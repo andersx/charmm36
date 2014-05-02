@@ -1,0 +1,66 @@
+HEADER    Coil Structure                          19-Sep-12         XXXX
+REMARK 0
+REMARK 0 Created by Phaistos
+REMARK 0 
+REMARK 0     Total: -348.006                         	(avg time/eval: [0.00189838] sec)
+REMARK 0     Terms:
+REMARK 0         clash-fast: 0                      	(avg time/eval: [6.21168e-05] sec)
+REMARK 0         opls-angle-bend-cached: 30.481     	(avg time/eval: [0.00011184] sec)
+REMARK 0         opls-torsion: 18.2328              	(avg time/eval: [0.000402339] sec)
+REMARK 0         opls-bond-stretch: 94.3498         	(avg time/eval: [6.39407e-05] sec)
+REMARK 0         opls-non-bonded-cached: -491.07    	(avg time/eval: [0.00126004] sec)
+REMARK 0 
+REMARK 0
+ATOM      1  N   ALA A   2      -1.534  -3.481  -0.890  1.00  0.00
+ATOM      2  CA  ALA A   2      -0.275  -3.379  -0.162  1.00  0.00
+ATOM      3  C   ALA A   2       0.396  -2.097  -0.644  1.00  0.00
+ATOM      4  O   ALA A   2       0.751  -1.255   0.181  1.00  0.00
+ATOM      5  CB  ALA A   2       0.515  -4.658  -0.393  1.00  0.00
+ATOM      6  HA  ALA A   2      -0.444  -3.304   0.820  1.00  0.00
+ATOM      7  HB1 ALA A   2       0.646  -4.906  -1.353  1.00  0.00
+ATOM      8  HB2 ALA A   2       1.373  -4.410   0.055  1.00  0.00
+ATOM      9  HB3 ALA A   2       0.114  -5.447   0.073  1.00  0.00
+ATOM     10  H1  ALA A   2      -2.024  -2.613  -0.805  1.00  0.00
+ATOM     11  H2  ALA A   2      -1.465  -3.706  -1.862  1.00  0.00
+ATOM     12  H3  ALA A   2      -2.082  -4.249  -0.558  1.00  0.00
+ATOM     13  N   ALA A   3       0.606  -1.893  -1.940  1.00  0.00
+ATOM     14  CA  ALA A   3       1.243  -0.686  -2.454  1.00  0.00
+ATOM     15  C   ALA A   3       0.555   0.616  -2.057  1.00  0.00
+ATOM     16  O   ALA A   3       1.122   1.685  -1.832  1.00  0.00
+ATOM     17  CB  ALA A   3       1.382  -0.794  -3.964  1.00  0.00
+ATOM     18  H   ALA A   3       0.325  -2.543  -2.645  1.00  0.00
+ATOM     19  HA  ALA A   3       2.139  -0.652  -2.012  1.00  0.00
+ATOM     20  HB1 ALA A   3       0.554  -0.854  -4.522  1.00  0.00
+ATOM     21  HB2 ALA A   3       1.908  -0.010  -4.293  1.00  0.00
+ATOM     22  HB3 ALA A   3       2.005  -1.557  -4.135  1.00  0.00
+ATOM     23  N   ALA A   4      -0.771   0.532  -2.106  1.00  0.00
+ATOM     24  CA  ALA A   4      -1.719   1.593  -1.790  1.00  0.00
+ATOM     25  C   ALA A   4      -1.954   1.682  -0.286  1.00  0.00
+ATOM     26  O   ALA A   4      -2.787   2.464   0.172  1.00  0.00
+ATOM     27  CB  ALA A   4      -3.061   1.471  -2.494  1.00  0.00
+ATOM     28  H   ALA A   4      -1.193  -0.308  -2.447  1.00  0.00
+ATOM     29  HA  ALA A   4      -1.328   2.476  -2.051  1.00  0.00
+ATOM     30  HB1 ALA A   4      -2.901   1.493  -3.481  1.00  0.00
+ATOM     31  HB2 ALA A   4      -3.465   0.564  -2.374  1.00  0.00
+ATOM     32  HB3 ALA A   4      -3.646   2.248  -2.265  1.00  0.00
+ATOM     33  N   ALA A   5      -1.345   0.818   0.520  1.00  0.00
+ATOM     34  CA  ALA A   5      -1.476   0.784   1.972  1.00  0.00
+ATOM     35  C   ALA A   5      -0.201   1.140   2.728  1.00  0.00
+ATOM     36  O   ALA A   5      -0.147   1.221   3.955  1.00  0.00
+ATOM     37  CB  ALA A   5      -2.039  -0.577   2.351  1.00  0.00
+ATOM     38  H   ALA A   5      -0.747   0.124   0.119  1.00  0.00
+ATOM     39  HA  ALA A   5      -2.101   1.506   2.267  1.00  0.00
+ATOM     40  HB1 ALA A   5      -2.914  -0.758   1.901  1.00  0.00
+ATOM     41  HB2 ALA A   5      -1.401  -1.281   2.038  1.00  0.00
+ATOM     42  HB3 ALA A   5      -2.186  -0.548   3.340  1.00  0.00
+ATOM     43  N   ALA A   6       0.884   1.339   1.986  1.00  0.00
+ATOM     44  CA  ALA A   6       2.226   1.688   2.434  1.00  0.00
+ATOM     45  C   ALA A   6       2.308   2.879   3.383  1.00  0.00
+ATOM     46  O   ALA A   6       1.752   3.921   3.035  1.00  0.00
+ATOM     47  CB  ALA A   6       3.116   1.821   1.208  1.00  0.00
+ATOM     48  H   ALA A   6       0.724   1.183   1.011  1.00  0.00
+ATOM     49  HA  ALA A   6       2.579   0.890   2.923  1.00  0.00
+ATOM     50  HB1 ALA A   6       3.047   1.077   0.543  1.00  0.00
+ATOM     51  HB2 ALA A   6       2.965   2.698   0.751  1.00  0.00
+ATOM     52  HB3 ALA A   6       4.047   1.825   1.575  1.00  0.00
+ATOM     53  OXT ALA A   6       2.919   2.800   4.449  1.00  0.00

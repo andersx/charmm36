@@ -1,0 +1,20 @@
+# This file was created Thu Sep 13 23:20:17 2012
+# by the following command:
+# g_energy -f 1l2y_energy.edr 
+#
+# g_energy is part of G R O M A C S:
+#
+# Great Red Oystrich Makes All Chemists Sane
+#
+@    title "Gromacs Energies"
+@    xaxis  label "Time (ps)"
+@    yaxis  label "(kJ/mol)"
+@TYPE xy
+@ view 0.15, 0.15, 0.75, 0.85
+@ legend on
+@ legend box on
+@ legend loctype view
+@ legend 0.78, 0.8
+@ legend length 2
+@ s0 legend "Coul-SR:a_8-a_21"
+    0.000000   -4.446656

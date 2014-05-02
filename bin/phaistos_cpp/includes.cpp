@@ -1,0 +1,6 @@
+#include "energy/term_angle_bend.h"
+#include "energy/term_bond_stretch.h"
+#include "energy/term_coulomb.h"
+#include "energy/term_eef1.h"
+#include "energy/term_torsion.h"
+#include "energy/term_vdw.h"

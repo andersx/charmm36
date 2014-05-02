@@ -1,0 +1,20 @@
+;
+;	File '1L2Y.top' was generated
+;	By user: onbekend (0)
+;	On host: onbekend
+;	At date: Thu Sep 13 20:00:41 2012
+;
+;	This is a standalone topology file
+;
+;	It was generated using program:
+;	pdb2gmx - VERSION 4.5.5
+;
+;	Command line was:
+;	pdb2gmx -f 1L2Y.pdb -o 1L2Y.gro -p 1L2Y.top 
+;
+;	Force field was read from the standard Gromacs share directory.
+;
+
+; Include forcefield parameters
+#include "gromos43a1.ff/forcefield.itp"
+

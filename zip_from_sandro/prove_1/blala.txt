@@ -1,0 +1,6286 @@
+Init ok 
+OK  
+E14FAC-coulomb:1
+dielectric constant:1
+distance-dependent-dielectric:0
+electric-factor:138.935
+force-field-dir:/usr/local/gromacs/share/gromacs/top/charmm27.ff
+weight:1.67857
+debug:0
+
+name: C
+non_bonded_parameters: [0.356359,0.46024]
+bonded_atom_type_index: 0
+radius: -1
+volume: -1
+surface_tension: -1
+gb_radius: -1
+atom: mass: 12.011
+charge: 0.51
+particle_type: 0
+resinfo_index: -1
+element_name: 
+
+name: CA
+non_bonded_parameters: [0.355005,0.29288]
+bonded_atom_type_index: 1
+radius: -1
+volume: -1
+surface_tension: -1
+gb_radius: -1
+atom: mass: 12.011
+charge: -0.115
+particle_type: 0
+resinfo_index: -1
+element_name: 
+
+name: CC
+non_bonded_parameters: [0.356359,0.29288]
+bonded_atom_type_index: 2
+radius: -1
+volume: -1
+surface_tension: -1
+gb_radius: -1
+atom: mass: 12.011
+charge: 0.62
+particle_type: 0
+resinfo_index: -1
+element_name: 
+
+name: CD
+non_bonded_parameters: [0.356359,0.29288]
+bonded_atom_type_index: 3
+radius: -1
+volume: -1
+surface_tension: -1
+gb_radius: -1
+atom: mass: 12.011
+charge: 0
+particle_type: 0
+resinfo_index: -1
+element_name: 
+
+name: CE1
+non_bonded_parameters: [0.372396,0.284512]
+bonded_atom_type_index: 4
+radius: -1
+volume: -1
+surface_tension: -1
+gb_radius: -1
+atom: mass: 12.011
+charge: 0
+particle_type: 0
+resinfo_index: -1
+element_name: 
+
+name: CE2
+non_bonded_parameters: [0.370614,0.267776]
+bonded_atom_type_index: 5
+radius: -1
+volume: -1
+surface_tension: -1
+gb_radius: -1
+atom: mass: 12.011
+charge: 0
+particle_type: 0
+resinfo_index: -1
+element_name: 
+
+name: CM
+non_bonded_parameters: [0.374177,0.46024]
+bonded_atom_type_index: 6
+radius: -1
+volume: -1
+surface_tension: -1
+gb_radius: -1
+atom: mass: 12.011
+charge: 0
+particle_type: 0
+resinfo_index: -1
+element_name: 
+
+name: CP1
+non_bonded_parameters: [0.405359,0.08368]
+bonded_atom_type_index: 7
+radius: -1
+volume: -1
+surface_tension: -1
+gb_radius: -1
+atom: mass: 12.011
+charge: 0.02
+particle_type: 0
+resinfo_index: -1
+element_name: 
+
+name: CP2
+non_bonded_parameters: [0.387541,0.23012]
+bonded_atom_type_index: 8
+radius: -1
+volume: -1
+surface_tension: -1
+gb_radius: -1
+atom: mass: 12.011
+charge: -0.18
+particle_type: 0
+resinfo_index: -1
+element_name: 
+
+name: CP3
+non_bonded_parameters: [0.387541,0.23012]
+bonded_atom_type_index: 9
+radius: -1
+volume: -1
+surface_tension: -1
+gb_radius: -1
+atom: mass: 12.011
+charge: 0
+particle_type: 0
+resinfo_index: -1
+element_name: 
+
+name: CPA
+non_bonded_parameters: [0.320724,0.37656]
+bonded_atom_type_index: 10
+radius: -1
+volume: -1
+surface_tension: -1
+gb_radius: -1
+atom: mass: 12.011
+charge: 0
+particle_type: 0
+resinfo_index: -1
+element_name: 
+
+name: CPB
+non_bonded_parameters: [0.320724,0.37656]
+bonded_atom_type_index: 11
+radius: -1
+volume: -1
+surface_tension: -1
+gb_radius: -1
+atom: mass: 12.011
+charge: 0
+particle_type: 0
+resinfo_index: -1
+element_name: 
+
+name: CPH1
+non_bonded_parameters: [0.320724,0.2092]
+bonded_atom_type_index: 12
+radius: -1
+volume: -1
+surface_tension: -1
+gb_radius: -1
+atom: mass: 12.011
+charge: 0.19
+particle_type: 0
+resinfo_index: -1
+element_name: 
+
+name: CPH2
+non_bonded_parameters: [0.320724,0.2092]
+bonded_atom_type_index: 13
+radius: -1
+volume: -1
+surface_tension: -1
+gb_radius: -1
+atom: mass: 12.011
+charge: 0.32
+particle_type: 0
+resinfo_index: -1
+element_name: 
+
+name: CPM
+non_bonded_parameters: [0.320724,0.37656]
+bonded_atom_type_index: 14
+radius: -1
+volume: -1
+surface_tension: -1
+gb_radius: -1
+atom: mass: 12.011
+charge: 0
+particle_type: 0
+resinfo_index: -1
+element_name: 
+
+name: CPT
+non_bonded_parameters: [0.320724,0.37656]
+bonded_atom_type_index: 15
+radius: -1
+volume: -1
+surface_tension: -1
+gb_radius: -1
+atom: mass: 12.011
+charge: -0.02
+particle_type: 0
+resinfo_index: -1
+element_name: 
+
+name: CS
+non_bonded_parameters: [0.391995,0.46024]
+bonded_atom_type_index: 16
+radius: -1
+volume: -1
+surface_tension: -1
+gb_radius: -1
+atom: mass: 12.011
+charge: 0
+particle_type: 0
+resinfo_index: -1
+element_name: 
+
+name: CST
+non_bonded_parameters: [0.278495,0.242672]
+bonded_atom_type_index: 17
+radius: -1
+volume: -1
+surface_tension: -1
+gb_radius: -1
+atom: mass: 12.011
+charge: 0
+particle_type: 0
+resinfo_index: -1
+element_name: 
+
+name: CT1
+non_bonded_parameters: [0.405359,0.08368]
+bonded_atom_type_index: 18
+radius: -1
+volume: -1
+surface_tension: -1
+gb_radius: -1
+atom: mass: 12.011
+charge: 0.07
+particle_type: 0
+resinfo_index: -1
+element_name: 
+
+name: CT2
+non_bonded_parameters: [0.387541,0.23012]
+bonded_atom_type_index: 19
+radius: -1
+volume: -1
+surface_tension: -1
+gb_radius: -1
+atom: mass: 12.011
+charge: -0.18
+particle_type: 0
+resinfo_index: -1
+element_name: 
+
+name: CT3
+non_bonded_parameters: [0.36705,0.33472]
+bonded_atom_type_index: 20
+radius: -1
+volume: -1
+surface_tension: -1
+gb_radius: -1
+atom: mass: 12.011
+charge: -0.11
+particle_type: 0
+resinfo_index: -1
+element_name: 
+
+name: CY
+non_bonded_parameters: [0.355005,0.29288]
+bonded_atom_type_index: 21
+radius: -1
+volume: -1
+surface_tension: -1
+gb_radius: -1
+atom: mass: 12.011
+charge: -0.03
+particle_type: 0
+resinfo_index: -1
+element_name: 
+
+name: CT
+non_bonded_parameters: [0.405359,0.08368]
+bonded_atom_type_index: 22
+radius: -1
+volume: -1
+surface_tension: -1
+gb_radius: -1
+atom: mass: 12.011
+charge: 0
+particle_type: 0
+resinfo_index: -1
+element_name: 
+
+name: CT1x
+non_bonded_parameters: [0.405359,0.08368]
+bonded_atom_type_index: 23
+radius: -1
+volume: -1
+surface_tension: -1
+gb_radius: -1
+atom: mass: 12.011
+charge: 0
+particle_type: 0
+resinfo_index: -1
+element_name: 
+
+name: CT2x
+non_bonded_parameters: [0.358141,0.234304]
+bonded_atom_type_index: 24
+radius: -1
+volume: -1
+surface_tension: -1
+gb_radius: -1
+atom: mass: 12.011
+charge: 0
+particle_type: 0
+resinfo_index: -1
+element_name: 
+
+name: CT3x
+non_bonded_parameters: [0.363487,0.326352]
+bonded_atom_type_index: 25
+radius: -1
+volume: -1
+surface_tension: -1
+gb_radius: -1
+atom: mass: 12.011
+charge: 0
+particle_type: 0
+resinfo_index: -1
+element_name: 
+
+name: H
+non_bonded_parameters: [0.0400014,0.192464]
+bonded_atom_type_index: 26
+radius: -1
+volume: -1
+surface_tension: -1
+gb_radius: -1
+atom: mass: 1.008
+charge: 0.31
+particle_type: 0
+resinfo_index: -1
+element_name: 
+
+name: HA
+non_bonded_parameters: [0.235197,0.092048]
+bonded_atom_type_index: 27
+radius: -1
+volume: -1
+surface_tension: -1
+gb_radius: -1
+atom: mass: 1.008
+charge: 0.09
+particle_type: 0
+resinfo_index: -1
+element_name: 
+
+name: HE1
+non_bonded_parameters: [0.222725,0.129704]
+bonded_atom_type_index: 28
+radius: -1
+volume: -1
+surface_tension: -1
+gb_radius: -1
+atom: mass: 1.008
+charge: 0
+particle_type: 0
+resinfo_index: -1
+element_name: 
+
+name: HE2
+non_bonded_parameters: [0.224506,0.108784]
+bonded_atom_type_index: 29
+radius: -1
+volume: -1
+surface_tension: -1
+gb_radius: -1
+atom: mass: 1.008
+charge: 0
+particle_type: 0
+resinfo_index: -1
+element_name: 
+
+name: HB
+non_bonded_parameters: [0.235197,0.092048]
+bonded_atom_type_index: 30
+radius: -1
+volume: -1
+surface_tension: -1
+gb_radius: -1
+atom: mass: 1.008
+charge: 0.09
+particle_type: 0
+resinfo_index: -1
+element_name: 
+
+name: HC
+non_bonded_parameters: [0.0400014,0.192464]
+bonded_atom_type_index: 31
+radius: -1
+volume: -1
+surface_tension: -1
+gb_radius: -1
+atom: mass: 1.008
+charge: 0.33
+particle_type: 0
+resinfo_index: -1
+element_name: 
+
+name: HP
+non_bonded_parameters: [0.242004,0.12552]
+bonded_atom_type_index: 32
+radius: -1
+volume: -1
+surface_tension: -1
+gb_radius: -1
+atom: mass: 1.008
+charge: 0.115
+particle_type: 0
+resinfo_index: -1
+element_name: 
+
+name: HR1
+non_bonded_parameters: [0.160362,0.192464]
+bonded_atom_type_index: 33
+radius: -1
+volume: -1
+surface_tension: -1
+gb_radius: -1
+atom: mass: 1.008
+charge: 0.13
+particle_type: 0
+resinfo_index: -1
+element_name: 
+
+name: HR2
+non_bonded_parameters: [0.124726,0.192464]
+bonded_atom_type_index: 34
+radius: -1
+volume: -1
+surface_tension: -1
+gb_radius: -1
+atom: mass: 1.008
+charge: 0.18
+particle_type: 0
+resinfo_index: -1
+element_name: 
+
+name: HR3
+non_bonded_parameters: [0.261568,0.0326352]
+bonded_atom_type_index: 35
+radius: -1
+volume: -1
+surface_tension: -1
+gb_radius: -1
+atom: mass: 1.008
+charge: 0.09
+particle_type: 0
+resinfo_index: -1
+element_name: 
+
+name: HS
+non_bonded_parameters: [0.0801809,0.4184]
+bonded_atom_type_index: 36
+radius: -1
+volume: -1
+surface_tension: -1
+gb_radius: -1
+atom: mass: 1.008
+charge: 0.16
+particle_type: 0
+resinfo_index: -1
+element_name: 
+
+name: HT
+non_bonded_parameters: [0.0400014,0.192464]
+bonded_atom_type_index: 37
+radius: -1
+volume: -1
+surface_tension: -1
+gb_radius: -1
+atom: mass: 1.008
+charge: 0.417
+particle_type: 0
+resinfo_index: -1
+element_name: 
+
+name: HA1
+non_bonded_parameters: [0.235197,0.092048]
+bonded_atom_type_index: 38
+radius: -1
+volume: -1
+surface_tension: -1
+gb_radius: -1
+atom: mass: 1.008
+charge: 0
+particle_type: 0
+resinfo_index: -1
+element_name: 
+
+name: HA2
+non_bonded_parameters: [0.238761,0.117152]
+bonded_atom_type_index: 39
+radius: -1
+volume: -1
+surface_tension: -1
+gb_radius: -1
+atom: mass: 1.008
+charge: 0
+particle_type: 0
+resinfo_index: -1
+element_name: 
+
+name: HA3
+non_bonded_parameters: [0.238761,0.100416]
+bonded_atom_type_index: 40
+radius: -1
+volume: -1
+surface_tension: -1
+gb_radius: -1
+atom: mass: 1.008
+charge: 0
+particle_type: 0
+resinfo_index: -1
+element_name: 
+
+name: N
+non_bonded_parameters: [0.329633,0.8368]
+bonded_atom_type_index: 41
+radius: -1
+volume: -1
+surface_tension: -1
+gb_radius: -1
+atom: mass: 14.007
+charge: -0.29
+particle_type: 0
+resinfo_index: -1
+element_name: 
+
+name: NC2
+non_bonded_parameters: [0.329633,0.8368]
+bonded_atom_type_index: 42
+radius: -1
+volume: -1
+surface_tension: -1
+gb_radius: -1
+atom: mass: 14.007
+charge: -0.8
+particle_type: 0
+resinfo_index: -1
+element_name: 
+
+name: NH1
+non_bonded_parameters: [0.329633,0.8368]
+bonded_atom_type_index: 43
+radius: -1
+volume: -1
+surface_tension: -1
+gb_radius: -1
+atom: mass: 14.007
+charge: -0.47
+particle_type: 0
+resinfo_index: -1
+element_name: 
+
+name: NH2
+non_bonded_parameters: [0.329633,0.8368]
+bonded_atom_type_index: 44
+radius: -1
+volume: -1
+surface_tension: -1
+gb_radius: -1
+atom: mass: 14.007
+charge: -0.62
+particle_type: 0
+resinfo_index: -1
+element_name: 
+
+name: NH3
+non_bonded_parameters: [0.329633,0.8368]
+bonded_atom_type_index: 45
+radius: -1
+volume: -1
+surface_tension: -1
+gb_radius: -1
+atom: mass: 14.007
+charge: -0.3
+particle_type: 0
+resinfo_index: -1
+element_name: 
+
+name: NP
+non_bonded_parameters: [0.329633,0.8368]
+bonded_atom_type_index: 46
+radius: -1
+volume: -1
+surface_tension: -1
+gb_radius: -1
+atom: mass: 14.007
+charge: 0
+particle_type: 0
+resinfo_index: -1
+element_name: 
+
+name: NPH
+non_bonded_parameters: [0.329633,0.8368]
+bonded_atom_type_index: 47
+radius: -1
+volume: -1
+surface_tension: -1
+gb_radius: -1
+atom: mass: 14.007
+charge: 0
+particle_type: 0
+resinfo_index: -1
+element_name: 
+
+name: NR1
+non_bonded_parameters: [0.329633,0.8368]
+bonded_atom_type_index: 48
+radius: -1
+volume: -1
+surface_tension: -1
+gb_radius: -1
+atom: mass: 14.007
+charge: -0.36
+particle_type: 0
+resinfo_index: -1
+element_name: 
+
+name: NR2
+non_bonded_parameters: [0.329633,0.8368]
+bonded_atom_type_index: 49
+radius: -1
+volume: -1
+surface_tension: -1
+gb_radius: -1
+atom: mass: 14.007
+charge: -0.7
+particle_type: 0
+resinfo_index: -1
+element_name: 
+
+name: NR3
+non_bonded_parameters: [0.329633,0.8368]
+bonded_atom_type_index: 50
+radius: -1
+volume: -1
+surface_tension: -1
+gb_radius: -1
+atom: mass: 14.007
+charge: -0.51
+particle_type: 0
+resinfo_index: -1
+element_name: 
+
+name: NY
+non_bonded_parameters: [0.329633,0.8368]
+bonded_atom_type_index: 51
+radius: -1
+volume: -1
+surface_tension: -1
+gb_radius: -1
+atom: mass: 14.007
+charge: -0.61
+particle_type: 0
+resinfo_index: -1
+element_name: 
+
+name: O
+non_bonded_parameters: [0.302906,0.50208]
+bonded_atom_type_index: 52
+radius: -1
+volume: -1
+surface_tension: -1
+gb_radius: -1
+atom: mass: 15.9994
+charge: -0.51
+particle_type: 0
+resinfo_index: -1
+element_name: 
+
+name: OB
+non_bonded_parameters: [0.302906,0.50208]
+bonded_atom_type_index: 53
+radius: -1
+volume: -1
+surface_tension: -1
+gb_radius: -1
+atom: mass: 15.9994
+charge: 0
+particle_type: 0
+resinfo_index: -1
+element_name: 
+
+name: OC
+non_bonded_parameters: [0.302906,0.50208]
+bonded_atom_type_index: 54
+radius: -1
+volume: -1
+surface_tension: -1
+gb_radius: -1
+atom: mass: 15.9994
+charge: -0.76
+particle_type: 0
+resinfo_index: -1
+element_name: 
+
+name: OH1
+non_bonded_parameters: [0.315378,0.636386]
+bonded_atom_type_index: 55
+radius: -1
+volume: -1
+surface_tension: -1
+gb_radius: -1
+atom: mass: 15.9994
+charge: -0.54
+particle_type: 0
+resinfo_index: -1
+element_name: 
+
+name: OM
+non_bonded_parameters: [0.302906,0.50208]
+bonded_atom_type_index: 56
+radius: -1
+volume: -1
+surface_tension: -1
+gb_radius: -1
+atom: mass: 15.9994
+charge: 0
+particle_type: 0
+resinfo_index: -1
+element_name: 
+
+name: OS
+non_bonded_parameters: [0.315378,0.636386]
+bonded_atom_type_index: 57
+radius: -1
+volume: -1
+surface_tension: -1
+gb_radius: -1
+atom: mass: 15.9994
+charge: 0
+particle_type: 0
+resinfo_index: -1
+element_name: 
+
+name: OST
+non_bonded_parameters: [0.30148,0.69036]
+bonded_atom_type_index: 58
+radius: -1
+volume: -1
+surface_tension: -1
+gb_radius: -1
+atom: mass: 15.9994
+charge: 0
+particle_type: 0
+resinfo_index: -1
+element_name: 
+
+name: OT
+non_bonded_parameters: [0.315057,0.636386]
+bonded_atom_type_index: 59
+radius: -1
+volume: -1
+surface_tension: -1
+gb_radius: -1
+atom: mass: 9.9514
+charge: -0.834
+particle_type: 0
+resinfo_index: -1
+element_name: 
+
+name: S
+non_bonded_parameters: [0.356359,1.8828]
+bonded_atom_type_index: 60
+radius: -1
+volume: -1
+surface_tension: -1
+gb_radius: -1
+atom: mass: 32.06
+charge: -0.09
+particle_type: 0
+resinfo_index: -1
+element_name: 
+
+name: SM
+non_bonded_parameters: [0.351905,1.58992]
+bonded_atom_type_index: 61
+radius: -1
+volume: -1
+surface_tension: -1
+gb_radius: -1
+atom: mass: 32.06
+charge: 0
+particle_type: 0
+resinfo_index: -1
+element_name: 
+
+name: SS
+non_bonded_parameters: [0.391995,1.96648]
+bonded_atom_type_index: 62
+radius: -1
+volume: -1
+surface_tension: -1
+gb_radius: -1
+atom: mass: 32.06
+charge: 0
+particle_type: 0
+resinfo_index: -1
+element_name: 
+
+name: SOD
+non_bonded_parameters: [0.242993,0.19623]
+bonded_atom_type_index: 63
+radius: -1
+volume: -1
+surface_tension: -1
+gb_radius: -1
+atom: mass: 22.9898
+charge: 1
+particle_type: 0
+resinfo_index: -1
+element_name: 
+
+name: POT
+non_bonded_parameters: [0.314265,0.364008]
+bonded_atom_type_index: 64
+radius: -1
+volume: -1
+surface_tension: -1
+gb_radius: -1
+atom: mass: 39.102
+charge: 1
+particle_type: 0
+resinfo_index: -1
+element_name: 
+
+name: CLA
+non_bonded_parameters: [0.404468,0.6276]
+bonded_atom_type_index: 65
+radius: -1
+volume: -1
+surface_tension: -1
+gb_radius: -1
+atom: mass: 35.45
+charge: -1
+particle_type: 0
+resinfo_index: -1
+element_name: 
+
+name: CAL
+non_bonded_parameters: [0.243572,0.50208]
+bonded_atom_type_index: 66
+radius: -1
+volume: -1
+surface_tension: -1
+gb_radius: -1
+atom: mass: 40.08
+charge: 2
+particle_type: 0
+resinfo_index: -1
+element_name: 
+
+name: MG
+non_bonded_parameters: [0.211143,0.06276]
+bonded_atom_type_index: 67
+radius: -1
+volume: -1
+surface_tension: -1
+gb_radius: -1
+atom: mass: 24.305
+charge: 2
+particle_type: 0
+resinfo_index: -1
+element_name: 
+
+name: CES
+non_bonded_parameters: [0.374177,0.79496]
+bonded_atom_type_index: 68
+radius: -1
+volume: -1
+surface_tension: -1
+gb_radius: -1
+atom: mass: 132.9
+charge: 1
+particle_type: 0
+resinfo_index: -1
+element_name: 
+
+name: ZN
+non_bonded_parameters: [0.194216,1.046]
+bonded_atom_type_index: 69
+radius: -1
+volume: -1
+surface_tension: -1
+gb_radius: -1
+atom: mass: 65.37
+charge: 2
+particle_type: 0
+resinfo_index: -1
+element_name: 
+
+name: FE
+non_bonded_parameters: [0.115817,0]
+bonded_atom_type_index: 70
+radius: -1
+volume: -1
+surface_tension: -1
+gb_radius: -1
+atom: mass: 55.847
+charge: 0
+particle_type: 0
+resinfo_index: -1
+element_name: 
+
+name: HE
+non_bonded_parameters: [0.263706,0.0889937]
+bonded_atom_type_index: 71
+radius: -1
+volume: -1
+surface_tension: -1
+gb_radius: -1
+atom: mass: 4.0026
+charge: 0
+particle_type: 0
+resinfo_index: -1
+element_name: 
+
+name: NE
+non_bonded_parameters: [0.272615,0.359824]
+bonded_atom_type_index: 72
+radius: -1
+volume: -1
+surface_tension: -1
+gb_radius: -1
+atom: mass: 20.1797
+charge: 0
+particle_type: 0
+resinfo_index: -1
+element_name: 
+
+name: CLAL
+non_bonded_parameters: [0.340003,0.12552]
+bonded_atom_type_index: 73
+radius: -1
+volume: -1
+surface_tension: -1
+gb_radius: -1
+atom: mass: 35.45
+charge: 0
+particle_type: 0
+resinfo_index: -1
+element_name: 
+
+name: DUM
+non_bonded_parameters: [0,0]
+bonded_atom_type_index: 74
+radius: -1
+volume: -1
+surface_tension: -1
+gb_radius: -1
+atom: mass: 1.008
+charge: 0
+particle_type: 0
+resinfo_index: -1
+element_name: 
+
+name: CAP
+non_bonded_parameters: [0.355005,0.29288]
+bonded_atom_type_index: 75
+radius: -1
+volume: -1
+surface_tension: -1
+gb_radius: -1
+atom: mass: 12.011
+charge: 0
+particle_type: 0
+resinfo_index: -1
+element_name: 
+
+name: FA
+non_bonded_parameters: [0.302906,0.50208]
+bonded_atom_type_index: 76
+radius: -1
+volume: -1
+surface_tension: -1
+gb_radius: -1
+atom: mass: 18.998
+charge: 0
+particle_type: 0
+resinfo_index: -1
+element_name: 
+
+name: CN
+non_bonded_parameters: [0.311815,0.8368]
+bonded_atom_type_index: 77
+radius: -1
+volume: -1
+surface_tension: -1
+gb_radius: -1
+atom: mass: 12.011
+charge: 0
+particle_type: 0
+resinfo_index: -1
+element_name: 
+
+name: NC
+non_bonded_parameters: [0.329633,2.5104]
+bonded_atom_type_index: 78
+radius: -1
+volume: -1
+surface_tension: -1
+gb_radius: -1
+atom: mass: 14.007
+charge: 0
+particle_type: 0
+resinfo_index: -1
+element_name: 
+
+name: OCA
+non_bonded_parameters: [0.302906,0.50208]
+bonded_atom_type_index: 79
+radius: -1
+volume: -1
+surface_tension: -1
+gb_radius: -1
+atom: mass: 15.9994
+charge: 0
+particle_type: 0
+resinfo_index: -1
+element_name: 
+
+name: COA
+non_bonded_parameters: [0.356359,0.46024]
+bonded_atom_type_index: 80
+radius: -1
+volume: -1
+surface_tension: -1
+gb_radius: -1
+atom: mass: 12.011
+charge: 0
+particle_type: 0
+resinfo_index: -1
+element_name: 
+
+name: CF1
+non_bonded_parameters: [0.338542,0.25104]
+bonded_atom_type_index: 81
+radius: -1
+volume: -1
+surface_tension: -1
+gb_radius: -1
+atom: mass: 12.011
+charge: 0
+particle_type: 0
+resinfo_index: -1
+element_name: 
+
+name: CF2
+non_bonded_parameters: [0.365268,0.175728]
+bonded_atom_type_index: 82
+radius: -1
+volume: -1
+surface_tension: -1
+gb_radius: -1
+atom: mass: 12.011
+charge: 0
+particle_type: 0
+resinfo_index: -1
+element_name: 
+
+name: CF3
+non_bonded_parameters: [0.409813,0.08368]
+bonded_atom_type_index: 83
+radius: -1
+volume: -1
+surface_tension: -1
+gb_radius: -1
+atom: mass: 12.011
+charge: 0
+particle_type: 0
+resinfo_index: -1
+element_name: 
+
+name: HF1
+non_bonded_parameters: [0.235197,0.117152]
+bonded_atom_type_index: 84
+radius: -1
+volume: -1
+surface_tension: -1
+gb_radius: -1
+atom: mass: 1.008
+charge: 0
+particle_type: 0
+resinfo_index: -1
+element_name: 
+
+name: HF2
+non_bonded_parameters: [0.231634,0.12552]
+bonded_atom_type_index: 85
+radius: -1
+volume: -1
+surface_tension: -1
+gb_radius: -1
+atom: mass: 1.008
+charge: 0
+particle_type: 0
+resinfo_index: -1
+element_name: 
+
+name: F1
+non_bonded_parameters: [0.290433,0.56484]
+bonded_atom_type_index: 86
+radius: -1
+volume: -1
+surface_tension: -1
+gb_radius: -1
+atom: mass: 18.998
+charge: 0
+particle_type: 0
+resinfo_index: -1
+element_name: 
+
+name: F2
+non_bonded_parameters: [0.290433,0.43932]
+bonded_atom_type_index: 87
+radius: -1
+volume: -1
+surface_tension: -1
+gb_radius: -1
+atom: mass: 18.998
+charge: 0
+particle_type: 0
+resinfo_index: -1
+element_name: 
+
+name: F3
+non_bonded_parameters: [0.285088,0.405848]
+bonded_atom_type_index: 88
+radius: -1
+volume: -1
+surface_tension: -1
+gb_radius: -1
+atom: mass: 18.998
+charge: 0
+particle_type: 0
+resinfo_index: -1
+element_name: 
+
+name: C3
+non_bonded_parameters: [0.405359,0.08368]
+bonded_atom_type_index: 89
+radius: -1
+volume: -1
+surface_tension: -1
+gb_radius: -1
+atom: mass: 12.011
+charge: 0
+particle_type: 0
+resinfo_index: -1
+element_name: 
+
+name: CC1A
+non_bonded_parameters: [0.372396,0.284512]
+bonded_atom_type_index: 90
+radius: -1
+volume: -1
+surface_tension: -1
+gb_radius: -1
+atom: mass: 12.011
+charge: 0
+particle_type: 0
+resinfo_index: -1
+element_name: 
+
+name: CC1B
+non_bonded_parameters: [0.372396,0.284512]
+bonded_atom_type_index: 91
+radius: -1
+volume: -1
+surface_tension: -1
+gb_radius: -1
+atom: mass: 12.011
+charge: 0
+particle_type: 0
+resinfo_index: -1
+element_name: 
+
+name: CC2
+non_bonded_parameters: [0.370614,0.267776]
+bonded_atom_type_index: 92
+radius: -1
+volume: -1
+surface_tension: -1
+gb_radius: -1
+atom: mass: 12.011
+charge: 0
+particle_type: 0
+resinfo_index: -1
+element_name: 
+
+name: NS1
+non_bonded_parameters: [0.329633,0.8368]
+bonded_atom_type_index: 93
+radius: -1
+volume: -1
+surface_tension: -1
+gb_radius: -1
+atom: mass: 14.007
+charge: 0
+particle_type: 0
+resinfo_index: -1
+element_name: 
+
+name: NS2
+non_bonded_parameters: [0.329633,0.8368]
+bonded_atom_type_index: 94
+radius: -1
+volume: -1
+surface_tension: -1
+gb_radius: -1
+atom: mass: 14.007
+charge: 0
+particle_type: 0
+resinfo_index: -1
+element_name: 
+
+name: HOL
+non_bonded_parameters: [0.0400014,0.192464]
+bonded_atom_type_index: 95
+radius: -1
+volume: -1
+surface_tension: -1
+gb_radius: -1
+atom: mass: 1.008
+charge: 0.43
+particle_type: 0
+resinfo_index: -1
+element_name: 
+
+name: HAL1
+non_bonded_parameters: [0.235197,0.092048]
+bonded_atom_type_index: 96
+radius: -1
+volume: -1
+surface_tension: -1
+gb_radius: -1
+atom: mass: 1.008
+charge: 0.09
+particle_type: 0
+resinfo_index: -1
+element_name: 
+
+name: HAL2
+non_bonded_parameters: [0.238761,0.117152]
+bonded_atom_type_index: 97
+radius: -1
+volume: -1
+surface_tension: -1
+gb_radius: -1
+atom: mass: 1.008
+charge: 0.09
+particle_type: 0
+resinfo_index: -1
+element_name: 
+
+name: HAL3
+non_bonded_parameters: [0.238761,0.100416]
+bonded_atom_type_index: 98
+radius: -1
+volume: -1
+surface_tension: -1
+gb_radius: -1
+atom: mass: 1.008
+charge: 0.09
+particle_type: 0
+resinfo_index: -1
+element_name: 
+
+name: HCL
+non_bonded_parameters: [0.0400014,0.192464]
+bonded_atom_type_index: 99
+radius: -1
+volume: -1
+surface_tension: -1
+gb_radius: -1
+atom: mass: 1.008
+charge: 0.33
+particle_type: 0
+resinfo_index: -1
+element_name: 
+
+name: HL
+non_bonded_parameters: [0.124726,0.192464]
+bonded_atom_type_index: 100
+radius: -1
+volume: -1
+surface_tension: -1
+gb_radius: -1
+atom: mass: 1.008
+charge: 0.25
+particle_type: 0
+resinfo_index: -1
+element_name: 
+
+name: HEL1
+non_bonded_parameters: [0.222725,0.129704]
+bonded_atom_type_index: 101
+radius: -1
+volume: -1
+surface_tension: -1
+gb_radius: -1
+atom: mass: 1.008
+charge: 0.15
+particle_type: 0
+resinfo_index: -1
+element_name: 
+
+name: HEL2
+non_bonded_parameters: [0.224506,0.108784]
+bonded_atom_type_index: 102
+radius: -1
+volume: -1
+surface_tension: -1
+gb_radius: -1
+atom: mass: 1.008
+charge: 0
+particle_type: 0
+resinfo_index: -1
+element_name: 
+
+name: CL
+non_bonded_parameters: [0.356359,0.29288]
+bonded_atom_type_index: 103
+radius: -1
+volume: -1
+surface_tension: -1
+gb_radius: -1
+atom: mass: 12.011
+charge: 0.62
+particle_type: 0
+resinfo_index: -1
+element_name: 
+
+name: CTL1
+non_bonded_parameters: [0.405359,0.08368]
+bonded_atom_type_index: 104
+radius: -1
+volume: -1
+surface_tension: -1
+gb_radius: -1
+atom: mass: 12.011
+charge: 0.14
+particle_type: 0
+resinfo_index: -1
+element_name: 
+
+name: CTL2
+non_bonded_parameters: [0.358141,0.234304]
+bonded_atom_type_index: 105
+radius: -1
+volume: -1
+surface_tension: -1
+gb_radius: -1
+atom: mass: 12.011
+charge: 0.05
+particle_type: 0
+resinfo_index: -1
+element_name: 
+
+name: CTL3
+non_bonded_parameters: [0.363487,0.326352]
+bonded_atom_type_index: 106
+radius: -1
+volume: -1
+surface_tension: -1
+gb_radius: -1
+atom: mass: 12.011
+charge: -0.27
+particle_type: 0
+resinfo_index: -1
+element_name: 
+
+name: CTL5
+non_bonded_parameters: [0.36705,0.33472]
+bonded_atom_type_index: 107
+radius: -1
+volume: -1
+surface_tension: -1
+gb_radius: -1
+atom: mass: 12.011
+charge: -0.35
+particle_type: 0
+resinfo_index: -1
+element_name: 
+
+name: CEL1
+non_bonded_parameters: [0.372396,0.284512]
+bonded_atom_type_index: 108
+radius: -1
+volume: -1
+surface_tension: -1
+gb_radius: -1
+atom: mass: 12.011
+charge: -0.15
+particle_type: 0
+resinfo_index: -1
+element_name: 
+
+name: CEL2
+non_bonded_parameters: [0.370614,0.267776]
+bonded_atom_type_index: 109
+radius: -1
+volume: -1
+surface_tension: -1
+gb_radius: -1
+atom: mass: 12.011
+charge: 0
+particle_type: 0
+resinfo_index: -1
+element_name: 
+
+name: OBL
+non_bonded_parameters: [0.302906,0.50208]
+bonded_atom_type_index: 110
+radius: -1
+volume: -1
+surface_tension: -1
+gb_radius: -1
+atom: mass: 15.9994
+charge: -0.52
+particle_type: 0
+resinfo_index: -1
+element_name: 
+
+name: OCL
+non_bonded_parameters: [0.302906,0.50208]
+bonded_atom_type_index: 111
+radius: -1
+volume: -1
+surface_tension: -1
+gb_radius: -1
+atom: mass: 15.9994
+charge: -0.76
+particle_type: 0
+resinfo_index: -1
+element_name: 
+
+name: O2L
+non_bonded_parameters: [0.302906,0.50208]
+bonded_atom_type_index: 112
+radius: -1
+volume: -1
+surface_tension: -1
+gb_radius: -1
+atom: mass: 15.9994
+charge: -0.78
+particle_type: 0
+resinfo_index: -1
+element_name: 
+
+name: OHL
+non_bonded_parameters: [0.315378,0.636386]
+bonded_atom_type_index: 113
+radius: -1
+volume: -1
+surface_tension: -1
+gb_radius: -1
+atom: mass: 15.9994
+charge: -0.66
+particle_type: 0
+resinfo_index: -1
+element_name: 
+
+name: OSL
+non_bonded_parameters: [0.315378,0.636386]
+bonded_atom_type_index: 114
+radius: -1
+volume: -1
+surface_tension: -1
+gb_radius: -1
+atom: mass: 15.9994
+charge: -0.57
+particle_type: 0
+resinfo_index: -1
+element_name: 
+
+name: NH3L
+non_bonded_parameters: [0.329633,0.8368]
+bonded_atom_type_index: 115
+radius: -1
+volume: -1
+surface_tension: -1
+gb_radius: -1
+atom: mass: 14.007
+charge: -0.3
+particle_type: 0
+resinfo_index: -1
+element_name: 
+
+name: NTL
+non_bonded_parameters: [0.329633,0.8368]
+bonded_atom_type_index: 116
+radius: -1
+volume: -1
+surface_tension: -1
+gb_radius: -1
+atom: mass: 14.007
+charge: -0.6
+particle_type: 0
+resinfo_index: -1
+element_name: 
+
+name: SL
+non_bonded_parameters: [0.374177,1.96648]
+bonded_atom_type_index: 117
+radius: -1
+volume: -1
+surface_tension: -1
+gb_radius: -1
+atom: mass: 32.06
+charge: 1.33
+particle_type: 0
+resinfo_index: -1
+element_name: 
+
+name: PL
+non_bonded_parameters: [0.383086,2.44764]
+bonded_atom_type_index: 118
+radius: -1
+volume: -1
+surface_tension: -1
+gb_radius: -1
+atom: mass: 30.974
+charge: 1.5
+particle_type: 0
+resinfo_index: -1
+element_name: 
+
+name: OWT3
+non_bonded_parameters: [0.315058,0.636386]
+bonded_atom_type_index: 119
+radius: -1
+volume: -1
+surface_tension: -1
+gb_radius: -1
+atom: mass: 15.9994
+charge: -0.834
+particle_type: 0
+resinfo_index: -1
+element_name: 
+
+name: HWT3
+non_bonded_parameters: [0,0]
+bonded_atom_type_index: 120
+radius: -1
+volume: -1
+surface_tension: -1
+gb_radius: -1
+atom: mass: 1.008
+charge: 0.417
+particle_type: 0
+resinfo_index: -1
+element_name: 
+
+name: OWT4
+non_bonded_parameters: [0.315365,0.64852]
+bonded_atom_type_index: 121
+radius: -1
+volume: -1
+surface_tension: -1
+gb_radius: -1
+atom: mass: 15.9994
+charge: 0
+particle_type: 0
+resinfo_index: -1
+element_name: 
+
+name: HWT4
+non_bonded_parameters: [0,0]
+bonded_atom_type_index: 122
+radius: -1
+volume: -1
+surface_tension: -1
+gb_radius: -1
+atom: mass: 1.008
+charge: 0.52
+particle_type: 0
+resinfo_index: -1
+element_name: 
+
+name: MWT4
+non_bonded_parameters: [0,0]
+bonded_atom_type_index: 123
+radius: -1
+volume: -1
+surface_tension: -1
+gb_radius: -1
+atom: mass: 0
+charge: -1.04
+particle_type: 0
+resinfo_index: -1
+element_name: 
+
+name: OWT5
+non_bonded_parameters: [0.312,0.66944]
+bonded_atom_type_index: 124
+radius: -1
+volume: -1
+surface_tension: -1
+gb_radius: -1
+atom: mass: 15.9994
+charge: 0
+particle_type: 0
+resinfo_index: -1
+element_name: 
+
+name: HWT5
+non_bonded_parameters: [0,0]
+bonded_atom_type_index: 125
+radius: -1
+volume: -1
+surface_tension: -1
+gb_radius: -1
+atom: mass: 1.008
+charge: 0.241
+particle_type: 0
+resinfo_index: -1
+element_name: 
+
+name: MWT5
+non_bonded_parameters: [0,0]
+bonded_atom_type_index: 126
+radius: -1
+volume: -1
+surface_tension: -1
+gb_radius: -1
+atom: mass: 0
+charge: -0.241
+particle_type: 0
+resinfo_index: -1
+element_name: 
+
+name: OW
+non_bonded_parameters: [0.316557,0.650194]
+bonded_atom_type_index: 127
+radius: -1
+volume: -1
+surface_tension: -1
+gb_radius: -1
+atom: mass: 15.9994
+charge: -0.82
+particle_type: 0
+resinfo_index: -1
+element_name: 
+
+name: HW
+non_bonded_parameters: [0,0]
+bonded_atom_type_index: 128
+radius: -1
+volume: -1
+surface_tension: -1
+gb_radius: -1
+atom: mass: 1.008
+charge: 0.41
+particle_type: 0
+resinfo_index: -1
+element_name: 
+
+name: MNH3
+non_bonded_parameters: [0,0]
+bonded_atom_type_index: 129
+radius: -1
+volume: -1
+surface_tension: -1
+gb_radius: -1
+atom: mass: 0
+charge: 0
+particle_type: 0
+resinfo_index: -1
+element_name: 
+
+name: MNH2
+non_bonded_parameters: [0,0]
+bonded_atom_type_index: 130
+radius: -1
+volume: -1
+surface_tension: -1
+gb_radius: -1
+atom: mass: 0
+charge: 0
+particle_type: 0
+resinfo_index: -1
+element_name: 
+
+name: MCH3
+non_bonded_parameters: [0,0]
+bonded_atom_type_index: 131
+radius: -1
+volume: -1
+surface_tension: -1
+gb_radius: -1
+atom: mass: 0
+charge: 0
+particle_type: 0
+resinfo_index: -1
+element_name: 
+
+name: MCH3S
+non_bonded_parameters: [0,0]
+bonded_atom_type_index: 132
+radius: -1
+volume: -1
+surface_tension: -1
+gb_radius: -1
+atom: mass: 0
+charge: 0
+particle_type: 0
+resinfo_index: -1
+element_name: 
+
+name: Cu2+
+non_bonded_parameters: [0.20847,4.76976]
+bonded_atom_type_index: 133
+radius: -1
+volume: -1
+surface_tension: -1
+gb_radius: -1
+atom: mass: 63.546
+charge: 2
+particle_type: 0
+resinfo_index: -1
+element_name: 
+
+name: Ar
+non_bonded_parameters: [0.341,0.027458]
+bonded_atom_type_index: 134
+radius: -1
+volume: -1
+surface_tension: -1
+gb_radius: -1
+atom: mass: 39.948
+charge: 0
+particle_type: 0
+resinfo_index: -1
+element_name: 
+
+name: SI
+non_bonded_parameters: [0.33855,2.44704]
+bonded_atom_type_index: 135
+radius: -1
+volume: -1
+surface_tension: -1
+gb_radius: -1
+atom: mass: 28.08
+charge: 0
+particle_type: 0
+resinfo_index: -1
+element_name: 
+
+name: HN1
+non_bonded_parameters: [0.0400014,0.192464]
+bonded_atom_type_index: 136
+radius: -1
+volume: -1
+surface_tension: -1
+gb_radius: -1
+atom: mass: 1.008
+charge: 0.33
+particle_type: 0
+resinfo_index: -1
+element_name: 
+
+name: HN2
+non_bonded_parameters: [0.0400014,0.192464]
+bonded_atom_type_index: 137
+radius: -1
+volume: -1
+surface_tension: -1
+gb_radius: -1
+atom: mass: 1.008
+charge: 0.36
+particle_type: 0
+resinfo_index: -1
+element_name: 
+
+name: HN3
+non_bonded_parameters: [0.195998,0.192464]
+bonded_atom_type_index: 138
+radius: -1
+volume: -1
+surface_tension: -1
+gb_radius: -1
+atom: mass: 1.008
+charge: 0.1
+particle_type: 0
+resinfo_index: -1
+element_name: 
+
+name: HNP
+non_bonded_parameters: [0.242004,0.12552]
+bonded_atom_type_index: 139
+radius: -1
+volume: -1
+surface_tension: -1
+gb_radius: -1
+atom: mass: 1.008
+charge: 0
+particle_type: 0
+resinfo_index: -1
+element_name: 
+
+name: HN3B
+non_bonded_parameters: [0.160362,0.192464]
+bonded_atom_type_index: 140
+radius: -1
+volume: -1
+surface_tension: -1
+gb_radius: -1
+atom: mass: 1.008
+charge: 0
+particle_type: 0
+resinfo_index: -1
+element_name: 
+
+name: HN3C
+non_bonded_parameters: [0.242004,0.12552]
+bonded_atom_type_index: 141
+radius: -1
+volume: -1
+surface_tension: -1
+gb_radius: -1
+atom: mass: 1.008
+charge: 0
+particle_type: 0
+resinfo_index: -1
+element_name: 
+
+name: HN4
+non_bonded_parameters: [0.0400014,0.192464]
+bonded_atom_type_index: 142
+radius: -1
+volume: -1
+surface_tension: -1
+gb_radius: -1
+atom: mass: 1.008
+charge: 0
+particle_type: 0
+resinfo_index: -1
+element_name: 
+
+name: HN5
+non_bonded_parameters: [0.0400014,0.192464]
+bonded_atom_type_index: 143
+radius: -1
+volume: -1
+surface_tension: -1
+gb_radius: -1
+atom: mass: 1.008
+charge: 0.43
+particle_type: 0
+resinfo_index: -1
+element_name: 
+
+name: HN6
+non_bonded_parameters: [0.235197,0.092048]
+bonded_atom_type_index: 144
+radius: -1
+volume: -1
+surface_tension: -1
+gb_radius: -1
+atom: mass: 1.008
+charge: 0
+particle_type: 0
+resinfo_index: -1
+element_name: 
+
+name: HN7
+non_bonded_parameters: [0.235197,0.092048]
+bonded_atom_type_index: 145
+radius: -1
+volume: -1
+surface_tension: -1
+gb_radius: -1
+atom: mass: 1.008
+charge: 0.09
+particle_type: 0
+resinfo_index: -1
+element_name: 
+
+name: HN8
+non_bonded_parameters: [0.238761,0.117152]
+bonded_atom_type_index: 146
+radius: -1
+volume: -1
+surface_tension: -1
+gb_radius: -1
+atom: mass: 1.008
+charge: 0.09
+particle_type: 0
+resinfo_index: -1
+element_name: 
+
+name: HN9
+non_bonded_parameters: [0.238761,0.100416]
+bonded_atom_type_index: 147
+radius: -1
+volume: -1
+surface_tension: -1
+gb_radius: -1
+atom: mass: 1.008
+charge: 0.07
+particle_type: 0
+resinfo_index: -1
+element_name: 
+
+name: HNE1
+non_bonded_parameters: [0.222725,0.129704]
+bonded_atom_type_index: 148
+radius: -1
+volume: -1
+surface_tension: -1
+gb_radius: -1
+atom: mass: 1.008
+charge: 0
+particle_type: 0
+resinfo_index: -1
+element_name: 
+
+name: HNE2
+non_bonded_parameters: [0.224506,0.108784]
+bonded_atom_type_index: 149
+radius: -1
+volume: -1
+surface_tension: -1
+gb_radius: -1
+atom: mass: 1.008
+charge: 0
+particle_type: 0
+resinfo_index: -1
+element_name: 
+
+name: NN1
+non_bonded_parameters: [0.329633,0.8368]
+bonded_atom_type_index: 150
+radius: -1
+volume: -1
+surface_tension: -1
+gb_radius: -1
+atom: mass: 14.007
+charge: -0.75
+particle_type: 0
+resinfo_index: -1
+element_name: 
+
+name: NN1C
+non_bonded_parameters: [0.329633,0.8368]
+bonded_atom_type_index: 151
+radius: -1
+volume: -1
+surface_tension: -1
+gb_radius: -1
+atom: mass: 14.007
+charge: 0
+particle_type: 0
+resinfo_index: -1
+element_name: 
+
+name: NN2
+non_bonded_parameters: [0.329633,0.8368]
+bonded_atom_type_index: 152
+radius: -1
+volume: -1
+surface_tension: -1
+gb_radius: -1
+atom: mass: 14.007
+charge: -0.13
+particle_type: 0
+resinfo_index: -1
+element_name: 
+
+name: NN2B
+non_bonded_parameters: [0.329633,0.8368]
+bonded_atom_type_index: 153
+radius: -1
+volume: -1
+surface_tension: -1
+gb_radius: -1
+atom: mass: 14.007
+charge: -0.34
+particle_type: 0
+resinfo_index: -1
+element_name: 
+
+name: NN2C
+non_bonded_parameters: [0.329633,0.8368]
+bonded_atom_type_index: 154
+radius: -1
+volume: -1
+surface_tension: -1
+gb_radius: -1
+atom: mass: 14.007
+charge: 0
+particle_type: 0
+resinfo_index: -1
+element_name: 
+
+name: NN2G
+non_bonded_parameters: [0.329633,0.8368]
+bonded_atom_type_index: 155
+radius: -1
+volume: -1
+surface_tension: -1
+gb_radius: -1
+atom: mass: 14.007
+charge: -0.34
+particle_type: 0
+resinfo_index: -1
+element_name: 
+
+name: NN2U
+non_bonded_parameters: [0.329633,0.8368]
+bonded_atom_type_index: 156
+radius: -1
+volume: -1
+surface_tension: -1
+gb_radius: -1
+atom: mass: 14.007
+charge: -0.46
+particle_type: 0
+resinfo_index: -1
+element_name: 
+
+name: NN3
+non_bonded_parameters: [0.329633,0.8368]
+bonded_atom_type_index: 157
+radius: -1
+volume: -1
+surface_tension: -1
+gb_radius: -1
+atom: mass: 14.007
+charge: -0.66
+particle_type: 0
+resinfo_index: -1
+element_name: 
+
+name: NN3A
+non_bonded_parameters: [0.329633,0.8368]
+bonded_atom_type_index: 158
+radius: -1
+volume: -1
+surface_tension: -1
+gb_radius: -1
+atom: mass: 14.007
+charge: -0.75
+particle_type: 0
+resinfo_index: -1
+element_name: 
+
+name: NN3G
+non_bonded_parameters: [0.329633,0.8368]
+bonded_atom_type_index: 159
+radius: -1
+volume: -1
+surface_tension: -1
+gb_radius: -1
+atom: mass: 14.007
+charge: -0.74
+particle_type: 0
+resinfo_index: -1
+element_name: 
+
+name: NN3I
+non_bonded_parameters: [0.329633,0.8368]
+bonded_atom_type_index: 160
+radius: -1
+volume: -1
+surface_tension: -1
+gb_radius: -1
+atom: mass: 14.007
+charge: 0
+particle_type: 0
+resinfo_index: -1
+element_name: 
+
+name: NN4
+non_bonded_parameters: [0.329633,0.8368]
+bonded_atom_type_index: 161
+radius: -1
+volume: -1
+surface_tension: -1
+gb_radius: -1
+atom: mass: 14.007
+charge: -0.71
+particle_type: 0
+resinfo_index: -1
+element_name: 
+
+name: NN5
+non_bonded_parameters: [0.329633,0.8368]
+bonded_atom_type_index: 162
+radius: -1
+volume: -1
+surface_tension: -1
+gb_radius: -1
+atom: mass: 14.007
+charge: 0
+particle_type: 0
+resinfo_index: -1
+element_name: 
+
+name: NN6
+non_bonded_parameters: [0.329633,0.8368]
+bonded_atom_type_index: 163
+radius: -1
+volume: -1
+surface_tension: -1
+gb_radius: -1
+atom: mass: 14.007
+charge: 0
+particle_type: 0
+resinfo_index: -1
+element_name: 
+
+name: ON1
+non_bonded_parameters: [0.302906,0.50208]
+bonded_atom_type_index: 164
+radius: -1
+volume: -1
+surface_tension: -1
+gb_radius: -1
+atom: mass: 15.9994
+charge: -0.48
+particle_type: 0
+resinfo_index: -1
+element_name: 
+
+name: ON1C
+non_bonded_parameters: [0.302906,0.50208]
+bonded_atom_type_index: 165
+radius: -1
+volume: -1
+surface_tension: -1
+gb_radius: -1
+atom: mass: 15.9994
+charge: -0.49
+particle_type: 0
+resinfo_index: -1
+element_name: 
+
+name: ON2
+non_bonded_parameters: [0.315378,0.636386]
+bonded_atom_type_index: 166
+radius: -1
+volume: -1
+surface_tension: -1
+gb_radius: -1
+atom: mass: 15.9994
+charge: -0.57
+particle_type: 0
+resinfo_index: -1
+element_name: 
+
+name: ON2B
+non_bonded_parameters: [0.315378,0.636386]
+bonded_atom_type_index: 167
+radius: -1
+volume: -1
+surface_tension: -1
+gb_radius: -1
+atom: mass: 15.9994
+charge: 0
+particle_type: 0
+resinfo_index: -1
+element_name: 
+
+name: ON3
+non_bonded_parameters: [0.302906,0.50208]
+bonded_atom_type_index: 168
+radius: -1
+volume: -1
+surface_tension: -1
+gb_radius: -1
+atom: mass: 15.9994
+charge: -0.78
+particle_type: 0
+resinfo_index: -1
+element_name: 
+
+name: ON4
+non_bonded_parameters: [0.315378,0.636386]
+bonded_atom_type_index: 169
+radius: -1
+volume: -1
+surface_tension: -1
+gb_radius: -1
+atom: mass: 15.9994
+charge: 0
+particle_type: 0
+resinfo_index: -1
+element_name: 
+
+name: ON5
+non_bonded_parameters: [0.315378,0.636386]
+bonded_atom_type_index: 170
+radius: -1
+volume: -1
+surface_tension: -1
+gb_radius: -1
+atom: mass: 15.9994
+charge: -0.66
+particle_type: 0
+resinfo_index: -1
+element_name: 
+
+name: ON6
+non_bonded_parameters: [0.315378,0.636386]
+bonded_atom_type_index: 171
+radius: -1
+volume: -1
+surface_tension: -1
+gb_radius: -1
+atom: mass: 15.9994
+charge: 0
+particle_type: 0
+resinfo_index: -1
+element_name: 
+
+name: ON6B
+non_bonded_parameters: [0.315378,0.636386]
+bonded_atom_type_index: 172
+radius: -1
+volume: -1
+surface_tension: -1
+gb_radius: -1
+atom: mass: 15.9994
+charge: -0.5
+particle_type: 0
+resinfo_index: -1
+element_name: 
+
+name: CN1
+non_bonded_parameters: [0.338542,0.4184]
+bonded_atom_type_index: 173
+radius: -1
+volume: -1
+surface_tension: -1
+gb_radius: -1
+atom: mass: 12.011
+charge: 0.53
+particle_type: 0
+resinfo_index: -1
+element_name: 
+
+name: CN1A
+non_bonded_parameters: [0.356359,0.29288]
+bonded_atom_type_index: 174
+radius: -1
+volume: -1
+surface_tension: -1
+gb_radius: -1
+atom: mass: 12.011
+charge: 0
+particle_type: 0
+resinfo_index: -1
+element_name: 
+
+name: CN1T
+non_bonded_parameters: [0.338542,0.4184]
+bonded_atom_type_index: 175
+radius: -1
+volume: -1
+surface_tension: -1
+gb_radius: -1
+atom: mass: 12.011
+charge: 0.55
+particle_type: 0
+resinfo_index: -1
+element_name: 
+
+name: CN2
+non_bonded_parameters: [0.338542,0.4184]
+bonded_atom_type_index: 176
+radius: -1
+volume: -1
+surface_tension: -1
+gb_radius: -1
+atom: mass: 12.011
+charge: 0.65
+particle_type: 0
+resinfo_index: -1
+element_name: 
+
+name: CN3
+non_bonded_parameters: [0.338542,0.37656]
+bonded_atom_type_index: 177
+radius: -1
+volume: -1
+surface_tension: -1
+gb_radius: -1
+atom: mass: 12.011
+charge: -0.15
+particle_type: 0
+resinfo_index: -1
+element_name: 
+
+name: CN3A
+non_bonded_parameters: [0.320724,0.75312]
+bonded_atom_type_index: 178
+radius: -1
+volume: -1
+surface_tension: -1
+gb_radius: -1
+atom: mass: 12.011
+charge: 0
+particle_type: 0
+resinfo_index: -1
+element_name: 
+
+name: CN3B
+non_bonded_parameters: [0.320724,0.75312]
+bonded_atom_type_index: 179
+radius: -1
+volume: -1
+surface_tension: -1
+gb_radius: -1
+atom: mass: 12.011
+charge: 0
+particle_type: 0
+resinfo_index: -1
+element_name: 
+
+name: CN3C
+non_bonded_parameters: [0.320724,0.75312]
+bonded_atom_type_index: 180
+radius: -1
+volume: -1
+surface_tension: -1
+gb_radius: -1
+atom: mass: 12.011
+charge: 0
+particle_type: 0
+resinfo_index: -1
+element_name: 
+
+name: CN3D
+non_bonded_parameters: [0.338542,0.37656]
+bonded_atom_type_index: 181
+radius: -1
+volume: -1
+surface_tension: -1
+gb_radius: -1
+atom: mass: 12.011
+charge: 0
+particle_type: 0
+resinfo_index: -1
+element_name: 
+
+name: CN3T
+non_bonded_parameters: [0.338542,0.37656]
+bonded_atom_type_index: 182
+radius: -1
+volume: -1
+surface_tension: -1
+gb_radius: -1
+atom: mass: 12.011
+charge: -0.15
+particle_type: 0
+resinfo_index: -1
+element_name: 
+
+name: CN4
+non_bonded_parameters: [0.338542,0.3138]
+bonded_atom_type_index: 183
+radius: -1
+volume: -1
+surface_tension: -1
+gb_radius: -1
+atom: mass: 12.011
+charge: 0.5
+particle_type: 0
+resinfo_index: -1
+element_name: 
+
+name: CN5
+non_bonded_parameters: [0.338542,0.3138]
+bonded_atom_type_index: 184
+radius: -1
+volume: -1
+surface_tension: -1
+gb_radius: -1
+atom: mass: 12.011
+charge: 0.43
+particle_type: 0
+resinfo_index: -1
+element_name: 
+
+name: CN5G
+non_bonded_parameters: [0.338542,0.3138]
+bonded_atom_type_index: 185
+radius: -1
+volume: -1
+surface_tension: -1
+gb_radius: -1
+atom: mass: 12.011
+charge: 0
+particle_type: 0
+resinfo_index: -1
+element_name: 
+
+name: CN7
+non_bonded_parameters: [0.405359,0.08368]
+bonded_atom_type_index: 186
+radius: -1
+volume: -1
+surface_tension: -1
+gb_radius: -1
+atom: mass: 12.011
+charge: 0.01
+particle_type: 0
+resinfo_index: -1
+element_name: 
+
+name: CN7B
+non_bonded_parameters: [0.405359,0.08368]
+bonded_atom_type_index: 187
+radius: -1
+volume: -1
+surface_tension: -1
+gb_radius: -1
+atom: mass: 12.011
+charge: 0.14
+particle_type: 0
+resinfo_index: -1
+element_name: 
+
+name: CN7C
+non_bonded_parameters: [0.405359,0.08368]
+bonded_atom_type_index: 188
+radius: -1
+volume: -1
+surface_tension: -1
+gb_radius: -1
+atom: mass: 12.011
+charge: 0
+particle_type: 0
+resinfo_index: -1
+element_name: 
+
+name: CN7D
+non_bonded_parameters: [0.405359,0.08368]
+bonded_atom_type_index: 189
+radius: -1
+volume: -1
+surface_tension: -1
+gb_radius: -1
+atom: mass: 12.011
+charge: 0
+particle_type: 0
+resinfo_index: -1
+element_name: 
+
+name: CN8
+non_bonded_parameters: [0.358141,0.234304]
+bonded_atom_type_index: 190
+radius: -1
+volume: -1
+surface_tension: -1
+gb_radius: -1
+atom: mass: 12.011
+charge: 0
+particle_type: 0
+resinfo_index: -1
+element_name: 
+
+name: CN8B
+non_bonded_parameters: [0.358141,0.234304]
+bonded_atom_type_index: 191
+radius: -1
+volume: -1
+surface_tension: -1
+gb_radius: -1
+atom: mass: 12.011
+charge: -0.08
+particle_type: 0
+resinfo_index: -1
+element_name: 
+
+name: CN9
+non_bonded_parameters: [0.363487,0.326352]
+bonded_atom_type_index: 192
+radius: -1
+volume: -1
+surface_tension: -1
+gb_radius: -1
+atom: mass: 12.011
+charge: -0.11
+particle_type: 0
+resinfo_index: -1
+element_name: 
+
+name: CNE1
+non_bonded_parameters: [0.372396,0.284512]
+bonded_atom_type_index: 193
+radius: -1
+volume: -1
+surface_tension: -1
+gb_radius: -1
+atom: mass: 12.011
+charge: 0
+particle_type: 0
+resinfo_index: -1
+element_name: 
+
+name: CNE2
+non_bonded_parameters: [0.370614,0.267776]
+bonded_atom_type_index: 194
+radius: -1
+volume: -1
+surface_tension: -1
+gb_radius: -1
+atom: mass: 12.011
+charge: 0
+particle_type: 0
+resinfo_index: -1
+element_name: 
+
+name: CNA
+non_bonded_parameters: [0.355005,0.29288]
+bonded_atom_type_index: 195
+radius: -1
+volume: -1
+surface_tension: -1
+gb_radius: -1
+atom: mass: 12.011
+charge: 0
+particle_type: 0
+resinfo_index: -1
+element_name: 
+
+name: CNA2
+non_bonded_parameters: [0.338542,0.29288]
+bonded_atom_type_index: 196
+radius: -1
+volume: -1
+surface_tension: -1
+gb_radius: -1
+atom: mass: 12.011
+charge: 0
+particle_type: 0
+resinfo_index: -1
+element_name: 
+
+name: CN6
+non_bonded_parameters: [0.405359,0.08368]
+bonded_atom_type_index: 197
+radius: -1
+volume: -1
+surface_tension: -1
+gb_radius: -1
+atom: mass: 12.011
+charge: 0
+particle_type: 0
+resinfo_index: -1
+element_name: 
+
+name: CN7E
+non_bonded_parameters: [0.405359,0.08368]
+bonded_atom_type_index: 198
+radius: -1
+volume: -1
+surface_tension: -1
+gb_radius: -1
+atom: mass: 12.011
+charge: 0
+particle_type: 0
+resinfo_index: -1
+element_name: 
+
+name: FN1
+non_bonded_parameters: [0.302906,0.37656]
+bonded_atom_type_index: 199
+radius: -1
+volume: -1
+surface_tension: -1
+gb_radius: -1
+atom: mass: 18.9984
+charge: 0
+particle_type: 0
+resinfo_index: -1
+element_name: 
+
+name: FNA
+non_bonded_parameters: [0.302906,0.50208]
+bonded_atom_type_index: 200
+radius: -1
+volume: -1
+surface_tension: -1
+gb_radius: -1
+atom: mass: 18.9984
+charge: 0
+particle_type: 0
+resinfo_index: -1
+element_name: 
+
+name: P
+non_bonded_parameters: [0.383086,2.44764]
+bonded_atom_type_index: 201
+radius: -1
+volume: -1
+surface_tension: -1
+gb_radius: -1
+atom: mass: 30.974
+charge: 1.5
+particle_type: 0
+resinfo_index: -1
+element_name: 
+
+name: P2
+non_bonded_parameters: [0.383086,2.44764]
+bonded_atom_type_index: 202
+radius: -1
+volume: -1
+surface_tension: -1
+gb_radius: -1
+atom: mass: 30.974
+charge: 0
+particle_type: 0
+resinfo_index: -1
+element_name: 
+
+name: P3
+non_bonded_parameters: [0.383086,2.44764]
+bonded_atom_type_index: 203
+radius: -1
+volume: -1
+surface_tension: -1
+gb_radius: -1
+atom: mass: 30.974
+charge: 0
+particle_type: 0
+resinfo_index: -1
+element_name: 
+
+
+OK  1 
+filename: /usr/local/gromacs/share/gromacs/top/charmm27.ff/aminoacids.n.tdb
+header: none
+Looking up none
+keyword_bonded: 0keyword_hack_block: 0header: gly-nh3+
+Looking up gly-nh3+
+keyword_bonded: 0keyword_hack_block: 0header: replace
+Looking up replace
+keyword_bonded: 0keyword_hack_block: 1header: 
+line: N	N	NH3		14.0027	-0.3
+header: 
+line: CA	CA	CT2		12.011	0.13
+header: add
+Looking up add
+keyword_bonded: 0keyword_hack_block: 1header: 
+header: delete
+Looking up delete
+keyword_bonded: 0keyword_hack_block: 1header: 
+line: HN
+header: nh3+
+Looking up nh3+
+keyword_bonded: 0keyword_hack_block: 0header: replace
+Looking up replace
+keyword_bonded: 0keyword_hack_block: 1header: 
+line: N	  N	NH3		14.0027 -0.3
+header: 
+line: CA	  CA	CT1		12.011  0.21
+header: 
+line: HA	  HA	HB		1.008	 0.10
+header: add
+Looking up add
+keyword_bonded: 0keyword_hack_block: 1header: 
+header: delete
+Looking up delete
+keyword_bonded: 0keyword_hack_block: 1header: 
+line: HN
+header: pro-nh2+
+Looking up pro-nh2+
+keyword_bonded: 0keyword_hack_block: 0header: replace
+Looking up replace
+keyword_bonded: 0keyword_hack_block: 1header: 
+line: N	  N	NP       14.0027 -0.07
+header: 
+line: CA	  CA	CP1      12.011  0.16
+header: 
+line: CD	  CD	CP3      12.011  0.16
+header: add
+Looking up add
+keyword_bonded: 0keyword_hack_block: 1header: 
+header: nh2
+Looking up nh2
+keyword_bonded: 0keyword_hack_block: 0header: replace
+Looking up replace
+keyword_bonded: 0keyword_hack_block: 1header: 
+line: N		NH2		14.0067	-0.96
+header: 
+line: CA		CT1		12.011	0.19
+header: 
+line: HA		HB		1.008	0.09
+header: add
+Looking up add
+keyword_bonded: 0keyword_hack_block: 1header: 
+header: delete
+Looking up delete
+keyword_bonded: 0keyword_hack_block: 1header: 
+line: HN
+header: gly-nh2
+Looking up gly-nh2
+keyword_bonded: 0keyword_hack_block: 0header: replace
+Looking up replace
+keyword_bonded: 0keyword_hack_block: 1header: 
+line: N		NH2		14.0067	-0.96
+header: 
+line: CA		CT2		12.011	0.10
+header: add
+Looking up add
+keyword_bonded: 0keyword_hack_block: 1header: 
+header: delete
+Looking up delete
+keyword_bonded: 0keyword_hack_block: 1header: 
+line: HN
+header: pro-nh
+Looking up pro-nh
+keyword_bonded: 0keyword_hack_block: 0header: replace
+Looking up replace
+keyword_bonded: 0keyword_hack_block: 1header: 
+line: N		NP	14.0027	-0.40
+header: 
+line: CA		CP1	12.011	-0.08
+header: 
+line: CD		CP3	12.011	-0.10
+header: add
+Looking up add
+keyword_bonded: 0keyword_hack_block: 1header: 
+filename: /usr/local/gromacs/share/gromacs/top/charmm27.ff/dna.n.tdb
+header: none
+Looking up none
+keyword_bonded: 0keyword_hack_block: 0header: 5'
+Looking up 5'
+keyword_bonded: 0keyword_hack_block: 0header: delete
+Looking up delete
+keyword_bonded: 0keyword_hack_block: 1header: 
+line: P
+header: 
+line: O1P
+header: 
+line: O2P
+header: replace
+Looking up replace
+keyword_bonded: 0keyword_hack_block: 1header: 
+line: O5'	O5' 	ON5	15.9994	  -0.66
+header: 
+line: C5'	C5'	CN8B	12.011 	   0.05
+header: add
+Looking up add
+keyword_bonded: 0keyword_hack_block: 1header: 
+filename: /usr/local/gromacs/share/gromacs/top/charmm27.ff/rna.n.tdb
+header: none
+Looking up none
+keyword_bonded: 0keyword_hack_block: 0header: 5'
+Looking up 5'
+keyword_bonded: 0keyword_hack_block: 0header: delete
+Looking up delete
+keyword_bonded: 0keyword_hack_block: 1header: 
+line: P
+header: 
+line: O1P
+header: 
+line: O2P
+header: replace
+Looking up replace
+keyword_bonded: 0keyword_hack_block: 1header: 
+line: O5'	O5' 	ON5	15.9994	  -0.66
+header: 
+line: C5'	C5'	CN8B	12.011 	   0.05
+header: add
+Looking up add
+keyword_bonded: 0keyword_hack_block: 1header: 
+filename: /usr/local/gromacs/share/gromacs/top/charmm27.ff/aminoacids.c.tdb
+header: none
+Looking up none
+keyword_bonded: 0keyword_hack_block: 0header: coo-
+Looking up coo-
+keyword_bonded: 0keyword_hack_block: 0header: replace
+Looking up replace
+keyword_bonded: 0keyword_hack_block: 1header: 
+line: C	C	CC		12.011	0.34
+header: 
+line: O	OT1	OC		15.9994	-0.67
+header: 
+line: OXT	OT2	OC		15.9994	-0.67
+header: add
+Looking up add
+keyword_bonded: 0keyword_hack_block: 1header: 
+header: impropers
+Looking up impropers
+keyword_bonded: 1keyword_hack_block: 0header: 
+header: cooh
+Looking up cooh
+keyword_bonded: 0keyword_hack_block: 0header: replace
+Looking up replace
+keyword_bonded: 0keyword_hack_block: 1header: 
+line: C	C	CD		12.011	0.72
+header: 
+line: O	OT1	OB		15.9994	-0.55
+header: 
+line: OXT	OT2	OH		15.9994	-0.61
+header: add
+Looking up add
+keyword_bonded: 0keyword_hack_block: 1header: 
+header: 
+header: replace
+Looking up replace
+keyword_bonded: 0keyword_hack_block: 1header: 
+line: OT2	OT2	OH1		15.9994	-0.61
+header: impropers
+Looking up impropers
+keyword_bonded: 1keyword_hack_block: 0header: 
+header: ct2
+Looking up ct2
+keyword_bonded: 0keyword_hack_block: 0header: replace
+Looking up replace
+keyword_bonded: 0keyword_hack_block: 1header: 
+line: C		CC		12.011	0.55
+header: 
+line: O		O		15.9994	-0.55
+header: add
+Looking up add
+keyword_bonded: 0keyword_hack_block: 1header: 
+header: 
+header: replace
+Looking up replace
+keyword_bonded: 0keyword_hack_block: 1header: 
+line: HT1		H		1.008	0.30	; this one is trans to O
+header: 
+line: HT2		H		1.008	0.32	; this one is cis to O
+header: impropers
+Looking up impropers
+keyword_bonded: 1keyword_hack_block: 0header: 
+header: 
+header: 
+header: 
+header: ct3
+Looking up ct3
+keyword_bonded: 0keyword_hack_block: 0header: delete
+Looking up delete
+keyword_bonded: 0keyword_hack_block: 1header: 
+line: OXT
+header: add
+Looking up add
+keyword_bonded: 0keyword_hack_block: 1header: 
+header: 
+header: 
+header: 
+header: bonds
+Looking up bonds
+keyword_bonded: 1keyword_hack_block: 0header: 
+header: impropers
+Looking up impropers
+keyword_bonded: 1keyword_hack_block: 0header: 
+header: 
+header: cmap
+Looking up cmap
+keyword_bonded: 1keyword_hack_block: 0header: 
+filename: /usr/local/gromacs/share/gromacs/top/charmm27.ff/dna.c.tdb
+header: none
+Looking up none
+keyword_bonded: 0keyword_hack_block: 0header: 3'
+Looking up 3'
+keyword_bonded: 0keyword_hack_block: 0header: replace
+Looking up replace
+keyword_bonded: 0keyword_hack_block: 1header: 
+line: C3'	C3'	CN7	12.011 	   0.14
+header: 
+line: H3'	H3'	HN7	1.008	   0.09
+header: 
+line: O3'	O3'	ON5	15.9994   -0.66
+header: add
+Looking up add
+keyword_bonded: 0keyword_hack_block: 1header: 
+filename: /usr/local/gromacs/share/gromacs/top/charmm27.ff/rna.c.tdb
+header: none
+Looking up none
+keyword_bonded: 0keyword_hack_block: 0header: 3'
+Looking up 3'
+keyword_bonded: 0keyword_hack_block: 0header: replace
+Looking up replace
+keyword_bonded: 0keyword_hack_block: 1header: 
+line: C3'	C3'	CN7	12.011 	   0.14
+header: 
+line: H3'	H3'	HN7	1.008	   0.09
+header: 
+line: O3'	O3'	ON5	15.9994   -0.66
+header: add
+Looking up add
+keyword_bonded: 0keyword_hack_block: 1header: 
+residue_name: ala
+atoms
+line: N	NH1	-0.47	0
+line: HN	H	0.31	1
+line: CA	CT1	0.07	2
+line: HA	HB	0.09	3
+line: CB	CT3	-0.27	4
+line: HB1	HA	0.09	5
+line: HB2	HA	0.09	6
+line: HB3	HA	0.09	7
+line: C	C	0.51	8
+line: O	O	-0.51	9
+bonds
+line: [ impropers ]
+impropers
+line: [ cmap ]
+cmap
+line: [ ARG ]
+arg
+Next residue: arg
+OUT OF LOOP
+residue_name: arg
+atoms
+line: N	NH1	-0.47	0
+line: HN	H	0.31	1
+line: CA	CT1	0.07	2
+line: HA	HB	0.09	3
+line: CB	CT2	-0.18	4
+line: HB1	HA	0.09	5
+line: HB2	HA	0.09	6
+line: CG	CT2	-0.18	7
+line: HG1	HA	0.09	8
+line: HG2	HA	0.09	9
+line: CD	CT2	0.20	10
+line: HD1	HA	0.09	11
+line: HD2	HA	0.09	12
+line: NE	NC2	-0.70	13
+line: HE	HC	0.44	14
+line: CZ	C	0.64	15
+line: NH1	NC2	-0.80	16
+line: HH11	HC	0.46	17
+line: HH12	HC	0.46	18
+line: NH2	NC2	-0.80	19
+line: HH21	HC	0.46	20
+line: HH22	HC	0.46	21
+line: C	C	0.51	22
+line: O	O	-0.51	23
+bonds
+line: [ impropers ]
+impropers
+line: [ cmap ]
+cmap
+line: [ ASN ]
+asn
+Next residue: asn
+OUT OF LOOP
+residue_name: asn
+atoms
+line: N	NH1	-0.47	0
+line: HN	H	0.31	1
+line: CA	CT1	0.07	2
+line: HA	HB	0.09	3
+line: CB	CT2	-0.18	4
+line: HB1	HA	0.09	5
+line: HB2	HA	0.09	6
+line: CG	CC	0.55	7
+line: OD1	O	-0.55	8
+line: ND2	NH2	-0.62	9
+line: HD21	H	0.32	10
+line: HD22	H	0.30	11
+line: C	C	0.51	12
+line: O	O	-0.51	13
+bonds
+line: [ impropers ]
+impropers
+line: [ cmap ]
+cmap
+line: [ ASP ]
+asp
+Next residue: asp
+OUT OF LOOP
+residue_name: asp
+atoms
+line: N	NH1	-0.47	0
+line: HN	H	0.31	1
+line: CA	CT1	0.07	2
+line: HA	HB	0.09	3
+line: CB	CT2	-0.28	4
+line: HB1	HA	0.09	5
+line: HB2	HA	0.09	6
+line: CG	CC	0.62	7
+line: OD1	OC	-0.76	8
+line: OD2	OC	-0.76	9
+line: C	C	0.51	10
+line: O	O	-0.51	11
+bonds
+line: [ impropers ]
+impropers
+line: [ cmap ]
+cmap
+line: [ ASPP ] ; protonated ASP
+aspp
+Next residue: aspp
+OUT OF LOOP
+residue_name: aspp
+Unknown amino acid type: aspp
+atoms
+line: N       NH1     -0.47   0
+line: HN      H       0.31    1
+line: CA      CT1     0.07    2
+line: HA      HB      0.09    3
+line: CB      CT2    -0.21    4 ;
+line: HB1     HA      0.09    5 ; HB1    OD1
+line: HB2     HA      0.09    6 ;  |    //
+line: CG      CD      0.75    7 ; -CB--CG
+line: OD1     OB     -0.55    8 ;  |     \
+line: OD2     OH1    -0.61    9 ; HB2     OD2-HD2
+line: HD2     H       0.44    10;
+line: C       C       0.51    11
+line: O       O       -0.51   12
+bonds
+line: [ impropers ]
+impropers
+line: [ cmap ]
+cmap
+line: [ CYS ]
+cys
+Next residue: cys
+OUT OF LOOP
+residue_name: cys
+atoms
+line: N	NH1	-0.47	0
+line: HN	H	0.31	1
+line: CA	CT1	0.07	2
+line: HA	HB	0.09	3
+line: CB	CT2	-0.11	4
+line: HB1	HA	0.09	5
+line: HB2	HA	0.09	6
+line: SG	S	-0.23	7
+line: HG1	HS	0.16	8
+line: C	C	0.51	9
+line: O	O	-0.51	10
+bonds
+line: [ impropers ]
+impropers
+line: [ cmap ]
+cmap
+line: [ CYS2 ]  ; disulfide cystine
+cys2
+Next residue: cys2
+OUT OF LOOP
+residue_name: cys2
+Unknown amino acid type: cys2
+atoms
+line: N       NH1     -0.47   0
+line: HN      H       0.31    1
+line: CA      CT1     0.07    2
+line: HA      HB      0.09    3
+line: CB      CT2     -0.10   4
+line: HB1     HA      0.09    5
+line: HB2     HA      0.09    6
+line: SG      SM      -0.08   7
+line: C       C       0.51    8
+line: O       O       -0.51   9
+bonds
+line: [ impropers ]
+impropers
+line: [ cmap ]
+cmap
+line: [ GLN ]
+gln
+Next residue: gln
+OUT OF LOOP
+residue_name: gln
+atoms
+line: N	NH1	-0.47	0
+line: HN	H	0.31	1
+line: CA	CT1	0.07	2
+line: HA	HB	0.09	3
+line: CB	CT2	-0.18	4
+line: HB1	HA	0.09	5
+line: HB2	HA	0.09	6
+line: CG	CT2	-0.18	7
+line: HG1	HA	0.09	8
+line: HG2	HA	0.09	9
+line: CD	CC	0.55	10
+line: OE1	O	-0.55	11
+line: NE2	NH2	-0.62	12
+line: HE21	H	0.32	13
+line: HE22	H	0.30	14
+line: C	C	0.51	15
+line: O	O	-0.51	16
+bonds
+line: [ impropers ]
+impropers
+line: [ cmap ]
+cmap
+line: [ GLU ]
+glu
+Next residue: glu
+OUT OF LOOP
+residue_name: glu
+atoms
+line: N	NH1	-0.47	0
+line: HN	H	0.31	1
+line: CA	CT1	0.07	2
+line: HA	HB	0.09	3
+line: CB	CT2	-0.18	4
+line: HB1	HA	0.09	5
+line: HB2	HA	0.09	6
+line: CG	CT2	-0.28	7
+line: HG1	HA	0.09	8
+line: HG2	HA	0.09	9
+line: CD	CC	0.62	10
+line: OE1	OC	-0.76	11
+line: OE2	OC	-0.76	12
+line: C	C	0.51	13
+line: O	O	-0.51	14
+bonds
+line: [ impropers ]
+impropers
+line: [ cmap ]
+cmap
+line: [ GLUP ] ; protonated GLU
+glup
+Next residue: glup
+OUT OF LOOP
+residue_name: glup
+Unknown amino acid type: glup
+atoms
+line: N       NH1     -0.47   0
+line: HN      H       0.31    1
+line: CA      CT1     0.07    2
+line: HA      HB      0.09    3
+line: CB      CT2     -0.18   4
+line: HB1     HA      0.09    5
+line: HB2     HA      0.09    6
+line: CG      CT2    -0.21    7 ;
+line: HG1     HA      0.09    8 ; HG1    OE1
+line: HG2     HA      0.09    9 ;  |    //
+line: CD      CD      0.75    10; -CG--CD
+line: OE1     OB     -0.55    11;  |     \
+line: OE2     OH1    -0.61    12; HG2     OE2-HE2
+line: HE2     H       0.44    13;
+line: C       C       0.51    14
+line: O       O       -0.51   15
+bonds
+line: [ impropers ]
+impropers
+line: [ cmap ]
+cmap
+line: [ GLY ]
+gly
+Next residue: gly
+OUT OF LOOP
+residue_name: gly
+atoms
+line: N	NH1	-0.47	0
+line: HN	H	0.31	1
+line: CA	CT2	-0.02	2
+line: HA1	HB	0.09	3
+line: HA2	HB	0.09	4
+line: C	C	0.51	5
+line: O	O	-0.51	6
+bonds
+line: [ impropers ]
+impropers
+line: [ cmap ]
+cmap
+line: [ HSD ]
+hsd
+Next residue: hsd
+OUT OF LOOP
+residue_name: hsd
+Unknown amino acid type: hsd
+atoms
+line: N	NH1	-0.47	0
+line: HN	H	0.31	1
+line: CA	CT1	0.07	2
+line: HA	HB	0.09	3
+line: CB	CT2	-0.09	4
+line: HB1	HA	0.09	5
+line: HB2	HA	0.09	6
+line: ND1	NR1	-0.36	7
+line: HD1	H	0.32	8
+line: CG	CPH1	-0.05	9
+line: CE1	CPH2	0.25	10
+line: HE1	HR1	0.13	11
+line: NE2	NR2	-0.70	12
+line: CD2	CPH1	0.22	13
+line: HD2	HR3	0.10	14
+line: C	C	0.51	15
+line: O	O	-0.51	16
+bonds
+line: [ impropers ]
+impropers
+line: [ cmap ]
+cmap
+line: [ HSE ]
+hse
+Next residue: hse
+OUT OF LOOP
+residue_name: hse
+Unknown amino acid type: hse
+atoms
+line: N	NH1	-0.47	0
+line: HN	H	0.31	1
+line: CA	CT1	0.07	2
+line: HA	HB	0.09	3
+line: CB	CT2	-0.08	4
+line: HB1	HA	0.09	5
+line: HB2	HA	0.09	6
+line: ND1	NR2	-0.70	7
+line: CG	CPH1	0.22	8
+line: CE1	CPH2	0.25	9
+line: HE1	HR1	0.13	10
+line: NE2	NR1	-0.36	11
+line: HE2	H	0.32	12
+line: CD2	CPH1	-0.05	13
+line: HD2	HR3	0.09	14
+line: C	C	0.51	15
+line: O	O	-0.51	16
+bonds
+line: [ impropers ]
+impropers
+line: [ cmap ]
+cmap
+line: [ HSP ]
+hsp
+Next residue: hsp
+OUT OF LOOP
+residue_name: hsp
+Unknown amino acid type: hsp
+atoms
+line: N	NH1	-0.47	0
+line: HN	H	0.31	1
+line: CA	CT1	0.07	2
+line: HA	HB	0.09	3
+line: CB	CT2	-0.05	4
+line: HB1	HA	0.09	5
+line: HB2	HA	0.09	6
+line: CD2	CPH1	0.19	7
+line: HD2	HR1	0.13	8
+line: CG	CPH1	0.19	9
+line: NE2	NR3	-0.51	10
+line: HE2	H	0.44	11
+line: ND1	NR3	-0.51	12
+line: HD1	H	0.44	13
+line: CE1	CPH2	0.32	14
+line: HE1	HR2	0.18	15
+line: C	C	0.51	16
+line: O	O	-0.51	17
+bonds
+line: [ impropers ]
+impropers
+line: [ cmap ]
+cmap
+line: [ ILE ]
+ile
+Next residue: ile
+OUT OF LOOP
+residue_name: ile
+atoms
+line: N	NH1	-0.47	0
+line: HN	H	0.31	1
+line: CA	CT1	0.07	2
+line: HA	HB	0.09	3
+line: CB	CT1	-0.09	4
+line: HB	HA	0.09	5
+line: CG2	CT3	-0.27	6
+line: HG21	HA	0.09	7
+line: HG22	HA	0.09	8
+line: HG23	HA	0.09	9
+line: CG1	CT2	-0.18	10
+line: HG11	HA	0.09	11
+line: HG12	HA	0.09	12
+line: CD	CT3	-0.27	13
+line: HD1	HA	0.09	14
+line: HD2	HA	0.09	15
+line: HD3	HA	0.09	16
+line: C	C	0.51	17
+line: O	O	-0.51	18
+bonds
+line: [ impropers ]
+impropers
+line: [ cmap ]
+cmap
+line: [ LEU ]
+leu
+Next residue: leu
+OUT OF LOOP
+residue_name: leu
+atoms
+line: N	NH1	-0.47	0
+line: HN	H	0.31	1
+line: CA	CT1	0.07	2
+line: HA	HB	0.09	3
+line: CB	CT2	-0.18	4
+line: HB1	HA	0.09	5
+line: HB2	HA	0.09	6
+line: CG	CT1	-0.09	7
+line: HG	HA	0.09	8
+line: CD1	CT3	-0.27	9
+line: HD11	HA	0.09	10
+line: HD12	HA	0.09	11
+line: HD13	HA	0.09	12
+line: CD2	CT3	-0.27	13
+line: HD21	HA	0.09	14
+line: HD22	HA	0.09	15
+line: HD23	HA	0.09	16
+line: C	C	0.51	17
+line: O	O	-0.51	18
+bonds
+line: [ impropers ]
+impropers
+line: [ cmap ]
+cmap
+line: [ LYS ]
+lys
+Next residue: lys
+OUT OF LOOP
+residue_name: lys
+atoms
+line: N	NH1	-0.47	0
+line: HN	H	0.31	1
+line: CA	CT1	0.07	2
+line: HA	HB	0.09	3
+line: CB	CT2	-0.18	4
+line: HB1	HA	0.09	5
+line: HB2	HA	0.09	6
+line: CG	CT2	-0.18	7
+line: HG1	HA	0.09	8
+line: HG2	HA	0.09	9
+line: CD	CT2	-0.18	10
+line: HD1	HA	0.09	11
+line: HD2	HA	0.09	12
+line: CE	CT2	0.21	13
+line: HE1	HA	0.05	14
+line: HE2	HA	0.05	15
+line: NZ	NH3	-0.30	16
+line: HZ1	HC	0.33	17
+line: HZ2	HC	0.33	18
+line: HZ3	HC	0.33	19
+line: C	C	0.51	20
+line: O	O	-0.51	21
+bonds
+line: [ impropers ]
+impropers
+line: [ cmap ]
+cmap
+line: [ LSN ] ; neutral lysine residue
+lsn
+Next residue: lsn
+OUT OF LOOP
+residue_name: lsn
+Unknown amino acid type: lsn
+atoms
+line: N       NH1     -0.47   0
+line: HN      H       0.31    1
+line: CA      CT1     0.07    2
+line: HA      HB      0.09    3
+line: CB      CT2     -0.18   4
+line: HB1     HA      0.09    5
+line: HB2     HA      0.09    6
+line: CG      CT2     -0.18   7
+line: HG1     HA      0.09    8
+line: HG2     HA      0.09    9
+line: CD      CT2     -0.18   10
+line: HD1     HA      0.09    11
+line: HD2     HA      0.09    12
+line: CE      CT2     0.13    13
+line: HE1     HA      0.075   14
+line: HE2     HA      0.075   15
+line: NZ      NH2     -0.96   16
+line: HZ1     HC      0.34    17
+line: HZ2     HC      0.34    18
+line: C       C       0.51    19
+line: O       O       -0.51   20
+bonds
+line: [ impropers ]
+impropers
+line: [ cmap ]
+cmap
+line: [ MET ]
+met
+Next residue: met
+OUT OF LOOP
+residue_name: met
+atoms
+line: N	NH1	-0.47	0
+line: HN	H	0.31	1
+line: CA	CT1	0.07	2
+line: HA	HB	0.09	3
+line: CB	CT2	-0.18	4
+line: HB1	HA	0.09	5
+line: HB2	HA	0.09	6
+line: CG	CT2	-0.14	7
+line: HG1	HA	0.09	8
+line: HG2	HA	0.09	9
+line: SD	S	-0.09	10
+line: CE	CT3	-0.22	11
+line: HE1	HA	0.09	12
+line: HE2	HA	0.09	13
+line: HE3	HA	0.09	14
+line: C	C	0.51	15
+line: O	O	-0.51	16
+bonds
+line: [ impropers ]
+impropers
+line: [ cmap ]
+cmap
+line: [ PHE ]
+phe
+Next residue: phe
+OUT OF LOOP
+residue_name: phe
+atoms
+line: N	NH1	-0.47	0
+line: HN	H	0.31	1
+line: CA	CT1	0.07	2
+line: HA	HB	0.09	3
+line: CB	CT2	-0.18	4
+line: HB1	HA	0.09	5
+line: HB2	HA	0.09	6
+line: CG	CA	0.00	7
+line: CD1	CA	-0.115	8
+line: HD1	HP	0.115	9
+line: CE1	CA	-0.115	10
+line: HE1	HP	0.115	11
+line: CZ	CA	-0.115	12
+line: HZ	HP	0.115	13
+line: CD2	CA	-0.115	14
+line: HD2	HP	0.115	15
+line: CE2	CA	-0.115	16
+line: HE2	HP	0.115	17
+line: C	C	0.51	18
+line: O	O	-0.51	19
+bonds
+line: [ impropers ]
+impropers
+line: [ cmap ]
+cmap
+line: [ PRO ]
+pro
+Next residue: pro
+OUT OF LOOP
+residue_name: pro
+atoms
+line: N	N	-0.29	0
+line: CD	CP3	0.00	1
+line: HD1	HA	0.09	2
+line: HD2	HA	0.09	3
+line: CA	CP1	0.02	4
+line: HA	HB	0.09	5
+line: CB	CP2	-0.18	6
+line: HB1	HA	0.09	7
+line: HB2	HA	0.09	8
+line: CG	CP2	-0.18	9
+line: HG1	HA	0.09	10
+line: HG2	HA	0.09	11
+line: C	C	0.51	12
+line: O	O	-0.51	13
+bonds
+line: [ impropers ]
+impropers
+line: [ cmap ]
+cmap
+line: [ SER ]
+ser
+Next residue: ser
+OUT OF LOOP
+residue_name: ser
+atoms
+line: N	NH1	-0.47	0
+line: HN	H	0.31	1
+line: CA	CT1	0.07	2
+line: HA	HB	0.09	3
+line: CB	CT2	0.05	4
+line: HB1	HA	0.09	5
+line: HB2	HA	0.09	6
+line: OG	OH1	-0.66	7
+line: HG1	H	0.43	8
+line: C	C	0.51	9
+line: O	O	-0.51	10
+bonds
+line: [ impropers ]
+impropers
+line: [ cmap ]
+cmap
+line: [ THR ]
+thr
+Next residue: thr
+OUT OF LOOP
+residue_name: thr
+atoms
+line: N	NH1	-0.47	0
+line: HN	H	0.31	1
+line: CA	CT1	0.07	2
+line: HA	HB	0.09	3
+line: CB	CT1	0.14	4
+line: HB	HA	0.09	5
+line: OG1	OH1	-0.66	6
+line: HG1	H	0.43	7
+line: CG2	CT3	-0.27	8
+line: HG21	HA	0.09	9
+line: HG22	HA	0.09	10
+line: HG23	HA	0.09	11
+line: C	C	0.51	12
+line: O	O	-0.51	13
+bonds
+line: [ impropers ]
+impropers
+line: [ cmap ]
+cmap
+line: [ TRP ]
+trp
+Next residue: trp
+OUT OF LOOP
+residue_name: trp
+atoms
+line: N	NH1	-0.47	0
+line: HN	H	0.31	1
+line: CA	CT1	0.07	2
+line: HA	HB	0.09	3
+line: CB	CT2	-0.18	4
+line: HB1	HA	0.09	5
+line: HB2	HA	0.09	6
+line: CG	CY	-0.03	7
+line: CD1	CA	0.035	8
+line: HD1	HP	0.115	9
+line: NE1	NY	-0.61	10
+line: HE1	H	0.38	11
+line: CE2	CPT	0.13	12
+line: CD2	CPT	-0.02	13
+line: CE3	CA	-0.115	14
+line: HE3	HP	0.115	15
+line: CZ3	CA	-0.115	16
+line: HZ3	HP	0.115	17
+line: CZ2	CA	-0.115	18
+line: HZ2	HP	0.115	19
+line: CH2	CA	-0.115	20
+line: HH2	HP	0.115	21
+line: C	C	0.51	22
+line: O	O	-0.51	23
+bonds
+line: [ impropers ]
+impropers
+line: [ cmap ]
+cmap
+line: [ TYR ]
+tyr
+Next residue: tyr
+OUT OF LOOP
+residue_name: tyr
+atoms
+line: N	NH1	-0.47	0
+line: HN	H	0.31	1
+line: CA	CT1	0.07	2
+line: HA	HB	0.09	3
+line: CB	CT2	-0.18	4
+line: HB1	HA	0.09	5
+line: HB2	HA	0.09	6
+line: CG	CA	0.00	7
+line: CD1	CA	-0.115	8
+line: HD1	HP	0.115	9
+line: CE1	CA	-0.115	10
+line: HE1	HP	0.115	11
+line: CZ	CA	0.11	12
+line: OH	OH1	-0.54	13
+line: HH	H	0.43	14
+line: CD2	CA	-0.115	15
+line: HD2	HP	0.115	16
+line: CE2	CA	-0.115	17
+line: HE2	HP	0.115	18
+line: C	C	0.51	19
+line: O	O	-0.51	20
+bonds
+line: [ impropers ]
+impropers
+line: [ cmap ]
+cmap
+line: [ VAL ]
+val
+Next residue: val
+OUT OF LOOP
+residue_name: val
+atoms
+line: N	NH1	-0.47	0
+line: HN	H	0.31	1
+line: CA	CT1	0.07	2
+line: HA	HB	0.09	3
+line: CB	CT1	-0.09	4
+line: HB	HA	0.09	5
+line: CG1	CT3	-0.27	6
+line: HG11	HA	0.09	7
+line: HG12	HA	0.09	8
+line: HG13	HA	0.09	9
+line: CG2	CT3	-0.27	10
+line: HG21	HA	0.09	11
+line: HG22	HA	0.09	12
+line: HG23	HA	0.09	13
+line: C	C	0.51	14
+line: O	O	-0.51	15
+bonds
+line: [ impropers ]
+impropers
+line: [ cmap ]
+cmap
+line: [ ALAD ] ; Alanine dipeptide
+alad
+Next residue: alad
+OUT OF LOOP
+residue_name: alad
+Unknown amino acid type: alad
+atoms
+line: CL	CT3	-0.27	0
+line: HL1	HA	0.09	1
+line: HL2	HA	0.09	2
+line: HL3	HA	0.09	3
+line: CLP	C	0.51	4
+line: OL	O	-0.51	5
+line: NL	NH1	-0.47	6
+line: HL	H	0.31	7
+line: CA	CT1	0.07	8
+line: HA	HB	0.09	9
+line: CB	CT3	-0.27	10
+line: HB1	HA	0.09	11
+line: HB2	HA	0.09	12
+line: HB3	HA	0.09	13
+line: CRP	C	0.51	14
+line: OR	O	-0.51	15
+line: NR	NH1	-0.47	16
+line: HR	H	0.31	17
+line: CR	CT3	-0.11	18
+line: HR1	HA	0.09	19
+line: HR2	HA	0.09	20
+line: HR3	HA	0.09	21
+bonds
+line: [ impropers ]
+impropers
+line: [ cmap ]
+cmap
+line: [ HEME ]
+heme
+Next residue: heme
+OUT OF LOOP
+residue_name: heme
+Unknown amino acid type: heme
+atoms
+line: FE	FE	 0.24	0
+line: NA	NPH	-0.18	1
+line: NB	NPH	-0.18	2
+line: NC	NPH	-0.18	3
+line: ND	NPH	-0.18	4
+line: C1A	CPA	 0.12	5
+line: C2A	CPB	-0.06	6
+line: C3A	CPB	-0.06	7
+line: C4A	CPA	 0.12	8
+line: C1B	CPA	 0.12	9
+line: C2B	CPB	-0.06	10
+line: C3B	CPB	-0.06	11
+line: C4B	CPA	 0.12	12
+line: C1C	CPA	 0.12	13
+line: C2C	CPB	-0.06	14
+line: C3C	CPB	-0.06	15
+line: C4C	CPA	 0.12	16
+line: C1D	CPA	 0.12	17
+line: C2D	CPB	-0.06	18
+line: C3D	CPB	-0.06	19
+line: C4D	CPA	 0.12	20
+line: CHA	CPM	-0.10	21
+line: HA	HA	 0.10	22
+line: CHB	CPM	-0.10	23
+line: HB	HA	 0.10	24
+line: CHC	CPM	-0.10	25
+line: HC	HA	 0.10	26
+line: CHD	CPM	-0.10	27
+line: HD	HA	 0.10	28
+line: CMA	CT3	-0.27	29
+line: HMA1	HA	 0.09	30
+line: HMA2	HA	 0.09	31
+line: HMA3	HA	 0.09	32
+line: CAA	CT2	-0.18	33
+line: HAA1	HA	 0.09	34
+line: HAA2	HA	 0.09	35
+line: CBA	CT2	-0.28	36
+line: HBA1	HA	 0.09	37
+line: HBA2	HA	 0.09	38
+line: CGA	CC	 0.62	39
+line: O1A	OC	-0.76	40
+line: O2A	OC	-0.76	41
+line: CMB	CT3	-0.27	42
+line: HMB1	HA	 0.09	43
+line: HMB2	HA	 0.09	44
+line: HMB3	HA	 0.09	45
+line: CAB	CE1	-0.15	46
+line: HAB	HE1	 0.15	47
+line: CBB	CE2	-0.42	48
+line: HBB1	HE2	 0.21	49
+line: HBB2	HE2	 0.21	50
+line: CMC	CT3	-0.27	51
+line: HMC1	HA	 0.09	52
+line: HMC2	HA	 0.09	53
+line: HMC3	HA	 0.09	54
+line: CAC	CE1	-0.15	55
+line: HAC	HE1	 0.15	56
+line: CBC	CE2	-0.42	57
+line: HBC1	HE2	 0.21	58
+line: HBC2	HE2	 0.21	59
+line: CMD	CT3	-0.27	60
+line: HMD1	HA	 0.09	61
+line: HMD2	HA	 0.09	62
+line: HMD3	HA	 0.09	63
+line: CAD	CT2	-0.18	64
+line: HAD1	HA	 0.09	65
+line: HAD2	HA	 0.09	66
+line: CBD	CT2	-0.28	67
+line: HBD1	HA	 0.09	68
+line: HBD2	HA	 0.09	69
+line: CGD	CC	 0.62	70
+line: O1D	OC	-0.76	71
+line: O2D	OC	-0.76	72
+bonds
+line: [ angles ]
+angles
+line: [ impropers ]
+impropers
+line: [ HEO2 ]
+heo2
+Next residue: heo2
+OUT OF LOOP
+residue_name: heo2
+Unknown amino acid type: heo2
+atoms
+line: FE	FE	 0.24	0
+line: NA	NPH	-0.18	1
+line: NB	NPH	-0.18	2
+line: NC	NPH	-0.18	3
+line: ND	NPH	-0.18	4
+line: C1A	CPA	 0.12	5
+line: C2A	CPB	-0.06	6
+line: C3A	CPB	-0.06	7
+line: C4A	CPA	 0.12	8
+line: C1B	CPA	 0.12	9
+line: C2B	CPB	-0.06	10
+line: C3B	CPB	-0.06	11
+line: C4B	CPA	 0.12	12
+line: C1C	CPA	 0.12	13
+line: C2C	CPB	-0.06	14
+line: C3C	CPB	-0.06	15
+line: C4C	CPA	 0.12	16
+line: C1D	CPA	 0.12	17
+line: C2D	CPB	-0.06	18
+line: C3D	CPB	-0.06	19
+line: C4D	CPA	 0.12	20
+line: CHA	CPM	-0.10	21
+line: HA	HA	 0.10	22
+line: CHB	CPM	-0.10	23
+line: HB	HA	 0.10	24
+line: CHC	CPM	-0.10	25
+line: HC	HA	 0.10	26
+line: CHD	CPM	-0.10	27
+line: HD	HA	 0.10	28
+line: CMA	CT3	-0.27	29
+line: HMA1	HA	 0.09	30
+line: HMA2	HA	 0.09	31
+line: HMA3	HA	 0.09	32
+line: CAA	CT2	-0.18	33
+line: HAA1	HA	 0.09	34
+line: HAA2	HA	 0.09	35
+line: CBA	CT2	-0.28	36
+line: HBA1	HA	 0.09	37
+line: HBA2	HA	 0.09	38
+line: CGA	CC	 0.62	39
+line: O1A	OC	-0.76	40
+line: O2A	OC	-0.76	41
+line: CMB	CT3	-0.27	42
+line: HMB1	HA	 0.09	43
+line: HMB2	HA	 0.09	44
+line: HMB3	HA	 0.09	45
+line: CAB	CE1	-0.15	46
+line: HAB	HE1	 0.15	47
+line: CBB	CE2	-0.42	48
+line: HBB1	HE2	 0.21	49
+line: HBB2	HE2	 0.21	50
+line: CMC	CT3	-0.27	51
+line: HMC1	HA	 0.09	52
+line: HMC2	HA	 0.09	53
+line: HMC3	HA	 0.09	54
+line: CAC	CE1	-0.15	55
+line: HAC	HE1	 0.15	56
+line: CBC	CE2	-0.42	57
+line: HBC1	HE2	 0.21	58
+line: HBC2	HE2	 0.21	59
+line: CMD	CT3	-0.27	60
+line: HMD1	HA	 0.09	61
+line: HMD2	HA	 0.09	62
+line: HMD3	HA	 0.09	63
+line: CAD	CT2	-0.18	64
+line: HAD1	HA	 0.09	65
+line: HAD2	HA	 0.09	66
+line: CBD	CT2	-0.28	67
+line: HBD1	HA	 0.09	68
+line: HBD2	HA	 0.09	69
+line: CGD	CC	 0.62	70
+line: O1D	OC	-0.76	71
+line: O2D	OC	-0.76	72
+line: O1      OM      0.021   73
+line: O2      OM     -0.021   74
+bonds
+line: [ angles ]
+angles
+line: [ impropers ]
+impropers
+line: [ O2 ] ; O2 ligand for HEME
+o2
+Next residue: o2
+OUT OF LOOP
+residue_name: o2
+Unknown amino acid type: o2
+atoms
+line: O1      OM      0.021   0
+line: O2      OM     -0.021   1
+bonds
+line: [ CO ] ; CO ligand for HEME
+co
+Next residue: co
+OUT OF LOOP
+residue_name: co
+Unknown amino acid type: co
+atoms
+line: C       CM      0.021   0
+line: O       OM     -0.021   1
+bonds
+line: [ HOH ]
+hoh
+Next residue: hoh
+OUT OF LOOP
+residue_name: hoh
+Unknown amino acid type: hoh
+atoms
+line: OW      OT      -0.834  0
+line: HW1     HT      0.417   1
+line: HW2     HT      0.417   2
+bonds
+line: [ TIP3 ]
+tip3
+Next residue: tip3
+OUT OF LOOP
+residue_name: tip3
+Unknown amino acid type: tip3
+atoms
+line: OH2	OT	-0.834	0
+line: H1	HT	0.417	1
+line: H2	HT	0.417	2
+bonds
+line: [ TP3M ]
+tp3m
+Next residue: tp3m
+OUT OF LOOP
+residue_name: tp3m
+Unknown amino acid type: tp3m
+atoms
+line: OH2	OT	-0.834	0
+line: H1	HT	0.417	1
+line: H2	HT	0.417	2
+bonds
+line: [ SOD ]
+sod
+Next residue: sod
+OUT OF LOOP
+residue_name: sod
+Unknown amino acid type: sod
+atoms
+line: SOD	SOD	1.00	0
+mg
+Next residue: mg
+OUT OF LOOP
+residue_name: mg
+Unknown amino acid type: mg
+atoms
+line: MG	MG	2.00	0
+pot
+Next residue: pot
+OUT OF LOOP
+residue_name: pot
+Unknown amino acid type: pot
+atoms
+line: POT	POT	1.00	0
+ces
+Next residue: ces
+OUT OF LOOP
+residue_name: ces
+Unknown amino acid type: ces
+atoms
+line: CES	CES	1.00	0
+cal
+Next residue: cal
+OUT OF LOOP
+residue_name: cal
+Unknown amino acid type: cal
+atoms
+line: CAL	CAL	2.00	0
+cla
+Next residue: cla
+OUT OF LOOP
+residue_name: cla
+Unknown amino acid type: cla
+atoms
+line: CLA	CLA	-1.00	0
+zn2
+Next residue: zn2
+OUT OF LOOP
+residue_name: zn2
+Unknown amino acid type: zn2
+atoms
+line: ZN	ZN	2.00	0
+ace
+Next residue: ace
+OUT OF LOOP
+residue_name: ace
+Unknown amino acid type: ace
+atoms
+line: CH3     CT3     -0.270  0
+line: HH31    HA      0.090   1
+line: HH32    HA      0.090   2
+line: HH33    HA      0.090   3
+line: C       C       0.510   4
+line: O       O       -0.510  5
+bonds
+line: [ impropers ]
+impropers
+line: [ CT3 ]
+ct3
+Next residue: ct3
+OUT OF LOOP
+residue_name: ct3
+Unknown amino acid type: ct3
+atoms
+line: N       NH1     -0.470  0
+line: HN      H       0.310   1
+line: CH3     CT3     -0.110  2
+line: HH31    HA      0.090   3
+line: HH32    HA      0.090   4
+line: HH33    HA      0.090   5
+bonds
+line: [ impropers ]
+impropers
+line: 
+OUT OF LOOP
+residue_name: da
+Unknown amino acid type: da
+atoms
+line: P	P	 1.50	0
+line: O1P	ON3	-0.78	1
+line: O2P	ON3	-0.78	2
+line: O5'	ON2	-0.57	3
+line: C5'	CN8B	-0.08	4
+line: H5'1	HN8	 0.09	5
+line: H5'2	HN8	 0.09	6
+line: C4'	CN7	 0.16	7
+line: H4'	HN7	 0.09	8
+line: O4'	ON6	-0.50	9
+line: C1'	CN7B	 0.16	10
+line: H1'	HN7	 0.09	11
+line: N9	NN2	-0.05	12
+line: C5	CN5	 0.28	13
+line: N7	NN4	-0.71	14
+line: C8	CN4	 0.34	15
+line: H8	HN3	 0.12	16
+line: N1	NN3A	-0.74	17
+line: C2	CN4	 0.50	18
+line: H2	HN3	 0.13	19
+line: N3	NN3A	-0.75	20
+line: C4	CN5	 0.43	21
+line: C6	CN2	 0.46	22
+line: N6	NN1	-0.77	23
+line: H61	HN1	 0.38	24
+line: H62	HN1	 0.38	25
+line: C2'	CN8	-0.18	26
+line: H2'1	HN8	 0.09	27
+line: H2'2	HN8	 0.09	28
+line: C3'	CN7	 0.01	29
+line: H3'	HN7	 0.09	30
+line: O3'	ON2	-0.57	31
+bonds
+line: [ impropers ]
+impropers
+line: [ DC ]
+dc
+Next residue: dc
+OUT OF LOOP
+residue_name: dc
+Unknown amino acid type: dc
+atoms
+line: P	P	 1.50	0
+line: O1P	ON3	-0.78	1
+line: O2P	ON3	-0.78	2
+line: O5'	ON2	-0.57	3
+line: C5'	CN8B	-0.08	4
+line: H5'1	HN8	 0.09	5
+line: H5'2	HN8	 0.09	6
+line: C4'	CN7	 0.16	7
+line: H4'	HN7	 0.09	8
+line: O4'	ON6	-0.50	9
+line: C1'	CN7B	 0.16	10
+line: H1'	HN7	 0.09	11
+line: N1	NN2	-0.13	12
+line: C6	CN3	 0.05	13
+line: H6	HN3	 0.17	14
+line: C5	CN3	-0.13	15
+line: H5	HN3	 0.07	16
+line: C2	CN1	 0.52	17
+line: O2	ON1C	-0.49	18
+line: N3	NN3	-0.66	19
+line: C4	CN2	 0.65	20
+line: N4	NN1	-0.75	21
+line: H41	HN1	 0.37	22
+line: H42	HN1	 0.33	23
+line: C2'	CN8	-0.18	24
+line: H2'1	HN8	 0.09	25
+line: H2'2	HN8	 0.09	26
+line: C3'	CN7	 0.01	27
+line: H3'	HN7	 0.09	28
+line: O3'	ON2	-0.57	29
+bonds
+line: [ impropers ]
+impropers
+line: [ DG ]
+dg
+Next residue: dg
+OUT OF LOOP
+residue_name: dg
+Unknown amino acid type: dg
+atoms
+line: P	P	 1.50	0
+line: O1P	ON3	-0.78	1
+line: O2P	ON3	-0.78	2
+line: O5'	ON2	-0.57	3
+line: C5'	CN8B	-0.08	4
+line: H5'1	HN8	 0.09	5
+line: H5'2	HN8	 0.09	6
+line: C4'	CN7	 0.16	7
+line: H4'	HN7	 0.09	8
+line: O4'	ON6	-0.50	9
+line: C1'	CN7B	 0.16	10
+line: H1'	HN7	 0.09	11
+line: N9	NN2B	-0.02	12
+line: C4	CN5	 0.26	13
+line: N2	NN1	-0.68	14
+line: H21	HN1	 0.32	15
+line: H22	HN1	 0.35	16
+line: N3	NN3G	-0.74	17
+line: C2	CN2	 0.75	18
+line: N1	NN2G	-0.34	19
+line: H1	HN2	 0.26	20
+line: C6	CN1	 0.54	21
+line: O6	ON1	-0.51	22
+line: C5	CN5G	 0.00	23
+line: N7	NN4	-0.60	24
+line: C8	CN4	 0.25	25
+line: H8	HN3	 0.16	26
+line: C2'	CN8	-0.18	27
+line: H2'1	HN8	 0.09	28
+line: H2'2	HN8	 0.09	29
+line: C3'	CN7	 0.01	30
+line: H3'	HN7	 0.09	31
+line: O3'	ON2	-0.57	32
+bonds
+line: [ impropers ]
+impropers
+line: [ DT ]
+dt
+Next residue: dt
+OUT OF LOOP
+residue_name: dt
+Unknown amino acid type: dt
+atoms
+line: P	P	 1.50	0
+line: O1P	ON3	-0.78	1
+line: O2P	ON3	-0.78	2
+line: O5'	ON2	-0.57	3
+line: C5'	CN8B	-0.08	4
+line: H5'1	HN8	 0.09	5
+line: H5'2	HN8	 0.09	6
+line: C4'	CN7	 0.16	7
+line: H4'	HN7	 0.09	8
+line: O4'	ON6	-0.50	9
+line: C1'	CN7B	 0.16	10
+line: H1'	HN7	 0.09	11
+line: N1	NN2B	-0.34	12
+line: C6	CN3	 0.17	13
+line: H6	HN3	 0.17	14
+line: C2	CN1T	 0.51	15
+line: O2	ON1	-0.41	16
+line: N3	NN2U	-0.46	17
+line: H3	HN2	 0.36	18
+line: C4	CN1	 0.50	19
+line: O4	ON1	-0.45	20
+line: C5	CN3T	-0.15	21
+line: C5M	CN9	-0.11	22
+line: H51	HN9	 0.07	23
+line: H52	HN9	 0.07	24
+line: H53	HN9	 0.07	25
+line: C2'	CN8	-0.18	26
+line: H2'1	HN8	 0.09	27
+line: H2'2	HN8	 0.09	28
+line: C3'	CN7	 0.01	29
+line: H3'	HN7	 0.09	30
+line: O3'	ON2	-0.57	31
+bonds
+line: [ impropers ]
+impropers
+line: 
+OUT OF LOOP
+residue_name: lppc
+Unknown amino acid type: lppc
+atoms
+line: N	NTL	-0.60	0
+line: C13	CTL5	-0.35	1
+line: H13A	HL	0.25	2
+line: H13B	HL	0.25	3
+line: H13C	HL	0.25	4
+line: C14	CTL5	-0.35	5
+line: H14A	HL	0.25	6
+line: H14B	HL	0.25	7
+line: H14C	HL	0.25	8
+line: C15	CTL5	-0.35	9
+line: H15A	HL	0.25	10
+line: H15B	HL	0.25	11
+line: H15C	HL	0.25	12
+line: C12	CTL2	-0.10	13
+line: H12A	HL	0.25	14
+line: H12B	HL	0.25	15
+line: C11	CTL2	-0.08	16
+line: H11A	HAL2	0.09	17
+line: H11B	HAL2	0.09	18
+line: P	PL	1.50	19
+line: O13	O2L	-0.78	20
+line: O14	O2L	-0.78	21
+line: O11	OSL	-0.57	22
+line: O12	OSL	-0.57	23
+line: C1	CTL2	-0.08	24
+line: HA	HAL2	0.09	25
+line: HB	HAL2	0.09	26
+line: C2	CTL2	-0.18	27
+line: HS	HAL2	0.09	28
+line: HR	HAL2	0.09	29
+line: C3	CTL2	-0.05	30
+line: HX	HAL2	0.09	31
+line: HY	HAL2	0.09	32
+line: O31	OSL	-0.34	33
+line: C31	CL	0.63	34
+line: O32	OBL	-0.52	35
+line: C32	CTL2	-0.08	36
+line: H2X	HAL2	0.09	37
+line: H2Y	HAL2	0.09	38
+line: C33	CTL2	-0.18	39
+line: H3X	HAL2	0.09	40
+line: H3Y	HAL2	0.09	41
+line: C34	CTL2	-0.18	42
+line: H4X	HAL2	0.09	43
+line: H4Y	HAL2	0.09	44
+line: C35	CTL2	-0.18	45
+line: H5X	HAL2	0.09	46
+line: H5Y	HAL2	0.09	47
+line: C36	CTL2	-0.18	48
+line: H6X	HAL2	0.09	49
+line: H6Y	HAL2	0.09	50
+line: C37	CTL2	-0.18	51
+line: H7X	HAL2	0.09	52
+line: H7Y	HAL2	0.09	53
+line: C38	CTL2	-0.18	54
+line: H8X	HAL2	0.09	55
+line: H8Y	HAL2	0.09	56
+line: C39	CTL2	-0.18	57
+line: H9X	HAL2	0.09	58
+line: H9Y	HAL2	0.09	59
+line: C310	CTL2	-0.18	60
+line: H10X	HAL2	0.09	61
+line: H10Y	HAL2	0.09	62
+line: C311	CTL2	-0.18	63
+line: H11X	HAL2	0.09	64
+line: H11Y	HAL2	0.09	65
+line: C312	CTL3	-0.27	66
+line: H12X	HAL3	0.09	67
+line: H12Y	HAL3	0.09	68
+line: H12Z	HAL3	0.09	69
+bonds
+line: [ impropers ]
+impropers
+line: [ GPE ]
+gpe
+Next residue: gpe
+OUT OF LOOP
+residue_name: gpe
+Unknown amino acid type: gpe
+atoms
+line: N	NH3L	-0.30	0
+line: HN1	HCL	0.33	1
+line: HN2	HCL	0.33	2
+line: HN3	HCL	0.33	3
+line: C12	CTL2	0.13	4
+line: H12A	HAL2	0.09	5
+line: H12B	HAL2	0.09	6
+line: C11	CTL2	-0.08	7
+line: H11A	HAL2	0.09	8
+line: H11B	HAL2	0.09	9
+line: P	PL	1.50	10
+line: O13	O2L	-0.78	11
+line: O14	O2L	-0.78	12
+line: O11	OSL	-0.57	13
+line: O12	OSL	-0.57	14
+line: C1	CTL2	-0.08	15
+line: HA	HAL2	0.09	16
+line: HB	HAL2	0.09	17
+line: C2	CTL1	0.14	18
+line: HS	HAL1	0.09	19
+line: OH2	OHL	-0.66	20
+line: HO2	HOL	0.43	21
+line: C3	CTL2	0.05	22
+line: HX	HAL2	0.09	23
+line: HY	HAL2	0.09	24
+line: OH3	OHL	-0.66	25
+line: HO3	HOL	0.43	26
+bonds
+line: [ DLPE ]
+dlpe
+Next residue: dlpe
+OUT OF LOOP
+residue_name: dlpe
+Unknown amino acid type: dlpe
+atoms
+line: N	NH3L	-0.30	0
+line: HN1	HCL	0.33	1
+line: HN2	HCL	0.33	2
+line: HN3	HCL	0.33	3
+line: C12	CTL2	0.13	4
+line: H12A	HAL2	0.09	5
+line: H12B	HAL2	0.09	6
+line: C11	CTL2	-0.08	7
+line: H11A	HAL2	0.09	8
+line: H11B	HAL2	0.09	9
+line: P	PL	1.50	10
+line: O13	O2L	-0.78	11
+line: O14	O2L	-0.78	12
+line: O11	OSL	-0.57	13
+line: O12	OSL	-0.57	14
+line: C1	CTL2	-0.08	15
+line: HA	HAL2	0.09	16
+line: HB	HAL2	0.09	17
+line: C2	CTL1	0.04	18
+line: HS	HAL1	0.09	19
+line: O21	OSL	-0.34	20
+line: C21	CL	0.63	21
+line: O22	OBL	-0.52	22
+line: C22	CTL2	-0.08	23
+line: H2R	HAL2	0.09	24
+line: H2S	HAL2	0.09	25
+line: C3	CTL2	-0.05	26
+line: HX	HAL2	0.09	27
+line: HY	HAL2	0.09	28
+line: O31	OSL	-0.34	29
+line: C31	CL	0.63	30
+line: O32	OBL	-0.52	31
+line: C32	CTL2	-0.08	32
+line: H2X	HAL2	0.09	33
+line: H2Y	HAL2	0.09	34
+line: C23	CTL2	-0.18	35
+line: H3R	HAL2	0.09	36
+line: H3S	HAL2	0.09	37
+line: C24	CTL2	-0.18	38
+line: H4R	HAL2	0.09	39
+line: H4S	HAL2	0.09	40
+line: C25	CTL2	-0.18	41
+line: H5R	HAL2	0.09	42
+line: H5S	HAL2	0.09	43
+line: C26	CTL2	-0.18	44
+line: H6R	HAL2	0.09	45
+line: H6S	HAL2	0.09	46
+line: C27	CTL2	-0.18	47
+line: H7R	HAL2	0.09	48
+line: H7S	HAL2	0.09	49
+line: C28	CTL2	-0.18	50
+line: H8R	HAL2	0.09	51
+line: H8S	HAL2	0.09	52
+line: C29	CTL2	-0.18	53
+line: H9R	HAL2	0.09	54
+line: H9S	HAL2	0.09	55
+line: C210	CTL2	-0.18	56
+line: H10R	HAL2	0.09	57
+line: H10S	HAL2	0.09	58
+line: C211	CTL2	-0.18	59
+line: H11R	HAL2	0.09	60
+line: H11S	HAL2	0.09	61
+line: C212	CTL3	-0.27	62
+line: H12R	HAL3	0.09	63
+line: H12S	HAL3	0.09	64
+line: H12T	HAL3	0.09	65
+line: C33	CTL2	-0.18	66
+line: H3X	HAL2	0.09	67
+line: H3Y	HAL2	0.09	68
+line: C34	CTL2	-0.18	69
+line: H4X	HAL2	0.09	70
+line: H4Y	HAL2	0.09	71
+line: C35	CTL2	-0.18	72
+line: H5X	HAL2	0.09	73
+line: H5Y	HAL2	0.09	74
+line: C36	CTL2	-0.18	75
+line: H6X	HAL2	0.09	76
+line: H6Y	HAL2	0.09	77
+line: C37	CTL2	-0.18	78
+line: H7X	HAL2	0.09	79
+line: H7Y	HAL2	0.09	80
+line: C38	CTL2	-0.18	81
+line: H8X	HAL2	0.09	82
+line: H8Y	HAL2	0.09	83
+line: C39	CTL2	-0.18	84
+line: H9X	HAL2	0.09	85
+line: H9Y	HAL2	0.09	86
+line: C310	CTL2	-0.18	87
+line: H10X	HAL2	0.09	88
+line: H10Y	HAL2	0.09	89
+line: C311	CTL2	-0.18	90
+line: H11X	HAL2	0.09	91
+line: H11Y	HAL2	0.09	92
+line: C312	CTL3	-0.27	93
+line: H12X	HAL3	0.09	94
+line: H12Y	HAL3	0.09	95
+line: H12Z	HAL3	0.09	96
+bonds
+line: [ impropers ]
+impropers
+line: [ DMPC ]
+dmpc
+Next residue: dmpc
+OUT OF LOOP
+residue_name: dmpc
+Unknown amino acid type: dmpc
+atoms
+line: N	NTL	-0.60	0
+line: C13	CTL5	-0.35	1
+line: H13A	HL	0.25	2
+line: H13B	HL	0.25	3
+line: H13C	HL	0.25	4
+line: C14	CTL5	-0.35	5
+line: H14A	HL	0.25	6
+line: H14B	HL	0.25	7
+line: H14C	HL	0.25	8
+line: C15	CTL5	-0.35	9
+line: H15A	HL	0.25	10
+line: H15B	HL	0.25	11
+line: H15C	HL	0.25	12
+line: C12	CTL2	-0.10	13
+line: H12A	HL	0.25	14
+line: H12B	HL	0.25	15
+line: C11	CTL2	-0.08	16
+line: H11A	HAL2	0.09	17
+line: H11B	HAL2	0.09	18
+line: P	PL	1.50	19
+line: O13	O2L	-0.78	20
+line: O14	O2L	-0.78	21
+line: O11	OSL	-0.57	22
+line: O12	OSL	-0.57	23
+line: C1	CTL2	-0.08	24
+line: HA	HAL2	0.09	25
+line: HB	HAL2	0.09	26
+line: C2	CTL1	0.04	27
+line: HS	HAL1	0.09	28
+line: O21	OSL	-0.34	29
+line: C21	CL	0.63	30
+line: O22	OBL	-0.52	31
+line: C22	CTL2	-0.08	32
+line: H2R	HAL2	0.09	33
+line: H2S	HAL2	0.09	34
+line: C3	CTL2	-0.05	35
+line: HX	HAL2	0.09	36
+line: HY	HAL2	0.09	37
+line: O31	OSL	-0.34	38
+line: C31	CL	0.63	39
+line: O32	OBL	-0.52	40
+line: C32	CTL2	-0.08	41
+line: H2X	HAL2	0.09	42
+line: H2Y	HAL2	0.09	43
+line: C23	CTL2	-0.18	44
+line: H3R	HAL2	0.09	45
+line: H3S	HAL2	0.09	46
+line: C24	CTL2	-0.18	47
+line: H4R	HAL2	0.09	48
+line: H4S	HAL2	0.09	49
+line: C25	CTL2	-0.18	50
+line: H5R	HAL2	0.09	51
+line: H5S	HAL2	0.09	52
+line: C26	CTL2	-0.18	53
+line: H6R	HAL2	0.09	54
+line: H6S	HAL2	0.09	55
+line: C27	CTL2	-0.18	56
+line: H7R	HAL2	0.09	57
+line: H7S	HAL2	0.09	58
+line: C28	CTL2	-0.18	59
+line: H8R	HAL2	0.09	60
+line: H8S	HAL2	0.09	61
+line: C29	CTL2	-0.18	62
+line: H9R	HAL2	0.09	63
+line: H9S	HAL2	0.09	64
+line: C210	CTL2	-0.18	65
+line: H10R	HAL2	0.09	66
+line: H10S	HAL2	0.09	67
+line: C211	CTL2	-0.18	68
+line: H11R	HAL2	0.09	69
+line: H11S	HAL2	0.09	70
+line: C212	CTL2	-0.18	71
+line: H12R	HAL2	0.09	72
+line: H12S	HAL2	0.09	73
+line: C213	CTL2	-0.18	74
+line: H13R	HAL2	0.09	75
+line: H13S	HAL2	0.09	76
+line: C214	CTL3	-0.27	77
+line: H14R	HAL3	0.09	78
+line: H14S	HAL3	0.09	79
+line: H14T	HAL3	0.09	80
+line: C33	CTL2	-0.18	81
+line: H3X	HAL2	0.09	82
+line: H3Y	HAL2	0.09	83
+line: C34	CTL2	-0.18	84
+line: H4X	HAL2	0.09	85
+line: H4Y	HAL2	0.09	86
+line: C35	CTL2	-0.18	87
+line: H5X	HAL2	0.09	88
+line: H5Y	HAL2	0.09	89
+line: C36	CTL2	-0.18	90
+line: H6X	HAL2	0.09	91
+line: H6Y	HAL2	0.09	92
+line: C37	CTL2	-0.18	93
+line: H7X	HAL2	0.09	94
+line: H7Y	HAL2	0.09	95
+line: C38	CTL2	-0.18	96
+line: H8X	HAL2	0.09	97
+line: H8Y	HAL2	0.09	98
+line: C39	CTL2	-0.18	99
+line: H9X	HAL2	0.09	100
+line: H9Y	HAL2	0.09	101
+line: C310	CTL2	-0.18	102
+line: H10X	HAL2	0.09	103
+line: H10Y	HAL2	0.09	104
+line: C311	CTL2	-0.18	105
+line: H11X	HAL2	0.09	106
+line: H11Y	HAL2	0.09	107
+line: C312	CTL2	-0.18	108
+line: H12X	HAL2	0.09	109
+line: H12Y	HAL2	0.09	110
+line: C313	CTL2	-0.18	111
+line: H13X	HAL2	0.09	112
+line: H13Y	HAL2	0.09	113
+line: C314	CTL3	-0.27	114
+line: H14X	HAL3	0.09	115
+line: H14Y	HAL3	0.09	116
+line: H14Z	HAL3	0.09	117
+bonds
+line: [ impropers ]
+impropers
+line: [ SDS ]
+sds
+Next residue: sds
+OUT OF LOOP
+residue_name: sds
+Unknown amino acid type: sds
+atoms
+line: S	SL	1.33	0
+line: OS1	OSL	-0.28	1
+line: OS2	O2L	-0.65	2
+line: OS3	O2L	-0.65	3
+line: OS4	O2L	-0.65	4
+line: C1	CTL2	-0.28	5
+line: H11	HAL2	0.09	6
+line: H12	HAL2	0.09	7
+line: C2	CTL2	-0.18	8
+line: H21	HAL2	0.09	9
+line: H22	HAL2	0.09	10
+line: C3	CTL2	-0.18	11
+line: H31	HAL2	0.09	12
+line: H32	HAL2	0.09	13
+line: C4	CTL2	-0.18	14
+line: H41	HAL2	0.09	15
+line: H42	HAL2	0.09	16
+line: C5	CTL2	-0.18	17
+line: H51	HAL2	0.09	18
+line: H52	HAL2	0.09	19
+line: C6	CTL2	-0.18	20
+line: H61	HAL2	0.09	21
+line: H62	HAL2	0.09	22
+line: C7	CTL2	-0.18	23
+line: H71	HAL2	0.09	24
+line: H72	HAL2	0.09	25
+line: C8	CTL2	-0.18	26
+line: H81	HAL2	0.09	27
+line: H82	HAL2	0.09	28
+line: C9	CTL2	-0.18	29
+line: H91	HAL2	0.09	30
+line: H92	HAL2	0.09	31
+line: C10	CTL2	-0.18	32
+line: H101	HAL2	0.09	33
+line: H102	HAL2	0.09	34
+line: C11	CTL2	-0.18	35
+line: H111	HAL2	0.09	36
+line: H112	HAL2	0.09	37
+line: C12	CTL3	-0.27	38
+line: H121	HAL3	0.09	39
+line: H122	HAL3	0.09	40
+line: H123	HAL3	0.09	41
+bonds
+line: [ POPC ]
+popc
+Next residue: popc
+OUT OF LOOP
+residue_name: popc
+Unknown amino acid type: popc
+atoms
+line: N	NTL	-0.60	0
+line: C11	CTL2	-0.10	1
+line: C12	CTL5	-0.35	2
+line: C13	CTL5	-0.35	3
+line: C14	CTL5	-0.35	4
+line: H11	HL	0.25	5
+line: H12	HL	0.25	6
+line: H21	HL	0.25	7
+line: H22	HL	0.25	8
+line: H23	HL	0.25	9
+line: H31	HL	0.25	10
+line: H32	HL	0.25	11
+line: H33	HL	0.25	12
+line: H41	HL	0.25	13
+line: H42	HL	0.25	14
+line: H43	HL	0.25	15
+line: C15	CTL2	-0.08	16
+line: H51	HAL2	0.09	17
+line: H52	HAL2	0.09	18
+line: P1	PL	1.50	19
+line: O3	O2L	-0.78	20
+line: O4	O2L	-0.78	21
+line: O1	OSL	-0.57	22
+line: O2	OSL	-0.57	23
+line: C1	CTL2	-0.08	24
+line: HA	HAL2	0.09	25
+line: HB	HAL2	0.09	26
+line: C2	CTL1	0.04	27
+line: HS	HAL1	0.09	28
+line: O21	OSL	-0.34	29
+line: C21	CL	0.63	30
+line: O22	OBL	-0.52	31
+line: C22	CTL2	-0.08	32
+line: H2R	HAL2	0.09	33
+line: H2S	HAL2	0.09	34
+line: C3	CTL2	-0.05	35
+line: HX	HAL2	0.09	36
+line: HY	HAL2	0.09	37
+line: O31	OSL	-0.34	38
+line: C31	CL	0.63	39
+line: O32	OBL	-0.52	40
+line: C32	CTL2	-0.08	41
+line: H2X	HAL2	0.09	42
+line: H2Y	HAL2	0.09	43
+line: C23	CTL2	-0.18	44
+line: H3R	HAL2	0.09	45
+line: H3S	HAL2	0.09	46
+line: C24	CTL2	-0.18	47
+line: H4R	HAL2	0.09	48
+line: H4S	HAL2	0.09	49
+line: C25	CTL2	-0.18	50
+line: H5R	HAL2	0.09	51
+line: H5S	HAL2	0.09	52
+line: C26	CTL2	-0.18	53
+line: H6R	HAL2	0.09	54
+line: H6S	HAL2	0.09	55
+line: C27	CTL2	-0.18	56
+line: H7R	HAL2	0.09	57
+line: H7S	HAL2	0.09	58
+line: C28	CTL2	-0.18	59
+line: H8R	HAL2	0.09	60
+line: H8S	HAL2	0.09	61
+line: C29	CEL1	-0.15	62
+line: H91	HEL1	0.15	63
+line: C210	CEL1	-0.15	64
+line: H101	HEL1	0.15	65
+line: C211	CTL2	-0.18	66
+line: H11R	HAL2	0.09	67
+line: H11S	HAL2	0.09	68
+line: C212	CTL2	-0.18	69
+line: H12R	HAL2	0.09	70
+line: H12S	HAL2	0.09	71
+line: C213	CTL2	-0.18	72
+line: H13R	HAL2	0.09	73
+line: H13S	HAL2	0.09	74
+line: C214	CTL2	-0.18	75
+line: H14R	HAL2	0.09	76
+line: H14S	HAL2	0.09	77
+line: C215	CTL2	-0.18	78
+line: H15R	HAL2	0.09	79
+line: H15S	HAL2	0.09	80
+line: C216	CTL2	-0.18	81
+line: H16R	HAL2	0.09	82
+line: H16S	HAL2	0.09	83
+line: C217	CTL2	-0.18	84
+line: H17R	HAL2	0.09	85
+line: H17S	HAL2	0.09	86
+line: C218	CTL3	-0.27	87
+line: H18R	HAL3	0.09	88
+line: H18S	HAL3	0.09	89
+line: H18T	HAL3	0.09	90
+line: C33	CTL2	-0.18	91
+line: H3X	HAL2	0.09	92
+line: H3Y	HAL2	0.09	93
+line: C34	CTL2	-0.18	94
+line: H4X	HAL2	0.09	95
+line: H4Y	HAL2	0.09	96
+line: C35	CTL2	-0.18	97
+line: H5X	HAL2	0.09	98
+line: H5Y	HAL2	0.09	99
+line: C36	CTL2	-0.18	100
+line: H6X	HAL2	0.09	101
+line: H6Y	HAL2	0.09	102
+line: C37	CTL2	-0.18	103
+line: H7X	HAL2	0.09	104
+line: H7Y	HAL2	0.09	105
+line: C38	CTL2	-0.18	106
+line: H8X	HAL2	0.09	107
+line: H8Y	HAL2	0.09	108
+line: C39	CTL2	-0.18	109
+line: H9X	HAL2	0.09	110
+line: H9Y	HAL2	0.09	111
+line: C310	CTL2	-0.18	112
+line: H10X	HAL2	0.09	113
+line: H10Y	HAL2	0.09	114
+line: C311	CTL2	-0.18	115
+line: H11X	HAL2	0.09	116
+line: H11Y	HAL2	0.09	117
+line: C312	CTL2	-0.18	118
+line: H12X	HAL2	0.09	119
+line: H12Y	HAL2	0.09	120
+line: C313	CTL2	-0.18	121
+line: H13X	HAL2	0.09	122
+line: H13Y	HAL2	0.09	123
+line: C314	CTL2	-0.18	124
+line: H14X	HAL2	0.09	125
+line: H14Y	HAL2	0.09	126
+line: C315	CTL2	-0.18	127
+line: H15X	HAL2	0.09	128
+line: H15Y	HAL2	0.09	129
+line: C316	CTL3	-0.27	130
+line: H16X	HAL3	0.09	131
+line: H16Y	HAL3	0.09	132
+line: H16Z	HAL3	0.09	133
+bonds
+line: [ impropers ]
+impropers
+line: [ POPE ]
+pope
+Next residue: pope
+OUT OF LOOP
+residue_name: pope
+Unknown amino acid type: pope
+atoms
+line: N	NH3L	-0.30	0
+line: HN1	HCL	0.33	1
+line: HN2	HCL	0.33	2
+line: HN3	HCL	0.33	3
+line: C12	CTL2	0.13	4
+line: H12A	HAL2	0.09	5
+line: H12B	HAL2	0.09	6
+line: C11	CTL2	-0.08	7
+line: H11A	HAL2	0.09	8
+line: H11B	HAL2	0.09	9
+line: P	PL	1.50	10
+line: O13	O2L	-0.78	11
+line: O14	O2L	-0.78	12
+line: O11	OSL	-0.57	13
+line: O12	OSL	-0.57	14
+line: C1	CTL2	-0.08	15
+line: HA	HAL2	0.09	16
+line: HB	HAL2	0.09	17
+line: C2	CTL1	0.04	18
+line: HS	HAL1	0.09	19
+line: O21	OSL	-0.34	20
+line: C21	CL	0.63	21
+line: O22	OBL	-0.52	22
+line: C22	CTL2	-0.08	23
+line: H2R	HAL2	0.09	24
+line: H2S	HAL2	0.09	25
+line: C3	CTL2	-0.05	26
+line: HX	HAL2	0.09	27
+line: HY	HAL2	0.09	28
+line: O31	OSL	-0.34	29
+line: C31	CL	0.63	30
+line: O32	OBL	-0.52	31
+line: C32	CTL2	-0.08	32
+line: H2X	HAL2	0.09	33
+line: H2Y	HAL2	0.09	34
+line: C23	CTL2	-0.18	35
+line: H3R	HAL2	0.09	36
+line: H3S	HAL2	0.09	37
+line: C24	CTL2	-0.18	38
+line: H4R	HAL2	0.09	39
+line: H4S	HAL2	0.09	40
+line: C25	CTL2	-0.18	41
+line: H5R	HAL2	0.09	42
+line: H5S	HAL2	0.09	43
+line: C26	CTL2	-0.18	44
+line: H6R	HAL2	0.09	45
+line: H6S	HAL2	0.09	46
+line: C27	CTL2	-0.18	47
+line: H7R	HAL2	0.09	48
+line: H7S	HAL2	0.09	49
+line: C28	CTL2	-0.18	50
+line: H8R	HAL2	0.09	51
+line: H8S	HAL2	0.09	52
+line: C29	CEL1	-0.15	53
+line: H91	HEL1	0.15	54
+line: C210	CEL1	-0.15	55
+line: H101	HEL1	0.15	56
+line: C211	CTL2	-0.18	57
+line: H11R	HAL2	0.09	58
+line: H11S	HAL2	0.09	59
+line: C212	CTL2	-0.18	60
+line: H12R	HAL2	0.09	61
+line: H12S	HAL2	0.09	62
+line: C213	CTL2	-0.18	63
+line: H13R	HAL2	0.09	64
+line: H13S	HAL2	0.09	65
+line: C214	CTL2	-0.18	66
+line: H14R	HAL2	0.09	67
+line: H14S	HAL2	0.09	68
+line: C215	CTL2	-0.18	69
+line: H15R	HAL2	0.09	70
+line: H15S	HAL2	0.09	71
+line: C216	CTL2	-0.18	72
+line: H16R	HAL2	0.09	73
+line: H16S	HAL2	0.09	74
+line: C217	CTL2	-0.18	75
+line: H17R	HAL2	0.09	76
+line: H17S	HAL2	0.09	77
+line: C218	CTL3	-0.27	78
+line: H18R	HAL3	0.09	79
+line: H18S	HAL3	0.09	80
+line: H18T	HAL3	0.09	81
+line: C33	CTL2	-0.18	82
+line: H3X	HAL2	0.09	83
+line: H3Y	HAL2	0.09	84
+line: C34	CTL2	-0.18	85
+line: H4X	HAL2	0.09	86
+line: H4Y	HAL2	0.09	87
+line: C35	CTL2	-0.18	88
+line: H5X	HAL2	0.09	89
+line: H5Y	HAL2	0.09	90
+line: C36	CTL2	-0.18	91
+line: H6X	HAL2	0.09	92
+line: H6Y	HAL2	0.09	93
+line: C37	CTL2	-0.18	94
+line: H7X	HAL2	0.09	95
+line: H7Y	HAL2	0.09	96
+line: C38	CTL2	-0.18	97
+line: H8X	HAL2	0.09	98
+line: H8Y	HAL2	0.09	99
+line: C39	CTL2	-0.18	100
+line: H9X	HAL2	0.09	101
+line: H9Y	HAL2	0.09	102
+line: C310	CTL2	-0.18	103
+line: H10X	HAL2	0.09	104
+line: H10Y	HAL2	0.09	105
+line: C311	CTL2	-0.18	106
+line: H11X	HAL2	0.09	107
+line: H11Y	HAL2	0.09	108
+line: C312	CTL2	-0.18	109
+line: H12X	HAL2	0.09	110
+line: H12Y	HAL2	0.09	111
+line: C313	CTL2	-0.18	112
+line: H13X	HAL2	0.09	113
+line: H13Y	HAL2	0.09	114
+line: C314	CTL2	-0.18	115
+line: H14X	HAL2	0.09	116
+line: H14Y	HAL2	0.09	117
+line: C315	CTL2	-0.18	118
+line: H15X	HAL2	0.09	119
+line: H15Y	HAL2	0.09	120
+line: C316	CTL3	-0.27	121
+line: H16X	HAL3	0.09	122
+line: H16Y	HAL3	0.09	123
+line: H16Z	HAL3	0.09	124
+bonds
+line: [ impropers ]
+impropers
+line: [ PALM ]
+palm
+Next residue: palm
+OUT OF LOOP
+residue_name: palm
+Unknown amino acid type: palm
+atoms
+line: C1	CL	0.62	0
+line: O1	OCL	-0.76	1
+line: O2	OCL	-0.76	2
+line: C2	CTL2	-0.28	3
+line: H2A	HAL2	0.09	4
+line: H2B	HAL2	0.09	5
+line: C3	CTL2	-0.18	6
+line: H3A	HAL2	0.09	7
+line: H3B	HAL2	0.09	8
+line: C4	CTL2	-0.18	9
+line: H4A	HAL2	0.09	10
+line: H4B	HAL2	0.09	11
+line: C5	CTL2	-0.18	12
+line: H5A	HAL2	0.09	13
+line: H5B	HAL2	0.09	14
+line: C6	CTL2	-0.18	15
+line: H6A	HAL2	0.09	16
+line: H6B	HAL2	0.09	17
+line: C7	CTL2	-0.18	18
+line: H7A	HAL2	0.09	19
+line: H7B	HAL2	0.09	20
+line: C8	CTL2	-0.18	21
+line: H8A	HAL2	0.09	22
+line: H8B	HAL2	0.09	23
+line: C9	CTL2	-0.18	24
+line: H9A	HAL2	0.09	25
+line: H9B	HAL2	0.09	26
+line: C10	CTL2	-0.18	27
+line: H10A	HAL2	0.09	28
+line: H10B	HAL2	0.09	29
+line: C11	CTL2	-0.18	30
+line: H11A	HAL2	0.09	31
+line: H11B	HAL2	0.09	32
+line: C12	CTL2	-0.18	33
+line: H12A	HAL2	0.09	34
+line: H12B	HAL2	0.09	35
+line: C13	CTL2	-0.18	36
+line: H13A	HAL2	0.09	37
+line: H13B	HAL2	0.09	38
+line: C14	CTL2	-0.18	39
+line: H14A	HAL2	0.09	40
+line: H14B	HAL2	0.09	41
+line: C15	CTL2	-0.18	42
+line: H15A	HAL2	0.09	43
+line: H15B	HAL2	0.09	44
+line: C16	CTL3	-0.27	45
+line: H16A	HAL3	0.09	46
+line: H16B	HAL3	0.09	47
+line: H16C	HAL3	0.09	48
+bonds
+line: [ impropers ]
+impropers
+line: [ OLEO ]
+oleo
+Next residue: oleo
+OUT OF LOOP
+residue_name: oleo
+Unknown amino acid type: oleo
+atoms
+line: C1	CL	0.62	0
+line: O1	OCL	-0.76	1
+line: O2	OCL	-0.76	2
+line: C2	CTL2	-0.28	3
+line: H2A	HAL2	0.09	4
+line: H2B	HAL2	0.09	5
+line: C3	CTL2	-0.18	6
+line: H3A	HAL2	0.09	7
+line: H3B	HAL2	0.09	8
+line: C4	CTL2	-0.18	9
+line: H4A	HAL2	0.09	10
+line: H4B	HAL2	0.09	11
+line: C5	CTL2	-0.18	12
+line: H5A	HAL2	0.09	13
+line: H5B	HAL2	0.09	14
+line: C6	CTL2	-0.18	15
+line: H6A	HAL2	0.09	16
+line: H6B	HAL2	0.09	17
+line: C7	CTL2	-0.18	18
+line: H7A	HAL2	0.09	19
+line: H7B	HAL2	0.09	20
+line: C8	CTL2	-0.18	21
+line: H8A	HAL2	0.09	22
+line: H8B	HAL2	0.09	23
+line: C9	CEL1	-0.15	24
+line: H9A	HEL1	0.15	25
+line: C10	CEL1	-0.15	26
+line: H10A	HEL1	0.15	27
+line: C11	CTL2	-0.18	28
+line: H11A	HAL2	0.09	29
+line: H11B	HAL2	0.09	30
+line: C12	CTL2	-0.18	31
+line: H12A	HAL2	0.09	32
+line: H12B	HAL2	0.09	33
+line: C13	CTL2	-0.18	34
+line: H13A	HAL2	0.09	35
+line: H13B	HAL2	0.09	36
+line: C14	CTL2	-0.18	37
+line: H14A	HAL2	0.09	38
+line: H14B	HAL2	0.09	39
+line: C15	CTL2	-0.18	40
+line: H15A	HAL2	0.09	41
+line: H15B	HAL2	0.09	42
+line: C16	CTL2	-0.18	43
+line: H16A	HAL2	0.09	44
+line: H16B	HAL2	0.09	45
+line: C17	CTL2	-0.18	46
+line: H17A	HAL2	0.09	47
+line: H17B	HAL2	0.09	48
+line: C18	CTL3	-0.27	49
+line: H18A	HAL3	0.09	50
+line: H18B	HAL3	0.09	51
+line: H18C	HAL3	0.09	52
+bonds
+line: [ DHA ]
+dha
+Next residue: dha
+OUT OF LOOP
+residue_name: dha
+atoms
+line: C1	CL	0.62	0
+line: O1	OCL	-0.76	1
+line: O2	OCL	-0.76	2
+line: C2	CTL2	-0.28	3
+line: H2A	HAL2	0.09	4
+line: H2B	HAL2	0.09	5
+line: C3	CTL2	-0.18	6
+line: H3A	HAL2	0.09	7
+line: H3B	HAL2	0.09	8
+line: C4	CEL1	-0.15	9
+line: H4	HEL1	0.15	10
+line: C5	CEL1	-0.15	11
+line: H5	HEL1	0.15	12
+line: C6	CTL2	-0.18	13
+line: H6A	HAL2	0.09	14
+line: H6B	HAL2	0.09	15
+line: C7	CEL1	-0.15	16
+line: H7	HEL1	0.15	17
+line: C8	CEL1	-0.15	18
+line: H8	HEL1	0.15	19
+line: C9	CTL2	-0.18	20
+line: H9A	HAL2	0.09	21
+line: H9B	HAL2	0.09	22
+line: C10	CEL1	-0.15	23
+line: H10	HEL1	0.15	24
+line: C11	CEL1	-0.15	25
+line: H11	HEL1	0.15	26
+line: C12	CTL2	-0.18	27
+line: H12A	HAL2	0.09	28
+line: H12B	HAL2	0.09	29
+line: C13	CEL1	-0.15	30
+line: H13	HEL1	0.15	31
+line: C14	CEL1	-0.15	32
+line: H14	HEL1	0.15	33
+line: C15	CTL2	-0.18	34
+line: H15A	HAL2	0.09	35
+line: H15B	HAL2	0.09	36
+line: C16	CEL1	-0.15	37
+line: H16	HEL1	0.15	38
+line: C17	CEL1	-0.15	39
+line: H17	HEL1	0.15	40
+line: C18	CTL2	-0.18	41
+line: H18A	HAL2	0.09	42
+line: H18B	HAL2	0.09	43
+line: C19	CEL1	-0.15	44
+line: H19	HEL1	0.15	45
+line: C20	CEL1	-0.15	46
+line: H20	HEL1	0.15	47
+line: C21	CTL2	-0.18	48
+line: H21A	HAL2	0.09	49
+line: H21B	HAL2	0.09	50
+line: C22	CTL3	-0.27	51
+line: H22A	HAL3	0.09	52
+line: H22B	HAL3	0.09	53
+line: H22C	HAL3	0.09	54
+bonds
+line: [ STEA ]
+stea
+Next residue: stea
+OUT OF LOOP
+residue_name: stea
+Unknown amino acid type: stea
+atoms
+line: C1	CL	0.62	0
+line: O1	OCL	-0.76	1
+line: O2	OCL	-0.76	2
+line: C2	CTL2	-0.28	3
+line: H2A	HAL2	0.09	4
+line: H2B	HAL2	0.09	5
+line: C3	CTL2	-0.18	6
+line: H3A	HAL2	0.09	7
+line: H3B	HAL2	0.09	8
+line: C4	CTL2	-0.18	9
+line: H4A	HAL2	0.09	10
+line: H4B	HAL2	0.09	11
+line: C5	CTL2	-0.18	12
+line: H5A	HAL2	0.09	13
+line: H5B	HAL2	0.09	14
+line: C6	CTL2	-0.18	15
+line: H6A	HAL2	0.09	16
+line: H6B	HAL2	0.09	17
+line: C7	CTL2	-0.18	18
+line: H7A	HAL2	0.09	19
+line: H7B	HAL2	0.09	20
+line: C8	CTL2	-0.18	21
+line: H8A	HAL2	0.09	22
+line: H8B	HAL2	0.09	23
+line: C9	CTL2	-0.18	24
+line: H9A	HAL2	0.09	25
+line: H9B	HAL2	0.09	26
+line: C10	CTL2	-0.18	27
+line: H10A	HAL2	0.09	28
+line: H10B	HAL2	0.09	29
+line: C11	CTL2	-0.18	30
+line: H11A	HAL2	0.09	31
+line: H11B	HAL2	0.09	32
+line: C12	CTL2	-0.18	33
+line: H12A	HAL2	0.09	34
+line: H12B	HAL2	0.09	35
+line: C13	CTL2	-0.18	36
+line: H13A	HAL2	0.09	37
+line: H13B	HAL2	0.09	38
+line: C14	CTL2	-0.18	39
+line: H14A	HAL2	0.09	40
+line: H14B	HAL2	0.09	41
+line: C15	CTL2	-0.18	42
+line: H15A	HAL2	0.09	43
+line: H15B	HAL2	0.09	44
+line: C16	CTL2	-0.18	45
+line: H16A	HAL2	0.09	46
+line: H16B	HAL2	0.09	47
+line: C17	CTL2	-0.18	48
+line: H17A	HAL2	0.09	49
+line: H17B	HAL2	0.09	50
+line: C18	CTL3	-0.27	51
+line: H18A	HAL3	0.09	52
+line: H18B	HAL3	0.09	53
+line: H18C	HAL3	0.09	54
+bonds
+line: [ PCGL ]
+pcgl
+Next residue: pcgl
+OUT OF LOOP
+residue_name: pcgl
+Unknown amino acid type: pcgl
+atoms
+line: N	NTL	-0.60	0
+line: C5	CTL2	-0.10	1
+line: C6	CTL5	-0.35	2
+line: C7	CTL5	-0.35	3
+line: C8	CTL5	-0.35	4
+line: H5A	HL	0.25	5
+line: H5B	HL	0.25	6
+line: H6A	HL	0.25	7
+line: H6B	HL	0.25	8
+line: H6C	HL	0.25	9
+line: H7A	HL	0.25	10
+line: H7B	HL	0.25	11
+line: H7C	HL	0.25	12
+line: H8A	HL	0.25	13
+line: H8B	HL	0.25	14
+line: H8C	HL	0.25	15
+line: C4	CTL2	-0.08	16
+line: H4A	HAL2	0.09	17
+line: H4B	HAL2	0.09	18
+line: P	PL	1.50	19
+line: OP3	O2L	-0.78	20
+line: OP4	O2L	-0.78	21
+line: OP1	OSL	-0.57	22
+line: OP2	OSL	-0.57	23
+line: C3	CTL2	-0.08	24
+line: H3A	HAL2	0.09	25
+line: H3B	HAL2	0.09	26
+line: C2	CTL1	0.14	27
+line: H2A	HAL1	0.09	28
+line: O2	OHL	-0.66	29
+line: H2	HOL	0.43	30
+line: C1	CTL2	0.05	31
+line: H1A	HAL2	0.09	32
+line: H1B	HAL2	0.09	33
+line: O1	OHL	-0.66	34
+line: H1	HOL	0.43	35
+bonds
+line: 
+OUT OF LOOP
+residue_name: ra
+Unknown amino acid type: ra
+atoms
+line: P	P	 1.50	0
+line: O1P	ON3	-0.78	1
+line: O2P	ON3	-0.78	2
+line: O5'	ON2	-0.57	3
+line: C5'	CN8B	-0.08	4
+line: H5'1	HN8	 0.09	5
+line: H5'2	HN8	 0.09	6
+line: C4'	CN7	 0.16	7
+line: H4'	HN7	 0.09	8
+line: O4'	ON6B	-0.50	9
+line: C1'	CN7B	 0.16	10
+line: H1'	HN7	 0.09	11
+line: N9	NN2	-0.05	12
+line: C5	CN5	 0.28	13
+line: N7	NN4	-0.71	14
+line: C8	CN4	 0.34	15
+line: H8	HN3	 0.12	16
+line: N1	NN3A	-0.74	17
+line: C2	CN4	 0.50	18
+line: H2	HN3	 0.13	19
+line: N3	NN3A	-0.75	20
+line: C4	CN5	 0.43	21
+line: C6	CN2	 0.46	22
+line: N6	NN1	-0.77	23
+line: H61	HN1	 0.38	24
+line: H62	HN1	 0.38	25
+line: C2'	CN7B	 0.14	26
+line: H2'2	HN7	 0.09	27
+line: O2'	ON5	-0.66	28
+line: H2'1	HN5	 0.43	29
+line: C3'	CN7	 0.01	30
+line: H3'	HN7	 0.09	31
+line: O3'	ON2	-0.57	32
+bonds
+line: [ impropers ]
+impropers
+line: [ RC ]
+rc
+Next residue: rc
+OUT OF LOOP
+residue_name: rc
+Unknown amino acid type: rc
+atoms
+line: P	P	 1.50	0
+line: O1P	ON3	-0.78	1
+line: O2P	ON3	-0.78	2
+line: O5'	ON2	-0.57	3
+line: C5'	CN8B	-0.08	4
+line: H5'1	HN8	 0.09	5
+line: H5'2	HN8	 0.09	6
+line: C4'	CN7	 0.16	7
+line: H4'	HN7	 0.09	8
+line: O4'	ON6B	-0.50	9
+line: C1'	CN7B	 0.16	10
+line: H1'	HN7	 0.09	11
+line: N1	NN2	-0.13	12
+line: C6	CN3	 0.05	13
+line: H6	HN3	 0.17	14
+line: C5	CN3	-0.13	15
+line: H5	HN3	 0.07	16
+line: C2	CN1	 0.52	17
+line: O2	ON1C	-0.49	18
+line: N3	NN3	-0.66	19
+line: C4	CN2	 0.65	20
+line: N4	NN1	-0.75	21
+line: H41	HN1	 0.37	22
+line: H42	HN1	 0.33	23
+line: C2'	CN7B	 0.14	24
+line: H2'2	HN7	 0.09	25
+line: O2'	ON5	-0.66	26
+line: H2'1	HN5	 0.43	27
+line: C3'	CN7	 0.01	28
+line: H3'	HN7	 0.09	29
+line: O3'	ON2	-0.57	30
+bonds
+line: [ impropers ]
+impropers
+line: [ RG ]
+rg
+Next residue: rg
+OUT OF LOOP
+residue_name: rg
+Unknown amino acid type: rg
+atoms
+line: P	P	 1.50	0
+line: O1P	ON3	-0.78	1
+line: O2P	ON3	-0.78	2
+line: O5'	ON2	-0.57	3
+line: C5'	CN8B	-0.08	4
+line: H5'1	HN8	 0.09	5
+line: H5'2	HN8	 0.09	6
+line: C4'	CN7	 0.16	7
+line: H4'	HN7	 0.09	8
+line: O4'	ON6B	-0.50	9
+line: C1'	CN7B	 0.16	10
+line: H1'	HN7	 0.09	11
+line: N9	NN2B	-0.02	12
+line: C4	CN5	 0.26	13
+line: N2	NN1	-0.68	14
+line: H21	HN1	 0.32	15
+line: H22	HN1	 0.35	16
+line: N3	NN3G	-0.74	17
+line: C2	CN2	 0.75	18
+line: N1	NN2G	-0.34	19
+line: H1	HN2	 0.26	20
+line: C6	CN1	 0.54	21
+line: O6	ON1	-0.51	22
+line: C5	CN5G	 0.00	23
+line: N7	NN4	-0.60	24
+line: C8	CN4	 0.25	25
+line: H8	HN3	 0.16	26
+line: C2'	CN7B	 0.14	27
+line: H2'2	HN7	 0.09	28
+line: O2'	ON5	-0.66	29
+line: H2'1	HN5	 0.43	30
+line: C3'	CN7	 0.01	31
+line: H3'	HN7	 0.09	32
+line: O3'	ON2	-0.57	33
+bonds
+line: [ impropers ]
+impropers
+line: [ RU ]
+ru
+Next residue: ru
+OUT OF LOOP
+residue_name: ru
+Unknown amino acid type: ru
+atoms
+line: P	P	 1.50	0
+line: O1P	ON3	-0.78	1
+line: O2P	ON3	-0.78	2
+line: O5'	ON2	-0.57	3
+line: C5'	CN8B	-0.08	4
+line: H5'1	HN8	 0.09	5
+line: H5'2	HN8	 0.09	6
+line: C4'	CN7	 0.16	7
+line: H4'	HN7	 0.09	8
+line: O4'	ON6B	-0.50	9
+line: C1'	CN7B	 0.16	10
+line: H1'	HN7	 0.09	11
+line: N1	NN2B	-0.34	12
+line: C6	CN3	 0.20	13
+line: H6	HN3	 0.14	14
+line: C2	CN1T	 0.55	15
+line: O2	ON1	-0.45	16
+line: N3	NN2U	-0.46	17
+line: H3	HN2	 0.36	18
+line: C4	CN1	 0.53	19
+line: O4	ON1	-0.48	20
+line: C5	CN3	-0.15	21
+line: H5	HN3	 0.10	22
+line: C2'	CN7B	 0.14	23
+line: H2'2	HN7	 0.09	24
+line: O2'	ON5	-0.66	25
+line: H2'1	HN5	 0.43	26
+line: C3'	CN7	 0.01	27
+line: H3'	HN7	 0.09	28
+line: O3'	ON2	-0.57	29
+bonds
+line: [ impropers ]
+impropers
+line: 
+OUT OF LOOP
+aminoacids aminoacids none ASN
+aminoacids aminoacids gly-nh3+ ASN
+aminoacids aminoacids nh3+ ASN
+aminoacids aminoacids pro-nh2+ ASN
+aminoacids aminoacids nh2 ASN
+aminoacids aminoacids gly-nh2 ASN
+aminoacids aminoacids pro-nh ASN
+dna aminoacids none ASN
+dna aminoacids 5' ASN
+rna aminoacids none ASN
+rna aminoacids 5' ASN
+aminoacids aminoacids none SER
+aminoacids aminoacids coo- SER
+aminoacids aminoacids cooh SER
+aminoacids aminoacids ct2 SER
+aminoacids aminoacids ct3 SER
+dna aminoacids none SER
+dna aminoacids 3' SER
+rna aminoacids none SER
+rna aminoacids 3' SER
+ N N
+ N C
+ HN C
+ CA C
+ HA C
+ CB C
+ HB1 C
+ HB2 C
+ OG C
+ HG1 C
+ C C
+OK 2  
+Atom[9][HB2]: ([-9.1475, 2.7625, -3.6027]) in Residue ASN(0)
+Atom[4][CB]: ([-4.4100, 5.4500, -2.6200]) in Residue LEU(1)
+0.0900
+-0.1800
+-2.2508
+Atom[9][HB2]: ([-9.1475, 2.7625, -3.6027]) in Residue ASN(0)
+Atom[4][CB]: ([-3.9600, 3.4700, 2.3000]) in Residue TYR(2)
+0.0900
+-0.1800
+-2.2508
+Atom[9][HB2]: ([-9.1475, 2.7625, -3.6027]) in Residue ASN(0)
+Atom[4][CB]: ([-7.3900, -0.4700, 0.3400]) in Residue ILE(3)
+0.0900
+-0.0900
+-1.1254
+Atom[9][HB2]: ([-9.1475, 2.7625, -3.6027]) in Residue ASN(0)
+Atom[4][CB]: ([-4.2900, -0.3100, -4.0100]) in Residue GLN(4)
+0.0900
+-0.1800
+-2.2508
+Atom[9][HB2]: ([-9.1475, 2.7625, -3.6027]) in Residue ASN(0)
+Atom[4][CB]: ([-0.2200, 0.7000, -0.4200]) in Residue TRP(5)
+0.0900
+-0.1800
+-2.2508
+Atom[9][HB2]: ([-9.1475, 2.7625, -3.6027]) in Residue ASN(0)
+Atom[4][CB]: ([-2.7100, -2.6400, 3.0300]) in Residue LEU(6)
+0.0900
+-0.1800
+-2.2508
+Atom[9][HB2]: ([-9.1475, 2.7625, -3.6027]) in Residue ASN(0)
+Atom[4][CB]: ([-4.2200, -5.7000, -1.2300]) in Residue LYS(7)
+0.0900
+-0.1800
+-2.2508
+Atom[9][HB2]: ([-9.1475, 2.7625, -3.6027]) in Residue ASN(0)
+Atom[4][CB]: ([1.0300, -4.8400, -2.7200]) in Residue ASP(8)
+0.0900
+-0.2800
+-3.5012
+Atom[9][HB2]: ([-9.1475, 2.7625, -3.6027]) in Residue ASN(0)
+Atom[4][CB]: ([6.7400, -2.3900, 5.2800]) in Residue PRO(11)
+0.0900
+-0.1800
+-2.2508
+Atom[9][HB2]: ([-9.1475, 2.7625, -3.6027]) in Residue ASN(0)
+Atom[4][CB]: ([6.4600, -7.3700, 3.4700]) in Residue SER(12)
+0.0900
+0.0500
+0.6252
+Atom[9][HB2]: ([-9.1475, 2.7625, -3.6027]) in Residue ASN(0)
+Atom[4][CB]: ([4.9100, -4.9900, -1.2600]) in Residue SER(13)
+0.0900
+0.0500
+0.6252
+Atom[9][HB2]: ([-9.1475, 2.7625, -3.6027]) in Residue ASN(0)
+Atom[4][CB]: ([6.1100, -0.2400, -2.9900]) in Residue ARG(15)
+0.0900
+-0.1800
+-2.2508
+Atom[9][HB2]: ([-9.1475, 2.7625, -3.6027]) in Residue ASN(0)
+Atom[4][CB]: ([7.5500, 4.3900, 0.1200]) in Residue PRO(16)
+0.0900
+-0.1800
+-2.2508
+Atom[9][HB2]: ([-9.1475, 2.7625, -3.6027]) in Residue ASN(0)
+Atom[4][CB]: ([3.0300, 4.1900, 3.1900]) in Residue PRO(17)
+0.0900
+-0.1800
+-2.2508
+Atom[9][HB2]: ([-9.1475, 2.7625, -3.6027]) in Residue ASN(0)
+Atom[4][CB]: ([0.0500, 6.0100, -1.2300]) in Residue PRO(18)
+0.0900
+-0.1800
+-2.2508
+Atom[9][HB2]: ([-9.1475, 2.7625, -3.6027]) in Residue ASN(0)
+Atom[4][CB]: ([1.9700, 11.0700, 1.2800]) in Residue SER(19)
+0.0900
+0.0500
+0.6252
+Atom[10][HB2]: ([-4.6015, 5.9402, -1.7697]) in Residue LEU(1)
+Atom[4][CB]: ([-3.9600, 3.4700, 2.3000]) in Residue TYR(2)
+0.0900
+-0.1800
+-2.2508
+Atom[10][HB2]: ([-4.6015, 5.9402, -1.7697]) in Residue LEU(1)
+Atom[4][CB]: ([-7.3900, -0.4700, 0.3400]) in Residue ILE(3)
+0.0900
+-0.0900
+-1.1254
+Atom[10][HB2]: ([-4.6015, 5.9402, -1.7697]) in Residue LEU(1)
+Atom[4][CB]: ([-4.2900, -0.3100, -4.0100]) in Residue GLN(4)
+0.0900
+-0.1800
+-2.2508
+Atom[10][HB2]: ([-4.6015, 5.9402, -1.7697]) in Residue LEU(1)
+Atom[4][CB]: ([-0.2200, 0.7000, -0.4200]) in Residue TRP(5)
+0.0900
+-0.1800
+-2.2508
+Atom[10][HB2]: ([-4.6015, 5.9402, -1.7697]) in Residue LEU(1)
+Atom[4][CB]: ([-2.7100, -2.6400, 3.0300]) in Residue LEU(6)
+0.0900
+-0.1800
+-2.2508
+Atom[10][HB2]: ([-4.6015, 5.9402, -1.7697]) in Residue LEU(1)
+Atom[4][CB]: ([-4.2200, -5.7000, -1.2300]) in Residue LYS(7)
+0.0900
+-0.1800
+-2.2508
+Atom[10][HB2]: ([-4.6015, 5.9402, -1.7697]) in Residue LEU(1)
+Atom[4][CB]: ([1.0300, -4.8400, -2.7200]) in Residue ASP(8)
+0.0900
+-0.2800
+-3.5012
+Atom[10][HB2]: ([-4.6015, 5.9402, -1.7697]) in Residue LEU(1)
+Atom[4][CB]: ([6.7400, -2.3900, 5.2800]) in Residue PRO(11)
+0.0900
+-0.1800
+-2.2508
+Atom[10][HB2]: ([-4.6015, 5.9402, -1.7697]) in Residue LEU(1)
+Atom[4][CB]: ([6.4600, -7.3700, 3.4700]) in Residue SER(12)
+0.0900
+0.0500
+0.6252
+Atom[10][HB2]: ([-4.6015, 5.9402, -1.7697]) in Residue LEU(1)
+Atom[4][CB]: ([4.9100, -4.9900, -1.2600]) in Residue SER(13)
+0.0900
+0.0500
+0.6252
+Atom[10][HB2]: ([-4.6015, 5.9402, -1.7697]) in Residue LEU(1)
+Atom[4][CB]: ([6.1100, -0.2400, -2.9900]) in Residue ARG(15)
+0.0900
+-0.1800
+-2.2508
+Atom[10][HB2]: ([-4.6015, 5.9402, -1.7697]) in Residue LEU(1)
+Atom[4][CB]: ([7.5500, 4.3900, 0.1200]) in Residue PRO(16)
+0.0900
+-0.1800
+-2.2508
+Atom[10][HB2]: ([-4.6015, 5.9402, -1.7697]) in Residue LEU(1)
+Atom[4][CB]: ([3.0300, 4.1900, 3.1900]) in Residue PRO(17)
+0.0900
+-0.1800
+-2.2508
+Atom[10][HB2]: ([-4.6015, 5.9402, -1.7697]) in Residue LEU(1)
+Atom[4][CB]: ([0.0500, 6.0100, -1.2300]) in Residue PRO(18)
+0.0900
+-0.1800
+-2.2508
+Atom[10][HB2]: ([-4.6015, 5.9402, -1.7697]) in Residue LEU(1)
+Atom[4][CB]: ([1.9700, 11.0700, 1.2800]) in Residue SER(19)
+0.0900
+0.0500
+0.6252
+Atom[14][HB2]: ([-3.5810, 2.9204, 3.0445]) in Residue TYR(2)
+Atom[4][CB]: ([-7.3900, -0.4700, 0.3400]) in Residue ILE(3)
+0.0900
+-0.0900
+-1.1254
+Atom[14][HB2]: ([-3.5810, 2.9204, 3.0445]) in Residue TYR(2)
+Atom[4][CB]: ([-4.2900, -0.3100, -4.0100]) in Residue GLN(4)
+0.0900
+-0.1800
+-2.2508
+Atom[14][HB2]: ([-3.5810, 2.9204, 3.0445]) in Residue TYR(2)
+Atom[4][CB]: ([-0.2200, 0.7000, -0.4200]) in Residue TRP(5)
+0.0900
+-0.1800
+-2.2508
+Atom[14][HB2]: ([-3.5810, 2.9204, 3.0445]) in Residue TYR(2)
+Atom[4][CB]: ([-2.7100, -2.6400, 3.0300]) in Residue LEU(6)
+0.0900
+-0.1800
+-2.2508
+Atom[14][HB2]: ([-3.5810, 2.9204, 3.0445]) in Residue TYR(2)
+Atom[4][CB]: ([-4.2200, -5.7000, -1.2300]) in Residue LYS(7)
+0.0900
+-0.1800
+-2.2508
+Atom[14][HB2]: ([-3.5810, 2.9204, 3.0445]) in Residue TYR(2)
+Atom[4][CB]: ([1.0300, -4.8400, -2.7200]) in Residue ASP(8)
+0.0900
+-0.2800
+-3.5012
+Atom[14][HB2]: ([-3.5810, 2.9204, 3.0445]) in Residue TYR(2)
+Atom[4][CB]: ([6.7400, -2.3900, 5.2800]) in Residue PRO(11)
+0.0900
+-0.1800
+-2.2508
+Atom[14][HB2]: ([-3.5810, 2.9204, 3.0445]) in Residue TYR(2)
+Atom[4][CB]: ([6.4600, -7.3700, 3.4700]) in Residue SER(12)
+0.0900
+0.0500
+0.6252
+Atom[14][HB2]: ([-3.5810, 2.9204, 3.0445]) in Residue TYR(2)
+Atom[4][CB]: ([4.9100, -4.9900, -1.2600]) in Residue SER(13)
+0.0900
+0.0500
+0.6252
+Atom[14][HB2]: ([-3.5810, 2.9204, 3.0445]) in Residue TYR(2)
+Atom[4][CB]: ([6.1100, -0.2400, -2.9900]) in Residue ARG(15)
+0.0900
+-0.1800
+-2.2508
+Atom[14][HB2]: ([-3.5810, 2.9204, 3.0445]) in Residue TYR(2)
+Atom[4][CB]: ([7.5500, 4.3900, 0.1200]) in Residue PRO(16)
+0.0900
+-0.1800
+-2.2508
+Atom[14][HB2]: ([-3.5810, 2.9204, 3.0445]) in Residue TYR(2)
+Atom[4][CB]: ([3.0300, 4.1900, 3.1900]) in Residue PRO(17)
+0.0900
+-0.1800
+-2.2508
+Atom[14][HB2]: ([-3.5810, 2.9204, 3.0445]) in Residue TYR(2)
+Atom[4][CB]: ([0.0500, 6.0100, -1.2300]) in Residue PRO(18)
+0.0900
+-0.1800
+-2.2508
+Atom[14][HB2]: ([-3.5810, 2.9204, 3.0445]) in Residue TYR(2)
+Atom[4][CB]: ([1.9700, 11.0700, 1.2800]) in Residue SER(19)
+0.0900
+0.0500
+0.6252
+Atom[11][HB2]: ([-3.6478, -0.6433, -4.7003]) in Residue GLN(4)
+Atom[4][CB]: ([-0.2200, 0.7000, -0.4200]) in Residue TRP(5)
+0.0900
+-0.1800
+-2.2508
+Atom[11][HB2]: ([-3.6478, -0.6433, -4.7003]) in Residue GLN(4)
+Atom[4][CB]: ([-2.7100, -2.6400, 3.0300]) in Residue LEU(6)
+0.0900
+-0.1800
+-2.2508
+Atom[11][HB2]: ([-3.6478, -0.6433, -4.7003]) in Residue GLN(4)
+Atom[4][CB]: ([-4.2200, -5.7000, -1.2300]) in Residue LYS(7)
+0.0900
+-0.1800
+-2.2508
+Atom[11][HB2]: ([-3.6478, -0.6433, -4.7003]) in Residue GLN(4)
+Atom[4][CB]: ([1.0300, -4.8400, -2.7200]) in Residue ASP(8)
+0.0900
+-0.2800
+-3.5012
+Atom[11][HB2]: ([-3.6478, -0.6433, -4.7003]) in Residue GLN(4)
+Atom[4][CB]: ([6.7400, -2.3900, 5.2800]) in Residue PRO(11)
+0.0900
+-0.1800
+-2.2508
+Atom[11][HB2]: ([-3.6478, -0.6433, -4.7003]) in Residue GLN(4)
+Atom[4][CB]: ([6.4600, -7.3700, 3.4700]) in Residue SER(12)
+0.0900
+0.0500
+0.6252
+Atom[11][HB2]: ([-3.6478, -0.6433, -4.7003]) in Residue GLN(4)
+Atom[4][CB]: ([4.9100, -4.9900, -1.2600]) in Residue SER(13)
+0.0900
+0.0500
+0.6252
+Atom[11][HB2]: ([-3.6478, -0.6433, -4.7003]) in Residue GLN(4)
+Atom[4][CB]: ([6.1100, -0.2400, -2.9900]) in Residue ARG(15)
+0.0900
+-0.1800
+-2.2508
+Atom[11][HB2]: ([-3.6478, -0.6433, -4.7003]) in Residue GLN(4)
+Atom[4][CB]: ([7.5500, 4.3900, 0.1200]) in Residue PRO(16)
+0.0900
+-0.1800
+-2.2508
+Atom[11][HB2]: ([-3.6478, -0.6433, -4.7003]) in Residue GLN(4)
+Atom[4][CB]: ([3.0300, 4.1900, 3.1900]) in Residue PRO(17)
+0.0900
+-0.1800
+-2.2508
+Atom[11][HB2]: ([-3.6478, -0.6433, -4.7003]) in Residue GLN(4)
+Atom[4][CB]: ([0.0500, 6.0100, -1.2300]) in Residue PRO(18)
+0.0900
+-0.1800
+-2.2508
+Atom[11][HB2]: ([-3.6478, -0.6433, -4.7003]) in Residue GLN(4)
+Atom[4][CB]: ([1.9700, 11.0700, 1.2800]) in Residue SER(19)
+0.0900
+0.0500
+0.6252
+Atom[16][HB2]: ([0.6607, 0.5381, 0.0251]) in Residue TRP(5)
+Atom[4][CB]: ([-2.7100, -2.6400, 3.0300]) in Residue LEU(6)
+0.0900
+-0.1800
+-2.2508
+Atom[16][HB2]: ([0.6607, 0.5381, 0.0251]) in Residue TRP(5)
+Atom[4][CB]: ([-4.2200, -5.7000, -1.2300]) in Residue LYS(7)
+0.0900
+-0.1800
+-2.2508
+Atom[16][HB2]: ([0.6607, 0.5381, 0.0251]) in Residue TRP(5)
+Atom[4][CB]: ([1.0300, -4.8400, -2.7200]) in Residue ASP(8)
+0.0900
+-0.2800
+-3.5012
+Atom[16][HB2]: ([0.6607, 0.5381, 0.0251]) in Residue TRP(5)
+Atom[4][CB]: ([6.7400, -2.3900, 5.2800]) in Residue PRO(11)
+0.0900
+-0.1800
+-2.2508
+Atom[16][HB2]: ([0.6607, 0.5381, 0.0251]) in Residue TRP(5)
+Atom[4][CB]: ([6.4600, -7.3700, 3.4700]) in Residue SER(12)
+0.0900
+0.0500
+0.6252
+Atom[16][HB2]: ([0.6607, 0.5381, 0.0251]) in Residue TRP(5)
+Atom[4][CB]: ([4.9100, -4.9900, -1.2600]) in Residue SER(13)
+0.0900
+0.0500
+0.6252
+Atom[16][HB2]: ([0.6607, 0.5381, 0.0251]) in Residue TRP(5)
+Atom[4][CB]: ([6.1100, -0.2400, -2.9900]) in Residue ARG(15)
+0.0900
+-0.1800
+-2.2508
+Atom[16][HB2]: ([0.6607, 0.5381, 0.0251]) in Residue TRP(5)
+Atom[4][CB]: ([7.5500, 4.3900, 0.1200]) in Residue PRO(16)
+0.0900
+-0.1800
+-2.2508
+Atom[16][HB2]: ([0.6607, 0.5381, 0.0251]) in Residue TRP(5)
+Atom[4][CB]: ([3.0300, 4.1900, 3.1900]) in Residue PRO(17)
+0.0900
+-0.1800
+-2.2508
+Atom[16][HB2]: ([0.6607, 0.5381, 0.0251]) in Residue TRP(5)
+Atom[4][CB]: ([0.0500, 6.0100, -1.2300]) in Residue PRO(18)
+0.0900
+-0.1800
+-2.2508
+Atom[16][HB2]: ([0.6607, 0.5381, 0.0251]) in Residue TRP(5)
+Atom[4][CB]: ([1.9700, 11.0700, 1.2800]) in Residue SER(19)
+0.0900
+0.0500
+0.6252
+Atom[10][HB2]: ([-3.5976, -2.6067, 2.5706]) in Residue LEU(6)
+Atom[4][CB]: ([-4.2200, -5.7000, -1.2300]) in Residue LYS(7)
+0.0900
+-0.1800
+-2.2508
+Atom[10][HB2]: ([-3.5976, -2.6067, 2.5706]) in Residue LEU(6)
+Atom[4][CB]: ([1.0300, -4.8400, -2.7200]) in Residue ASP(8)
+0.0900
+-0.2800
+-3.5012
+Atom[10][HB2]: ([-3.5976, -2.6067, 2.5706]) in Residue LEU(6)
+Atom[4][CB]: ([6.7400, -2.3900, 5.2800]) in Residue PRO(11)
+0.0900
+-0.1800
+-2.2508
+Atom[10][HB2]: ([-3.5976, -2.6067, 2.5706]) in Residue LEU(6)
+Atom[4][CB]: ([6.4600, -7.3700, 3.4700]) in Residue SER(12)
+0.0900
+0.0500
+0.6252
+Atom[10][HB2]: ([-3.5976, -2.6067, 2.5706]) in Residue LEU(6)
+Atom[4][CB]: ([4.9100, -4.9900, -1.2600]) in Residue SER(13)
+0.0900
+0.0500
+0.6252
+Atom[10][HB2]: ([-3.5976, -2.6067, 2.5706]) in Residue LEU(6)
+Atom[4][CB]: ([6.1100, -0.2400, -2.9900]) in Residue ARG(15)
+0.0900
+-0.1800
+-2.2508
+Atom[10][HB2]: ([-3.5976, -2.6067, 2.5706]) in Residue LEU(6)
+Atom[4][CB]: ([7.5500, 4.3900, 0.1200]) in Residue PRO(16)
+0.0900
+-0.1800
+-2.2508
+Atom[10][HB2]: ([-3.5976, -2.6067, 2.5706]) in Residue LEU(6)
+Atom[4][CB]: ([3.0300, 4.1900, 3.1900]) in Residue PRO(17)
+0.0900
+-0.1800
+-2.2508
+Atom[10][HB2]: ([-3.5976, -2.6067, 2.5706]) in Residue LEU(6)
+Atom[4][CB]: ([0.0500, 6.0100, -1.2300]) in Residue PRO(18)
+0.0900
+-0.1800
+-2.2508
+Atom[10][HB2]: ([-3.5976, -2.6067, 2.5706]) in Residue LEU(6)
+Atom[4][CB]: ([1.9700, 11.0700, 1.2800]) in Residue SER(19)
+0.0900
+0.0500
+0.6252
+Atom[11][HB2]: ([-4.2882, -6.5655, -1.7262]) in Residue LYS(7)
+Atom[4][CB]: ([1.0300, -4.8400, -2.7200]) in Residue ASP(8)
+0.0900
+-0.2800
+-3.5012
+Atom[11][HB2]: ([-4.2882, -6.5655, -1.7262]) in Residue LYS(7)
+Atom[4][CB]: ([6.7400, -2.3900, 5.2800]) in Residue PRO(11)
+0.0900
+-0.1800
+-2.2508
+Atom[11][HB2]: ([-4.2882, -6.5655, -1.7262]) in Residue LYS(7)
+Atom[4][CB]: ([6.4600, -7.3700, 3.4700]) in Residue SER(12)
+0.0900
+0.0500
+0.6252
+Atom[11][HB2]: ([-4.2882, -6.5655, -1.7262]) in Residue LYS(7)
+Atom[4][CB]: ([4.9100, -4.9900, -1.2600]) in Residue SER(13)
+0.0900
+0.0500
+0.6252
+Atom[11][HB2]: ([-4.2882, -6.5655, -1.7262]) in Residue LYS(7)
+Atom[4][CB]: ([6.1100, -0.2400, -2.9900]) in Residue ARG(15)
+0.0900
+-0.1800
+-2.2508
+Atom[11][HB2]: ([-4.2882, -6.5655, -1.7262]) in Residue LYS(7)
+Atom[4][CB]: ([7.5500, 4.3900, 0.1200]) in Residue PRO(16)
+0.0900
+-0.1800
+-2.2508
+Atom[11][HB2]: ([-4.2882, -6.5655, -1.7262]) in Residue LYS(7)
+Atom[4][CB]: ([3.0300, 4.1900, 3.1900]) in Residue PRO(17)
+0.0900
+-0.1800
+-2.2508
+Atom[11][HB2]: ([-4.2882, -6.5655, -1.7262]) in Residue LYS(7)
+Atom[4][CB]: ([0.0500, 6.0100, -1.2300]) in Residue PRO(18)
+0.0900
+-0.1800
+-2.2508
+Atom[11][HB2]: ([-4.2882, -6.5655, -1.7262]) in Residue LYS(7)
+Atom[4][CB]: ([1.9700, 11.0700, 1.2800]) in Residue SER(19)
+0.0900
+0.0500
+0.6252
+Atom[10][HB2]: ([1.9801, -5.0405, -2.9589]) in Residue ASP(8)
+Atom[4][CB]: ([6.7400, -2.3900, 5.2800]) in Residue PRO(11)
+0.0900
+-0.1800
+-2.2508
+Atom[10][HB2]: ([1.9801, -5.0405, -2.9589]) in Residue ASP(8)
+Atom[4][CB]: ([6.4600, -7.3700, 3.4700]) in Residue SER(12)
+0.0900
+0.0500
+0.6252
+Atom[10][HB2]: ([1.9801, -5.0405, -2.9589]) in Residue ASP(8)
+Atom[4][CB]: ([4.9100, -4.9900, -1.2600]) in Residue SER(13)
+0.0900
+0.0500
+0.6252
+Atom[10][HB2]: ([1.9801, -5.0405, -2.9589]) in Residue ASP(8)
+Atom[4][CB]: ([6.1100, -0.2400, -2.9900]) in Residue ARG(15)
+0.0900
+-0.1800
+-2.2508
+Atom[10][HB2]: ([1.9801, -5.0405, -2.9589]) in Residue ASP(8)
+Atom[4][CB]: ([7.5500, 4.3900, 0.1200]) in Residue PRO(16)
+0.0900
+-0.1800
+-2.2508
+Atom[10][HB2]: ([1.9801, -5.0405, -2.9589]) in Residue ASP(8)
+Atom[4][CB]: ([3.0300, 4.1900, 3.1900]) in Residue PRO(17)
+0.0900
+-0.1800
+-2.2508
+Atom[10][HB2]: ([1.9801, -5.0405, -2.9589]) in Residue ASP(8)
+Atom[4][CB]: ([0.0500, 6.0100, -1.2300]) in Residue PRO(18)
+0.0900
+-0.1800
+-2.2508
+Atom[10][HB2]: ([1.9801, -5.0405, -2.9589]) in Residue ASP(8)
+Atom[4][CB]: ([1.9700, 11.0700, 1.2800]) in Residue SER(19)
+0.0900
+0.0500
+0.6252
+Atom[8][HB2]: ([6.7483, -1.4270, 5.5495]) in Residue PRO(11)
+Atom[4][CB]: ([6.4600, -7.3700, 3.4700]) in Residue SER(12)
+0.0900
+0.0500
+0.6252
+Atom[8][HB2]: ([6.7483, -1.4270, 5.5495]) in Residue PRO(11)
+Atom[4][CB]: ([4.9100, -4.9900, -1.2600]) in Residue SER(13)
+0.0900
+0.0500
+0.6252
+Atom[8][HB2]: ([6.7483, -1.4270, 5.5495]) in Residue PRO(11)
+Atom[4][CB]: ([6.1100, -0.2400, -2.9900]) in Residue ARG(15)
+0.0900
+-0.1800
+-2.2508
+Atom[8][HB2]: ([6.7483, -1.4270, 5.5495]) in Residue PRO(11)
+Atom[4][CB]: ([7.5500, 4.3900, 0.1200]) in Residue PRO(16)
+0.0900
+-0.1800
+-2.2508
+Atom[8][HB2]: ([6.7483, -1.4270, 5.5495]) in Residue PRO(11)
+Atom[4][CB]: ([3.0300, 4.1900, 3.1900]) in Residue PRO(17)
+0.0900
+-0.1800
+-2.2508
+Atom[8][HB2]: ([6.7483, -1.4270, 5.5495]) in Residue PRO(11)
+Atom[4][CB]: ([0.0500, 6.0100, -1.2300]) in Residue PRO(18)
+0.0900
+-0.1800
+-2.2508
+Atom[8][HB2]: ([6.7483, -1.4270, 5.5495]) in Residue PRO(11)
+Atom[4][CB]: ([1.9700, 11.0700, 1.2800]) in Residue SER(19)
+0.0900
+0.0500
+0.6252
+Atom[8][HB2]: ([6.6565, -7.2427, 4.4422]) in Residue SER(12)
+Atom[4][CB]: ([4.9100, -4.9900, -1.2600]) in Residue SER(13)
+0.0900
+0.0500
+0.6252
+Atom[8][HB2]: ([6.6565, -7.2427, 4.4422]) in Residue SER(12)
+Atom[4][CB]: ([6.1100, -0.2400, -2.9900]) in Residue ARG(15)
+0.0900
+-0.1800
+-2.2508
+Atom[8][HB2]: ([6.6565, -7.2427, 4.4422]) in Residue SER(12)
+Atom[4][CB]: ([7.5500, 4.3900, 0.1200]) in Residue PRO(16)
+0.0900
+-0.1800
+-2.2508
+Atom[8][HB2]: ([6.6565, -7.2427, 4.4422]) in Residue SER(12)
+Atom[4][CB]: ([3.0300, 4.1900, 3.1900]) in Residue PRO(17)
+0.0900
+-0.1800
+-2.2508
+Atom[8][HB2]: ([6.6565, -7.2427, 4.4422]) in Residue SER(12)
+Atom[4][CB]: ([0.0500, 6.0100, -1.2300]) in Residue PRO(18)
+0.0900
+-0.1800
+-2.2508
+Atom[8][HB2]: ([6.6565, -7.2427, 4.4422]) in Residue SER(12)
+Atom[4][CB]: ([1.9700, 11.0700, 1.2800]) in Residue SER(19)
+0.0900
+0.0500
+0.6252
+Atom[8][HB2]: ([4.3567, -5.6730, -0.7831]) in Residue SER(13)
+Atom[4][CB]: ([6.1100, -0.2400, -2.9900]) in Residue ARG(15)
+0.0900
+-0.1800
+-2.2508
+Atom[8][HB2]: ([4.3567, -5.6730, -0.7831]) in Residue SER(13)
+Atom[4][CB]: ([7.5500, 4.3900, 0.1200]) in Residue PRO(16)
+0.0900
+-0.1800
+-2.2508
+Atom[8][HB2]: ([4.3567, -5.6730, -0.7831]) in Residue SER(13)
+Atom[4][CB]: ([3.0300, 4.1900, 3.1900]) in Residue PRO(17)
+0.0900
+-0.1800
+-2.2508
+Atom[8][HB2]: ([4.3567, -5.6730, -0.7831]) in Residue SER(13)
+Atom[4][CB]: ([0.0500, 6.0100, -1.2300]) in Residue PRO(18)
+0.0900
+-0.1800
+-2.2508
+Atom[8][HB2]: ([4.3567, -5.6730, -0.7831]) in Residue SER(13)
+Atom[4][CB]: ([1.9700, 11.0700, 1.2800]) in Residue SER(19)
+0.0900
+0.0500
+0.6252
+Atom[13][HB2]: ([5.5933, 0.6030, -3.1398]) in Residue ARG(15)
+Atom[4][CB]: ([7.5500, 4.3900, 0.1200]) in Residue PRO(16)
+0.0900
+-0.1800
+-2.2508
+Atom[13][HB2]: ([5.5933, 0.6030, -3.1398]) in Residue ARG(15)
+Atom[4][CB]: ([3.0300, 4.1900, 3.1900]) in Residue PRO(17)
+0.0900
+-0.1800
+-2.2508
+Atom[13][HB2]: ([5.5933, 0.6030, -3.1398]) in Residue ARG(15)
+Atom[4][CB]: ([0.0500, 6.0100, -1.2300]) in Residue PRO(18)
+0.0900
+-0.1800
+-2.2508
+Atom[13][HB2]: ([5.5933, 0.6030, -3.1398]) in Residue ARG(15)
+Atom[4][CB]: ([1.9700, 11.0700, 1.2800]) in Residue SER(19)
+0.0900
+0.0500
+0.6252
+Atom[8][HB2]: ([8.4451, 4.3452, 0.5635]) in Residue PRO(16)
+Atom[4][CB]: ([3.0300, 4.1900, 3.1900]) in Residue PRO(17)
+0.0900
+-0.1800
+-2.2508
+Atom[8][HB2]: ([8.4451, 4.3452, 0.5635]) in Residue PRO(16)
+Atom[4][CB]: ([0.0500, 6.0100, -1.2300]) in Residue PRO(18)
+0.0900
+-0.1800
+-2.2508
+Atom[8][HB2]: ([8.4451, 4.3452, 0.5635]) in Residue PRO(16)
+Atom[4][CB]: ([1.9700, 11.0700, 1.2800]) in Residue SER(19)
+0.0900
+0.0500
+0.6252
+Atom[8][HB2]: ([2.7995, 3.3076, 3.6002]) in Residue PRO(17)
+Atom[4][CB]: ([0.0500, 6.0100, -1.2300]) in Residue PRO(18)
+0.0900
+-0.1800
+-2.2508
+Atom[8][HB2]: ([2.7995, 3.3076, 3.6002]) in Residue PRO(17)
+Atom[4][CB]: ([1.9700, 11.0700, 1.2800]) in Residue SER(19)
+0.0900
+0.0500
+0.6252
+Atom[8][HB2]: ([0.4008, 5.7307, -2.1238]) in Residue PRO(18)
+Atom[4][CB]: ([1.9700, 11.0700, 1.2800]) in Residue SER(19)
+0.0900
+0.0500
+0.6252
+Chain annotated 
+Atom[9][HB2]: ([-9.1475, 2.7625, -3.6027]) in Residue ASN(0)
+Atom[4][CB]: ([-4.4100, 5.4500, -2.6200]) in Residue LEU(1)
+-4.0667  0.5535 -2.2508
+Atom[9][HB2]: ([-9.1475, 2.7625, -3.6027]) in Residue ASN(0)
+Atom[4][CB]: ([-3.9600, 3.4700, 2.3000]) in Residue TYR(2)
+-2.8526  0.7890 -2.2508
+Atom[9][HB2]: ([-9.1475, 2.7625, -3.6027]) in Residue ASN(0)
+Atom[4][CB]: ([-7.3900, -0.4700, 0.3400]) in Residue ILE(3)
+-2.0868  0.5393 -1.1254
+Atom[9][HB2]: ([-9.1475, 2.7625, -3.6027]) in Residue ASN(0)
+Atom[4][CB]: ([-4.2900, -0.3100, -4.0100]) in Residue GLN(4)
+-3.9062  0.5762 -2.2508
+Atom[9][HB2]: ([-9.1475, 2.7625, -3.6027]) in Residue ASN(0)
+Atom[4][CB]: ([-0.2200, 0.7000, -0.4200]) in Residue TRP(5)
+-2.3204  0.9700 -2.2508
+Atom[9][HB2]: ([-9.1475, 2.7625, -3.6027]) in Residue ASN(0)
+Atom[4][CB]: ([-2.7100, -2.6400, 3.0300]) in Residue LEU(6)
+-2.1023  1.0706 -2.2508
+Atom[9][HB2]: ([-9.1475, 2.7625, -3.6027]) in Residue ASN(0)
+Atom[4][CB]: ([-4.2200, -5.7000, -1.2300]) in Residue LYS(7)
+-2.2338  1.0076 -2.2508
+Atom[9][HB2]: ([-9.1475, 2.7625, -3.6027]) in Residue ASN(0)
+Atom[4][CB]: ([1.0300, -4.8400, -2.7200]) in Residue ASP(8)
+-2.7494  1.2734 -3.5012
+Atom[9][HB2]: ([-9.1475, 2.7625, -3.6027]) in Residue ASN(0)
+Atom[4][CB]: ([6.7400, -2.3900, 5.2800]) in Residue PRO(11)
+-1.1898  1.8917 -2.2508
+Atom[9][HB2]: ([-9.1475, 2.7625, -3.6027]) in Residue ASN(0)
+Atom[4][CB]: ([6.4600, -7.3700, 3.4700]) in Residue SER(12)
+0.3141  1.9907 0.6252
+Atom[9][HB2]: ([-9.1475, 2.7625, -3.6027]) in Residue ASN(0)
+Atom[4][CB]: ([4.9100, -4.9900, -1.2600]) in Residue SER(13)
+0.3854  1.6224 0.6252
+Atom[9][HB2]: ([-9.1475, 2.7625, -3.6027]) in Residue ASN(0)
+Atom[4][CB]: ([6.1100, -0.2400, -2.9900]) in Residue ARG(15)
+-1.4463  1.5562 -2.2508
+Atom[9][HB2]: ([-9.1475, 2.7625, -3.6027]) in Residue ASN(0)
+Atom[4][CB]: ([7.5500, 4.3900, 0.1200]) in Residue PRO(16)
+-1.3097  1.7185 -2.2508
+Atom[9][HB2]: ([-9.1475, 2.7625, -3.6027]) in Residue ASN(0)
+Atom[4][CB]: ([3.0300, 4.1900, 3.1900]) in Residue PRO(17)
+-1.6058  1.4017 -2.2508
+Atom[9][HB2]: ([-9.1475, 2.7625, -3.6027]) in Residue ASN(0)
+Atom[4][CB]: ([0.0500, 6.0100, -1.2300]) in Residue PRO(18)
+-2.2421  1.0038 -2.2508
+Atom[9][HB2]: ([-9.1475, 2.7625, -3.6027]) in Residue ASN(0)
+Atom[4][CB]: ([1.9700, 11.0700, 1.2800]) in Residue SER(19)
+0.4250  1.4712 0.6252
+Atom[10][HB2]: ([-4.6015, 5.9402, -1.7697]) in Residue LEU(1)
+Atom[4][CB]: ([-3.9600, 3.4700, 2.3000]) in Residue TYR(2)
+-4.6854  0.4804 -2.2508
+Atom[10][HB2]: ([-4.6015, 5.9402, -1.7697]) in Residue LEU(1)
+Atom[4][CB]: ([-7.3900, -0.4700, 0.3400]) in Residue ILE(3)
+-1.5412  0.7302 -1.1254
+Atom[10][HB2]: ([-4.6015, 5.9402, -1.7697]) in Residue LEU(1)
+Atom[4][CB]: ([-4.2900, -0.3100, -4.0100]) in Residue GLN(4)
+-3.3862  0.6647 -2.2508
+Atom[10][HB2]: ([-4.6015, 5.9402, -1.7697]) in Residue LEU(1)
+Atom[4][CB]: ([-0.2200, 0.7000, -0.4200]) in Residue TRP(5)
+-3.2326  0.6963 -2.2508
+Atom[10][HB2]: ([-4.6015, 5.9402, -1.7697]) in Residue LEU(1)
+Atom[4][CB]: ([-2.7100, -2.6400, 3.0300]) in Residue LEU(6)
+-2.2481  1.0012 -2.2508
+Atom[10][HB2]: ([-4.6015, 5.9402, -1.7697]) in Residue LEU(1)
+Atom[4][CB]: ([-4.2200, -5.7000, -1.2300]) in Residue LYS(7)
+-1.9305  1.1659 -2.2508
+Atom[10][HB2]: ([-4.6015, 5.9402, -1.7697]) in Residue LEU(1)
+Atom[4][CB]: ([1.0300, -4.8400, -2.7200]) in Residue ASP(8)
+-2.8699  1.2200 -3.5012
+Atom[10][HB2]: ([-4.6015, 5.9402, -1.7697]) in Residue LEU(1)
+Atom[4][CB]: ([6.7400, -2.3900, 5.2800]) in Residue PRO(11)
+-1.4300  1.5739 -2.2508
+Atom[10][HB2]: ([-4.6015, 5.9402, -1.7697]) in Residue LEU(1)
+Atom[4][CB]: ([6.4600, -7.3700, 3.4700]) in Residue SER(12)
+0.3458  1.8082 0.6252
+Atom[10][HB2]: ([-4.6015, 5.9402, -1.7697]) in Residue LEU(1)
+Atom[4][CB]: ([4.9100, -4.9900, -1.2600]) in Residue SER(13)
+0.4312  1.4498 0.6252
+Atom[10][HB2]: ([-4.6015, 5.9402, -1.7697]) in Residue LEU(1)
+Atom[4][CB]: ([6.1100, -0.2400, -2.9900]) in Residue ARG(15)
+-1.8112  1.2427 -2.2508
+Atom[10][HB2]: ([-4.6015, 5.9402, -1.7697]) in Residue LEU(1)
+Atom[4][CB]: ([7.5500, 4.3900, 0.1200]) in Residue PRO(16)
+-1.8159  1.2395 -2.2508
+Atom[10][HB2]: ([-4.6015, 5.9402, -1.7697]) in Residue LEU(1)
+Atom[4][CB]: ([3.0300, 4.1900, 3.1900]) in Residue PRO(17)
+-2.4284  0.9268 -2.2508
+Atom[10][HB2]: ([-4.6015, 5.9402, -1.7697]) in Residue LEU(1)
+Atom[4][CB]: ([0.0500, 6.0100, -1.2300]) in Residue PRO(18)
+-4.8060  0.4683 -2.2508
+Atom[10][HB2]: ([-4.6015, 5.9402, -1.7697]) in Residue LEU(1)
+Atom[4][CB]: ([1.9700, 11.0700, 1.2800]) in Residue SER(19)
+0.7043  0.8877 0.6252
+Atom[14][HB2]: ([-3.5810, 2.9204, 3.0445]) in Residue TYR(2)
+Atom[4][CB]: ([-7.3900, -0.4700, 0.3400]) in Residue ILE(3)
+-1.9497  0.5772 -1.1254
+Atom[14][HB2]: ([-3.5810, 2.9204, 3.0445]) in Residue TYR(2)
+Atom[4][CB]: ([-4.2900, -0.3100, -4.0100]) in Residue GLN(4)
+-2.8888  0.7791 -2.2508
+Atom[14][HB2]: ([-3.5810, 2.9204, 3.0445]) in Residue TYR(2)
+Atom[4][CB]: ([-0.2200, 0.7000, -0.4200]) in Residue TRP(5)
+-4.2362  0.5313 -2.2508
+Atom[14][HB2]: ([-3.5810, 2.9204, 3.0445]) in Residue TYR(2)
+Atom[4][CB]: ([-2.7100, -2.6400, 3.0300]) in Residue LEU(6)
+-3.9990  0.5628 -2.2508
+Atom[14][HB2]: ([-3.5810, 2.9204, 3.0445]) in Residue TYR(2)
+Atom[4][CB]: ([-4.2200, -5.7000, -1.2300]) in Residue LYS(7)
+-2.3340  0.9643 -2.2508
+Atom[14][HB2]: ([-3.5810, 2.9204, 3.0445]) in Residue TYR(2)
+Atom[4][CB]: ([1.0300, -4.8400, -2.7200]) in Residue ASP(8)
+-3.2689  1.0711 -3.5012
+Atom[14][HB2]: ([-3.5810, 2.9204, 3.0445]) in Residue TYR(2)
+Atom[4][CB]: ([6.7400, -2.3900, 5.2800]) in Residue PRO(11)
+-1.9041  1.1820 -2.2508
+Atom[14][HB2]: ([-3.5810, 2.9204, 3.0445]) in Residue TYR(2)
+Atom[4][CB]: ([6.4600, -7.3700, 3.4700]) in Residue SER(12)
+0.4347  1.4384 0.6252
+Atom[14][HB2]: ([-3.5810, 2.9204, 3.0445]) in Residue TYR(2)
+Atom[4][CB]: ([4.9100, -4.9900, -1.2600]) in Residue SER(13)
+0.5051  1.2377 0.6252
+Atom[14][HB2]: ([-3.5810, 2.9204, 3.0445]) in Residue TYR(2)
+Atom[4][CB]: ([6.1100, -0.2400, -2.9900]) in Residue ARG(15)
+-1.9001  1.1846 -2.2508
+Atom[14][HB2]: ([-3.5810, 2.9204, 3.0445]) in Residue TYR(2)
+Atom[4][CB]: ([7.5500, 4.3900, 0.1200]) in Residue PRO(16)
+-1.9399  1.1602 -2.2508
+Atom[14][HB2]: ([-3.5810, 2.9204, 3.0445]) in Residue TYR(2)
+Atom[4][CB]: ([3.0300, 4.1900, 3.1900]) in Residue PRO(17)
+-3.3427  0.6733 -2.2508
+Atom[14][HB2]: ([-3.5810, 2.9204, 3.0445]) in Residue TYR(2)
+Atom[4][CB]: ([0.0500, 6.0100, -1.2300]) in Residue PRO(18)
+-3.5150  0.6403 -2.2508
+Atom[14][HB2]: ([-3.5810, 2.9204, 3.0445]) in Residue TYR(2)
+Atom[4][CB]: ([1.9700, 11.0700, 1.2800]) in Residue SER(19)
+0.6241  1.0017 0.6252
+Atom[11][HB2]: ([-3.6478, -0.6433, -4.7003]) in Residue GLN(4)
+Atom[4][CB]: ([-0.2200, 0.7000, -0.4200]) in Residue TRP(5)
+-3.9866  0.5646 -2.2508
+Atom[11][HB2]: ([-3.6478, -0.6433, -4.7003]) in Residue GLN(4)
+Atom[4][CB]: ([-2.7100, -2.6400, 3.0300]) in Residue LEU(6)
+-2.7998  0.8039 -2.2508
+Atom[11][HB2]: ([-3.6478, -0.6433, -4.7003]) in Residue GLN(4)
+Atom[4][CB]: ([-4.2200, -5.7000, -1.2300]) in Residue LYS(7)
+-3.6540  0.6160 -2.2508
+Atom[11][HB2]: ([-3.6478, -0.6433, -4.7003]) in Residue GLN(4)
+Atom[4][CB]: ([1.0300, -4.8400, -2.7200]) in Residue ASP(8)
+-5.3136  0.6589 -3.5012
+Atom[11][HB2]: ([-3.6478, -0.6433, -4.7003]) in Residue GLN(4)
+Atom[4][CB]: ([6.7400, -2.3900, 5.2800]) in Residue PRO(11)
+-1.5511  1.4511 -2.2508
+Atom[11][HB2]: ([-3.6478, -0.6433, -4.7003]) in Residue GLN(4)
+Atom[4][CB]: ([6.4600, -7.3700, 3.4700]) in Residue SER(12)
+0.4272  1.4635 0.6252
+Atom[11][HB2]: ([-3.6478, -0.6433, -4.7003]) in Residue GLN(4)
+Atom[4][CB]: ([4.9100, -4.9900, -1.2600]) in Residue SER(13)
+0.6132  1.0196 0.6252
+Atom[11][HB2]: ([-3.6478, -0.6433, -4.7003]) in Residue GLN(4)
+Atom[4][CB]: ([6.1100, -0.2400, -2.9900]) in Residue ARG(15)
+-2.2701  0.9915 -2.2508
+Atom[11][HB2]: ([-3.6478, -0.6433, -4.7003]) in Residue GLN(4)
+Atom[4][CB]: ([7.5500, 4.3900, 0.1200]) in Residue PRO(16)
+-1.7065  1.3189 -2.2508
+Atom[11][HB2]: ([-3.6478, -0.6433, -4.7003]) in Residue GLN(4)
+Atom[4][CB]: ([3.0300, 4.1900, 3.1900]) in Residue PRO(17)
+-1.9724  1.1411 -2.2508
+Atom[11][HB2]: ([-3.6478, -0.6433, -4.7003]) in Residue GLN(4)
+Atom[4][CB]: ([0.0500, 6.0100, -1.2300]) in Residue PRO(18)
+-2.6905  0.8366 -2.2508
+Atom[11][HB2]: ([-3.6478, -0.6433, -4.7003]) in Residue GLN(4)
+Atom[4][CB]: ([1.9700, 11.0700, 1.2800]) in Residue SER(19)
+0.4372  1.4301 0.6252
+Atom[16][HB2]: ([0.6607, 0.5381, 0.0251]) in Residue TRP(5)
+Atom[4][CB]: ([-2.7100, -2.6400, 3.0300]) in Residue LEU(6)
+-4.0760  0.5522 -2.2508
+Atom[16][HB2]: ([0.6607, 0.5381, 0.0251]) in Residue TRP(5)
+Atom[4][CB]: ([-4.2200, -5.7000, -1.2300]) in Residue LYS(7)
+-2.8066  0.8019 -2.2508
+Atom[16][HB2]: ([0.6607, 0.5381, 0.0251]) in Residue TRP(5)
+Atom[4][CB]: ([1.0300, -4.8400, -2.7200]) in Residue ASP(8)
+-5.7876  0.6049 -3.5012
+Atom[16][HB2]: ([0.6607, 0.5381, 0.0251]) in Residue TRP(5)
+Atom[4][CB]: ([6.7400, -2.3900, 5.2800]) in Residue PRO(11)
+-2.6317  0.8553 -2.2508
+Atom[16][HB2]: ([0.6607, 0.5381, 0.0251]) in Residue TRP(5)
+Atom[4][CB]: ([6.4600, -7.3700, 3.4700]) in Residue SER(12)
+0.6015  1.0394 0.6252
+Atom[16][HB2]: ([0.6607, 0.5381, 0.0251]) in Residue TRP(5)
+Atom[4][CB]: ([4.9100, -4.9900, -1.2600]) in Residue SER(13)
+0.8818  0.7090 0.6252
+Atom[16][HB2]: ([0.6607, 0.5381, 0.0251]) in Residue TRP(5)
+Atom[4][CB]: ([6.1100, -0.2400, -2.9900]) in Residue ARG(15)
+-3.5862  0.6276 -2.2508
+Atom[16][HB2]: ([0.6607, 0.5381, 0.0251]) in Residue TRP(5)
+Atom[4][CB]: ([7.5500, 4.3900, 0.1200]) in Residue PRO(16)
+-2.8514  0.7894 -2.2508
+Atom[16][HB2]: ([0.6607, 0.5381, 0.0251]) in Residue TRP(5)
+Atom[4][CB]: ([3.0300, 4.1900, 3.1900]) in Residue PRO(17)
+-4.1820  0.5382 -2.2508
+Atom[16][HB2]: ([0.6607, 0.5381, 0.0251]) in Residue TRP(5)
+Atom[4][CB]: ([0.0500, 6.0100, -1.2300]) in Residue PRO(18)
+-3.9857  0.5647 -2.2508
+Atom[16][HB2]: ([0.6607, 0.5381, 0.0251]) in Residue TRP(5)
+Atom[4][CB]: ([1.9700, 11.0700, 1.2800]) in Residue SER(19)
+0.5850  1.0687 0.6252
+Atom[10][HB2]: ([-3.5976, -2.6067, 2.5706]) in Residue LEU(6)
+Atom[4][CB]: ([-4.2200, -5.7000, -1.2300]) in Residue LYS(7)
+-4.5565  0.4940 -2.2508
+Atom[10][HB2]: ([-3.5976, -2.6067, 2.5706]) in Residue LEU(6)
+Atom[4][CB]: ([1.0300, -4.8400, -2.7200]) in Residue ASP(8)
+-4.7473  0.7375 -3.5012
+Atom[10][HB2]: ([-3.5976, -2.6067, 2.5706]) in Residue LEU(6)
+Atom[4][CB]: ([6.7400, -2.3900, 5.2800]) in Residue PRO(11)
+-2.1057  1.0689 -2.2508
+Atom[10][HB2]: ([-3.5976, -2.6067, 2.5706]) in Residue LEU(6)
+Atom[4][CB]: ([6.4600, -7.3700, 3.4700]) in Residue SER(12)
+0.5600  1.1165 0.6252
+Atom[10][HB2]: ([-3.5976, -2.6067, 2.5706]) in Residue LEU(6)
+Atom[4][CB]: ([4.9100, -4.9900, -1.2600]) in Residue SER(13)
+0.6492  0.9630 0.6252
+Atom[10][HB2]: ([-3.5976, -2.6067, 2.5706]) in Residue LEU(6)
+Atom[4][CB]: ([6.1100, -0.2400, -2.9900]) in Residue ARG(15)
+-1.9683  1.1435 -2.2508
+Atom[10][HB2]: ([-3.5976, -2.6067, 2.5706]) in Residue LEU(6)
+Atom[4][CB]: ([7.5500, 4.3900, 0.1200]) in Residue PRO(16)
+-1.6812  1.3388 -2.2508
+Atom[10][HB2]: ([-3.5976, -2.6067, 2.5706]) in Residue LEU(6)
+Atom[4][CB]: ([3.0300, 4.1900, 3.1900]) in Residue PRO(17)
+-2.3659  0.9513 -2.2508
+Atom[10][HB2]: ([-3.5976, -2.6067, 2.5706]) in Residue LEU(6)
+Atom[4][CB]: ([0.0500, 6.0100, -1.2300]) in Residue PRO(18)
+-2.2286  1.0099 -2.2508
+Atom[10][HB2]: ([-3.5976, -2.6067, 2.5706]) in Residue LEU(6)
+Atom[4][CB]: ([1.9700, 11.0700, 1.2800]) in Residue SER(19)
+0.4218  1.4823 0.6252
+Atom[11][HB2]: ([-4.2882, -6.5655, -1.7262]) in Residue LYS(7)
+Atom[4][CB]: ([1.0300, -4.8400, -2.7200]) in Residue ASP(8)
+-6.1654  0.5679 -3.5012
+Atom[11][HB2]: ([-4.2882, -6.5655, -1.7262]) in Residue LYS(7)
+Atom[4][CB]: ([6.7400, -2.3900, 5.2800]) in Residue PRO(11)
+-1.6409  1.3717 -2.2508
+Atom[11][HB2]: ([-4.2882, -6.5655, -1.7262]) in Residue LYS(7)
+Atom[4][CB]: ([6.4600, -7.3700, 3.4700]) in Residue SER(12)
+0.5225  1.1965 0.6252
+Atom[11][HB2]: ([-4.2882, -6.5655, -1.7262]) in Residue LYS(7)
+Atom[4][CB]: ([4.9100, -4.9900, -1.2600]) in Residue SER(13)
+0.6691  0.9344 0.6252
+Atom[11][HB2]: ([-4.2882, -6.5655, -1.7262]) in Residue LYS(7)
+Atom[4][CB]: ([6.1100, -0.2400, -2.9900]) in Residue ARG(15)
+-1.8394  1.2237 -2.2508
+Atom[11][HB2]: ([-4.2882, -6.5655, -1.7262]) in Residue LYS(7)
+Atom[4][CB]: ([7.5500, 4.3900, 0.1200]) in Residue PRO(16)
+-1.3864  1.6235 -2.2508
+Atom[11][HB2]: ([-4.2882, -6.5655, -1.7262]) in Residue LYS(7)
+Atom[4][CB]: ([3.0300, 4.1900, 3.1900]) in Residue PRO(17)
+-1.6184  1.3907 -2.2508
+Atom[11][HB2]: ([-4.2882, -6.5655, -1.7262]) in Residue LYS(7)
+Atom[4][CB]: ([0.0500, 6.0100, -1.2300]) in Residue PRO(18)
+-1.6908  1.3312 -2.2508
+Atom[11][HB2]: ([-4.2882, -6.5655, -1.7262]) in Residue LYS(7)
+Atom[4][CB]: ([1.9700, 11.0700, 1.2800]) in Residue SER(19)
+0.3299  1.8953 0.6252
+Atom[10][HB2]: ([1.9801, -5.0405, -2.9589]) in Residue ASP(8)
+Atom[4][CB]: ([6.7400, -2.3900, 5.2800]) in Residue PRO(11)
+-2.2787  0.9877 -2.2508
+Atom[10][HB2]: ([1.9801, -5.0405, -2.9589]) in Residue ASP(8)
+Atom[4][CB]: ([6.4600, -7.3700, 3.4700]) in Residue SER(12)
+0.7648  0.8175 0.6252
+Atom[10][HB2]: ([1.9801, -5.0405, -2.9589]) in Residue ASP(8)
+Atom[4][CB]: ([4.9100, -4.9900, -1.2600]) in Residue SER(13)
+1.8458  0.3387 0.6252
+Atom[10][HB2]: ([1.9801, -5.0405, -2.9589]) in Residue ASP(8)
+Atom[4][CB]: ([6.1100, -0.2400, -2.9900]) in Residue ARG(15)
+-3.5542  0.6333 -2.2508
+Atom[10][HB2]: ([1.9801, -5.0405, -2.9589]) in Residue ASP(8)
+Atom[4][CB]: ([7.5500, 4.3900, 0.1200]) in Residue PRO(16)
+-1.9783  1.1377 -2.2508
+Atom[10][HB2]: ([1.9801, -5.0405, -2.9589]) in Residue ASP(8)
+Atom[4][CB]: ([3.0300, 4.1900, 3.1900]) in Residue PRO(17)
+-2.0203  1.1141 -2.2508
+Atom[10][HB2]: ([1.9801, -5.0405, -2.9589]) in Residue ASP(8)
+Atom[4][CB]: ([0.0500, 6.0100, -1.2300]) in Residue PRO(18)
+-1.9830  1.1350 -2.2508
+Atom[10][HB2]: ([1.9801, -5.0405, -2.9589]) in Residue ASP(8)
+Atom[4][CB]: ([1.9700, 11.0700, 1.2800]) in Residue SER(19)
+0.3753  1.6659 0.6252
+Atom[8][HB2]: ([6.7483, -1.4270, 5.5495]) in Residue PRO(11)
+Atom[4][CB]: ([6.4600, -7.3700, 3.4700]) in Residue SER(12)
+0.9919  0.6303 0.6252
+Atom[8][HB2]: ([6.7483, -1.4270, 5.5495]) in Residue PRO(11)
+Atom[4][CB]: ([4.9100, -4.9900, -1.2600]) in Residue SER(13)
+0.7912  0.7902 0.6252
+Atom[8][HB2]: ([6.7483, -1.4270, 5.5495]) in Residue PRO(11)
+Atom[4][CB]: ([6.1100, -0.2400, -2.9900]) in Residue ARG(15)
+-2.6035  0.8645 -2.2508
+Atom[8][HB2]: ([6.7483, -1.4270, 5.5495]) in Residue PRO(11)
+Atom[4][CB]: ([7.5500, 4.3900, 0.1200]) in Residue PRO(16)
+-2.8143  0.7998 -2.2508
+Atom[8][HB2]: ([6.7483, -1.4270, 5.5495]) in Residue PRO(11)
+Atom[4][CB]: ([3.0300, 4.1900, 3.1900]) in Residue PRO(17)
+-3.1534  0.7138 -2.2508
+Atom[8][HB2]: ([6.7483, -1.4270, 5.5495]) in Residue PRO(11)
+Atom[4][CB]: ([0.0500, 6.0100, -1.2300]) in Residue PRO(18)
+-1.8619  1.2089 -2.2508
+Atom[8][HB2]: ([6.7483, -1.4270, 5.5495]) in Residue PRO(11)
+Atom[4][CB]: ([1.9700, 11.0700, 1.2800]) in Residue SER(19)
+0.4452  1.4044 0.6252
+Atom[8][HB2]: ([6.6565, -7.2427, 4.4422]) in Residue SER(12)
+Atom[4][CB]: ([4.9100, -4.9900, -1.2600]) in Residue SER(13)
+0.9807  0.6375 0.6252
+Atom[8][HB2]: ([6.6565, -7.2427, 4.4422]) in Residue SER(12)
+Atom[4][CB]: ([6.1100, -0.2400, -2.9900]) in Residue ARG(15)
+-2.2010  1.0226 -2.2508
+Atom[8][HB2]: ([6.6565, -7.2427, 4.4422]) in Residue SER(12)
+Atom[4][CB]: ([7.5500, 4.3900, 0.1200]) in Residue PRO(16)
+-1.8090  1.2442 -2.2508
+Atom[8][HB2]: ([6.6565, -7.2427, 4.4422]) in Residue SER(12)
+Atom[4][CB]: ([3.0300, 4.1900, 3.1900]) in Residue PRO(17)
+-1.8664  1.2059 -2.2508
+Atom[8][HB2]: ([6.6565, -7.2427, 4.4422]) in Residue SER(12)
+Atom[4][CB]: ([0.0500, 6.0100, -1.2300]) in Residue PRO(18)
+-1.4194  1.5857 -2.2508
+Atom[8][HB2]: ([6.6565, -7.2427, 4.4422]) in Residue SER(12)
+Atom[4][CB]: ([1.9700, 11.0700, 1.2800]) in Residue SER(19)
+0.3262  1.9165 0.6252
+Atom[8][HB2]: ([4.3567, -5.6730, -0.7831]) in Residue SER(13)
+Atom[4][CB]: ([6.1100, -0.2400, -2.9900]) in Residue ARG(15)
+-3.6773  0.6121 -2.2508
+Atom[8][HB2]: ([4.3567, -5.6730, -0.7831]) in Residue SER(13)
+Atom[4][CB]: ([7.5500, 4.3900, 0.1200]) in Residue PRO(16)
+-2.1241  1.0596 -2.2508
+Atom[8][HB2]: ([4.3567, -5.6730, -0.7831]) in Residue SER(13)
+Atom[4][CB]: ([3.0300, 4.1900, 3.1900]) in Residue PRO(17)
+-2.1004  1.0716 -2.2508
+Atom[8][HB2]: ([4.3567, -5.6730, -0.7831]) in Residue SER(13)
+Atom[4][CB]: ([0.0500, 6.0100, -1.2300]) in Residue PRO(18)
+-1.8065  1.2460 -2.2508
+Atom[8][HB2]: ([4.3567, -5.6730, -0.7831]) in Residue SER(13)
+Atom[4][CB]: ([1.9700, 11.0700, 1.2800]) in Residue SER(19)
+0.3670  1.7038 0.6252
+Atom[13][HB2]: ([5.5933, 0.6030, -3.1398]) in Residue ARG(15)
+Atom[4][CB]: ([7.5500, 4.3900, 0.1200]) in Residue PRO(16)
+-4.1943  0.5366 -2.2508
+Atom[13][HB2]: ([5.5933, 0.6030, -3.1398]) in Residue ARG(15)
+Atom[4][CB]: ([3.0300, 4.1900, 3.1900]) in Residue PRO(17)
+-2.9178  0.7714 -2.2508
+Atom[13][HB2]: ([5.5933, 0.6030, -3.1398]) in Residue ARG(15)
+Atom[4][CB]: ([0.0500, 6.0100, -1.2300]) in Residue PRO(18)
+-2.8220  0.7976 -2.2508
+Atom[13][HB2]: ([5.5933, 0.6030, -3.1398]) in Residue ARG(15)
+Atom[4][CB]: ([1.9700, 11.0700, 1.2800]) in Residue SER(19)
+0.5243  1.1926 0.6252
+Atom[8][HB2]: ([8.4451, 4.3452, 0.5635]) in Residue PRO(16)
+Atom[4][CB]: ([3.0300, 4.1900, 3.1900]) in Residue PRO(17)
+-3.7385  0.6020 -2.2508
+Atom[8][HB2]: ([8.4451, 4.3452, 0.5635]) in Residue PRO(16)
+Atom[4][CB]: ([0.0500, 6.0100, -1.2300]) in Residue PRO(18)
+-2.5739  0.8745 -2.2508
+Atom[8][HB2]: ([8.4451, 4.3452, 0.5635]) in Residue PRO(16)
+Atom[4][CB]: ([1.9700, 11.0700, 1.2800]) in Residue SER(19)
+0.6678  0.9363 0.6252
+Atom[8][HB2]: ([2.7995, 3.3076, 3.6002]) in Residue PRO(17)
+Atom[4][CB]: ([0.0500, 6.0100, -1.2300]) in Residue PRO(18)
+-3.6419  0.6180 -2.2508
+Atom[8][HB2]: ([2.7995, 3.3076, 3.6002]) in Residue PRO(17)
+Atom[4][CB]: ([1.9700, 11.0700, 1.2800]) in Residue SER(19)
+0.7677  0.8144 0.6252
+Atom[8][HB2]: ([0.4008, 5.7307, -2.1238]) in Residue PRO(18)
+Atom[4][CB]: ([1.9700, 11.0700, 1.2800]) in Residue SER(19)
+0.9584  0.6524 0.6252
+Total Energy: -1120.52
+    Energy terms:
+        energy-coulomb: 	-1120.52

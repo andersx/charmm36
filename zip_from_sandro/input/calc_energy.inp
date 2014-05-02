@@ -1,0 +1,18 @@
+* calculate energy over trajectory
+
+read rtf card name @topology
+read param flexi card name  @parameter
+open read card unit 10 name @psf
+read psf card unit 10
+close unit 10
+stream @{stream}
+open unit 20 read file name @{trajectory}
+traj firstu 20 nunit 1 begin @{begin}
+set ntot ?nfile
+SET frame 0 
+LABEL LOOP 
+TRAJ READ 
+energy
+INCR frame BY 1 
+if frame le @{ntot} goto loop 
+stop 

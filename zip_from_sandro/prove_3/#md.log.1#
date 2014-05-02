@@ -1,0 +1,306 @@
+Log file opened on Mon Oct 29 11:27:46 2012
+Host: Sandro-Bottaro.local  pid: 30004  nodeid: 0  nnodes:  1
+The Gromacs distribution was built Tue Sep 11 12:35:00 CEST 2012 by
+sandro@dhcp-054.sbp.sissa.it (Darwin 9.8.0 i386)
+
+
+                         :-)  G  R  O  M  A  C  S  (-:
+
+                       Great Red Owns Many ACres of Sand 
+
+                            :-)  VERSION 4.5.5  (-:
+
+        Written by Emile Apol, Rossen Apostolov, Herman J.C. Berendsen,
+      Aldert van Buuren, Pär Bjelkmar, Rudi van Drunen, Anton Feenstra, 
+        Gerrit Groenhof, Peter Kasson, Per Larsson, Pieter Meulenhoff, 
+           Teemu Murtola, Szilard Pall, Sander Pronk, Roland Schulz, 
+                Michael Shirts, Alfons Sijbers, Peter Tieleman,
+
+               Berk Hess, David van der Spoel, and Erik Lindahl.
+
+       Copyright (c) 1991-2000, University of Groningen, The Netherlands.
+            Copyright (c) 2001-2010, The GROMACS development team at
+        Uppsala University & The Royal Institute of Technology, Sweden.
+            check out http://www.gromacs.org for more information.
+
+         This program is free software; you can redistribute it and/or
+          modify it under the terms of the GNU General Public License
+         as published by the Free Software Foundation; either version 2
+             of the License, or (at your option) any later version.
+
+                                :-)  mdrun  (-:
+
+
+++++ PLEASE READ AND CITE THE FOLLOWING REFERENCE ++++
+B. Hess and C. Kutzner and D. van der Spoel and E. Lindahl
+GROMACS 4: Algorithms for highly efficient, load-balanced, and scalable
+molecular simulation
+J. Chem. Theory Comput. 4 (2008) pp. 435-447
+-------- -------- --- Thank You --- -------- --------
+
+
+++++ PLEASE READ AND CITE THE FOLLOWING REFERENCE ++++
+D. van der Spoel, E. Lindahl, B. Hess, G. Groenhof, A. E. Mark and H. J. C.
+Berendsen
+GROMACS: Fast, Flexible and Free
+J. Comp. Chem. 26 (2005) pp. 1701-1719
+-------- -------- --- Thank You --- -------- --------
+
+
+++++ PLEASE READ AND CITE THE FOLLOWING REFERENCE ++++
+E. Lindahl and B. Hess and D. van der Spoel
+GROMACS 3.0: A package for molecular simulation and trajectory analysis
+J. Mol. Mod. 7 (2001) pp. 306-317
+-------- -------- --- Thank You --- -------- --------
+
+
+++++ PLEASE READ AND CITE THE FOLLOWING REFERENCE ++++
+H. J. C. Berendsen, D. van der Spoel and R. van Drunen
+GROMACS: A message-passing parallel molecular dynamics implementation
+Comp. Phys. Comm. 91 (1995) pp. 43-56
+-------- -------- --- Thank You --- -------- --------
+
+Input Parameters:
+   integrator           = steep
+   nsteps               = 0
+   init_step            = 0
+   ns_type              = Simple
+   nstlist              = 0
+   ndelta               = 2
+   nstcomm              = 10
+   comm_mode            = Linear
+   nstlog               = 100
+   nstxout              = 10
+   nstvout              = 100
+   nstfout              = 0
+   nstcalcenergy        = -1
+   nstenergy            = 10
+   nstxtcout            = 0
+   init_t               = 0
+   delta_t              = 0.001
+   xtcprec              = 1000
+   nkx                  = 0
+   nky                  = 0
+   nkz                  = 0
+   pme_order            = 4
+   ewald_rtol           = 1e-05
+   ewald_geometry       = 0
+   epsilon_surface      = 0
+   optimize_fft         = TRUE
+   ePBC                 = no
+   bPeriodicMols        = FALSE
+   bContinuation        = TRUE
+   bShakeSOR            = FALSE
+   etc                  = No
+   nsttcouple           = -1
+   epc                  = No
+   epctype              = Isotropic
+   nstpcouple           = -1
+   tau_p                = 1
+   ref_p (3x3):
+      ref_p[    0]={ 0.00000e+00,  0.00000e+00,  0.00000e+00}
+      ref_p[    1]={ 0.00000e+00,  0.00000e+00,  0.00000e+00}
+      ref_p[    2]={ 0.00000e+00,  0.00000e+00,  0.00000e+00}
+   compress (3x3):
+      compress[    0]={ 0.00000e+00,  0.00000e+00,  0.00000e+00}
+      compress[    1]={ 0.00000e+00,  0.00000e+00,  0.00000e+00}
+      compress[    2]={ 0.00000e+00,  0.00000e+00,  0.00000e+00}
+   refcoord_scaling     = No
+   posres_com (3):
+      posres_com[0]= 0.00000e+00
+      posres_com[1]= 0.00000e+00
+      posres_com[2]= 0.00000e+00
+   posres_comB (3):
+      posres_comB[0]= 0.00000e+00
+      posres_comB[1]= 0.00000e+00
+      posres_comB[2]= 0.00000e+00
+   andersen_seed        = 815131
+   rlist                = 0
+   rlistlong            = 0
+   rtpi                 = 0.05
+   coulombtype          = Cut-off
+   rcoulomb_switch      = 0
+   rcoulomb             = 0
+   vdwtype              = Cut-off
+   rvdw_switch          = 0
+   rvdw                 = 0
+   epsilon_r            = 1
+   epsilon_rf           = 1
+   tabext               = 1
+   implicit_solvent     = No
+   gb_algorithm         = Still
+   gb_epsilon_solvent   = 80
+   nstgbradii           = 1
+   rgbradii             = 1
+   gb_saltconc          = 0
+   gb_obc_alpha         = 1
+   gb_obc_beta          = 0.8
+   gb_obc_gamma         = 4.85
+   gb_dielectric_offset = 0.009
+   sa_algorithm         = Ace-approximation
+   sa_surface_tension   = 2.05016
+   DispCorr             = No
+   free_energy          = no
+   init_lambda          = 0
+   delta_lambda         = 0
+   n_foreign_lambda     = 0
+   sc_alpha             = 0
+   sc_power             = 0
+   sc_sigma             = 0.3
+   sc_sigma_min         = 0.3
+   nstdhdl              = 10
+   separate_dhdl_file   = yes
+   dhdl_derivatives     = yes
+   dh_hist_size         = 0
+   dh_hist_spacing      = 0.1
+   nwall                = 0
+   wall_type            = 9-3
+   wall_atomtype[0]     = -1
+   wall_atomtype[1]     = -1
+   wall_density[0]      = 0
+   wall_density[1]      = 0
+   wall_ewald_zfac      = 3
+   pull                 = no
+   disre                = No
+   disre_weighting      = Conservative
+   disre_mixed          = FALSE
+   dr_fc                = 1000
+   dr_tau               = 0
+   nstdisreout          = 100
+   orires_fc            = 0
+   orires_tau           = 0
+   nstorireout          = 100
+   dihre-fc             = 1000
+   em_stepsize          = 0.001
+   em_tol               = 1000
+   niter                = 20
+   fc_stepsize          = 0
+   nstcgsteep           = 1000
+   nbfgscorr            = 10
+   ConstAlg             = Lincs
+   shake_tol            = 0.0001
+   lincs_order          = 4
+   lincs_warnangle      = 30
+   lincs_iter           = 1
+   bd_fric              = 0
+   ld_seed              = 1993
+   cos_accel            = 0
+   deform (3x3):
+      deform[    0]={ 0.00000e+00,  0.00000e+00,  0.00000e+00}
+      deform[    1]={ 0.00000e+00,  0.00000e+00,  0.00000e+00}
+      deform[    2]={ 0.00000e+00,  0.00000e+00,  0.00000e+00}
+   userint1             = 0
+   userint2             = 0
+   userint3             = 0
+   userint4             = 0
+   userreal1            = 0
+   userreal2            = 0
+   userreal3            = 0
+   userreal4            = 0
+grpopts:
+   nrdf:         894
+   ref_t:           0
+   tau_t:           0
+anneal:          No
+ann_npoints:           0
+   acc:	           0           0           0
+   nfreeze:           N           N           N
+   energygrp_flags[  0]: 0
+   efield-x:
+      n = 0
+   efield-xt:
+      n = 0
+   efield-y:
+      n = 0
+   efield-yt:
+      n = 0
+   efield-z:
+      n = 0
+   efield-zt:
+      n = 0
+   bQMMM                = FALSE
+   QMconstraints        = 0
+   QMMMscheme           = 0
+   scalefactor          = 1
+qm_opts:
+   ngQM                 = 0
+
+Using accelerated all-vs-all kernels.
+
+Table routines are used for coulomb: FALSE
+Table routines are used for vdw:     FALSE
+Cut-off's:   NS: 1e+18   Coulomb: 1e+18   LJ: 1e+18
+System total charge: 0.000
+Generated table with 500 data points for 1-4 COUL.
+Tabscale = 500 points/nm
+Generated table with 500 data points for 1-4 LJ6.
+Tabscale = 500 points/nm
+Generated table with 500 data points for 1-4 LJ12.
+Tabscale = 500 points/nm
+Configuring nonbonded kernels...
+Configuring standard C nonbonded kernels...
+Testing ia32 SSE2 support... present.
+
+
+Initiating Steepest Descents
+Started Steepest Descents on node 0 Mon Oct 29 11:27:46 2012
+
+Steepest Descents:
+   Tolerance (Fmax)   =  1.00000e+03
+   Number of steps    =            0
+           Step           Time         Lambda
+              0        0.00000        0.00000
+
+   Energies (kJ/mol)
+           Bond            U-B    Proper Dih.  Improper Dih.      CMAP Dih.
+    4.13429e+03    1.65004e+03    4.86718e+02    4.26213e+00   -7.64714e+01
+          LJ-14     Coulomb-14        LJ (SR)   Coulomb (SR)      Potential
+    8.00848e+02    3.06561e+03    4.05819e+03   -3.72401e+03    1.03995e+04
+ Pressure (bar)
+    0.00000e+00
+
+
+Reached the maximum number of steps before reaching Fmax < 1000
+
+Steepest Descents did not converge to Fmax < 1000 in 1 steps.
+Potential Energy  =  1.0399480e+04
+Maximum force     =  1.4330255e+05 on atom 24
+Norm of force     =  1.3503216e+04
+
+	M E G A - F L O P S   A C C O U N T I N G
+
+   RF=Reaction-Field  FE=Free Energy  SCFE=Soft-Core/Free Energy
+   T=Tabulated        W3=SPC/TIP3p    W4=TIP4p (single or pairs)
+   NF=No Forces
+
+ Computing:                               M-Number         M-Flops  % Flops
+-----------------------------------------------------------------------------
+ LJ                                       0.000544           0.018     0.9
+ All-vs-All, Coul + LJ                    0.044700           1.699    84.4
+ Outer nonbonded loop                     0.000299           0.003     0.1
+ 1,4 nonbonded interactions               0.000777           0.070     3.5
+ Bonds                                    0.000303           0.018     0.9
+ Propers                                  0.000828           0.190     9.4
+ Impropers                                0.000046           0.010     0.5
+ Virial                                   0.000344           0.006     0.3
+ (null)                                   0.000016           0.000     0.0
+-----------------------------------------------------------------------------
+ Total                                                       2.013   100.0
+-----------------------------------------------------------------------------
+
+
+     R E A L   C Y C L E   A N D   T I M E   A C C O U N T I N G
+
+ Computing:         Nodes     Number     G-Cycles    Seconds     %
+-----------------------------------------------------------------------
+ Force                  1          1        0.004        0.0    12.4
+ Rest                   1                   0.026        0.0    87.6
+-----------------------------------------------------------------------
+ Total                  1                   0.029        0.0   100.0
+-----------------------------------------------------------------------
+
+               NODE (s)   Real (s)      (%)
+       Time:      0.005      0.006     81.1
+               (Mnbf/s)   (MFlops)   (steps/hour)
+Performance:      0.109      2.013       723618.1
+Finished mdrun on node 0 Mon Oct 29 11:27:46 2012

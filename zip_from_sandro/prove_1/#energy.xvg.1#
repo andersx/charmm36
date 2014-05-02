@@ -1,0 +1,25 @@
+# This file was created Mon Sep 17 11:18:42 2012
+# by the following command:
+# g_energy -f _energy.edr 
+#
+# g_energy is part of G R O M A C S:
+#
+# Gromacs Runs One Microsecond At Cannonball Speeds
+#
+@    title "Gromacs Energies"
+@    xaxis  label "Time (ps)"
+@    yaxis  label "(kJ/mol)"
+@TYPE xy
+@ view 0.15, 0.15, 0.75, 0.85
+@ legend on
+@ legend box on
+@ legend loctype view
+@ legend 0.78, 0.8
+@ legend length 2
+@ s0 legend "Coul-SR:Protein-H-Protein-H"
+@ s1 legend "Coul-14:Protein-H-Protein-H"
+@ s2 legend "Coul-SR:Protein-H-!Protein-H"
+@ s3 legend "Coul-14:Protein-H-!Protein-H"
+@ s4 legend "Coul-SR:!Protein-H-!Protein-H"
+@ s5 legend "Coul-14:!Protein-H-!Protein-H"
+    0.000000  22151.771484  5720.984375  -52709.769531  -3645.974854  26385.673828  979.384583

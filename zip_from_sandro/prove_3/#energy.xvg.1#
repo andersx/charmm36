@@ -1,0 +1,27 @@
+# This file was created Wed Sep 19 16:02:52 2012
+# by the following command:
+# g_energy -f temp/temp_ener.edr 
+#
+# g_energy is part of G R O M A C S:
+#
+# Gravel Rubs Often Many Awfully Cauterized Sores
+#
+@    title "Gromacs Energies"
+@    xaxis  label "Time (ps)"
+@    yaxis  label "(kJ/mol)"
+@TYPE xy
+@ view 0.15, 0.15, 0.75, 0.85
+@ legend on
+@ legend box on
+@ legend loctype view
+@ legend 0.78, 0.8
+@ legend length 2
+@ s0 legend "Coulomb-14"
+@ s1 legend "Coulomb (SR)"
+    0.000000  1857.627197  -1365.512817
+    4.000000  1838.409790  -1373.115112
+    5.000000  1856.665039  -1365.754395
+    6.000000  1829.900269  -1392.092529
+    8.000000  1844.474609  -1370.176392
+   11.000000  1838.468018  -1379.737427
+   13.000000  1839.789307  -1375.100464

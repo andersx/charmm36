@@ -1,0 +1,28 @@
+################################################################################
+
+  
+  # NAMD configuration file generated automatically by NAMDenergy
+
+  # It may be ugly, but it should work.
+
+  # I wouldn't recommend using it for anything else though.
+
+  ################################################################################
+
+structure		beta3_f.psf
+paraTypeCharmm		on
+parameters		/Users/sandro/Programs/charmm/c36a4_rev31/toppar/par_all27_prot_na.prm
+numsteps		 1
+exclude			 scaled1-4
+outputname		 namd-temp
+temperature		 0
+COMmotion 		 yes
+cutoff			 12
+dielectric		 1.0
+switchdist		 10
+pairInteraction		 on
+pairInteractionGroup1 1
+pairInteractionFile   namd-temp.pdb
+pairInteractionSelf		 on
+coordinates namd-temp.pdb
+run 0

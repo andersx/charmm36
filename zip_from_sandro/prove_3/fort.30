@@ -1,0 +1,57 @@
+REMARK  LALAAL                                                                        
+REMARK   DATE:    10/ 8/12     11:37: 5      CREATED BY USER: sandro                  
+ATOM      1  N   ALA     2      -4.781  -5.070  -0.842  1.00  0.00      PROT
+ATOM      2  HT1 ALA     2      -5.762  -4.802  -0.626  1.00  0.00      PROT
+ATOM      3  HT2 ALA     2      -4.425  -5.707  -0.101  1.00  0.00      PROT
+ATOM      4  HT3 ALA     2      -4.749  -5.556  -1.761  1.00  0.00      PROT
+ATOM      5  CA  ALA     2      -3.950  -3.872  -0.895  1.00  0.00      PROT
+ATOM      6  HA  ALA     2      -4.316  -3.222  -1.681  1.00  0.00      PROT
+ATOM      7  CB  ALA     2      -4.107  -3.108   0.439  1.00  0.00      PROT
+ATOM      8  HB1 ALA     2      -5.180  -2.884   0.617  1.00  0.00      PROT
+ATOM      9  HB2 ALA     2      -3.738  -3.716   1.294  1.00  0.00      PROT
+ATOM     10  HB3 ALA     2      -3.553  -2.144   0.427  1.00  0.00      PROT
+ATOM     11  C   ALA     2      -2.467  -4.140  -1.209  1.00  0.00      PROT
+ATOM     12  O   ALA     2      -2.025  -5.271  -1.398  1.00  0.00      PROT
+ATOM     13  N   ALA     3      -1.650  -3.060  -1.270  1.00  0.00      PROT
+ATOM     14  HN  ALA     3      -2.050  -2.158  -1.110  1.00  0.00      PROT
+ATOM     15  CA  ALA     3      -0.220  -3.070  -1.550  1.00  0.00      PROT
+ATOM     16  HA  ALA     3       0.190  -3.620  -0.820  1.00  0.00      PROT
+ATOM     17  CB  ALA     3       0.060  -3.720  -2.900  1.00  0.00      PROT
+ATOM     18  HB1 ALA     3       1.040  -3.720  -3.070  1.00  0.00      PROT
+ATOM     19  HB2 ALA     3      -0.280  -4.660  -2.890  1.00  0.00      PROT
+ATOM     20  HB3 ALA     3      -0.410  -3.200  -3.620  1.00  0.00      PROT
+ATOM     21  C   ALA     3       0.340  -1.650  -1.530  1.00  0.00      PROT
+ATOM     22  O   ALA     3       0.930  -1.250  -0.520  1.00  0.00      PROT
+ATOM     23  N   ALA     4       0.160  -0.930  -2.620  1.00  0.00      PROT
+ATOM     24  HN  ALA     4      -0.330  -1.330  -3.400  1.00  0.00      PROT
+ATOM     25  CA  ALA     4       0.650   0.440  -2.730  1.00  0.00      PROT
+ATOM     26  HA  ALA     4       1.640   0.380  -2.630  1.00  0.00      PROT
+ATOM     27  CB  ALA     4       0.310   1.030  -4.090  1.00  0.00      PROT
+ATOM     28  HB1 ALA     4       0.650   1.970  -4.140  1.00  0.00      PROT
+ATOM     29  HB2 ALA     4       0.730   0.480  -4.810  1.00  0.00      PROT
+ATOM     30  HB3 ALA     4      -0.690   1.030  -4.210  1.00  0.00      PROT
+ATOM     31  C   ALA     4       0.060   1.310  -1.620  1.00  0.00      PROT
+ATOM     32  O   ALA     4       0.820   1.990  -0.920  1.00  0.00      PROT
+ATOM     33  N   ALA     5      -1.260   1.270  -1.480  1.00  0.00      PROT
+ATOM     34  HN  ALA     5      -1.790   0.690  -2.090  1.00  0.00      PROT
+ATOM     35  CA  ALA     5      -1.950   2.050  -0.460  1.00  0.00      PROT
+ATOM     36  HA  ALA     5      -1.640   2.990  -0.600  1.00  0.00      PROT
+ATOM     37  CB  ALA     5      -3.460   1.960  -0.660  1.00  0.00      PROT
+ATOM     38  HB1 ALA     5      -3.920   2.500   0.050  1.00  0.00      PROT
+ATOM     39  HB2 ALA     5      -3.700   2.320  -1.560  1.00  0.00      PROT
+ATOM     40  HB3 ALA     5      -3.750   1.010  -0.590  1.00  0.00      PROT
+ATOM     41  C   ALA     5      -1.580   1.580   0.940  1.00  0.00      PROT
+ATOM     42  O   ALA     5      -1.470   2.410   1.840  1.00  0.00      PROT
+ATOM     43  N   ALA     6      -1.400   0.280   1.110  1.00  0.00      PROT
+ATOM     44  HN  ALA     6      -1.520  -0.330   0.320  1.00  0.00      PROT
+ATOM     45  CA  ALA     6      -1.050  -0.300   2.400  1.00  0.00      PROT
+ATOM     46  HA  ALA     6      -1.780  -0.030   3.020  1.00  0.00      PROT
+ATOM     47  CB  ALA     6      -0.970  -1.810   2.310  1.00  0.00      PROT
+ATOM     48  HB1 ALA     6      -0.730  -2.190   3.200  1.00  0.00      PROT
+ATOM     49  HB2 ALA     6      -1.860  -2.170   2.030  1.00  0.00      PROT
+ATOM     50  HB3 ALA     6      -0.280  -2.070   1.640  1.00  0.00      PROT
+ATOM     51  C   ALA     6       0.280   0.260   2.900  1.00  0.00      PROT
+ATOM     52  OT1 ALA     6       0.875   1.104   2.178  1.00  0.00      PROT
+ATOM     53  OT2 ALA     6       0.715  -0.150   4.009  1.00  0.00      PROT
+TER      54      ALA      6
+END

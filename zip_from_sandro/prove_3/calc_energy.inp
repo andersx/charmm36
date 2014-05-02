@@ -1,0 +1,45 @@
+* lalaal
+*
+read rtf card name @topology
+read param card name @parameter
+
+open read card unit 10 name @{pdb}
+read sequ pdb unit 10 
+generate setup prot first NTER last CTER
+rewind unit 10
+bomlev -1
+read coor pdb unit 10
+close unit 10
+define test select segid protein .and. ( .not. hydrogen ) .and. ( .not. init ) show end
+!define test select segid protein  show end
+ic para
+ic fill preserve
+ic build
+hbuild sele all end 
+print coor
+!nbonds elec  switch  group  rdie vdw  vswitch vgroup -
+!NBONDS CUTNB 0.0 CGONNB 0.0  CGOFNB 0.0 ATOM  CDIE GSHIft -
+!       CTONNB 0.0  CTOFNB 0.0 VATOM VGSHift
+!NBONDS  ATOM  FSWITCH CDIE  VDW VSHIFT  -
+!        CUTNB 200.0  CTOFNB 200.0 CTONNB 200.0  WMIN 1.5  EPS 1.0
+NBONDS CUTNB 1000.0 CGONNB 0.0  CGOFNB 1000.0 ATOM  CDIE GSHIft
+
+!read psf card unit 10
+!close unit 10
+eef1 setup temp 298.15 unit 95 name "/Users/sandro/Programs/Phaistos/phaistos/ff_scripts/prove_3/eef1.inp"
+nbonds elec  switch  group  rdie vdw  vswitch vgroup -
+cutnb 100.0 ctofnb 100.0 ctonnb 100.0 -
+wmin 1.2 eps 1.0 e14f 1.0 nbxm 5 
+!stream @{stream}
+open write card unit 30 name temp/charmm_post.pdb
+write coor pdb unit 30
+open unit 20 read file name @{trajectory}
+traj firstu 20 nunit 1 
+set ntot ?nfile
+SET frame 0 
+LABEL LOOP 
+TRAJ READ 
+energy
+INCR frame BY 1 
+if frame le @{ntot} goto loop 
+stop 

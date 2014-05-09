@@ -21,14 +21,17 @@
 #ifndef TERM_GROMACS_VDW_H
 #define TERM_GROMACS_VDW_H
 
+#include <string>
+
 #include <boost/type_traits/is_base_of.hpp>
 #include "energy/energy_term.h"
 #include "protein/iterators/pair_iterator_chaintree.h"
 
+#include "charmm22_parser.h"
+
 namespace phaistos {
 
-
-//! OPLS van der Waals interaction term
+//! Gromacs van der Waals interaction term
 class TermGromacsVdw: public EnergyTermCommon<TermGromacsVdw, ChainFB> {
 
 protected:
@@ -43,7 +46,7 @@ public:
 
      //! Use same settings as base class
      typedef EnergyTerm<ChainFB>::SettingsClassicEnergy Settings;
-
+     std::vector<NonBondedParameter> non_bonded_parameters;
      //! Constructor.
      //! \param chain Molecule chain
      //! \param settings Local Settings object
@@ -52,6 +55,11 @@ public:
                     const Settings &settings = Settings(),
                     RandomNumberEngine *random_number_engine = &random_global)
           : EnergyTermCommon(chain, "gromacs-vdw", settings, random_number_engine) {
+
+              std::string filename = "/home/andersx/phaistos_dev/modules/gromacs/src/energy/charmm22_cmap/charmm22_atom_data.itp";
+              non_bonded_parameters = read_nonbonded_parameters(filename);
+
+              std::cout << non_bonded_parameters[1].atom_type << std::endl;
 
      }
 
@@ -103,21 +111,53 @@ public:
           return (eps*(pow6*pow6-pow6));
      }
 
+
+
+
+
+
      //! Evaluate chain energy
      //! \param move_info object containing information about last move
      //! \return vdw potential energy of the chain in the object
      double evaluate(MoveInfo *move_info=NULL) {
 
           double energy_sum = 0.0;
+
+          for (AtomIterator<ChainFB, definitions::ALL> it1(*this->chain);
+               !it1.end(); ++it1) {
+
+               Atom *atom1 = &*it1;
+               // Residue *res1 = &*it1;
+
+               GromacsAtomParameter gromacs_atom_parameter1(atom1);
+               // std::cout << atom1 << std::endl;
+
+
+          }
+
+
+
+
           this->counter = 0;
 
+          std::cout << "start";
           // Iterate all the atom pairs on the chain
           for (AtomIterator<ChainFB, definitions::ALL> it1(*this->chain); !it1.end(); ++it1) {
                for(AtomIterator<ChainFB, definitions::ALL> it2(it1+1); !it2.end(); ++it2){
 
                     Atom *atom1 = &*it1;
                     Atom *atom2 = &*it2;
-                    energy_sum += calculate_contribution(atom1, atom2);
+                    // energy_sum += calculate_contribution(atom1, atom2);
+
+                    const double dx = atom1->position[0] - atom2->position[0];
+                    const double dy = atom1->position[1] - atom2->position[1];
+                    const double dz = atom1->position[2] - atom2->position[2];
+                    const double r_sq = dx*dx + dy*dy + dz*dz;
+                    const double eps = 0.0; //ASC: Epsilon
+                    const double rmin = 1.0; //ASC: Minum energy distance
+                    const double ratio = (rmin*rmin)/r_sq;
+                    const double pow6 = ratio*ratio*ratio;
+                    return (eps*(pow6*pow6-pow6));
                }
 
           }

@@ -43,11 +43,11 @@ void test_terms(ChainFB *chain, int n=1) {
      // Add terms
      // energy.add_term( new TermOplsNonBonded<ChainFB,double>(chain) );
 
-     energy.add_term( new TermBondStretch(chain) );
-     energy.add_term( new TermAngleBend(chain) );
-     energy.add_term( new TermTorsion(chain) );
-     energy.add_term( new TermVdw(chain) );
-     energy.add_term( new TermCoulomb(chain) );
+     // energy.add_term( new TermGromacsBondStretch(chain) );
+     // energy.add_term( new TermGromacsAngleBend(chain) );
+     // energy.add_term( new TermGromacsTorsion(chain) );
+     energy.add_term( new TermGromacsVdw(chain) );
+     // energy.add_term( new TermGromacsCoulomb(chain) );
      // energy.add_term( new TermEef1(chain) );
 
 

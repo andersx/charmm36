@@ -1,19 +1,19 @@
-Log file opened on Mon Sep 17 18:07:15 2012
-Host: dhcp-031.sbp.sissa.it  pid: 9549  nodeid: 0  nnodes:  1
-The Gromacs distribution was built Tue Sep 11 12:35:00 CEST 2012 by
-sandro@dhcp-054.sbp.sissa.it (Darwin 9.8.0 i386)
+Log file opened on Sun May 11 14:04:29 2014
+Host: awesome  pid: 10787  nodeid: 0  nnodes:  1
+The Gromacs distribution was built Tue May  6 18:33:21 CEST 2014 by
+andersx@awesome (Linux 3.11.0-19-generic x86_64)
 
 
                          :-)  G  R  O  M  A  C  S  (-:
 
-        Getting the Right Output Means no Artefacts in Calculating Stuff
+               Go Rough, Oppose Many Angry Chinese Serial killers
 
-                            :-)  VERSION 4.5.5  (-:
+                     :-)  VERSION 4.5-20100901-ed0da69  (-:
 
         Written by Emile Apol, Rossen Apostolov, Herman J.C. Berendsen,
       Aldert van Buuren, Pär Bjelkmar, Rudi van Drunen, Anton Feenstra, 
-        Gerrit Groenhof, Peter Kasson, Per Larsson, Pieter Meulenhoff, 
-           Teemu Murtola, Szilard Pall, Sander Pronk, Roland Schulz, 
+        Gerrit Groenhof, Peter Kasson, Per Larsson, Peiter Meulenhoff, 
+          Teemu Murtola, Szilard Pall, Sander Pronk, Roland Schultz, 
                 Michael Shirts, Alfons Sijbers, Peter Tieleman,
 
                Berk Hess, David van der Spoel, and Erik Lindahl.
@@ -28,7 +28,7 @@ sandro@dhcp-054.sbp.sissa.it (Darwin 9.8.0 i386)
          as published by the Free Software Foundation; either version 2
              of the License, or (at your option) any later version.
 
-                                :-)  mdrun  (-:
+                       :-)  mdrun (double precision)  (-:
 
 
 ++++ PLEASE READ AND CITE THE FOLLOWING REFERENCE ++++
@@ -137,8 +137,8 @@ Input Parameters:
    gb_obc_beta          = 0.8
    gb_obc_gamma         = 4.85
    gb_dielectric_offset = 0.009
-   sa_algorithm         = Ace-approximation
-   sa_surface_tension   = 2.05016
+   sa_algorithm         = No
+   sa_surface_tension   = 2.092
    DispCorr             = No
    free_energy          = no
    init_lambda          = 0
@@ -198,7 +198,7 @@ Input Parameters:
    userreal3            = 0
    userreal4            = 0
 grpopts:
-   nrdf:         978
+   nrdf:         909
    ref_t:           0
    tau_t:           0
 anneal:          No
@@ -228,94 +228,27 @@ qm_opts:
 
 NOTE: Can not use all-vs-all force loops, because there are multiple energy monitor groups; you might get significantly higher performance when using only a single energy monitor group.
 
-Table routines are used for coulomb: FALSE
-Table routines are used for vdw:     FALSE
-Cut-off's:   NS: 1e+18   Coulomb: 1e+18   LJ: 1e+18
-System total charge: 0.000
-Generated table with 500 data points for 1-4 COUL.
-Tabscale = 500 points/nm
-Generated table with 500 data points for 1-4 LJ6.
-Tabscale = 500 points/nm
-Generated table with 500 data points for 1-4 LJ12.
-Tabscale = 500 points/nm
-Configuring nonbonded kernels...
-Configuring standard C nonbonded kernels...
-Testing ia32 SSE2 support... present.
 
+Initializing Domain Decomposition on 3 nodes
+Dynamic load balancing: no
+Will sort the charge groups at every domain (re)decomposition
+Initial maximum inter charge-group distances:
+    two-body bonded interactions: 0.398 nm, LJ-14, atoms 229 237
+  multi-body bonded interactions: 0.398 nm, Proper Dih., atoms 229 237
+Minimum cell size due to bonded interactions: 0.437 nm
+Optimizing the DD grid for 3 cells with a minimum initial size of 0.437 nm
+The maximum allowed number of cells is: X 4 Y 3 Z 2
+Domain decomposition grid 3 x 1 x 1, separate PME nodes 0
 
-Initiating Steepest Descents
-Started Steepest Descents on node 0 Mon Sep 17 18:07:15 2012
+-------------------------------------------------------
+Program mdrun, VERSION 4.5-20100901-ed0da69
+Source code file: domdec.c, line: 5998
 
-Steepest Descents:
-   Tolerance (Fmax)   =  1.00000e+03
-   Number of steps    =            1
-           Step           Time         Lambda
-              0        0.00000        0.00000
+Fatal error:
+Domain decomposition does not support simple neighbor searching, use grid searching or use particle decomposition
+For more information and tips for troubleshooting, please check the GROMACS
+website at http://www.gromacs.org/Documentation/Errors
+-------------------------------------------------------
 
-   Energies (kJ/mol)
-           Bond            U-B    Proper Dih.  Improper Dih.      CMAP Dih.
-    3.24536e+03    1.54437e+03    5.68360e+02    1.26063e+00   -1.36684e+02
-          LJ-14     Coulomb-14        LJ (SR)   Coulomb (SR)      Potential
-    7.61736e+02    3.47242e+03    6.15297e+03   -4.69342e+03    1.09164e+04
- Pressure (bar)
-    0.00000e+00
+"Baby, It Aint Over Till It's Over" (Lenny Kravitz)
 
-           Step           Time         Lambda
-              1        1.00000        0.00000
-
-   Energies (kJ/mol)
-           Bond            U-B    Proper Dih.  Improper Dih.      CMAP Dih.
-    2.70298e+03    1.77311e+03    5.55025e+02    1.35358e+02   -1.22139e+02
-          LJ-14     Coulomb-14        LJ (SR)   Coulomb (SR)      Potential
-    8.50211e+02    3.50749e+03    5.57309e+02   -4.78801e+03    5.17133e+03
- Pressure (bar)
-    0.00000e+00
-
-
-Reached the maximum number of steps before reaching Fmax < 1000
-
-Steepest Descents did not converge to Fmax < 1000 in 2 steps.
-Potential Energy  =  5.1713340e+03
-Maximum force     =  2.6357992e+04 on atom 239
-Norm of force     =  3.6545969e+03
-
-	M E G A - F L O P S   A C C O U N T I N G
-
-   RF=Reaction-Field  FE=Free Energy  SCFE=Soft-Core/Free Energy
-   T=Tabulated        W3=SPC/TIP3p    W4=TIP4p (single or pairs)
-   NF=No Forces
-
- Computing:                               M-Number         M-Flops  % Flops
------------------------------------------------------------------------------
- LJ                                       0.003044           0.100     1.8
- Coulomb + LJ                             0.101200           3.846    67.0
- Outer nonbonded loop                     0.001786           0.018     0.3
- 1,4 nonbonded interactions               0.001694           0.152     2.7
- NS-Pairs                                 0.053628           1.126    19.6
- CG-CoM                                   0.000327           0.001     0.0
- Bonds                                    0.000664           0.039     0.7
- Propers                                  0.001818           0.416     7.3
- Impropers                                0.000112           0.023     0.4
- Virial                                   0.000744           0.013     0.2
- (null)                                   0.000036           0.000     0.0
------------------------------------------------------------------------------
- Total                                                       5.736   100.0
------------------------------------------------------------------------------
-
-
-     R E A L   C Y C L E   A N D   T I M E   A C C O U N T I N G
-
- Computing:         Nodes     Number     G-Cycles    Seconds     %
------------------------------------------------------------------------
- Neighbor search        1          1        0.007        0.0    10.6
- Force                  1          2        0.014        0.0    22.0
- Rest                   1                   0.043        0.0    67.4
------------------------------------------------------------------------
- Total                  1                   0.064        0.0   100.0
------------------------------------------------------------------------
-
-               NODE (s)   Real (s)      (%)
-       Time:      0.010      0.013     73.7
-               (Mnbf/s)   (MFlops)   (steps/hour)
-Performance:     10.500      5.736       725221.6
-Finished mdrun on node 0 Mon Sep 17 18:07:15 2012

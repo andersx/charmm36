@@ -2,14 +2,14 @@
 ;	File 'mdout.mdp' was generated
 ;	By user: onbekend (0)
 ;	On host: onbekend
-;	At date: Mon Sep 17 18:07:15 2012
+;	At date: Sun May 11 14:04:29 2014
 ;
 
 ; VARIOUS PREPROCESSING OPTIONS
 ; Preprocessor information: use cpp syntax.
 ; e.g.: -I/home/joe/doe -I/home/mary/roe
 include                  = 
-; e.g.: -DPOSRES -DFLEXIBLE (note these variable names are case sensitive)
+; e.g.: -DI_Want_Cookies -DMe_Too
 define                   = 
 
 ; RUN CONTROL PARAMETERS
@@ -58,10 +58,10 @@ nstfout                  = 0
 nstlog                   = 100
 nstcalcenergy            = -1
 nstenergy                = 10
-; Output frequency and precision for .xtc file
+; Output frequency and precision for xtc file
 nstxtcout                = 0
 xtc-precision            = 1000
-; This selects the subset of atoms for the .xtc file. You can
+; This selects the subset of atoms for the xtc file. You can
 ; select multiple groups. By default all atoms will be written.
 xtc-grps                 = 
 ; Selection of energy groups
@@ -132,10 +132,10 @@ gb_obc_alpha             = 1
 gb_obc_beta              = 0.8
 gb_obc_gamma             = 4.85
 gb_dielectric_offset     = 0.009
-sa_algorithm             = Ace-approximation
+sa_algorithm             = No
 ; Surface tension (kJ/mol/nm^2) for the SA (nonpolar surface) part of GBSA
-; The value -1 will set default value for Still/HCT/OBC GB-models.
-sa_surface_tension       = -1
+; The default value (2.092) corresponds to 0.005 kcal/mol/Angstrom^2.
+sa_surface_tension       = 2.092
 
 ; OPTIONS FOR WEAK COUPLING ALGORITHMS
 ; Temperature coupling  

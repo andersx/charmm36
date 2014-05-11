@@ -46,7 +46,11 @@ public:
 
      //! Use same settings as base class
      typedef EnergyTerm<ChainFB>::SettingsClassicEnergy Settings;
+
      std::vector<NonBondedParameter> non_bonded_parameters;
+     std::vector<NonBonded14Parameter> non_bonded_14_parameters;
+     std::vector<NonBondedPair> non_bonded_pairs;
+
      //! Constructor.
      //! \param chain Molecule chain
      //! \param settings Local Settings object
@@ -56,10 +60,18 @@ public:
                     RandomNumberEngine *random_number_engine = &random_global)
           : EnergyTermCommon(chain, "gromacs-vdw", settings, random_number_engine) {
 
-              std::string filename = "/home/andersx/phaistos_dev/modules/gromacs/src/energy/charmm22_cmap/charmm22_atom_data.itp";
-              non_bonded_parameters = read_nonbonded_parameters(filename);
+              std::string non_bonded_filename = "/home/andersx/phaistos_dev/modules/gromacs/src/energy/charmm22_cmap/charmm22_vdw.itp";
+              non_bonded_parameters = read_nonbonded_parameters(non_bonded_filename);
 
-              std::cout << non_bonded_parameters[1].atom_type << std::endl;
+              std::string non_bonded_14_filename = "/home/andersx/phaistos_dev/modules/gromacs/src/energy/charmm22_cmap/charmm22_vdw14.itp";
+              non_bonded_14_parameters = read_nonbonded_14_parameters(non_bonded_14_filename);
+
+              // std::cout << non_bonded_parameters[1].atom_type << std::endl;
+              // std::cout << non_bonded_14_parameters[1].atom_type1 << std::endl;
+
+              non_bonded_pairs = generate_non_bonded_pairs(this->chain,
+                                                           non_bonded_parameters,
+                                                           non_bonded_14_parameters);
 
      }
 
@@ -123,46 +135,103 @@ public:
 
           double energy_sum = 0.0;
 
-          for (AtomIterator<ChainFB, definitions::ALL> it1(*this->chain);
-               !it1.end(); ++it1) {
+          double vdw_energy = 0.0;
+          double coul_energy = 0.0;
 
-               Atom *atom1 = &*it1;
-               // Residue *res1 = &*it1;
+          // std::cout << non_bonded_pairs.size() << " terms total" << std::endl;
+          for (unsigned int i = 0; i < non_bonded_pairs.size(); i++) {
 
-               GromacsAtomParameter gromacs_atom_parameter1(atom1);
-               // std::cout << atom1 << std::endl;
+               NonBondedPair pair = non_bonded_pairs[i];
 
+               // const double dx = (pair.atom1)->position[0] - (pair.atom2)->position[0];
+               // const double dy = (pair.atom1)->position[1] - (pair.atom2)->position[1];
+               // const double dz = (pair.atom1)->position[2] - (pair.atom2)->position[2];
+               // const double r_sq = dx*dx + dy*dy + dz*dz;
+
+               const double r_sq = ((pair.atom1)->position - (pair.atom2)->position).norm_squared();
+               const double inv_r_sq = 100.0 / (r_sq); //shift to nanometers
+               const double inv_r_sq6 = inv_r_sq * inv_r_sq * inv_r_sq;
+               const double inv_r_sq12 = inv_r_sq6 * inv_r_sq6;
+               const double vdw_energy_temp = pair.c12 * inv_r_sq12 - pair.c6 * inv_r_sq6;
+
+               const double coul_energy_temp = pair.qq * sqrt(inv_r_sq);
+
+               coul_energy += coul_energy_temp;
+               vdw_energy += vdw_energy_temp;
+
+               printf("ASC: LxCOL: %5d %5d %5d  r = %8.4f  XYZ = %8.4f %8.4f %8.4f   XYZ2 = %8.4f %8.4f %8.4f   q1 = %6.3f  q2 = %6.3f  qq = %7.3f  ecoul = %7.3f\n",
+                    pair.i1, pair.i2, pair.i2 , sqrt(r_sq),
+                     (pair.atom1)->position[0],  (pair.atom1)->position[1],  (pair.atom1)->position[2],
+                     (pair.atom2)->position[0],  (pair.atom2)->position[1],  (pair.atom2)->position[2],
+                    pair.q1, pair.q2, pair.qq, coul_energy_temp);
+                  //std::cout << "ASC: " << pair.i1
+                  // << "   " << pair.i2
+                  // // << "   " << pair.atom1
+                  // // << "   " << pair.atom2
+                  // << "  q1 = " << pair.q1
+                  // << "  q2 = " << pair.q2
+                  // << "  qq = " << pair.qq
+                  // // << "  s1 = " << pair.sigma1
+                  // // << "  s2 = " << pair.sigma2
+                  // // << "  e1 = " << pair.epsilon1
+                  // // << "  e2 = " << pair.epsilon2
+                  // << "   r = " << 10.0 / sqrt(inv_r_sq)
+                  // // << std::setprecision(9) << "   c6 = "   << pair.c6
+                  // // << "   c12 = "  << pair.c12
+                  // // << "   evdw = "  << vdw_energy_temp
+                  // << "   ecoul = "  << coul_energy_temp
+                  // // << "   TOTAL = "  << vdw_energy
+                  // << std::endl;
 
           }
 
 
+          // for (AtomIterator<ChainFB, definitions::ALL> it1(*this->chain);
+          //      !it1.end(); ++it1) {
+
+          //      Atom *atom1 = &*it1;
+          //      // Residue *res1 = &*it1;
+
+          //      GromacsAtomParameter gromacs_atom_parameter1(atom1);
+          //      // std::cout << atom1 << std::endl;
 
 
-          this->counter = 0;
+          // }
 
-          std::cout << "start";
-          // Iterate all the atom pairs on the chain
-          for (AtomIterator<ChainFB, definitions::ALL> it1(*this->chain); !it1.end(); ++it1) {
-               for(AtomIterator<ChainFB, definitions::ALL> it2(it1+1); !it2.end(); ++it2){
 
-                    Atom *atom1 = &*it1;
-                    Atom *atom2 = &*it2;
-                    // energy_sum += calculate_contribution(atom1, atom2);
 
-                    const double dx = atom1->position[0] - atom2->position[0];
-                    const double dy = atom1->position[1] - atom2->position[1];
-                    const double dz = atom1->position[2] - atom2->position[2];
-                    const double r_sq = dx*dx + dy*dy + dz*dz;
-                    const double eps = 0.0; //ASC: Epsilon
-                    const double rmin = 1.0; //ASC: Minum energy distance
-                    const double ratio = (rmin*rmin)/r_sq;
-                    const double pow6 = ratio*ratio*ratio;
-                    return (eps*(pow6*pow6-pow6));
-               }
 
-          }
+          // this->counter = 0;
 
-          return energy_sum;
+          // std::cout << "start";
+          // // Iterate all the atom pairs on the chain
+          // for (AtomIterator<ChainFB, definitions::ALL> it1(*this->chain); !it1.end(); ++it1) {
+          //      for(AtomIterator<ChainFB, definitions::ALL> it2(it1+1); !it2.end(); ++it2){
+
+          //           Atom *atom1 = &*it1;
+          //           Atom *atom2 = &*it2;
+          //           // energy_sum += calculate_contribution(atom1, atom2);
+
+          //           const double dx = atom1->position[0] - atom2->position[0];
+          //           const double dy = atom1->position[1] - atom2->position[1];
+          //           const double dz = atom1->position[2] - atom2->position[2];
+          //           const double r_sq = dx*dx + dy*dy + dz*dz;
+          //           const double eps = 0.0; //ASC: Epsilon
+          //           const double rmin = 1.0; //ASC: Minum energy distance
+          //           const double ratio = (rmin*rmin)/r_sq;
+          //           const double pow6 = ratio*ratio*ratio;
+          //           return (eps*(pow6*pow6-pow6));
+          //      }
+
+          // }
+
+          // return energy_sum;
+
+          std::cout << " COUL_TOTAL(SR) E = " << coul_energy << std::endl;
+          std::cout << "  VDW_TOTAL(SR) E = " << vdw_energy << std::endl;
+
+          const double total_energy_in_kcal_mol = (coul_energy + vdw_energy) / 4.184;
+          return total_energy_in_kcal_mol;
      }
 };
 

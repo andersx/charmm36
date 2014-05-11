@@ -1,10 +1,10 @@
-# This file was created Mon Sep 17 11:22:10 2012
+# This file was created Sun May 11 14:00:49 2014
 # by the following command:
 # g_energy -f _energy.edr 
 #
 # g_energy is part of G R O M A C S:
 #
-# GROwing Monsters And Cloning Shrimps
+# GROningen Mixture of Alchemy and Childrens' Stories
 #
 @    title "Gromacs Energies"
 @    xaxis  label "Time (ps)"
@@ -16,6 +16,13 @@
 @ legend loctype view
 @ legend 0.78, 0.8
 @ legend length 2
-@ s0 legend "Coulomb-14"
-@ s1 legend "Coulomb (SR)"
-    0.000000  3054.394043  -4172.324219
+@ s0 legend "Bond"
+@ s1 legend "U-B"
+@ s2 legend "Proper Dih."
+@ s3 legend "Improper Dih."
+@ s4 legend "CMAP Dih."
+@ s5 legend "LJ-14"
+@ s6 legend "Coulomb-14"
+@ s7 legend "LJ (SR)"
+@ s8 legend "Coulomb (SR)"
+    0.000000  2276.401611  929.405396  380.592926  121.141472  -111.257660  719.093750  3054.394043  1191.925415  -4172.324219

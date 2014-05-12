@@ -1116,11 +1116,201 @@ std::vector<NonBondedPair> generate_non_bonded_pairs(ChainFB *chain,
 }
 
 
+struct DihedralType9Parameter {
+
+    std::string type1;
+    std::string type2;
+    std::string type3;
+    std::string type4;
+    double phi0;
+    double cp;
+    unsigned int mult;
+
+};
 
 
+std::vector<DihedralType9Parameter> read_dihedral_type_9_parameters(const std::string filename) {
 
+    std::ifstream input_stream(filename.c_str());
 
+    if (!input_stream.is_open()) {
+        std::cerr << "# Error: Cannot open itp file " << " .\n";
+        exit(EXIT_FAILURE);
+    }
 
+    std::vector<DihedralType9Parameter> parameters;
 
+    while (input_stream.good()) {
+
+        std::string line;
+        std::getline(input_stream, line);
+
+        boost::trim(line);
+
+        // std::cout << line << std::endl;
+        if (line.size() == 0 || line[0] == ';') {
+            continue;
+        }
+
+        std::vector<std::string> split_line;
+        boost::split(split_line, line, boost::is_any_of(" \t"), boost::token_compress_on);
+
+        DihedralType9Parameter parameter;
+
+        parameter.type1 = boost::lexical_cast<std::string >(split_line[0]);
+        parameter.type2 = boost::lexical_cast<std::string >(split_line[1]);
+        parameter.type3 = boost::lexical_cast<std::string >(split_line[2]);
+        parameter.type4 = boost::lexical_cast<std::string >(split_line[3]);
+        parameter.phi0        = boost::lexical_cast<double>(split_line[5]);
+        parameter.cp          = boost::lexical_cast<double>(split_line[6]);
+        parameter.mult        = boost::lexical_cast<unsigned int >(split_line[7]);
+
+        parameters.push_back(parameter);
+
+      }
+
+    return parameters;
 }
+
+
+struct DihedralAngleType9 {
+
+    Atom *atom1;
+    Atom *atom2;
+    Atom *atom3;
+    Atom *atom4;
+    double phi0;
+    double cp;
+    unsigned int mult;
+
+};
+
+
+std::vector<DihedralAngleType9> generate_non_bonded_pairs(ChainFB *chain,
+                    std::vector<DihedralType9Parameter> dihedral_angle_type_9_parameters) {
+
+    std::vector<DihedralAngleType9> dihedral_angle_type_9s;
+
+    // all torsions
+    for (AtomIterator<ChainFB, definitions::ALL> it2(*chain); !it2.end(); ++it2) {
+        Atom *atom2 = &*it2;
+        for (AtomIterator<ChainFB, definitions::ALL> it3(*chain); !it3.end(); ++it3) {
+            Atom *atom3 = &*it3;
+
+            if ((atom2->residue->index >
+                 atom3->residue->index ) ||
+                ((atom2->residue->index == atom3->residue->index) &&
+                 (atom2->index > atom3->index)))
+                continue;
+
+            if(chain_distance<ChainFB>(atom2,atom3) != 1)
+                continue;
+            // this->counter++;
+            // std::cout << counter << atom2 << atom3 << std::endl;
+            for (CovalentBondIterator<ChainFB> it1(atom2, CovalentBondIterator<ChainFB>::DEPTH_1_ONLY);
+                !it1.end(); ++it1) {
+                Atom *atom1 = &*it1;
+                for (CovalentBondIterator<ChainFB> it4(atom3, CovalentBondIterator<ChainFB>::DEPTH_1_ONLY);
+                    !it4.end(); ++it4) {
+                    Atom *atom4 = &*it4;
+
+                    if ((atom2 != atom4) && (atom1 != atom3)) {
+
+                        bool found_this_parameter = false;
+
+                        // std::cout << atom1 << atom2 << atom3 << atom4 << std::endl;
+
+                        std::string type1 = get_charmm22_atom_type(atom1);
+                        std::string type2 = get_charmm22_atom_type(atom2);
+                        std::string type3 = get_charmm22_atom_type(atom3);
+                        std::string type4 = get_charmm22_atom_type(atom4);
+
+                        for (unsigned int i = 0; i < dihedral_angle_type_9_parameters.size(); i++) {
+
+                            DihedralType9Parameter p = dihedral_angle_type_9_parameters[i];
+                            // std::cout << p.type1 << type1 << std::endl;
+
+                            if ((p.type1 == type1) && (p.type2 == type2) && (p.type3 == type3)&& (p.type4 == type4)) {
+                                DihedralAngleType9 dihedral_angle_type_9;
+                                dihedral_angle_type_9.atom1 = atom1;
+                                dihedral_angle_type_9.atom2 = atom2;
+                                dihedral_angle_type_9.atom3 = atom3;
+                                dihedral_angle_type_9.atom4 = atom4;
+                                dihedral_angle_type_9.phi0  = p.phi0;
+                                dihedral_angle_type_9.cp    = p.cp;
+                                dihedral_angle_type_9.mult  = p.mult;
+                                found_this_parameter = true;
+
+                                dihedral_angle_type_9s.push_back(dihedral_angle_type_9);
+                            }
+                            if ((p.type1 == type4) && (p.type2 == type3) && (p.type3 == type2)&& (p.type4 == type1)) {
+                                DihedralAngleType9 dihedral_angle_type_9;
+                                dihedral_angle_type_9.atom1 = atom4;
+                                dihedral_angle_type_9.atom2 = atom3;
+                                dihedral_angle_type_9.atom3 = atom2;
+                                dihedral_angle_type_9.atom4 = atom1;
+                                dihedral_angle_type_9.phi0  = p.phi0;
+                                dihedral_angle_type_9.cp    = p.cp;
+                                dihedral_angle_type_9.mult  = p.mult;
+                                found_this_parameter = true;
+                                dihedral_angle_type_9s.push_back(dihedral_angle_type_9);
+                            }
+                        }
+                        if (!found_this_parameter) {
+                            for (unsigned int i = 0; i < dihedral_angle_type_9_parameters.size(); i++) {
+
+                                DihedralType9Parameter p = dihedral_angle_type_9_parameters[i];
+                                // std::cout << p.type1 << type1 << std::endl;
+
+                                if ((p.type1 == "X") && (p.type2 == type2) && (p.type3 == type3)&& (p.type4 == "X")) {
+                                    DihedralAngleType9 dihedral_angle_type_9;
+                                    dihedral_angle_type_9.atom1 = atom1;
+                                    dihedral_angle_type_9.atom2 = atom2;
+                                    dihedral_angle_type_9.atom3 = atom3;
+                                    dihedral_angle_type_9.atom4 = atom4;
+                                    dihedral_angle_type_9.phi0  = p.phi0;
+                                    dihedral_angle_type_9.cp    = p.cp;
+                                    dihedral_angle_type_9.mult  = p.mult;
+                                    found_this_parameter = true;
+                                    dihedral_angle_type_9s.push_back(dihedral_angle_type_9);
+                                    break;
+                                }
+                                if ((p.type1 == "X") && (p.type2 == type3) && (p.type3 == type2)&& (p.type4 == "X")) {
+                                    DihedralAngleType9 dihedral_angle_type_9;
+                                    dihedral_angle_type_9.atom1 = atom4;
+                                    dihedral_angle_type_9.atom2 = atom3;
+                                    dihedral_angle_type_9.atom3 = atom2;
+                                    dihedral_angle_type_9.atom4 = atom1;
+                                    dihedral_angle_type_9.phi0  = p.phi0;
+                                    dihedral_angle_type_9.cp    = p.cp;
+                                    dihedral_angle_type_9.mult  = p.mult;
+                                    found_this_parameter = true;
+                                    dihedral_angle_type_9s.push_back(dihedral_angle_type_9);
+                                    break;
+                                }
+                            }
+                            if (!found_this_parameter) {
+                                std::cout << "ASC: TORERR COULD NOT FIND DIHEDRAL PARAM" << atom1 << atom2 << atom3 << atom4 << std::endl;
+                                std::cout << "ASC: TORERR COULD NOT FIND DIHEDRAL PARAM   " << type1 << "  " << type2 << "  " << type3 << "  " << type4 << "  " << std::endl;
+                            } else {
+
+                                // std::cout << "ASC: TOR FOUND DIHEDRAL PARAM" << atom1 << atom2 << atom3 << atom4 << std::endl;
+                            }
+
+                            // std::cout << "ASC: TORERR COULD NOT FIND DIHEDRAL PARAM" << atom1 << atom2 << atom3 << atom4 << std::endl;
+                            // std::cout << "ASC: TORERR COULD NOT FIND DIHEDRAL PARAM   " << type1 << "  " << type2 << "  " << type3 << "  " << type4 << "  " << std::endl;
+                        } else {
+
+                            // std::cout << "ASC: TOR FOUND DIHEDRAL PARAM" << atom1 << atom2 << atom3 << atom4 << std::endl;
+                        }
+                    }
+                }
+            }
+        }
+    }
+    return dihedral_angle_type_9s;
+}
+
+
+} // End namespace phaistos
 #endif

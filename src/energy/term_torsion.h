@@ -22,6 +22,8 @@
 
 #include <boost/type_traits/is_base_of.hpp>
 #include "energy/energy_term.h"
+#include "charmm22_parser.h"
+#include "math.h"
 
 namespace phaistos {
 
@@ -36,6 +38,7 @@ private:
      //! Number of interactions calculated
      int counter;
 
+     std::vector<DihedralAngleType9> dihedral_angles;
 public:
 
      //! Use same settings as base class
@@ -50,6 +53,11 @@ public:
                         RandomNumberEngine *random_number_engine = &random_global)
           : EnergyTermCommon(chain, "gromacs-torsion", settings, random_number_engine) {
 
+          std::string filename = "/home/andersx/phaistos_dev/modules/gromacs/src/energy/charmm22_cmap/charmm22_torsion.itp";
+          std::vector<DihedralType9Parameter> dihedral_type_9_parameters = read_dihedral_type_9_parameters(filename);
+
+          dihedral_angles = generate_non_bonded_pairs(this->chain, dihedral_type_9_parameters);
+
      }
 
      //! Copy constructor.
@@ -61,102 +69,43 @@ public:
                         RandomNumberEngine *random_number_engine,
                         int thread_index, ChainFB *chain)
           : EnergyTermCommon(other, random_number_engine, thread_index, chain),
-            counter(other.counter) {
-
-     }
+            counter(other.counter),
+            dihedral_angles(other.dihedral_angles) {}
 
      //! Evaluate chain energy
      //! \param move_info object containing information about last move
      //! \return torsional potential energy of the chain in the object
      double evaluate(MoveInfo *move_info=NULL) {
 
-          return 0;
+        double e_torsion = 0.0;
+
+        for (unsigned int i = 0; i < this->dihedral_angles.size(); i++) {
+
+            DihedralAngleType9 dihedral = this->dihedral_angles[i];
+
+            double angle = calc_dihedral((dihedral.atom1)->position,
+                                         (dihedral.atom2)->position,
+                                         (dihedral.atom3)->position,
+                                         (dihedral.atom4)->position);
+
+            double e_torsion_temp = dihedral.cp * cos(dihedral.mult * angle - dihedral.phi0 / 180.0 * M_PI) + dihedral.cp;
+
+            e_torsion += e_torsion_temp;
+
+            // printf("ASC: TOR XYZ1 = %8.4f %8.4f %8.4f   XYZ2 = %8.4f %8.4f %8.4f   XYZ3 = %8.4f %8.4f %8.4f   XYZ4 = %8.4f %8.4f %8.4f   a = %9.4f   phi0 = %9.4f   cp = %8.4f   mult = %d   etor = %14.10f\n",
+
+            //         (dihedral.atom1)->position[0], (dihedral.atom1)->position[1], (dihedral.atom1)->position[2],
+            //         (dihedral.atom2)->position[0], (dihedral.atom2)->position[1], (dihedral.atom2)->position[2],
+            //         (dihedral.atom3)->position[0], (dihedral.atom3)->position[1], (dihedral.atom3)->position[2],
+            //         (dihedral.atom4)->position[0], (dihedral.atom4)->position[1], (dihedral.atom4)->position[2],
+            //         angle *180.0 / M_PI, dihedral.phi0, dihedral.cp, dihedral.mult, e_torsion_temp);
+        }
+
+        std::cout << " TORSION _TOTAL E = " << e_torsion << std::endl;
+        return e_torsion / 4.184;
 
      }
 
-
-
-
-
-//     //! Evaluate torsion energy for a bond (atom2-atom3)
-//     //! \param atom2 First atom defining the bond
-//     //! \param atom3 Second atom defining the bond
-//     //! \return Torsional energy of that bond
-//     inline double calc_torsion_energy(Atom *atom2, Atom *atom3) {
-//          double angle,energy = 0.0;
-//          CovalentBondIterator<ChainFB> it1(atom2, CovalentBondIterator<ChainFB>::DEPTH_1_ONLY);
-//          for (; !it1.end(); ++it1) {
-//               Atom *atom1 = &*it1;
-//               if (atom1 == atom3)
-//                    continue;
-//               CovalentBondIterator<ChainFB> it4(atom3, CovalentBondIterator<ChainFB>::DEPTH_1_ONLY);
-//               for (; !it4.end(); ++it4) {
-//                    Atom *atom4 = &*it4;
-//                    if (atom4 == atom2)
-//                         continue;
-//                    double param = 1.0;
-//                    angle = calc_dihedral(atom1->position,atom2->position,
-//                                          atom3->position,atom4->position);
-//                    energy += calc_spring_energy(angle,param);
-//               }
-//          }
-//          return energy;
-//     }
-//
-//     //! Evaluate a single torsional term
-//     //! \param angle Dihedral angle
-//     //! \param param Parameter container
-//     inline double calc_spring_energy(double angle, double param) {
-//          double energy=0.0;
-//          counter++;
-//          //cos is symmetric around angle so we need not flip sign when param is mirrored
-//          energy += param*( 1 + cos(param*angle - param) );
-//
-//          return energy;
-//     }
-//
-//     //! Evaluate chain energy
-//     //! \param move_info object containing information about last move
-//     //! \return torsional potential energy of the chain in the object
-//     double evaluate(MoveInfo *move_info=NULL) {
-//
-//          double energy_sum=0.0;
-//          counter=0;
-//
-//          // all torsions
-//          int size = (this->chain)->size();
-//          for (int r=0; r<size; r++) {
-//               Residue *res = &(*(this->chain))[r];
-//               int res_size = res->size();
-//               for (int a=0; a<res_size; a++) {
-//                    Atom *atom2 = res->atoms[a];
-//                    CovalentBondIterator<ChainFB> it(atom2, CovalentBondIterator<ChainFB>::DEPTH_1_ONLY);
-//                    for (; !it.end(); ++it) {
-//                         Atom *atom3 = &*it;
-//                         if(atom2->index < atom3->index)
-//                              energy_sum += calc_torsion_energy(atom2,atom3);
-//                    }
-//               }
-//          }
-//
-//          /* // phaistos degrees of freedom only */
-//          /* DofIterator::angle_selection_enum dofs = DofIterator::DIHEDRAL_DOFS + */
-//          /*      DofIterator::CHI_ANGLES + DofIterator::N_DIHEDRAL; */
-//          /* DofIterator dofIt((*chain)(0,N),DofIterator::DIHEDRAL,dofs); */
-//          /* DofIterator end = chain->dofIteratorEnd(); */
-//          /* for (; dofIt!=end; ++dofIt) { */
-//          /*      Atom *atom3 = dofIt.getAtom(); */
-//          /*      Atom *atom1init,*atom2,*atom4init; */
-//          /*      atom3->get_dihedral_atoms(&atom1init,&atom2,&atom3,&atom4init); */
-//          /*      energy_sum += calc_torsion_energy(atom2,atom3); */
-//          /* } */
-//
-//          //energy_sum *= parameters.torsion_unit;
-//
-//          /* std::cout<<"Torsional Angle "<<energy_sum<<" kcal/mol "<<counter<<" interactions\n"; */
-//
-//          return energy_sum;
-//     }
 };
 
 }

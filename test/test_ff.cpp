@@ -45,7 +45,7 @@ void test_terms(ChainFB *chain, int n=1) {
 
      // energy.add_term( new TermGromacsBondStretch(chain) );
      // energy.add_term( new TermGromacsAngleBend(chain) );
-     // energy.add_term( new TermGromacsTorsion(chain) );
+     energy.add_term( new TermGromacsTorsion(chain) );
      energy.add_term( new TermGromacsVdw(chain) );
      // energy.add_term( new TermGromacsCoulomb(chain) );
      // energy.add_term( new TermEef1(chain) );
@@ -54,6 +54,7 @@ void test_terms(ChainFB *chain, int n=1) {
      // energy.add_term( new TermOplsImptor(chain) );
 
      // Evaluate energy
+     // for (unsigned int i = 0; i < 100; i++)
      energy.evaluate();
      // Output
      cout << energy << endl;;

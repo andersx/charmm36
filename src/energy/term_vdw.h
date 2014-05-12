@@ -84,8 +84,8 @@ public:
                  RandomNumberEngine *random_number_engine,
                  int thread_index, ChainFB *chain)
           : EnergyTermCommon(other, random_number_engine, thread_index, chain),
-            counter(other.counter) {
-     }
+            counter(other.counter),
+            non_bonded_pairs(other.non_bonded_pairs) {}
 
      //! Evaluate van der Waal interaction between 2 atoms
      //! \param atom1 First atom
@@ -159,11 +159,11 @@ public:
                coul_energy += coul_energy_temp;
                vdw_energy += vdw_energy_temp;
 
-               printf("ASC: LxCOL: %5d %5d %5d  r = %8.4f  XYZ = %8.4f %8.4f %8.4f   XYZ2 = %8.4f %8.4f %8.4f   q1 = %6.3f  q2 = %6.3f  qq = %7.3f  ecoul = %7.3f\n",
-                    pair.i1, pair.i2, pair.i2 , sqrt(r_sq),
-                     (pair.atom1)->position[0],  (pair.atom1)->position[1],  (pair.atom1)->position[2],
-                     (pair.atom2)->position[0],  (pair.atom2)->position[1],  (pair.atom2)->position[2],
-                    pair.q1, pair.q2, pair.qq, coul_energy_temp);
+               // printf("ASC: LxCOL: %5d %5d %5d  r = %8.4f  XYZ = %8.4f %8.4f %8.4f   XYZ2 = %8.4f %8.4f %8.4f   q1 = %6.3f  q2 = %6.3f  qq = %7.3f  ecoul = %7.3f\n",
+               //      pair.i1, pair.i2, pair.i2 , sqrt(r_sq),
+               //       (pair.atom1)->position[0],  (pair.atom1)->position[1],  (pair.atom1)->position[2],
+               //       (pair.atom2)->position[0],  (pair.atom2)->position[1],  (pair.atom2)->position[2],
+               //      pair.q1, pair.q2, pair.qq, coul_energy_temp);
                   //std::cout << "ASC: " << pair.i1
                   // << "   " << pair.i2
                   // // << "   " << pair.atom1
@@ -186,22 +186,6 @@ public:
           }
 
 
-          // for (AtomIterator<ChainFB, definitions::ALL> it1(*this->chain);
-          //      !it1.end(); ++it1) {
-
-          //      Atom *atom1 = &*it1;
-          //      // Residue *res1 = &*it1;
-
-          //      GromacsAtomParameter gromacs_atom_parameter1(atom1);
-          //      // std::cout << atom1 << std::endl;
-
-
-          // }
-
-
-
-
-          // this->counter = 0;
 
           // std::cout << "start";
           // // Iterate all the atom pairs on the chain
@@ -230,6 +214,7 @@ public:
           std::cout << " COUL_TOTAL(SR) E = " << coul_energy << std::endl;
           std::cout << "  VDW_TOTAL(SR) E = " << vdw_energy << std::endl;
 
+          // GROMACS energies are in kJ/mol, and need to return in kcal/mol
           const double total_energy_in_kcal_mol = (coul_energy + vdw_energy) / 4.184;
           return total_energy_in_kcal_mol;
      }

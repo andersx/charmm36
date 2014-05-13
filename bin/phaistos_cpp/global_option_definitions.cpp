@@ -171,6 +171,30 @@ struct EnergyOptions {
                          super_group, counter==1);
           }
 
+          // Improper torsion
+          for (int counter = occurrences[prefix+"-gromacs-imptor"]; counter > 0; counter--) {
+
+               // Create settings object
+               typedef TermGromacsImptor EnergyTerm;
+               typedef EnergyTerm::Settings Settings;
+               boost::shared_ptr<Settings> settings(
+                    SETTINGS_MODIFIER().template modify<EnergyTerm>(new Settings(), prefix));
+
+               // If temperature has been specified, set weight based on that value
+               if(target.has_key("temperature")) {
+                    settings->weight = temperature_to_one_over_k(target["temperature"].as<double>());
+               }
+
+               // Add options
+               target.add(
+                    target.create_options(
+                         DefineEnergyCommonOptions(),
+                         "Gromacs improper torsion term (" + prefix + ")",
+                         prefix+"-gromacs-imptor", settings,
+                         make_vector()),
+                         super_group, counter==1);
+          }
+
           // Lennard Jones
           for (int counter = occurrences[prefix+"-gromacs-vdw"]; counter > 0; counter--) {
 

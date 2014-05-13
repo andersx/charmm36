@@ -22,6 +22,7 @@
 #include "energy/term_bond_stretch.h"
 #include "energy/term_angle_bend.h"
 #include "energy/term_torsion.h"
+#include "energy/term_imptor.h"
 #include "energy/term_vdw.h"
 #include "energy/term_coulomb.h"
 #include "energy/term_eef1.h"
@@ -48,7 +49,7 @@ void test_terms(ChainFB *chain, int n=1) {
      energy.add_term( new TermGromacsAngleBend(chain) );
      energy.add_term( new TermGromacsTorsion(chain) );
      energy.add_term( new TermGromacsVdw(chain) );
-     // energy.add_term( new TermOplsImptor(chain) );
+     energy.add_term( new TermGromacsImptor(chain) );
      // energy.add_term( new TermGromacsCoulomb(chain) );
      // energy.add_term( new TermEef1(chain) );
 

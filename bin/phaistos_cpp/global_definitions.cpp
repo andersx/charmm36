@@ -77,6 +77,17 @@ struct EnergyInitialization {
                energy->add_term(new TermGromacsTorsion(chain,
                                                    options.get_settings<Settings>(option,i)));
           }
+          // Improper torsion
+          option = options[prefix+"-gromacs-imptor"];
+          for (int i=0; i<option.occurrences(); ++i) {
+
+               // Settings typedef
+               typedef TermGromacsImptor::Settings Settings;
+
+               // Add energy term
+               energy->add_term(new TermGromacsImptor(chain,
+                                                   options.get_settings<Settings>(option,i)));
+          }
           // Lennard Jones
           option = options[prefix+"-gromacs-vdw"];
           for (int i=0; i<option.occurrences(); ++i) {

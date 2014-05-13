@@ -34,10 +34,6 @@ class TermGromacsAngleBendBase: public EnergyTermCommon<DERIVED_CLASS,ChainFB> {
           //! For convenience, define local EnergyTermCommon
           typedef phaistos::EnergyTermCommon<DERIVED_CLASS, ChainFB> EnergyTermCommon;
 
-          //! Number of interactions in lastevaluation
-          int counter;
-
-
      public:
 
           std::vector<AngleBendPair> angle_bend_pairs;
@@ -71,8 +67,6 @@ class TermGromacsAngleBendBase: public EnergyTermCommon<DERIVED_CLASS,ChainFB> {
 
           std::string filename = "/home/andersx/phaistos_dev/modules/gromacs/src/energy/charmm22_cmap/charmm22_angle_bend.itp";
           std::vector<AngleBendParameter> angle_bend_parameters = read_angle_bend_parameters(filename);
-     
-          std::cout << "Length: " << angle_bend_parameters.size() << std::endl;
           this->angle_bend_pairs = generate_angle_bend_pairs(this->chain, angle_bend_parameters);
      }
 
@@ -85,7 +79,7 @@ class TermGromacsAngleBendBase: public EnergyTermCommon<DERIVED_CLASS,ChainFB> {
                               RandomNumberEngine *random_number_engine,
                               int thread_index, ChainFB *chain) :
           EnergyTermCommon(other, random_number_engine, thread_index, chain),
-          counter(other.counter),settings(other.settings) {
+          settings(other.settings) {
 
      }
 
@@ -126,7 +120,6 @@ class TermGromacsAngleBendBase: public EnergyTermCommon<DERIVED_CLASS,ChainFB> {
      //! \param k Spring constant
      //! \return Spring energy
      inline double calc_spring_energy(double x, double x_eq, double k) {
-          counter++;
           double dx = x - x_eq;
           /* if (dx > M_PI || dx < -M_PI) */
           /*      std::cout<<"dx = "<<dx<<"\n"; */
@@ -139,7 +132,6 @@ class TermGromacsAngleBendBase: public EnergyTermCommon<DERIVED_CLASS,ChainFB> {
      double evaluate(MoveInfo *move_info = NULL) {
 
           double energy_sum = 0.0;
-          counter = 0;
 
           // all angles
           int size = (this->chain)->size();

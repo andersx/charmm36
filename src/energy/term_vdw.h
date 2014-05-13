@@ -1,6 +1,5 @@
 // term_vdw.h --- Van der Waals interaction energy term
-// Copyright (C) 2009-2014 Kristoffer Enøe Johansson, Wouter Boomsma,
-// Anders S. Christensen
+// Copyright (C) 2014 Anders S. Christensen
 //
 // This file is part of PHAISTOS
 //
@@ -133,7 +132,7 @@ public:
      //! \return vdw potential energy of the chain in the object
      double evaluate(MoveInfo *move_info=NULL) {
 
-          double energy_sum = 0.0;
+          // double energy_sum = 0.0;
 
           double vdw_energy = 0.0;
           double coul_energy = 0.0;

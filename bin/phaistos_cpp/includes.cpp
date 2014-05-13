@@ -4,3 +4,4 @@
 #include "energy/term_eef1.h"
 #include "energy/term_torsion.h"
 #include "energy/term_vdw.h"
+#include "energy/term_imptor.h"

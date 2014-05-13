@@ -1,6 +1,5 @@
-// term_vdw.h --- Van der Waals interaction energy term
-// Copyright (C) 2009-2014 Kristoffer Enøe Johansson, Wouter Boomsma,
-// Anders S. Christensen
+// CHARMM22/CMAP parameter parser for PHAISTOS
+// Copyright (C) 2014 Anders S. Christensen
 //
 // This file is part of PHAISTOS
 //
@@ -1535,7 +1534,6 @@ std::vector<AngleBendPair> generate_angle_bend_pairs(ChainFB *chain,
                     std::cout << "ASC: COULD NOT FIND angle bend PARAM" << atom1 << atom2 << atom3 << std::endl;
                     std::cout << "ASC: COULD NOT FIND angle-bend PARAM   " << type1 << "  " << type2 << "  " << type3 << std::endl;
                 }
-
             }
         }
     }
@@ -1544,6 +1542,186 @@ std::vector<AngleBendPair> generate_angle_bend_pairs(ChainFB *chain,
 
 }
 
+
+
+struct DihedralType2Parameter {
+
+    std::string type1;
+    std::string type2;
+    std::string type3;
+    std::string type4;
+    double phi0;
+    double cp;
+
+};
+
+
+std::vector<DihedralType2Parameter> read_dihedral_type_2_parameters(const std::string filename) {
+
+    std::ifstream input_stream(filename.c_str());
+
+    if (!input_stream.is_open()) {
+        std::cerr << "# Error: Cannot open itp file " << " .\n";
+        exit(EXIT_FAILURE);
+    }
+
+    std::vector<DihedralType2Parameter> parameters;
+
+    while (input_stream.good()) {
+
+        std::string line;
+        std::getline(input_stream, line);
+
+        boost::trim(line);
+
+        // std::cout << line << std::endl;
+        if (line.size() == 0 || line[0] == ';') {
+            continue;
+        }
+
+        std::vector<std::string> split_line;
+        boost::split(split_line, line, boost::is_any_of(" \t"), boost::token_compress_on);
+
+        DihedralType2Parameter parameter;
+
+        parameter.type1 = boost::lexical_cast<std::string >(split_line[0]);
+        parameter.type2 = boost::lexical_cast<std::string >(split_line[1]);
+        parameter.type3 = boost::lexical_cast<std::string >(split_line[2]);
+        parameter.type4 = boost::lexical_cast<std::string >(split_line[3]);
+        parameter.phi0  = boost::lexical_cast<double>(split_line[5]);
+        parameter.cp    = boost::lexical_cast<double>(split_line[6]);
+
+        parameters.push_back(parameter);
+
+      }
+
+    return parameters;
+}
+
+
+struct Imptor {
+
+    Atom *atom1;
+    Atom *atom2;
+    Atom *atom3;
+    Atom *atom4;
+    double phi0;
+    double cp;
+
+};
+
+std::vector<DihedralType2Parameter> generate_imptors(ChainFB *chain,
+                                    std::vector<DihedralType2Parameter> imptor_parameters) {
+
+    for (ResidueIterator<ChainFB> res(*(this->chain)); !(res).end(); ++res) {
+
+        switch (res->residue_type) {
+        case definitions::ALA:
+            break;
+
+        case ARG:
+            CZ      NH1     NH2     NE
+            break;
+
+        case ASN:
+            G      ND2     CB      OD1
+            CG      CB      ND2     OD1
+            ND2     CG      HD21    HD22
+            ND2     CG      HD22    HD21
+            break;
+
+        case ASP:
+            CG      CB      OD2     OD1
+            break;
+
+        case CYS:
+            break;
+
+        case GLN:
+	        CD	NE2	CG	OE1
+        	CD	CG	NE2	OE1
+        	NE2	CD	HE21	HE22
+        	NE2	CD	HE22	HE21
+            break;
+
+        case GLU:
+         	CD	CG	OE2	OE1
+            break;
+
+        case GLY:
+            break;
+
+        case HIS:
+            if (res->has_atom(HD1) && res->has_atom(HE2)) {
+            	ND1	CG	CE1	HD1
+            	ND1	CE1	CG	HD1
+            	NE2	CD2	CE1	HE2
+            	NE2	CE1	CD2	HE2
+            } else if (!(res->has_atom(HD1)) && res->has_atom(HE2)) {
+            	NE2	CD2	CE1	HE2
+            	CD2	CG	NE2	HD2
+            	CE1	ND1	NE2	HE1
+            	NE2	CE1	CD2	HE2
+            	CD2	NE2	CG	HD2
+        	    CE1	NE2	ND1	HE1
+            } else if (res->has_atom(HD1) && !(res->has_atom(HE2))) {
+            	ND1	CG	CE1	HD1
+            	CD2	CG	NE2	HD2
+            	CE1	ND1	NE2	HE1
+            	ND1	CE1	CG	HD1
+        	    CD2	NE2	CG	HD2
+            	CE1	NE2	ND1	HE1
+            } else {
+                std::cout << "Unknown protonations state on " << res << std::endl;
+            }
+            break;
+
+        case ILE:
+            break;
+
+        case LEU:
+            break;
+
+        case LYS:
+            break;
+
+        case MET:
+            break;
+
+        case PHE:
+            break;
+
+        case PRO:
+            break;
+
+        case SER:
+            break;
+
+        case THR:
+            break;
+
+        case TRP:
+            break;
+
+        case TYR:
+            break;
+
+        case VAL:
+            break;
+
+        default:
+            std::cout << "ASC: Unknown residue type: " << atom->residue << std::endl;
+            break;
+        };
+
+         N   -C  CA  HN
+         C   CA  +N  O
+
+
+
+    }
+
+}
 
 } // End namespace phaistos
 #endif

@@ -209,10 +209,10 @@ public:
                                                (pair.atom2)->position,
                                                (pair.atom3)->position);
 
-               printf(" r21 = %7.4f   r23 = %7.4f\n", 
-                      ((pair.atom2)->position - (pair.atom1)->position).norm(),
-                      ((pair.atom2)->position - (pair.atom3)->position).norm());
-               std::cout << pair.atom1 << pair.atom2 << pair.atom3 << std::endl;
+               // printf(" r21 = %7.4f   r23 = %7.4f\n", 
+               //       ((pair.atom2)->position - (pair.atom1)->position).norm(),
+               //       ((pair.atom2)->position - (pair.atom3)->position).norm());
+               // std::cout << pair.atom1 << pair.atom2 << pair.atom3 << std::endl;
                const double dtheta = theta - pair.theta0 * M_PI / 180.0;
 
                // Angle bend part
@@ -231,8 +231,8 @@ public:
 
           }
 
-          printf("       bond-angle E = %12.4f kJ/mol\n", energy_angle_bend);
-          printf("     urey-bradley E = %12.4f kJ/mol\n", energy_urey_bradley);
+          // printf("       bond-angle E = %12.4f kJ/mol\n", energy_angle_bend);
+          printf("     urey-bradley E = %12.4f kJ/mol\n", energy_urey_bradley + energy_angle_bend);
 
           return (energy_angle_bend + energy_urey_bradley) / 4.184;
 

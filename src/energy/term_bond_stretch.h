@@ -22,6 +22,7 @@
 
 #include <boost/type_traits/is_base_of.hpp>
 #include "energy/energy_term.h"
+#include "charmm22_parser.h"
 
 namespace phaistos {
 
@@ -34,13 +35,12 @@ private:
      //! For convenience, define local EnergyTermCommon
      typedef phaistos::EnergyTermCommon<TermGromacsBondStretch, ChainFB> EnergyTermCommon;
 
-     //! Number of interactions calculated
-     int counter;
-
 public:
 
      // Use same settings as base class
      typedef EnergyTerm<ChainFB>::SettingsClassicEnergy Settings;
+
+     std::vector<BondedPair> bonded_pairs;
 
      //! Constructor
      //! \param chain Molecule chain
@@ -50,6 +50,10 @@ public:
                             const Settings &settings=Settings(),
                             RandomNumberEngine *random_number_engine = &random_global)
           : EnergyTermCommon(chain, "gromacs-bond-stretch", settings, random_number_engine) {
+
+          std::string filename = "/home/andersx/phaistos_dev/modules/gromacs/src/energy/charmm22_cmap/charmm22_bond.itp";
+          std::vector<BondedPairParameter> bonded_pair_parameters = read_bonded_pair_parameters(filename);
+          this->bonded_pairs = generate_bonded_pairs(this->chain, bonded_pair_parameters);
 
      }
 
@@ -62,58 +66,34 @@ public:
                             RandomNumberEngine *random_number_engine,
                             int thread_index, ChainFB *chain)
           : EnergyTermCommon(other, random_number_engine, thread_index, chain),
-            counter(other.counter) {
-     }
-
-     //! Evaluate anglebend energy for a bond (atom1-atom2)
-     //! \param atom2 Second atom
-     //! \return Bond stretch energy to previous neighbours
-     inline double calc_bondstretch_energy(Atom *atom2) {
-          double energy = 0.0;
-          double len = 1.5;
-          double k = 1.0;
-          CovalentBondIterator<ChainFB> it1(atom2, CovalentBondIterator<ChainFB>::DEPTH_1_ONLY);
-          for (; !it1.end(); ++it1) {
-               Atom *atom1 = &*it1;
-
-               // Only calculate the distance to covalently bonded that are before atom2 in the chain
-               // (otherwise all distance would be considered twice)
-               if (atom1->residue->index < atom2->residue->index ||
-                   (atom1->residue->index == atom2->residue->index && atom1->index < atom2->index)) {
-                    double length = (atom1->position - atom2->position).norm();
-                    energy += calc_spring_energy(length,len,k);
-               }
-          }
-
-          return energy;
-     }
-
-     //! Evaluate the potetial energy in a spring
-     //! \param x Distance
-     //! \param x_eq Equilibrium distance
-     //! \param k Spring constant
-     //! \return Spring energy
-     inline double calc_spring_energy(double x, double x_eq, double k) {
-          counter++;
-          double dx = x - x_eq;
-          return (k*dx*dx);
-     }
+          bonded_pairs(other.bonded_pairs) {}
 
      //! Evaluate chain energy
      //! \param move_info object containing information about last move
      //! \return bond stretch potential energy of the chain in the object
      double evaluate(MoveInfo *move_info=NULL) {
 
-          double energySum=0.0;
-          counter=0;
+          double e_bond = 0.0;
 
-          //+1 to avoid getNeighbout(-1) error from N[0]
-          AtomIterator<ChainFB,definitions::ALL> it(*(this->chain)); ++it;
-          for (; !it.end(); ++it) {
-               Atom &atom = *it;
-               energySum += calc_bondstretch_energy(&atom);
+          for (unsigned int i = 0; i < this->bonded_pairs.size(); i++){
+
+               BondedPair pair = this->bonded_pairs[i];
+
+               const double r = ((pair.atom1)->position - (pair.atom2)->position).norm() / 10.0;
+               const double kb = pair.kb;
+               const double r0 = pair.r0;
+
+               const double dr = r - r0;
+               const double e_bond_temp = 0.5 * kb * dr * dr;
+
+               e_bond += e_bond_temp;
+
+               // printf("ASC: BONDSTRETCH    dr = %14.10f   r0 = %14.10f   kb = %14.10f  vbond = %14.10f\n", dr, r0, kb, e_bond_temp);
           }
-          return energySum;
+
+          printf("     bond-stretch E = %12.4f kJ/mol\n", e_bond);
+
+          return e_bond / 4.184;
      }
 
 };

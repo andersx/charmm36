@@ -37,22 +37,24 @@ using namespace phaistos::definitions;
 //! Method to evaluate a PDB file using energy terms
 void test_terms(ChainFB *chain, int n=1) {
 
+
+     std::cout << "Setting up force field ... " << std::endl;
      // Create Energy class 
      Energy<ChainFB> energy(chain);
 
      // Add terms
-     // energy.add_term( new TermOplsNonBonded<ChainFB,double>(chain) );
 
-     // energy.add_term( new TermGromacsBondStretch(chain) );
-     // energy.add_term( new TermGromacsAngleBend(chain) );
+     energy.add_term( new TermGromacsBondStretch(chain) );
+     energy.add_term( new TermGromacsAngleBend(chain) );
      energy.add_term( new TermGromacsTorsion(chain) );
      energy.add_term( new TermGromacsVdw(chain) );
+     // energy.add_term( new TermOplsImptor(chain) );
      // energy.add_term( new TermGromacsCoulomb(chain) );
      // energy.add_term( new TermEef1(chain) );
 
 
-     // energy.add_term( new TermOplsImptor(chain) );
 
+     std::cout << "Init ok! " << std::endl;
      // Evaluate energy
      // for (unsigned int i = 0; i < 100; i++)
      energy.evaluate();
@@ -74,7 +76,6 @@ int main(int argc, char *argv[]) {
      // Create chain from PDB filename
      string pdb_filename = argv[1];
      ChainFB chain(pdb_filename, ALL_ATOMS);
-     std::cout << "Init ok " << std::endl;
      // Add atoms missing in the pdb structure
      //chain.add_atoms(ALL_PHYSICAL_ATOMS);
 

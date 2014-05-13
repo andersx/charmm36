@@ -211,9 +211,10 @@ public:
 
           // return energy_sum;
 
-          std::cout << " COUL_TOTAL(SR) E = " << coul_energy << std::endl;
-          std::cout << "  VDW_TOTAL(SR) E = " << vdw_energy << std::endl;
-
+          // std::cout << "          coulomb E = " << coul_energy <<  " kcal/mol" << std::endl;
+          // std::cout << "              vdW E = " << vdw_energy <<  " kcal/mol" << std::endl;
+          printf("          coulomb E = %12.4f kJ/mol\n", coul_energy);
+          printf("              vdW E = %12.4f kJ/mol\n", vdw_energy);
           // GROMACS energies are in kJ/mol, and need to return in kcal/mol
           const double total_energy_in_kcal_mol = (coul_energy + vdw_energy) / 4.184;
           return total_energy_in_kcal_mol;

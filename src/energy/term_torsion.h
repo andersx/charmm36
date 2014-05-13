@@ -39,6 +39,8 @@ private:
      int counter;
 
      std::vector<DihedralAngleType9> dihedral_angles;
+
+
 public:
 
      //! Use same settings as base class
@@ -77,6 +79,7 @@ public:
      //! \return torsional potential energy of the chain in the object
      double evaluate(MoveInfo *move_info=NULL) {
 
+
         double e_torsion = 0.0;
 
         for (unsigned int i = 0; i < this->dihedral_angles.size(); i++) {
@@ -88,20 +91,24 @@ public:
                                          (dihedral.atom3)->position,
                                          (dihedral.atom4)->position);
 
-            double e_torsion_temp = dihedral.cp * cos(dihedral.mult * angle - dihedral.phi0 / 180.0 * M_PI) + dihedral.cp;
+            // const double mdphi = dihedral.mult * angle - dihedral.phi0 * gmx_deg2rad;
+            // const double v1 = 1.0 + cos(mdphi);
+            // const double e_torsion_temp = v1 * dihedral.cp;
+
+            const double e_torsion_temp = dihedral.cp * cos(dihedral.mult * angle - dihedral.phi0 / 180.0 * M_PI) + dihedral.cp;
 
             e_torsion += e_torsion_temp;
 
-            // printf("ASC: TOR XYZ1 = %8.4f %8.4f %8.4f   XYZ2 = %8.4f %8.4f %8.4f   XYZ3 = %8.4f %8.4f %8.4f   XYZ4 = %8.4f %8.4f %8.4f   a = %9.4f   phi0 = %9.4f   cp = %8.4f   mult = %d   etor = %14.10f\n",
+             // printf("ASC: TOR XYZ1 = %8.4f %8.4f %8.4f   XYZ2 = %8.4f %8.4f %8.4f   XYZ3 = %8.4f %8.4f %8.4f   XYZ4 = %8.4f %8.4f %8.4f   a = %15.10f   phi0 = %9.4f   cp = %8.4f   mult = %d   etor = %14.10f\n",
 
-            //         (dihedral.atom1)->position[0], (dihedral.atom1)->position[1], (dihedral.atom1)->position[2],
-            //         (dihedral.atom2)->position[0], (dihedral.atom2)->position[1], (dihedral.atom2)->position[2],
-            //         (dihedral.atom3)->position[0], (dihedral.atom3)->position[1], (dihedral.atom3)->position[2],
-            //         (dihedral.atom4)->position[0], (dihedral.atom4)->position[1], (dihedral.atom4)->position[2],
-            //         angle *180.0 / M_PI, dihedral.phi0, dihedral.cp, dihedral.mult, e_torsion_temp);
+             //         (dihedral.atom1)->position[0], (dihedral.atom1)->position[1], (dihedral.atom1)->position[2],
+             //         (dihedral.atom2)->position[0], (dihedral.atom2)->position[1], (dihedral.atom2)->position[2],
+             //         (dihedral.atom3)->position[0], (dihedral.atom3)->position[1], (dihedral.atom3)->position[2],
+             //         (dihedral.atom4)->position[0], (dihedral.atom4)->position[1], (dihedral.atom4)->position[2],
+             //         angle *180.0 / M_PI, dihedral.phi0, dihedral.cp, dihedral.mult, e_torsion_temp);
         }
 
-        std::cout << " TORSION _TOTAL E = " << e_torsion << std::endl;
+        printf("          torsion E = %12.4f kJ/mol\n", e_torsion);
         return e_torsion / 4.184;
 
      }

@@ -22,6 +22,7 @@
 
 #include <boost/type_traits/is_base_of.hpp>
 #include "energy/energy_term.h"
+#include "charmm22_parser.h"
 
 namespace phaistos {
 
@@ -36,8 +37,10 @@ class TermGromacsAngleBendBase: public EnergyTermCommon<DERIVED_CLASS,ChainFB> {
           //! Number of interactions in lastevaluation
           int counter;
 
+
      public:
 
+          std::vector<AngleBendPair> angle_bend_pairs;
           //! Local settings class.
           const class Settings: public EnergyTerm<ChainFB>::SettingsClassicEnergy {
           public:
@@ -65,6 +68,12 @@ class TermGromacsAngleBendBase: public EnergyTermCommon<DERIVED_CLASS,ChainFB> {
      TermGromacsAngleBendBase(ChainFB *chain, std::string name, const Settings &settings = Settings(),
                               RandomNumberEngine *random_number_engine = &random_global) :
           EnergyTermCommon(chain, name, settings, random_number_engine),settings(settings) {
+
+          std::string filename = "/home/andersx/phaistos_dev/modules/gromacs/src/energy/charmm22_cmap/charmm22_angle_bend.itp";
+          std::vector<AngleBendParameter> angle_bend_parameters = read_angle_bend_parameters(filename);
+     
+          std::cout << "Length: " << angle_bend_parameters.size() << std::endl;
+          this->angle_bend_pairs = generate_angle_bend_pairs(this->chain, angle_bend_parameters);
      }
 
      //! Copy constructor
@@ -152,6 +161,7 @@ class TermGromacsAngleBendBase: public EnergyTermCommon<DERIVED_CLASS,ChainFB> {
           }
 
           /* std::cout<<"Angle Bending  "<<energy_sum<<" kcal/mol  "<<counter<<" interactions\n"; */
+          printf("       angle-bend E = %12.4f kJ/mol\n", energy_sum);
           return energy_sum;
      }
 
@@ -179,6 +189,53 @@ public:
                           RandomNumberEngine *random_number_engine,
                           int thread_index, ChainFB *chain)
           : TermGromacsAngleBendBase(other, random_number_engine, thread_index, chain) {
+     }
+
+
+     //! Evaluate chain energy
+     //! \param move_info object containing information about last move
+     //! \return angle bend potential energy of the chain in the object
+     double evaluate(MoveInfo *move_info = NULL) {
+
+
+          double energy_angle_bend = 0.0;
+          double energy_urey_bradley = 0.0;
+
+          for (unsigned int i = 0; i < this->angle_bend_pairs.size(); i++){
+
+               AngleBendPair pair = this->angle_bend_pairs[i];
+
+               const double theta = calc_angle((pair.atom1)->position,
+                                               (pair.atom2)->position,
+                                               (pair.atom3)->position);
+
+               printf(" r21 = %7.4f   r23 = %7.4f\n", 
+                      ((pair.atom2)->position - (pair.atom1)->position).norm(),
+                      ((pair.atom2)->position - (pair.atom3)->position).norm());
+               std::cout << pair.atom1 << pair.atom2 << pair.atom3 << std::endl;
+               const double dtheta = theta - pair.theta0 * M_PI / 180.0;
+
+               // Angle bend part
+               const double energy_angle_bend_temp = 0.5 * pair.k0 * dtheta * dtheta; 
+
+               energy_angle_bend += energy_angle_bend_temp;
+
+
+               const double r13 = ((pair.atom1)->position - (pair.atom3)->position).norm() / 10.0;
+
+               const double dr = r13 - pair.r13;
+
+               const double energy_urey_bradley_temp = 0.5 * pair.kub * dr * dr;
+
+               energy_urey_bradley += energy_urey_bradley_temp;
+
+          }
+
+          printf("       bond-angle E = %12.4f kJ/mol\n", energy_angle_bend);
+          printf("     urey-bradley E = %12.4f kJ/mol\n", energy_urey_bradley);
+
+          return (energy_angle_bend + energy_urey_bradley) / 4.184;
+
      }
 };
 

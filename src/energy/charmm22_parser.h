@@ -1161,9 +1161,9 @@ std::vector<DihedralType9Parameter> read_dihedral_type_9_parameters(const std::s
         parameter.type2 = boost::lexical_cast<std::string >(split_line[1]);
         parameter.type3 = boost::lexical_cast<std::string >(split_line[2]);
         parameter.type4 = boost::lexical_cast<std::string >(split_line[3]);
-        parameter.phi0        = boost::lexical_cast<double>(split_line[5]);
-        parameter.cp          = boost::lexical_cast<double>(split_line[6]);
-        parameter.mult        = boost::lexical_cast<unsigned int >(split_line[7]);
+        parameter.phi0  = boost::lexical_cast<double>(split_line[5]);
+        parameter.cp    = boost::lexical_cast<double>(split_line[6]);
+        parameter.mult  = boost::lexical_cast<unsigned int >(split_line[7]);
 
         parameters.push_back(parameter);
 
@@ -1309,6 +1309,239 @@ std::vector<DihedralAngleType9> generate_non_bonded_pairs(ChainFB *chain,
         }
     }
     return dihedral_angle_type_9s;
+}
+
+
+struct BondedPairParameter {
+    std::string type1;
+    std::string type2;
+    double kb;
+    double r0;
+};
+
+
+std::vector<BondedPairParameter> read_bonded_pair_parameters(const std::string filename) {
+
+    std::ifstream input_stream(filename.c_str());
+
+    if (!input_stream.is_open()) {
+        std::cerr << "# Error: Cannot open itp file " << " .\n";
+        exit(EXIT_FAILURE);
+    }
+
+    std::vector<BondedPairParameter> parameters;
+
+    while (input_stream.good()) {
+
+        std::string line;
+        std::getline(input_stream, line);
+
+        boost::trim(line);
+
+        // std::cout << line << std::endl;
+        if (line.size() == 0 || line[0] == ';') {
+            continue;
+        }
+
+        std::vector<std::string> split_line;
+        boost::split(split_line, line, boost::is_any_of(" \t"), boost::token_compress_on);
+
+        BondedPairParameter parameter;
+
+        parameter.type1 = boost::lexical_cast<std::string >(split_line[0]);
+        parameter.type2 = boost::lexical_cast<std::string >(split_line[1]);
+        parameter.r0    = boost::lexical_cast<double>(split_line[3]);
+        parameter.kb    = boost::lexical_cast<double>(split_line[4]);
+
+        parameters.push_back(parameter);
+
+      }
+
+    return parameters;
+}
+
+
+struct BondedPair {
+    Atom *atom1;
+    Atom *atom2;
+    double kb;
+    double r0;
+};
+
+
+
+std::vector<BondedPair> generate_bonded_pairs(ChainFB *chain,
+                    std::vector<BondedPairParameter> bonded_pair_parameters) {
+
+    std::vector<BondedPair> bonded_pairs;
+
+
+    for (AtomIterator<ChainFB,definitions::ALL> it1(*(chain)); !it1.end(); ++it1) {
+        Atom *atom1 = &*it1;
+        std::string type1 = get_charmm22_atom_type(atom1);
+
+        for (CovalentBondIterator<ChainFB> it2(atom1, CovalentBondIterator<ChainFB>::DEPTH_1_ONLY);
+            !it2.end(); ++it2) {
+
+            Atom *atom2 = &*it2;
+            if (atom1->residue->index < atom2->residue->index ||
+                (atom1->residue->index == atom2->residue->index && atom1->index < atom2->index)) {
+
+                std::string type2 = get_charmm22_atom_type(atom2);
+
+                for (unsigned int i = 0; i < bonded_pair_parameters.size(); i++) {
+
+                    BondedPairParameter parameter = bonded_pair_parameters[i];
+
+                    if (((parameter.type1 == type1) && (parameter.type2 == type2)) ||
+                        ((parameter.type1 == type2) && (parameter.type2 == type1))) {
+
+                        BondedPair pair;
+                        pair.atom1 = atom1;
+                        pair.atom2 = atom2;
+                        pair.kb = parameter.kb;
+                        pair.r0 = parameter.r0;
+
+                        bonded_pairs.push_back(pair);
+
+                        break;
+                    }
+                }
+            }
+        }
+    }
+
+    return bonded_pairs;
+
+}
+
+
+
+struct AngleBendParameter {
+    std::string type1;
+    std::string type2;
+    std::string type3;
+    double theta0;
+    double k0;
+    double r13;
+    double kub;
+};
+
+
+std::vector<AngleBendParameter> read_angle_bend_parameters(const std::string filename) {
+
+    std::ifstream input_stream(filename.c_str());
+
+    if (!input_stream.is_open()) {
+        std::cerr << "# Error: Cannot open itp file " << " .\n";
+        exit(EXIT_FAILURE);
+    }
+
+    std::vector<AngleBendParameter> parameters;
+
+    while (input_stream.good()) {
+
+        std::string line;
+        std::getline(input_stream, line);
+
+        boost::trim(line);
+
+        // std::cout << line << std::endl;
+        if (line.size() == 0 || line[0] == ';') {
+            continue;
+        }
+
+        std::vector<std::string> split_line;
+        boost::split(split_line, line, boost::is_any_of(" \t"), boost::token_compress_on);
+
+        AngleBendParameter parameter;
+
+        parameter.type1  = boost::lexical_cast<std::string >(split_line[0]);
+        parameter.type2  = boost::lexical_cast<std::string >(split_line[1]);
+        parameter.type3  = boost::lexical_cast<std::string >(split_line[2]);
+        parameter.theta0 = boost::lexical_cast<double>(split_line[4]);
+        parameter.k0     = boost::lexical_cast<double>(split_line[5]);
+        parameter.r13    = boost::lexical_cast<double>(split_line[6]);
+        parameter.kub    = boost::lexical_cast<double>(split_line[7]);
+
+        parameters.push_back(parameter);
+
+      }
+
+    return parameters;
+}
+
+
+
+struct AngleBendPair {
+    Atom *atom1;
+    Atom *atom2;
+    Atom *atom3;
+    double theta0;
+    double k0;
+    double r13;
+    double kub;
+};
+
+
+std::vector<AngleBendPair> generate_angle_bend_pairs(ChainFB *chain,
+                    std::vector<AngleBendParameter> angle_bend_parameters) {
+
+    std::vector<AngleBendPair> angle_bend_pairs;
+
+    for (AtomIterator<ChainFB,definitions::ALL> it1(*(chain)); !it1.end(); ++it1) {
+        Atom *atom2 = &*it1;
+
+        std::string type2 = get_charmm22_atom_type(atom2);
+        for (CovalentBondIterator<ChainFB> it2(atom2, CovalentBondIterator<ChainFB>::DEPTH_1_ONLY);
+            !it2.end(); ++it2) {
+
+            Atom *atom1 = &*it2;
+            std::string type1 = get_charmm22_atom_type(atom1);
+
+            CovalentBondIterator<ChainFB> it3(it2);
+            // Fancy way to discard it3 = it1
+            ++it3;
+            for (; !it3.end(); ++it3) {
+                Atom *atom3 = &*it3;
+
+                std::string type3 = get_charmm22_atom_type(atom3);
+
+                bool found_this_parameter = false;
+
+                for (unsigned int i = 0; i < angle_bend_parameters.size(); i++) {
+
+                    AngleBendParameter parameter = angle_bend_parameters[i];
+
+                    if (((parameter.type1 == type1) && (parameter.type2 == type2) && (parameter.type3 == type3)) ||
+                        ((parameter.type1 == type3) && (parameter.type2 == type2) && (parameter.type3 == type1))) {
+
+                        AngleBendPair pair;
+                        pair.atom1 = atom1;
+                        pair.atom2 = atom2;
+                        pair.atom3 = atom3;
+                        pair.theta0 = parameter.theta0;
+                        pair.k0     = parameter.k0;
+                        pair.r13    = parameter.r13;
+                        pair.kub    = parameter.kub;
+
+                        found_this_parameter = true;
+                        angle_bend_pairs.push_back(pair);
+
+                        break;
+                    }
+                }
+                if (!found_this_parameter) {
+                    std::cout << "ASC: COULD NOT FIND angle bend PARAM" << atom1 << atom2 << atom3 << std::endl;
+                    std::cout << "ASC: COULD NOT FIND angle-bend PARAM   " << type1 << "  " << type2 << "  " << type3 << std::endl;
+                }
+
+            }
+        }
+    }
+
+    return angle_bend_pairs;
+
 }
 
 

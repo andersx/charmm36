@@ -1610,42 +1610,94 @@ struct Imptor {
 
 };
 
-std::vector<DihedralType2Parameter> generate_imptors(ChainFB *chain,
-                                    std::vector<DihedralType2Parameter> imptor_parameters) {
 
-    for (ResidueIterator<ChainFB> res(*(this->chain)); !(res).end(); ++res) {
+Imptor atoms_to_imptor(std::vector<Atom*> atoms,
+    std::vector<DihedralType2Parameter> imptor_parameters) {
+
+    Imptor imptor;
+
+    imptor.atom1 = atoms[0];
+    imptor.atom2 = atoms[1];
+    imptor.atom3 = atoms[2];
+    imptor.atom4 = atoms[3];
+
+    std::string type1 = get_charmm22_atom_type(atoms[0]);
+    std::string type2 = get_charmm22_atom_type(atoms[1]);
+    std::string type3 = get_charmm22_atom_type(atoms[2]);
+    std::string type4 = get_charmm22_atom_type(atoms[3]);
+
+    bool found_parameter = false;
+
+    for (unsigned int i = 0; i < imptor_parameters.size(); i++) {
+
+        DihedralType2Parameter p = imptor_parameters[i];
+
+        if (((p.type1 == type1) && (p.type2 == type2) && (p.type3 == type3) && (p.type4 == type4)) ||
+            ((p.type1 == type4) && (p.type2 == type3) && (p.type3 == type2) && (p.type4 == type1)) ||
+            ((p.type1 == type1) && (p.type2 == "X"  ) && (p.type3 == "X"  ) && (p.type4 == type4)) ||
+            ((p.type1 == type4) && (p.type2 == "X"  ) && (p.type3 == "X"  ) && (p.type4 == type1))) {
+
+            found_parameter = true;
+
+            imptor.phi0 = p.phi0;
+            imptor.cp = p.cp;
+        }
+    }
+
+    if (!found_parameter) 
+        std::cout << "ERROR: DIDN'T FIND PARAMETER" << std::endl;
+
+    return imptor;
+
+
+}
+
+
+std::vector<Imptor> generate_imptors(ChainFB *chain,
+    std::vector<DihedralType2Parameter> imptor_parameters) {
+
+    using namespace definitions;
+    using namespace vector_utils;
+
+    std::vector<Imptor> imptors;
+
+    for (ResidueIterator<ChainFB> res(*(chain)); !(res).end(); ++res) {
+
+
+        std::vector<std::vector<AtomEnum> > enum_pairs;
+
 
         switch (res->residue_type) {
-        case definitions::ALA:
+        case ALA:
             break;
 
         case ARG:
-            CZ      NH1     NH2     NE
+            enum_pairs.push_back(make_vector(CZ,      NH1,     NH2,     NE));
             break;
 
         case ASN:
-            G      ND2     CB      OD1
-            CG      CB      ND2     OD1
-            ND2     CG      HD21    HD22
-            ND2     CG      HD22    HD21
+            enum_pairs.push_back(make_vector(CG,      ND2,     CB,      OD1));
+            enum_pairs.push_back(make_vector(CG,      CB,      ND2,     OD1));
+            enum_pairs.push_back(make_vector(ND2,     CG,      HD21,    HD22));
+            enum_pairs.push_back(make_vector(ND2,    CG,      HD22,    HD21));
             break;
 
         case ASP:
-            CG      CB      OD2     OD1
+            enum_pairs.push_back(make_vector(CG,      CB,      OD2,     OD1));
             break;
 
         case CYS:
             break;
 
         case GLN:
-	        CD	NE2	CG	OE1
-        	CD	CG	NE2	OE1
-        	NE2	CD	HE21	HE22
-        	NE2	CD	HE22	HE21
+	        enum_pairs.push_back(make_vector(CD,	NE2,	CG,	OE1));
+        	enum_pairs.push_back(make_vector(CD,	CG,	NE2,	OE1));
+        	enum_pairs.push_back(make_vector(NE2,	CD,	HE21,	HE22));
+        	enum_pairs.push_back(make_vector(NE2,	CD,	HE22,	HE21));
             break;
 
         case GLU:
-         	CD	CG	OE2	OE1
+         	enum_pairs.push_back(make_vector(CD,	CG,	OE2,	OE1));
             break;
 
         case GLY:
@@ -1653,24 +1705,24 @@ std::vector<DihedralType2Parameter> generate_imptors(ChainFB *chain,
 
         case HIS:
             if (res->has_atom(HD1) && res->has_atom(HE2)) {
-            	ND1	CG	CE1	HD1
-            	ND1	CE1	CG	HD1
-            	NE2	CD2	CE1	HE2
-            	NE2	CE1	CD2	HE2
+            	enum_pairs.push_back(make_vector(ND1, 	CG	, CE1,	HD1));
+            	enum_pairs.push_back(make_vector(ND1, 	CE1	, CG , HD1));
+            	enum_pairs.push_back(make_vector(NE2, 	CD2	, CE1,	HE2));
+            	enum_pairs.push_back(make_vector(NE2, 	CE1	, CD2,	HE2));
             } else if (!(res->has_atom(HD1)) && res->has_atom(HE2)) {
-            	NE2	CD2	CE1	HE2
-            	CD2	CG	NE2	HD2
-            	CE1	ND1	NE2	HE1
-            	NE2	CE1	CD2	HE2
-            	CD2	NE2	CG	HD2
-        	    CE1	NE2	ND1	HE1
+            	enum_pairs.push_back(make_vector(NE2, 	CD2	, CE1,	HE2));
+            	enum_pairs.push_back(make_vector(CD2, 	CG	, NE2,	HD2));
+            	enum_pairs.push_back(make_vector(CE1, 	ND1	, NE2,	HE1));
+            	enum_pairs.push_back(make_vector(NE2, 	CE1	, CD2,	HE2));
+            	enum_pairs.push_back(make_vector(CD2, 	NE2	, CG , HD2));
+        	    enum_pairs.push_back(make_vector(CE1, 	NE2	, ND1,	HE1));
             } else if (res->has_atom(HD1) && !(res->has_atom(HE2))) {
-            	ND1	CG	CE1	HD1
-            	CD2	CG	NE2	HD2
-            	CE1	ND1	NE2	HE1
-            	ND1	CE1	CG	HD1
-        	    CD2	NE2	CG	HD2
-            	CE1	NE2	ND1	HE1
+            	enum_pairs.push_back(make_vector(ND1, 	CG	, CE1,	HD1));
+            	enum_pairs.push_back(make_vector(CD2, 	CG	, NE2,	HD2));
+            	enum_pairs.push_back(make_vector(CE1, 	ND1	, NE2,	HE1));
+            	enum_pairs.push_back(make_vector(ND1, 	CE1	, CG , HD1));
+        	    enum_pairs.push_back(make_vector(CD2, 	NE2	, CG , HD2));
+            	enum_pairs.push_back(make_vector(CE1, 	NE2	, ND1,	HE1));
             } else {
                 std::cout << "Unknown protonations state on " << res << std::endl;
             }
@@ -1710,16 +1762,80 @@ std::vector<DihedralType2Parameter> generate_imptors(ChainFB *chain,
             break;
 
         default:
-            std::cout << "ASC: Unknown residue type: " << atom->residue << std::endl;
+            std::cout << "ASC: Unknown residue type: " << res << std::endl;
             break;
         };
 
-         N   -C  CA  HN
-         C   CA  +N  O
+
+        for (unsigned int i = 0; i < enum_pairs.size(); i++) {
+
+            Imptor sc_imptor = atoms_to_imptor(make_vector((*res)[enum_pairs[i][0]],
+                                                           (*res)[enum_pairs[i][1]],
+                                                           (*res)[enum_pairs[i][2]],
+                                                           (*res)[enum_pairs[i][3]]),
+                                               imptor_parameters);
+
+            imptors.push_back(sc_imptor);
+
+
+        }
+
+
+        Residue *previous_residue = res->get_neighbour(-1);
+        Residue *next_residue     = res->get_neighbour(+1);
+
+        // std::cout << *res << std::endl;
+
+         //N   -C  CA  HN
+         if (!(res->terminal_status == NTERM)) {
+
+             AtomEnum amide_atom = H;
+
+             if (res->residue_type == PRO)
+                amide_atom = CD;
+
+             Imptor bb_imptor = atoms_to_imptor(make_vector((*res)[N],
+                                                            (*previous_residue)[C],
+                                                            (*res)[CA],
+                                                            (*res)[amide_atom]),
+                                                imptor_parameters);
+
+             imptors.push_back(bb_imptor);
+         }
+
+          //C   CA  +N  O
+         if (!(res->terminal_status == CTERM)) {
+
+             Imptor bb_imptor = atoms_to_imptor(make_vector((*res)[C],
+                                                            (*res)[CA],
+                                                            (*next_residue)[N],
+                                                            (*res)[O]),
+                                                imptor_parameters);
+
+             imptors.push_back(bb_imptor);
+         } else if (res->terminal_status == CTERM) {
+
+             Imptor bb_imptor = atoms_to_imptor(make_vector((*res)[C],
+                                                            (*res)[CA],
+                                                            (*res)[OXT],
+                                                            (*res)[O]),
+                                                imptor_parameters);
+
+             imptors.push_back(bb_imptor);
+         }
+
+
+
+
+
+
+
 
 
 
     }
+
+    return imptors;
 
 }
 

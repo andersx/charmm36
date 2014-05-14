@@ -1,14 +1,14 @@
 // term_imptor.h --- OPLS energy: improper torsion or out-of-plane bending energy term
 // Copyright (C) 2014 Anders S. Christensen
 //
-// This file is part of Phaistos
+// This file is part of PHAISTOS
 //
-// Phaistos is free software: you can redistribute it and/or modify
+// PHAISTOS is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
 //
-// Phaistos is distributed in the hope that it will be useful,
+// PHAISTOS is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
@@ -25,50 +25,46 @@
 
 namespace phaistos {
 
-
-//! Gromacs out-of-plane bending for trivalent atoms (improper torsion) energy term
+//! Gromacs improper torsion Waals interaction term
 class TermGromacsImptor: public EnergyTermCommon<TermGromacsImptor, ChainFB> {
 
-private:
+protected:
 
      //! For convenience, define local EnergyTermCommon
      typedef phaistos::EnergyTermCommon<TermGromacsImptor, ChainFB> EnergyTermCommon;
 
 public:
 
-     std::vector<Imptor> imptors;
-
      //! Use same settings as base class
      typedef EnergyTerm<ChainFB>::SettingsClassicEnergy Settings;
 
-     //! Constructor
+     std::vector<Imptor> imptors;
+
+     //! Constructor.
      //! \param chain Molecule chain
      //! \param settings Local Settings object
      //! \param random_number_engine Object from which random number generators can be created.
-     TermGromacsImptor(ChainFB *chain, const Settings &settings=Settings(),
+     TermGromacsImptor(ChainFB *chain,
+                    const Settings &settings = Settings(),
                     RandomNumberEngine *random_number_engine = &random_global)
           : EnergyTermCommon(chain, "gromacs-imptor", settings, random_number_engine) {
 
-
           std::string filename = "/home/andersx/phaistos_dev/modules/gromacs/src/energy/charmm22_cmap/charmm22_imptor.itp";
           std::vector<DihedralType2Parameter> dihedral_type_2_parameters = read_dihedral_type_2_parameters(filename);
-          // std::cout << "Length: " << dihedral_type_2_parameters.size() << std::endl;
           imptors = generate_imptors(this->chain, dihedral_type_2_parameters);
-          // std::cout << "Length: " << imptors.size() << std::endl;
-
-          // dihedral_angles = generate_non_bonded_pairs(this->chain, dihedral_type_2_parameters);
 
      }
 
-     //! Copy constructor
+     //! Copy constructor.
      //! \param other Source object from which copy is made
      //! \param random_number_engine Object from which random number generators can be created.
      //! \param thread_index Index indicating in which thread|rank the copy exists
      //! \param chain Molecule chain
      TermGromacsImptor(const TermGromacsImptor &other,
-                    RandomNumberEngine *random_number_engine,
-                    int thread_index, ChainFB *chain)
-          : EnergyTermCommon(other, random_number_engine, thread_index, chain) {}
+                 RandomNumberEngine *random_number_engine,
+                 int thread_index, ChainFB *chain)
+          : EnergyTermCommon(other, random_number_engine, thread_index, chain),
+            imptors(other.imptors) {}
 
 
      //! Evaluate
@@ -91,25 +87,24 @@ public:
                const double energy_imptor_temp = 0.5 * imptor.cp * dphi * dphi;
 
                energy_imptor += energy_imptor_temp;
-              printf("ASC: IMP XYZ1 = %8.4f %8.4f %8.4f   XYZ2 = %8.4f %8.4f %8.4f   XYZ3 = %8.4f %8.4f %8.4f   XYZ4 = %8.4f %8.4f %8.4f   a = %15.10f   phi0 = %9.4f   cp = %12.4f   eimp = %14.10f\n",
+              // printf("ASC: IMP XYZ1 = %8.4f %8.4f %8.4f   XYZ2 = %8.4f %8.4f %8.4f   XYZ3 = %8.4f %8.4f %8.4f   XYZ4 = %8.4f %8.4f %8.4f   a = %15.10f   phi0 = %9.4f   cp = %12.4f   eimp = %14.10f\n",
 
-                      (imptor.atom1)->position[0], (imptor.atom1)->position[1], (imptor.atom1)->position[2],
-                      (imptor.atom2)->position[0], (imptor.atom2)->position[1], (imptor.atom2)->position[2],
-                      (imptor.atom3)->position[0], (imptor.atom3)->position[1], (imptor.atom3)->position[2],
-                      (imptor.atom4)->position[0], (imptor.atom4)->position[1], (imptor.atom4)->position[2],
-                      phi *180.0 / M_PI, imptor.phi0, imptor.cp, energy_imptor_temp);
+              //         (imptor.atom1)->position[0], (imptor.atom1)->position[1], (imptor.atom1)->position[2],
+              //         (imptor.atom2)->position[0], (imptor.atom2)->position[1], (imptor.atom2)->position[2],
+              //         (imptor.atom3)->position[0], (imptor.atom3)->position[1], (imptor.atom3)->position[2],
+              //         (imptor.atom4)->position[0], (imptor.atom4)->position[1], (imptor.atom4)->position[2],
+              //         phi *180.0 / M_PI, imptor.phi0, imptor.cp, energy_imptor_temp);
           }
 
 
 
-        printf("           imptor E = %12.4f kJ/mol\n", energy_imptor);
+        // printf("           imptor E = %12.4f kJ/mol\n", energy_imptor);
 
           return energy_imptor / 4.184;
      }
 
-
 };
 
-} // End namespace phaistos
+}
 
 #endif

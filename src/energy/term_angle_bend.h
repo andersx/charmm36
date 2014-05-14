@@ -223,8 +223,7 @@ public:
 
           }
 
-          // printf("       bond-angle E = %12.4f kJ/mol\n", energy_angle_bend);
-          printf("     urey-bradley E = %12.4f kJ/mol\n", energy_urey_bradley + energy_angle_bend);
+          // printf("     urey-bradley E = %12.4f kJ/mol\n", energy_urey_bradley + energy_angle_bend);
 
           return (energy_angle_bend + energy_urey_bradley) / 4.184;
 

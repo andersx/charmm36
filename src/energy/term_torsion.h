@@ -108,7 +108,7 @@ public:
              //         angle *180.0 / M_PI, dihedral.phi0, dihedral.cp, dihedral.mult, e_torsion_temp);
         }
 
-        printf("          torsion E = %12.4f kJ/mol\n", e_torsion);
+        // printf("          torsion E = %12.4f kJ/mol\n", e_torsion);
         return e_torsion / 4.184;
 
      }

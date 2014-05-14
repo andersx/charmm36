@@ -132,7 +132,7 @@ public:
      //! \return vdw potential energy of the chain in the object
      double evaluate(MoveInfo *move_info=NULL) {
 
-          // double energy_sum = 0.0;
+          double energy_sum = 0.0;
 
           double vdw_energy = 0.0;
           double coul_energy = 0.0;
@@ -144,6 +144,7 @@ public:
           //  int counter = 0;
 
           // std::cout << non_bonded_pairs.size() << " terms total" << std::endl;
+          #pragma omp parallel for reduction(+:energy_sum)
           for (unsigned int i = 0; i < non_bonded_pairs.size(); i++) {
 
                NonBondedPair pair = non_bonded_pairs[i];
@@ -161,45 +162,47 @@ public:
 
                const double coul_energy_temp = pair.qq * sqrt(inv_r_sq);
 
-               if (!pair.is_14_interaction) {
-                   coul_energy += coul_energy_temp;
-                   vdw_energy += vdw_energy_temp;
-                } else {
-                   coul14_energy += coul_energy_temp;
-                   vdw14_energy += vdw_energy_temp;
+               energy_sum += vdw_energy_temp + coul_energy_temp;
 
-                   // ::cout << counter++ << std::endl;
+               // if (!pair.is_14_interaction) {
+               //     coul_energy += coul_energy_temp;
+               //     vdw_energy += vdw_energy_temp;
+               //  } else {
+               //     coul14_energy += coul_energy_temp;
+               //     vdw14_energy += vdw_energy_temp;
 
-                // printf("ASC: LxCOL: %5d %5d %5d  r = %8.4f  XYZ = %8.4f %8.4f %8.4f   XYZ2 = %8.4f %8.4f %8.4f   q1 = %6.3f  q2 = %6.3f  qq = %7.3f  ecoul = %7.3f\n", pair.i1, pair.i2, pair.i2 , sqrt(r_sq),
+               //     // ::cout << counter++ << std::endl;
 
-                   // printf("ASC: LxCOL: %5d  r = %8.4f  XYZ = %8.4f %8.4f %8.4f   XYZ2 = %8.4f %8.4f %8.4f   q1 = %6.3f  q2 = %6.3f  ecol = %7.3f  c6 = %24.20f  c12 = %24.20f  evdw = %14.10f\n",
-                   //      counter,
-                   //      sqrt(r_sq),
-                   //    (pair.atom1)->position[0],  (pair.atom1)->position[1],  (pair.atom1)->position[2],
-                   //    (pair.atom2)->position[0],  (pair.atom2)->position[1],  (pair.atom2)->position[2],
-                   //   pair.q1, pair.q2, coul_energy_temp, pair.c6, pair.c12, vdw_energy_temp);
+               //  // printf("ASC: LxCOL: %5d %5d %5d  r = %8.4f  XYZ = %8.4f %8.4f %8.4f   XYZ2 = %8.4f %8.4f %8.4f   q1 = %6.3f  q2 = %6.3f  qq = %7.3f  ecoul = %7.3f\n", pair.i1, pair.i2, pair.i2 , sqrt(r_sq),
 
-                   // counter++;
-                  //std::cout << "ASC: " << pair.i1
-                  // << "   " << pair.i2
-                  // // << "   " << pair.atom1
-                  // // << "   " << pair.atom2
-                  // << "  q1 = " << pair.q1
-                  // << "  q2 = " << pair.q2
-                  // << "  qq = " << pair.qq
-                  // // << "  s1 = " << pair.sigma1
-                  // // << "  s2 = " << pair.sigma2
-                  // // << "  e1 = " << pair.epsilon1
-                  // // << "  e2 = " << pair.epsilon2
-                  // << "   r = " << 10.0 / sqrt(inv_r_sq)
-                  // // << std::setprecision(9) << "   c6 = "   << pair.c6
-                  // // << "   c12 = "  << pair.c12
-                  // // << "   evdw = "  << vdw_energy_temp
-                  // << "   ecoul = "  << coul_energy_temp
-                  // // << "   TOTAL = "  << vdw_energy
-                  // << std::endl;
+               //     // printf("ASC: LxCOL: %5d  r = %8.4f  XYZ = %8.4f %8.4f %8.4f   XYZ2 = %8.4f %8.4f %8.4f   q1 = %6.3f  q2 = %6.3f  ecol = %7.3f  c6 = %24.20f  c12 = %24.20f  evdw = %14.10f\n",
+               //     //      counter,
+               //     //      sqrt(r_sq),
+               //     //    (pair.atom1)->position[0],  (pair.atom1)->position[1],  (pair.atom1)->position[2],
+               //     //    (pair.atom2)->position[0],  (pair.atom2)->position[1],  (pair.atom2)->position[2],
+               //     //   pair.q1, pair.q2, coul_energy_temp, pair.c6, pair.c12, vdw_energy_temp);
 
-                }
+               //     // counter++;
+               //    //std::cout << "ASC: " << pair.i1
+               //    // << "   " << pair.i2
+               //    // // << "   " << pair.atom1
+               //    // // << "   " << pair.atom2
+               //    // << "  q1 = " << pair.q1
+               //    // << "  q2 = " << pair.q2
+               //    // << "  qq = " << pair.qq
+               //    // // << "  s1 = " << pair.sigma1
+               //    // // << "  s2 = " << pair.sigma2
+               //    // // << "  e1 = " << pair.epsilon1
+               //    // // << "  e2 = " << pair.epsilon2
+               //    // << "   r = " << 10.0 / sqrt(inv_r_sq)
+               //    // // << std::setprecision(9) << "   c6 = "   << pair.c6
+               //    // // << "   c12 = "  << pair.c12
+               //    // // << "   evdw = "  << vdw_energy_temp
+               //    // << "   ecoul = "  << coul_energy_temp
+               //    // // << "   TOTAL = "  << vdw_energy
+               //    // << std::endl;
+
+               //  }
           }
 
 
@@ -230,13 +233,15 @@ public:
 
           // std::cout << "          coulomb E = " << coul_energy <<  " kcal/mol" << std::endl;
           // std::cout << "              vdW E = " << vdw_energy <<  " kcal/mol" << std::endl;
-          printf("       coulomb-14 E = %12.4f kJ/mol\n", coul14_energy);
-          printf("           vdW-14 E = %12.4f kJ/mol\n", vdw14_energy);
-          printf("       coulomb-SR E = %12.4f kJ/mol\n", coul_energy);
-          printf("           vdW-SR E = %12.4f kJ/mol\n", vdw_energy);
+          // printf("       coulomb-14 E = %12.4f kJ/mol\n", coul14_energy);
+          // printf("           vdW-14 E = %12.4f kJ/mol\n", vdw14_energy);
+          // printf("       coulomb-SR E = %12.4f kJ/mol\n", coul_energy);
+          // printf("           vdW-SR E = %12.4f kJ/mol\n", vdw_energy);
           // GROMACS energies are in kJ/mol, and need to return in kcal/mol
-          const double total_energy_in_kcal_mol = (coul_energy + vdw_energy) / 4.184;
-          return total_energy_in_kcal_mol;
+          //const double total_energy_in_kcal_mol = (coul_energy + vdw_energy) / 4.184;
+          //return total_energy_in_kcal_mol;
+
+          return energy_sum / 4.184;
      }
 };
 

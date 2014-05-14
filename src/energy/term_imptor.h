@@ -91,13 +91,13 @@ public:
                const double energy_imptor_temp = 0.5 * imptor.cp * dphi * dphi;
 
                energy_imptor += energy_imptor_temp;
-             // printf("ASC: IMP XYZ1 = %8.4f %8.4f %8.4f   XYZ2 = %8.4f %8.4f %8.4f   XYZ3 = %8.4f %8.4f %8.4f   XYZ4 = %8.4f %8.4f %8.4f   a = %15.10f   phi0 = %9.4f   cp = %12.4f   eimp = %14.10f\n",
+              printf("ASC: IMP XYZ1 = %8.4f %8.4f %8.4f   XYZ2 = %8.4f %8.4f %8.4f   XYZ3 = %8.4f %8.4f %8.4f   XYZ4 = %8.4f %8.4f %8.4f   a = %15.10f   phi0 = %9.4f   cp = %12.4f   eimp = %14.10f\n",
 
-             //         (imptor.atom1)->position[0], (imptor.atom1)->position[1], (imptor.atom1)->position[2],
-             //         (imptor.atom2)->position[0], (imptor.atom2)->position[1], (imptor.atom2)->position[2],
-             //         (imptor.atom3)->position[0], (imptor.atom3)->position[1], (imptor.atom3)->position[2],
-             //         (imptor.atom4)->position[0], (imptor.atom4)->position[1], (imptor.atom4)->position[2],
-             //         phi *180.0 / M_PI, imptor.phi0, imptor.cp, energy_imptor_temp);
+                      (imptor.atom1)->position[0], (imptor.atom1)->position[1], (imptor.atom1)->position[2],
+                      (imptor.atom2)->position[0], (imptor.atom2)->position[1], (imptor.atom2)->position[2],
+                      (imptor.atom3)->position[0], (imptor.atom3)->position[1], (imptor.atom3)->position[2],
+                      (imptor.atom4)->position[0], (imptor.atom4)->position[1], (imptor.atom4)->position[2],
+                      phi *180.0 / M_PI, imptor.phi0, imptor.cp, energy_imptor_temp);
           }
 
 

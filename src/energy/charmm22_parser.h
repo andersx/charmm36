@@ -959,8 +959,8 @@ double get_charmm22_atom_charge(Atom *atom) {
         atom_map[H1]   = 0.33;
         atom_map[H2]   = 0.33;
         atom_map[H3]   = 0.33;
-        atom_map[HA]   = 0.21;
-        atom_map[CA]   = 0.10;
+        atom_map[HA]   = 0.10;
+        atom_map[CA]   = 0.21;
     }
 
     if (atom->residue->terminal_status == CTERM) {
@@ -1013,6 +1013,61 @@ NonBondedParameter get_non_bonded_parameter(std::string atom_type,
 
 }
 
+NonBonded14Parameter get_non_bonded14_parameter(std::string atom_type1, std::string atom_type2,
+        std::vector<NonBonded14Parameter> non_bonded14_parameters,
+        std::vector<NonBondedParameter> non_bonded_parameters) {
+
+    NonBonded14Parameter parameter;
+    bool found_parameter = false;
+
+    for (unsigned int i = 0; i < non_bonded14_parameters.size(); i++) {
+
+        if (((non_bonded14_parameters[i].atom_type1 == atom_type1) &&
+             (non_bonded14_parameters[i].atom_type2 == atom_type2)) ||
+            ((non_bonded14_parameters[i].atom_type1 == atom_type2) &&
+             (non_bonded14_parameters[i].atom_type2 == atom_type1))) {
+
+            parameter = non_bonded14_parameters[i];
+            found_parameter = true;
+            break;
+
+        }
+    }
+// struct NonBonded14Parameter{
+//
+//     std::string atom_type1;
+//     std::string atom_type2;
+//     unsigned int pair_function;
+//     double sigma;
+//     double epsilon;
+//
+// };
+
+
+    if (!found_parameter) {
+
+        NonBondedParameter parameter1 = get_non_bonded_parameter(atom_type1, non_bonded_parameters);
+        NonBondedParameter parameter2 = get_non_bonded_parameter(atom_type2, non_bonded_parameters);
+
+        parameter.atom_type1 = atom_type1;
+        parameter.atom_type2 = atom_type1;
+
+        const double sigma1 = parameter1.sigma;
+        const double sigma2 = parameter2.sigma;
+        const double epsilon1 = parameter1.epsilon;
+        const double epsilon2 = parameter2.epsilon;
+
+        const double epsilon_effective = sqrt(parameter1.epsilon * parameter2.epsilon);
+        const double sigma_effective   = 0.5 * (parameter1.sigma + parameter2.sigma);
+
+        parameter.sigma = sigma_effective;
+        parameter.epsilon = epsilon_effective;
+
+    }
+
+    return parameter;
+
+}
 
 std::vector<NonBondedPair> generate_non_bonded_pairs(ChainFB *chain,
                     std::vector<NonBondedParameter> non_bonded_parameters,
@@ -1075,6 +1130,7 @@ std::vector<NonBondedPair> generate_non_bonded_pairs(ChainFB *chain,
                non_bonded_pair.c6  = 4 * epsilon_effective * std::pow(sigma_effective, 6.0);
                non_bonded_pair.c12 = 4 * epsilon_effective * std::pow(sigma_effective, 12.0);
 
+               non_bonded_pair.is_14_interaction = false;
                //  if ((std::fabs(parameter1.atom_charge - atom_charge1) > 0.001) ||
                //      (std::fabs(parameter2.atom_charge - atom_charge2) > 0.001) ) std::cout << "ERROR";
                //  std::cout << "   " << i
@@ -1099,10 +1155,93 @@ std::vector<NonBondedPair> generate_non_bonded_pairs(ChainFB *chain,
                non_bonded_pair.i2 = j;
 
                non_bonded_pairs.push_back(non_bonded_pair);
+//               } else if (d == 3) {
+//               NonBondedPair non_bonded_pair;
+//
+//               double epsilon_effective = sqrt(parameter1.epsilon * parameter2.epsilon);
+//               double sigma_effective   = 0.5 * (parameter1.sigma + parameter2.sigma);
+//               // std::cout << "   " << epsilon_effective << "   " << sigma_effective << std::endl;
+//
+//               non_bonded_pair.atom1 = atom1;
+//               non_bonded_pair.atom2 = atom2;
+//               non_bonded_pair.q1 = atom_charge1;
+//               non_bonded_pair.q2 = atom_charge2;
+//               non_bonded_pair.sigma1 = parameter1.sigma;
+//               non_bonded_pair.sigma2 = parameter2.sigma;
+//               non_bonded_pair.epsilon1 = parameter1.epsilon;
+//               non_bonded_pair.epsilon2 = parameter2.epsilon;
+//               non_bonded_pair.sigma_effective = sigma_effective;
+//               non_bonded_pair.epsilon_effective = epsilon_effective;
+//               non_bonded_pair.qq  = non_bonded_pair.q1 * non_bonded_pair.q2 * 138.935455;
+//               non_bonded_pair.c6  = 4 * epsilon_effective * std::pow(sigma_effective, 6.0);
+//               non_bonded_pair.c12 = 4 * epsilon_effective * std::pow(sigma_effective, 12.0);
+//
+//               non_bonded_pair.is_14_interaction = false;
+//               //  if ((std::fabs(parameter1.atom_charge - atom_charge1) > 0.001) ||
+//               //      (std::fabs(parameter2.atom_charge - atom_charge2) > 0.001) ) std::cout << "ERROR";
+//               //  std::cout << "   " << i
+//               //            << "   " << j
+//               //            << "   " << atom_type1
+//               //            << "   " << atom_type2
+//               //          //  << "   " << parameter1.sigma
+//               //          //  << "   " << parameter2.sigma
+//               //          //  << "   " << parameter1.epsilon
+//               //          //  << "   " << parameter2.epsilon
+//               //            << "   " << parameter1.atom_charge
+//               //            << "   " << atom_charge1
+//               //            << "   " << parameter2.atom_charge
+//               //            << "   " << atom_charge2
+//               //          //  << "   " << non_bonded_pair.c6
+//               //          //  << "   " << non_bonded_pair.c12
+//               //            << std::endl;
+//
+//
+//               non_bonded_pair.is_14_interaction = true;
+//               non_bonded_pair.i1 = i;
+//               non_bonded_pair.i2 = j;
+//
+//               non_bonded_pairs.push_back(non_bonded_pair);
+//               }
+             } else if (d == 3) {
 
-            }
+
+                NonBonded14Parameter parameter14 = get_non_bonded14_parameter(atom_type1, atom_type2,
+                                                                            non_bonded_14_parameters,
+                                                                            non_bonded_parameters);
+
+                NonBondedParameter parameter2 = get_non_bonded_parameter(atom_type2, non_bonded_parameters);
+                NonBondedPair non_bonded_pair;
+
+                non_bonded_pair.atom1 = atom1;
+                non_bonded_pair.atom2 = atom2;
+                non_bonded_pair.q1 = atom_charge1;
+                non_bonded_pair.q2 = atom_charge2;
+                non_bonded_pair.sigma1 = parameter1.sigma;
+                non_bonded_pair.sigma2 = parameter2.sigma;
+                non_bonded_pair.epsilon1 = parameter1.epsilon;
+                non_bonded_pair.epsilon2 = parameter2.epsilon;
+                non_bonded_pair.sigma_effective = parameter14.sigma;
+                non_bonded_pair.epsilon_effective = parameter14.epsilon;
+                non_bonded_pair.qq  = non_bonded_pair.q1 * non_bonded_pair.q2 * 138.935455;
+                non_bonded_pair.c6  = 4 * parameter14.epsilon * std::pow(parameter14.sigma, 6.0);
+                non_bonded_pair.c12 = 4 * parameter14.epsilon * std::pow(parameter14.sigma, 12.0);
+
+                non_bonded_pair.is_14_interaction = true;
+
+                non_bonded_pairs.push_back(non_bonded_pair);
+         }
 
 
+// struct NonBonded14Parameter{
+//
+//     std::string atom_type1;
+//     std::string atom_type2;
+//     unsigned int pair_function;
+//     double sigma;
+//     double epsilon;
+//
+// };
+//
             // std::cout << atom2<< i << parameter2.get_atom_type() << std::endl;
 
             // if ((d == 3) && ((i==test_atom_index)||(j==test_atom_index))) {
@@ -1644,7 +1783,7 @@ Imptor atoms_to_imptor(std::vector<Atom*> atoms,
         }
     }
 
-    if (!found_parameter) 
+    if (!found_parameter)
         std::cout << "ERROR: DIDN'T FIND PARAMETER" << std::endl;
 
     return imptor;

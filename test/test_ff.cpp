@@ -51,7 +51,7 @@ void test_terms(ChainFB *chain, int n=1) {
      energy.add_term( new TermGromacsVdw(chain) );
      energy.add_term( new TermGromacsImptor(chain) );
      // energy.add_term( new TermGromacsCoulomb(chain) );
-     // energy.add_term( new TermEef1(chain) );
+     energy.add_term( new TermGromacsEef1(chain) );
 
 
 

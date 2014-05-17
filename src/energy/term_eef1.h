@@ -23,7 +23,7 @@
 #include <boost/type_traits/is_base_of.hpp>
 #include <boost/tokenizer.hpp>
 #include "energy/energy_term.h"
-#include "charmm22_parser.h"
+// #include "charmm22_parser.h"
 
 const double exponential [350] = {
           0.99998,0.99978,0.99938,0.99878,0.99798,0.99698,
@@ -151,6 +151,537 @@ public:
             counter(other.counter){
           initialize();
      }
+
+     // Returns the atom type according to the CHARMM36 force field
+     // as implemented in CHARMM ... note that these are slightly
+     // different that the atom types defined in GROMACS.
+     std::string get_charmm36_atom_type(Atom *atom) {
+
+        using namespace definitions;
+
+        Residue *res = atom->residue;
+        std::map<AtomEnum, std::string> atom_map;
+
+        switch (res->residue_type) {
+        case definitions::ALA:
+            atom_map[N]   = "NH1";
+            atom_map[H]   = "H";
+            atom_map[CA]  = "CT1";
+            atom_map[HA]  = "HB1";
+            atom_map[CB]  = "CT3";
+            atom_map[HB1] = "HA3";
+            atom_map[HB2] = "HA3";
+            atom_map[HB3] = "HA3";
+            atom_map[C]   = "C";
+            atom_map[O]   = "O";
+            break;
+
+        case ARG:
+            atom_map[N]   = "NH1";
+            atom_map[H]   = "H";
+            atom_map[CA]  = "CT1";
+            atom_map[HA]  = "HB1";
+            atom_map[CB]  = "CT2";
+            atom_map[HB2] = "HA2";
+            atom_map[HB3] = "HA2";
+            atom_map[CG]  = "CT2";
+            atom_map[HG2] = "HA2";
+            atom_map[HG3] = "HA2";
+            atom_map[CD]  = "CT2";
+            atom_map[HD2] = "HA2";
+            atom_map[HD3] = "HA2";
+            atom_map[NE]  = "NC2";
+            atom_map[HE]  = "HC";
+            atom_map[CZ]  = "C";
+            atom_map[NH1] = "NC2";
+            atom_map[HH11]= "HC";
+            atom_map[HH12]= "HC";
+            atom_map[NH2] = "NC2";
+            atom_map[HH21]= "HC";
+            atom_map[HH22]= "HC";
+            atom_map[C]   = "C";
+            atom_map[O]   = "O";
+            break;
+
+        case ASN:
+            atom_map[N]   = "NH1";
+            atom_map[H]   = "H";
+            atom_map[CA]  = "CT1";
+            atom_map[HA]  = "HB1";
+            atom_map[CB]  = "CT2";
+            atom_map[HB2] = "HA2";
+            atom_map[HB3] = "HA2";
+            atom_map[CG]  = "CC";
+            atom_map[OD1] = "O";
+            atom_map[ND2] = "NH2";
+            atom_map[HD21]= "H";
+            atom_map[HD22]= "H";
+            atom_map[C]   = "C";
+            atom_map[O]   = "O";
+            break;
+
+        case ASP:
+            atom_map[N]   = "NH1";
+            atom_map[H]   = "H";
+            atom_map[CA]  = "CT1";
+            atom_map[HA]  = "HB1";
+            atom_map[CB]  = "CT2A";
+            atom_map[HB2] = "HA2";
+            atom_map[HB3] = "HA2";
+            atom_map[CG]  = "CC";
+            atom_map[OD1] = "OC";
+            atom_map[OD2] = "OC";
+            atom_map[C]   = "C";
+            atom_map[O]   = "O";
+
+            if (res->has_atom(HD1)){
+                atom_map[OD1] = "OH1";
+                atom_map[OD2] = "OB";
+                atom_map[HD1] = "H";
+            }
+            if (res->has_atom(HD2)){
+                atom_map[OD1] = "OB";
+                atom_map[OD2] = "OH1";
+                atom_map[HD2] = "H";
+            }
+
+            break;
+
+        case CYS:
+            atom_map[N]   = "NH1";
+            atom_map[H]   = "H";
+            atom_map[CA]  = "CT1";
+            atom_map[HA]  = "HB1";
+            atom_map[CB]  = "CT2";
+            atom_map[HB2] = "HA2";
+            atom_map[HB3] = "HA2";
+            atom_map[SG]  = "S";
+            atom_map[HG1] = "HS";
+            atom_map[C]   = "C";
+            atom_map[O]   = "O";
+            break;
+
+        case GLN:
+            atom_map[N]    = "NH1";
+            atom_map[H]    = "H";
+            atom_map[CA]   = "CT1";
+            atom_map[HA]   = "HB1";
+            atom_map[CB]   = "CT2";
+            atom_map[HB2]  = "HA2";
+            atom_map[HB3]  = "HA2";
+            atom_map[CG]   = "CT2";
+            atom_map[HG2]  = "HA2";
+            atom_map[HG3]  = "HA2";
+            atom_map[CD]   = "CC";
+            atom_map[OE1]  = "O";
+            atom_map[NE2]  = "NH2";
+            atom_map[HE21] = "H";
+            atom_map[HE22] = "H";
+            atom_map[C]    = "C";
+            atom_map[O]    = "O";
+            break;
+
+        case GLU:
+            atom_map[N]   = "NH1";
+            atom_map[H]   = "H";
+            atom_map[CA]  = "CT1";
+            atom_map[HA]  = "HB1";
+            atom_map[CB]  = "CT2A";
+            atom_map[HB2] = "HA2";
+            atom_map[HB3] = "HA2";
+            atom_map[CG]  = "CT2";
+            atom_map[HG2] = "HA2";
+            atom_map[HG3] = "HA2";
+            atom_map[CD]  = "CC";
+            atom_map[OE1] = "OC";
+            atom_map[OE2] = "OC";
+            atom_map[C]   = "C";
+            atom_map[O]   = "O";
+
+            if (res->has_atom(HE1)){
+                atom_map[OE1] = "OH1";
+                atom_map[OE2] = "OB";
+                atom_map[HE1] = "H";
+            }
+            if (res->has_atom(HE2)){
+                atom_map[OE1] = "OB";
+                atom_map[OE2] = "OH1";
+                atom_map[HE2] = "H";
+            }
+
+            break;
+
+        case GLY:
+            atom_map[N]    = "NH1";
+            atom_map[H]    = "H";
+            atom_map[CA]   = "CT2";
+            atom_map[HA2]  = "HB2";
+            atom_map[HA3]  = "HB2";
+            atom_map[C]    = "C";
+            atom_map[O]    = "O";
+            break;
+
+        case HIS:
+            if ( (res->has_atom(HD1)) && (res->has_atom(HE2))) {
+            // HSP
+                atom_map[N]    = "NH1";
+                atom_map[H]    = "H";
+                atom_map[CA]   = "CT1";
+                atom_map[HA]   = "HB1";
+                atom_map[CB]   = "CT2A";
+                atom_map[HB2]  = "HA2";
+                atom_map[HB3]  = "HA2";
+                atom_map[CD2]  = "CPH1";
+                atom_map[HD2]  = "HR1";
+                atom_map[CG]   = "CPH1";
+                atom_map[NE2]  = "NR3";
+                atom_map[HE2]  = "H";
+                atom_map[ND1]  = "NR3";
+                atom_map[HD1]  = "H";
+                atom_map[CE1]  = "CPH2";
+                atom_map[HE1]  = "HR2";
+                atom_map[C]    = "C";
+                atom_map[O]    = "O";
+            } else if (res->has_atom(HD1)) {
+            // HSD
+                atom_map[N]    = "NH1";
+                atom_map[H]    = "H";
+                atom_map[CA]   = "CT1";
+                atom_map[HA]   = "HB1";
+                atom_map[CB]   = "CT2";
+                atom_map[HB2]  = "HA2";
+                atom_map[HB3]  = "HA2";
+                atom_map[CG]   = "CPH1";
+                atom_map[ND1]  = "NR1";
+                atom_map[HD1]  = "H";
+                atom_map[CD2]  = "CPH1";
+                atom_map[HD2]  = "HR3";
+                atom_map[CE1]  = "CPH2";
+                atom_map[HE1]  = "HR1";
+                atom_map[NE2]  = "NR2";
+                atom_map[C]    = "C";
+                atom_map[O]    = "O";
+            } else {
+            // HSE
+                atom_map[N]    = "NH1";
+                atom_map[H]    = "H";
+                atom_map[CA]   = "CT1";
+                atom_map[HA]   = "HB1";
+                atom_map[CB]   = "CT2";
+                atom_map[HB2]  = "HA2";
+                atom_map[HB3]  = "HA2";
+                atom_map[CG]   = "CPH1";
+                atom_map[CD2]  = "CPH1";
+                atom_map[HD2]  = "HR3";
+                atom_map[NE2]  = "NR1";
+                atom_map[HE2]  = "H";
+                atom_map[ND1]  = "NR2";
+                atom_map[CE1]  = "CPH1";
+                atom_map[HE1]  = "HR3";
+                atom_map[C]    = "C";
+                atom_map[O]    = "O";
+            }
+                break;
+
+        case ILE:
+            atom_map[N]    = "NH1";
+            atom_map[H]    = "H";
+            atom_map[CA]   = "CT1";
+            atom_map[HA]   = "HB1";
+            atom_map[CB]   = "CT1";
+            atom_map[HB]   = "HA1";
+            atom_map[CG2]  = "CT3";
+            atom_map[HG21] = "HA3";
+            atom_map[HG22] = "HA3";
+            atom_map[HG23] = "HA3";
+            atom_map[CG1]  = "CT2";
+            atom_map[HG12] = "HA2";
+            atom_map[HG13] = "HA2";
+            atom_map[CD1]  = "CT3";
+            atom_map[HD11] = "HA3";
+            atom_map[HD12] = "HA3";
+            atom_map[HD13] = "HA3";
+            atom_map[C]    = "C";
+            atom_map[O]    = "O";
+            break;
+
+        case LEU:
+            atom_map[N]    = "NH1";
+            atom_map[H]    = "H";
+            atom_map[CA]   = "CT1";
+            atom_map[HA]   = "HB1";
+            atom_map[CB]   = "CT2";
+            atom_map[HB2]  = "HA2";
+            atom_map[HB3]  = "HA2";
+            atom_map[CG]   = "CT1";
+            atom_map[HG]   = "HA1";
+            atom_map[CD1]  = "CT3";
+            atom_map[HD11] = "HA3";
+            atom_map[HD12] = "HA3";
+            atom_map[HD13] = "HA3";
+            atom_map[CD2]  = "CT3";
+            atom_map[HD21] = "HA3";
+            atom_map[HD22] = "HA3";
+            atom_map[HD23] = "HA3";
+            atom_map[C]    = "C";
+            atom_map[O]    = "O";
+            break;
+
+        case LYS:
+            atom_map[N]    = "NH1";
+            atom_map[H]    = "H";
+            atom_map[CA]   = "CT1";
+            atom_map[HA]   = "HB1";
+            atom_map[CB]   = "CT2";
+            atom_map[HB2]  = "HA2";
+            atom_map[HB3]  = "HA2";
+            atom_map[CG]   = "CT2";
+            atom_map[HG2]  = "HA2";
+            atom_map[HG3]  = "HA2";
+            atom_map[CD]   = "CT2";
+            atom_map[HD2]  = "HA2";
+            atom_map[HD3]  = "HA2";
+            atom_map[CE]   = "CT2";
+            atom_map[HE2]  = "HA2";
+            atom_map[HE3]  = "HA2";
+            atom_map[NZ]   = "NH3";
+            atom_map[HZ1]  = "HC";
+            atom_map[HZ2]  = "HC";
+            atom_map[HZ3]  = "HC";
+            atom_map[C]    = "C";
+            atom_map[O]    = "O";
+            break;
+
+        case MET:
+            atom_map[N]    = "NH1";
+            atom_map[H]    = "H";
+            atom_map[CA]   = "CT1";
+            atom_map[HA]   = "HB1";
+            atom_map[CB]   = "CT2";
+            atom_map[HB2]  = "HA2";
+            atom_map[HB3]  = "HA2";
+            atom_map[CG]   = "CT2";
+            atom_map[HG2]  = "HA2";
+            atom_map[HG3]  = "HA2";
+            atom_map[SD]   = "S";
+            atom_map[CE]   = "CT3";
+            atom_map[HE1]  = "HA3";
+            atom_map[HE2]  = "HA3";
+            atom_map[HE3]  = "HA3";
+            atom_map[C]    = "C";
+            atom_map[O]    = "O";
+            break;
+
+        case PHE:
+            atom_map[N]    = "NH1";
+            atom_map[H]    = "H";
+            atom_map[CA]   = "CT1";
+            atom_map[HA]   = "HB1";
+            atom_map[CB]   = "CT2";
+            atom_map[HB2]  = "HA2";
+            atom_map[HB3]  = "HA2";
+            atom_map[CG]   = "CA";
+            atom_map[CD1]  = "CA";
+            atom_map[HD1]  = "HP";
+            atom_map[CE1]  = "CA";
+            atom_map[HE1]  = "HP";
+            atom_map[CZ]   = "CA";
+            atom_map[HZ]   = "HP";
+            atom_map[CD2]  = "CA";
+            atom_map[HD2]  = "HP";
+            atom_map[CE2]  = "CA";
+            atom_map[HE2]  = "HP";
+            atom_map[C]    = "C";
+            atom_map[O]    = "O";
+            break;
+
+        case PRO:
+            atom_map[N]    = "N";
+            atom_map[CD]   = "CP3";
+            atom_map[HD2]  = "HA2";
+            atom_map[HD3]  = "HA2";
+            atom_map[CA]   = "CP1";
+            atom_map[HA]   = "HB1";
+            atom_map[CB]   = "CP2";
+            atom_map[HB2]  = "HA2";
+            atom_map[HB3]  = "HA2";
+            atom_map[CG]   = "CP2";
+            atom_map[HG2]  = "HA2";
+            atom_map[HG3]  = "HA2";
+            atom_map[C]    = "C";
+            atom_map[O]    = "O";
+            break;
+
+        case SER:
+            atom_map[N]    = "NH1";
+            atom_map[H]    = "H";
+            atom_map[CA]   = "CT1";
+            atom_map[HA]   = "HB1";
+            atom_map[CB]   = "CT2";
+            atom_map[HB2]  = "HA2";
+            atom_map[HB3]  = "HA2";
+            atom_map[OG]   = "OH1";
+            atom_map[HG]   = "H";
+            atom_map[C]    = "C";
+            atom_map[O]    = "O";
+            break;
+
+        case THR:
+            atom_map[N]    = "NH1";
+            atom_map[H]    = "H";
+            atom_map[CA]   = "CT1";
+            atom_map[HA]   = "HB1";
+            atom_map[CB]   = "CT1";
+            atom_map[HB]   = "HA1";
+            atom_map[OG1]  = "OH1";
+            atom_map[HG1]  = "H";
+            atom_map[CG2]  = "CT3";
+            atom_map[HG21] = "HA3";
+            atom_map[HG22] = "HA3";
+            atom_map[HG23] = "HA3";
+            atom_map[C]    = "C";
+            atom_map[O]    = "O";
+            break;
+
+        case TRP:
+            atom_map[N]    = "NH1";
+            atom_map[H]    = "H";
+            atom_map[CA]   = "CT1";
+            atom_map[HA]   = "HB1";
+            atom_map[CB]   = "CT2";
+            atom_map[HB2]  = "HA2";
+            atom_map[HB3]  = "HA2";
+            atom_map[CG]   = "CY";
+            atom_map[CD1]  = "CA";
+            atom_map[HD1]  = "HP";
+            atom_map[NE1]  = "NY";
+            atom_map[HE1]  = "H";
+            atom_map[CE2]  = "CPT";
+            atom_map[CD2]  = "CPT";
+            atom_map[CE3]  = "CAI";
+            atom_map[HE3]  = "HP";
+            atom_map[CZ3]  = "CA";
+            atom_map[HZ3]  = "HP";
+            atom_map[CZ2]  = "CAI";
+            atom_map[HZ2]  = "HP";
+            atom_map[CH2]  = "CA";
+            atom_map[HH2]  = "HP";
+            atom_map[C]    = "C";
+            atom_map[O]    = "O";
+            break;
+
+        case TYR:
+            atom_map[N]    = "NH1";
+            atom_map[H]    = "H";
+            atom_map[CA]   = "CT1";
+            atom_map[HA]   = "HB1";
+            atom_map[CB]   = "CT2";
+            atom_map[HB2]  = "HA2";
+            atom_map[HB3]  = "HA2";
+            atom_map[CG]   = "CA";
+            atom_map[CD1]  = "CA";
+            atom_map[HD1]  = "HP";
+            atom_map[CE1]  = "CA";
+            atom_map[HE1]  = "HP";
+            atom_map[CZ]   = "CA";
+            atom_map[OH]   = "OH1";
+            atom_map[HH]   = "H";
+            atom_map[CD2]  = "CA";
+            atom_map[HD2]  = "HP";
+            atom_map[CE2]  = "CA";
+            atom_map[HE2]  = "HP";
+            atom_map[C]    = "C";
+            atom_map[O]    = "O";
+            break;
+
+        case VAL:
+            atom_map[N]    = "NH1";
+            atom_map[H]    = "H";
+            atom_map[CA]   = "CT1";
+            atom_map[HA]   = "HB1";
+            atom_map[CB]   = "CT1";
+            atom_map[HB]   = "HA1";
+            atom_map[CG1]  = "CT3";
+            atom_map[HG11] = "HA3";
+            atom_map[HG12] = "HA3";
+            atom_map[HG13] = "HA3";
+            atom_map[CG2]  = "CT3";
+            atom_map[HG21] = "HA3";
+            atom_map[HG22] = "HA3";
+            atom_map[HG23] = "HA3";
+            atom_map[C]    = "C";
+            atom_map[O]    = "O";
+            break;
+
+        default:
+            std::cout << "ASC: Unknown residue type: " << atom->residue << std::endl;
+            break;
+        };
+
+        if (atom->residue->terminal_status == NTERM) {
+            switch (res->residue_type) {
+            case GLY:
+                if (res->has_atom(H3)) {
+                    atom_map[N]    = "NH3";
+                    atom_map[H1]   = "HC";
+                    atom_map[H2]   = "HC";
+                    atom_map[H3]   = "HC";
+                    atom_map[CA]   = "CT2";
+                    atom_map[HA2]  = "HB2";
+                    atom_map[HA3]  = "HB2";
+                } else {
+                    atom_map[N]    = "NH2";
+                    atom_map[H1]   = "H";
+                    atom_map[H2]   = "H";
+                    atom_map[CA]   = "CT2";
+                    atom_map[HA2]  = "HB2";
+                    atom_map[HA3]  = "HB2";
+                }
+                break;
+            case PRO:
+                atom_map[N]    = "NP";
+                atom_map[H1]   = "HC";
+                atom_map[H2]   = "HC";
+                atom_map[CD]   = "CP3";
+                atom_map[HD2]  = "HA2";
+                atom_map[HD3]  = "HA2";
+                atom_map[CA]   = "CP1";
+                atom_map[HA]   = "HB1";
+                break;
+            default:
+                if (res->has_atom(H3)) {
+                    atom_map[N]    = "NH3";
+                    atom_map[H1]   = "HC";
+                    atom_map[H2]   = "HC";
+                    atom_map[H3]   = "HC";
+                    atom_map[CA]   = "CT1";
+                    atom_map[HA]   = "HB1";
+                } else {
+                    atom_map[N]    = "NH2";
+                    atom_map[H1]   = "H";
+                    atom_map[H2]   = "H";
+                    atom_map[CA]   = "CT1";
+                    atom_map[HA]   = "HB1";
+                }
+                break;
+            }
+        }
+
+        if (atom->residue->terminal_status == CTERM) {
+            // There should be an "if (res->has_atom(HXT))" statment here,
+            // but Phaistos 1.0 does not support neutral C-term HXT atoms.
+            atom_map[C]    = "CC";
+            atom_map[O]    = "OC";
+            atom_map[OXT]  = "OC";
+        }
+
+
+        if (atom_map.count(atom->atom_type) < 1)
+            std::cout << "ASC: NOT found atom: " << atom << std::endl;
+
+        return atom_map[atom->atom_type];
+
+    }
 
      void initialize() {
 
@@ -285,15 +816,15 @@ public:
 
 
           // std::cout <<  "LAMBDA " << lambda_i << std::endl;
-          // std::cout << atom1 << get_charmm22_atom_type(atom1) << std::endl;
-          // std::cout << atom2 << get_charmm22_atom_type(atom2) << std::endl;
+          std::cout << atom1 << get_charmm36_atom_type(atom1) << std::endl;
+          std::cout << atom2 << get_charmm36_atom_type(atom2) << std::endl;
 
-          // std::cout<< "rij " << r_ij << "\n";
-          // std::cout<< "rijsq " << r_ij_sq << "\n";
-          // std::cout<< "RMini " << R_min_i << "\n";
-          // std::cout<< "RMinj " << R_min_j << "\n";
-          // std::cout<< "lambdi " << lambda_i << "\n";
-          // std::cout<< "lambdj " << lambda_j << "\n";
+          std::cout<< "rij " << r_ij << "\n";
+          std::cout<< "rijsq " << r_ij_sq << "\n";
+          std::cout<< "RMini " << R_min_i << "\n";
+          std::cout<< "RMinj " << R_min_j << "\n";
+          std::cout<< "lambdi " << lambda_i << "\n";
+          std::cout<< "lambdj " << lambda_j << "\n";
 
           // In CHARMM the exponential is not calculated explicitly
           // A lookup table is used instead (copied here for testing purposes only)
@@ -306,15 +837,13 @@ public:
           if (bin_ij < 350) exp_ij = exponential[bin_ij];
           if (bin_ji < 350) exp_ji = exponential[bin_ji];
 
-          // std::cout<< "expij " << exp_ij << "   " << std::exp(-(arg_ij*arg_ij)) << "\n";
-          // std::cout<< "expji " << exp_ji << "   " << std::exp(-(arg_ji*arg_ji)) << "\n";
-          // // std::cout<< "facij " << R_min_i << "\n";
-          // std::cout<< "facji " << factors[index1][index2] << "\n";
-          // std::cout<< "facji " << factors[index2][index1] << "\n";
-          // std::cout<< "bin_ij " << bin_ij << "\n";
-          // std::cout<< "bin_ji " << bin_ji << "\n";
-
-
+          std::cout<< "expij " << std::setprecision(9) << exp_ij << "   " << std::exp(-(arg_ij*arg_ij)) << "\n";
+          std::cout<< "expji " << std::setprecision(9) << exp_ji << "   " << std::exp(-(arg_ji*arg_ji)) << "\n";
+          // std::cout<< "facij " << R_min_i << "\n";
+          std::cout<< "facji " << std::setprecision(9) << factors[index1][index2] << "\n";
+          std::cout<< "facji " << std::setprecision(9) << factors[index2][index1] << "\n";
+          std::cout<< "bin_ij " << bin_ij << "\n";
+          std::cout<< "bin_ji " << bin_ji << "\n";
 
           double cont_ij = -factors[index1][index2]*exp_ij/r_ij_sq;
           double cont_ji = -factors[index2][index1]*exp_ji/r_ij_sq;
@@ -325,13 +854,15 @@ public:
           // double cont_ij = -factors[index1][index2]*std::exp(-(arg_ij*arg_ij))/r_ij_sq;
           // double cont_ji = -factors[index2][index1]*std::exp(-(arg_ji*arg_ji))/r_ij_sq;
 
+          std::cout << "cont_ij " << std::setprecision(9) << cont_ij << "\n";
+          std::cout << "cont_ji " << std::setprecision(9) << cont_ji << "\n";
           return (cont_ij+cont_ji);
      }
 
      //! Return index in parameter table corresponding to the atomtype
      int get_index(Atom *atom){
 
-          std::string atom_type = get_charmm22_atom_type(atom);
+          std::string atom_type = get_charmm36_atom_type(atom);
 
           // std::cout << atom_type << std::endl;
           unsigned int eef1_atom_type_index = eef1_atom_type_index_map[atom_type];
@@ -388,19 +919,19 @@ public:
                     contribs += energy_sum_temp;
 
                     e_atom += energy_sum_temp;
-                    //std::cout << atom1 << get_charmm22_atom_type(atom1) << std::endl;
-                    //std::cout << atom2 << get_charmm22_atom_type(atom2) << std::endl;
+                    //std::cout << atom1 << get_charmm36_atom_type(atom1) << std::endl;
+                    //std::cout << atom2 << get_charmm36_atom_type(atom2) << std::endl;
 
 
-                     //printf("ASC: EEF1-SB %4d %4d  Etot = %15.10f  Etemp = %15.10f  r_ij = %14.10f\n",
-                     //        i_atom, j_atom, energy_sum, energy_sum_temp, (atom1->position - atom2->position).norm());
+                     printf("ASC: EEF1-SB %4d %4d  Etot = %15.10f  Etemp = %15.10f  r_ij = %14.10f\n",
+                             i_atom, j_atom, energy_sum, energy_sum_temp, (atom1->position - atom2->position).norm());
                }
 
                //std::cout << "ASC: EEF1-SB Eatom = " << e_atom << "  "  << dGref[index1] << "  " << atom1 << std::endl;
           }
-          //std::cout << contribs << " kcal/mol" << std::endl;
-          //std::cout << energy_sum << " kcal/mol" << std::endl;
-          //std::cout << energy_sum*4.184 << " kJ/mol" << std::endl;
+          std::cout << contribs << " kcal/mol" << std::endl;
+          std::cout << energy_sum << " kcal/mol" << std::endl;
+          std::cout << energy_sum*4.184 << " kJ/mol" << std::endl;
           return energy_sum;
      }
 

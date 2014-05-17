@@ -211,7 +211,7 @@ public:
                double cont_1 = (params[i][1]);
                double cont_2 = (params[i][3] - (params[i][1]))*(dt/phys_t);
                double cont_3 = 0.0;
-               if(abs(dt)>0.0001){
+               if(std::fabs(dt)>0.00001){
                     double a = std::log(t/phys_t);
                       cont_3 = (t*a - dt);
                }
@@ -225,7 +225,7 @@ public:
 
                // dGfree_i(t) = (dGref(t)/dGref_t0)*dGfree_t0
                double dGfree_i = 0.0;
-               if(abs(params[i][1])>0.001){
+               if(std::fabs(params[i][1])>0.00001){
                     dGfree_i = (dGref[i]/(params[i][1]))*(params[i][2]);
                }
 
@@ -235,7 +235,7 @@ public:
                     //Factor = dGfree_i*V_j/(2*pi*sqrt(pi)*lambda_i)
                     double factor = 0.0;
 
-                    if(abs(params[i][5])>0.001){
+                    if(std::fabs(params[i][5])>0.00001){
                          factor = (dGfree_i*params[j][0])/(two_pi_3_2*params[i][5]);
                     }
 
@@ -308,7 +308,7 @@ public:
 
           // std::cout<< "expij " << exp_ij << "   " << std::exp(-(arg_ij*arg_ij)) << "\n";
           // std::cout<< "expji " << exp_ji << "   " << std::exp(-(arg_ji*arg_ji)) << "\n";
-          // std::cout<< "facij " << R_min_i << "\n";
+          // // std::cout<< "facij " << R_min_i << "\n";
           // std::cout<< "facji " << factors[index1][index2] << "\n";
           // std::cout<< "facji " << factors[index2][index1] << "\n";
           // std::cout<< "bin_ij " << bin_ij << "\n";
@@ -376,31 +376,31 @@ public:
                // Add dGref contribution
                // Remember to skip hydrogens (and atoms with dGref == 0)
 
-               if (chain_distance<ChainFB>(atom1,atom2) < 3) continue;
                if (j_atom <= i_atom) continue;
+               if (chain_distance<ChainFB>(atom1,atom2) < 3) continue;
                if (atom2->mass == definitions::atom_h_weight) continue;
                // if (std::fabs(dGref[index2]) < 0.00001) continue;
 
-               // if ((atom1->position - atom2->position).norm() > 9) continue;
+               if ((atom1->position - atom2->position).norm() > 9) continue;
                     const double energy_sum_temp = calculate_contribution(atom1, atom2,index1,index2);
                     energy_sum += energy_sum_temp;
 
                     contribs += energy_sum_temp;
 
                     e_atom += energy_sum_temp;
-                    // std::cout << atom1 << get_charmm22_atom_type(atom1) << std::endl;
-                    // std::cout << atom2 << get_charmm22_atom_type(atom2) << std::endl;
+                    //std::cout << atom1 << get_charmm22_atom_type(atom1) << std::endl;
+                    //std::cout << atom2 << get_charmm22_atom_type(atom2) << std::endl;
 
 
-                    // printf("ASC: EEF1-SB %4d %4d  Etot = %15.10f  Etemp = %15.10f\n",
-                    //         i_atom, j_atom, energy_sum, energy_sum_temp);
+                     //printf("ASC: EEF1-SB %4d %4d  Etot = %15.10f  Etemp = %15.10f  r_ij = %14.10f\n",
+                     //        i_atom, j_atom, energy_sum, energy_sum_temp, (atom1->position - atom2->position).norm());
                }
 
-               // std::cout << "ASC: EEF1-SB Eatom = " << e_atom << "  "  << dGref[index1] << "  " << atom1 << std::endl;
+               //std::cout << "ASC: EEF1-SB Eatom = " << e_atom << "  "  << dGref[index1] << "  " << atom1 << std::endl;
           }
-          // std::cout << contribs << " kcal/mol" << std::endl;
-          // std::cout << energy_sum << " kcal/mol" << std::endl;
-          // std::cout << energy_sum*4.184 << " kJ/mol" << std::endl;
+          //std::cout << contribs << " kcal/mol" << std::endl;
+          //std::cout << energy_sum << " kcal/mol" << std::endl;
+          //std::cout << energy_sum*4.184 << " kJ/mol" << std::endl;
           return energy_sum;
      }
 

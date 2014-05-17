@@ -193,6 +193,8 @@ public:
           double energy_angle_bend = 0.0;
           double energy_urey_bradley = 0.0;
 
+          double energy_sum = 0.0;
+          #pragma omp parallel for reduction(+:energy_sum) schedule(static)
           for (unsigned int i = 0; i < this->angle_bend_pairs.size(); i++){
 
                AngleBendPair pair = this->angle_bend_pairs[i];
@@ -210,7 +212,7 @@ public:
                // Angle bend part
                const double energy_angle_bend_temp = 0.5 * pair.k0 * dtheta * dtheta; 
 
-               energy_angle_bend += energy_angle_bend_temp;
+               // energy_angle_bend += energy_angle_bend_temp;
 
 
                const double r13 = ((pair.atom1)->position - (pair.atom3)->position).norm() / 10.0;
@@ -219,7 +221,9 @@ public:
 
                const double energy_urey_bradley_temp = 0.5 * pair.kub * dr * dr;
 
-               energy_urey_bradley += energy_urey_bradley_temp;
+               // energy_urey_bradley += energy_urey_bradley_temp;
+
+               energy_sum += energy_angle_bend_temp + energy_urey_bradley_temp;
 
           }
 

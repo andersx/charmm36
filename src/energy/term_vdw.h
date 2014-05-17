@@ -144,7 +144,7 @@ public:
           //  int counter = 0;
 
           // std::cout << non_bonded_pairs.size() << " terms total" << std::endl;
-          // #pragma omp parallel for reduction(+:energy_sum) schedule(static)
+          #pragma omp parallel for reduction(+:energy_sum) schedule(static)
           for (unsigned int i = 0; i < non_bonded_pairs.size(); i++) {
 
                NonBondedPair pair = non_bonded_pairs[i];

@@ -73,7 +73,7 @@ public:
      double evaluate(MoveInfo *move_info=NULL) {
 
           double energy_imptor = 0.0;
-
+          #pragma omp parallel for reduction(+:energy_imptor) schedule(static)
           for (unsigned int i = 0; i < imptors.size(); i++) {
 
                Imptor imptor = imptors[i];

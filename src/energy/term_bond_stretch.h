@@ -75,6 +75,7 @@ public:
 
           double e_bond = 0.0;
 
+          #pragma omp parallel for reduction(+:e_bond) schedule(static)
           for (unsigned int i = 0; i < this->bonded_pairs.size(); i++){
 
                BondedPair pair = this->bonded_pairs[i];

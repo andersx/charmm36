@@ -82,6 +82,7 @@ public:
 
         double e_torsion = 0.0;
 
+        #pragma omp parallel for reduction(+:e_torsion) schedule(static)
         for (unsigned int i = 0; i < this->dihedral_angles.size(); i++) {
 
             DihedralAngleType9 dihedral = this->dihedral_angles[i];

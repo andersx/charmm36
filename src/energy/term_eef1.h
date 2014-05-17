@@ -816,15 +816,15 @@ public:
 
 
           // std::cout <<  "LAMBDA " << lambda_i << std::endl;
-          std::cout << atom1 << get_charmm36_atom_type(atom1) << std::endl;
-          std::cout << atom2 << get_charmm36_atom_type(atom2) << std::endl;
+          // std::cout << atom1 << get_charmm36_atom_type(atom1) << std::endl;
+          // std::cout << atom2 << get_charmm36_atom_type(atom2) << std::endl;
 
-          std::cout<< "rij " << r_ij << "\n";
-          std::cout<< "rijsq " << r_ij_sq << "\n";
-          std::cout<< "RMini " << R_min_i << "\n";
-          std::cout<< "RMinj " << R_min_j << "\n";
-          std::cout<< "lambdi " << lambda_i << "\n";
-          std::cout<< "lambdj " << lambda_j << "\n";
+          // std::cout<< "rij " << r_ij << "\n";
+          // std::cout<< "rijsq " << r_ij_sq << "\n";
+          // std::cout<< "RMini " << R_min_i << "\n";
+          // std::cout<< "RMinj " << R_min_j << "\n";
+          // std::cout<< "lambdi " << lambda_i << "\n";
+          // std::cout<< "lambdj " << lambda_j << "\n";
 
           // In CHARMM the exponential is not calculated explicitly
           // A lookup table is used instead (copied here for testing purposes only)
@@ -837,13 +837,13 @@ public:
           if (bin_ij < 350) exp_ij = exponential[bin_ij];
           if (bin_ji < 350) exp_ji = exponential[bin_ji];
 
-          std::cout<< "expij " << std::setprecision(9) << exp_ij << "   " << std::exp(-(arg_ij*arg_ij)) << "\n";
-          std::cout<< "expji " << std::setprecision(9) << exp_ji << "   " << std::exp(-(arg_ji*arg_ji)) << "\n";
+          // std::cout<< "expij " << std::setprecision(9) << exp_ij << "   " << std::exp(-(arg_ij*arg_ij)) << "\n";
+          // std::cout<< "expji " << std::setprecision(9) << exp_ji << "   " << std::exp(-(arg_ji*arg_ji)) << "\n";
           // std::cout<< "facij " << R_min_i << "\n";
-          std::cout<< "facji " << std::setprecision(9) << factors[index1][index2] << "\n";
-          std::cout<< "facji " << std::setprecision(9) << factors[index2][index1] << "\n";
-          std::cout<< "bin_ij " << bin_ij << "\n";
-          std::cout<< "bin_ji " << bin_ji << "\n";
+          // std::cout<< "facji " << std::setprecision(9) << factors[index1][index2] << "\n";
+          // std::cout<< "facji " << std::setprecision(9) << factors[index2][index1] << "\n";
+          // std::cout<< "bin_ij " << bin_ij << "\n";
+          // std::cout<< "bin_ji " << bin_ji << "\n";
 
           double cont_ij = -factors[index1][index2]*exp_ij/r_ij_sq;
           double cont_ji = -factors[index2][index1]*exp_ji/r_ij_sq;
@@ -854,8 +854,8 @@ public:
           // double cont_ij = -factors[index1][index2]*std::exp(-(arg_ij*arg_ij))/r_ij_sq;
           // double cont_ji = -factors[index2][index1]*std::exp(-(arg_ji*arg_ji))/r_ij_sq;
 
-          std::cout << "cont_ij " << std::setprecision(9) << cont_ij << "\n";
-          std::cout << "cont_ji " << std::setprecision(9) << cont_ji << "\n";
+          // std::cout << "cont_ij " << std::setprecision(9) << cont_ij << "\n";
+          // std::cout << "cont_ji " << std::setprecision(9) << cont_ji << "\n";
           return (cont_ij+cont_ji);
      }
 
@@ -916,22 +916,22 @@ public:
                     const double energy_sum_temp = calculate_contribution(atom1, atom2,index1,index2);
                     energy_sum += energy_sum_temp;
 
-                    contribs += energy_sum_temp;
+                    // contribs += energy_sum_temp;
 
-                    e_atom += energy_sum_temp;
+                    // e_atom += energy_sum_temp;
                     //std::cout << atom1 << get_charmm36_atom_type(atom1) << std::endl;
                     //std::cout << atom2 << get_charmm36_atom_type(atom2) << std::endl;
 
 
-                     printf("ASC: EEF1-SB %4d %4d  Etot = %15.10f  Etemp = %15.10f  r_ij = %14.10f\n",
-                             i_atom, j_atom, energy_sum, energy_sum_temp, (atom1->position - atom2->position).norm());
+                     //printf("ASC: EEF1-SB %4d %4d  Etot = %15.10f  Etemp = %15.10f  r_ij = %14.10f\n",
+                     //        i_atom, j_atom, energy_sum, energy_sum_temp, (atom1->position - atom2->position).norm());
                }
 
                //std::cout << "ASC: EEF1-SB Eatom = " << e_atom << "  "  << dGref[index1] << "  " << atom1 << std::endl;
           }
-          std::cout << contribs << " kcal/mol" << std::endl;
-          std::cout << energy_sum << " kcal/mol" << std::endl;
-          std::cout << energy_sum*4.184 << " kJ/mol" << std::endl;
+          // std::cout << contribs << " kcal/mol" << std::endl;
+          // std::cout << energy_sum << " kcal/mol" << std::endl;
+          // std::cout << energy_sum*4.184 << " kJ/mol" << std::endl;
           return energy_sum;
      }
 

@@ -879,7 +879,7 @@ public:
           double energy_sum=0.0;
           counter=0;
 
-          double contribs = 0.0;
+          // double contribs = 0.0;
           unsigned int i_atom = 0;
           // Iterate all the atom pairs on the chain
           for (AtomIterator<ChainFB, definitions::ALL> it1(*this->chain); !it1.end(); ++it1) {
@@ -892,7 +892,7 @@ public:
                if (atom1->mass == definitions::atom_h_weight) continue;
                // if (std::fabs(dGref[index1]) < 0.00001) continue;
 
-               double e_atom = dGref[index1];
+               // double e_atom = dGref[index1];
 
                energy_sum += dGref[index1];
 

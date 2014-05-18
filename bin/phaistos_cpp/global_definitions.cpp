@@ -99,6 +99,17 @@ struct EnergyInitialization {
                energy->add_term(new TermGromacsVdw(chain,
                                                    options.get_settings<Settings>(option,i)));
           }
+          // Non-bonded cached terms
+          option = options[prefix+"-gromacs-non-bonded-cached"];
+          for (int i=0; i<option.occurrences(); ++i) {
+
+               // Settings typedef
+               typedef TermGromacsNonBondedCached::Settings Settings;
+
+               // Add energy term
+               energy->add_term(new TermGromacsNonBondedCached(chain,
+                                                   options.get_settings<Settings>(option,i)));
+          }
      }
 
 };

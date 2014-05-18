@@ -219,6 +219,30 @@ struct EnergyOptions {
                     super_group, counter==1);
           }
 
+          // Non-Bonded chaced
+          for (int counter = occurrences[prefix+"-gromacs-non-bonded-cached"]; counter > 0; counter--) {
+
+               // Create settings object
+               typedef TermGromacsNonBondedCached EnergyTerm;
+               typedef EnergyTerm::Settings Settings;
+               boost::shared_ptr<Settings> settings(
+                    SETTINGS_MODIFIER().template modify<EnergyTerm>(new Settings(), prefix));
+
+               // If temperature has been specified, set weight based on that value
+               if(target.has_key("temperature")) {
+                    settings->weight = temperature_to_one_over_k(target["temperature"].as<double>());
+               }
+
+               // Add options
+               target.add(
+                    target.create_options(
+                         DefineEnergyCommonOptions(),
+                         "Cached van der Waal + Coulomb + EEF1-SB terms (" + prefix + ")",
+                         prefix+"-gromacs-non-bonded-cached", settings,
+                         make_vector()),
+                    super_group, counter==1);
+          }
+
 
      }
 

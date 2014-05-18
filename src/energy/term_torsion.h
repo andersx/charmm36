@@ -58,7 +58,7 @@ public:
           std::string filename = "/home/andersx/phaistos_dev/modules/gromacs/src/energy/charmm22_cmap/charmm22_torsion.itp";
           std::vector<DihedralType9Parameter> dihedral_type_9_parameters = read_dihedral_type_9_parameters(filename);
 
-          dihedral_angles = generate_non_bonded_pairs(this->chain, dihedral_type_9_parameters);
+          dihedral_angles = generate_dihedral_pairs(this->chain, dihedral_type_9_parameters);
 
      }
 

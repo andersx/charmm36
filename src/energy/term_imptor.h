@@ -17,8 +17,8 @@
 // along with Phaistos.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-#ifndef TERM_GROMACS_IMPTOR_H
-#define TERM_GROMACS_IMPTOR_H
+#ifndef TERM_CHARMM36_IMPTOR_H
+#define TERM_CHARMM36_IMPTOR_H
 
 #include "energy/energy_term.h"
 #include "charmm22_parser.h"
@@ -26,12 +26,12 @@
 namespace phaistos {
 
 //! Gromacs improper torsion Waals interaction term
-class TermGromacsImptor: public EnergyTermCommon<TermGromacsImptor, ChainFB> {
+class TermCharmm36Imptor: public EnergyTermCommon<TermCharmm36Imptor, ChainFB> {
 
 protected:
 
      //! For convenience, define local EnergyTermCommon
-     typedef phaistos::EnergyTermCommon<TermGromacsImptor, ChainFB> EnergyTermCommon;
+     typedef phaistos::EnergyTermCommon<TermCharmm36Imptor, ChainFB> EnergyTermCommon;
 
 public:
 
@@ -44,12 +44,12 @@ public:
      //! \param chain Molecule chain
      //! \param settings Local Settings object
      //! \param random_number_engine Object from which random number generators can be created.
-     TermGromacsImptor(ChainFB *chain,
+     TermCharmm36Imptor(ChainFB *chain,
                     const Settings &settings = Settings(),
                     RandomNumberEngine *random_number_engine = &random_global)
-          : EnergyTermCommon(chain, "gromacs-imptor", settings, random_number_engine) {
+          : EnergyTermCommon(chain, "charmm36-imptor", settings, random_number_engine) {
 
-          std::string filename = "/home/andersx/phaistos_dev/modules/gromacs/src/energy/charmm22_cmap/charmm22_imptor.itp";
+          std::string filename = "/home/andersx/phaistos_dev/modules/charmm36/src/energy/charmm22_cmap/charmm22_imptor.itp";
           std::vector<DihedralType2Parameter> dihedral_type_2_parameters = read_dihedral_type_2_parameters(filename);
           imptors = generate_imptors(this->chain, dihedral_type_2_parameters);
 
@@ -60,7 +60,7 @@ public:
      //! \param random_number_engine Object from which random number generators can be created.
      //! \param thread_index Index indicating in which thread|rank the copy exists
      //! \param chain Molecule chain
-     TermGromacsImptor(const TermGromacsImptor &other,
+     TermCharmm36Imptor(const TermCharmm36Imptor &other,
                  RandomNumberEngine *random_number_engine,
                  int thread_index, ChainFB *chain)
           : EnergyTermCommon(other, random_number_engine, thread_index, chain),

@@ -17,8 +17,8 @@
 // along with Phaistos.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-#ifndef TERM_GROMACS_TORSION_H
-#define TERM_GROMACS_TORSION_H
+#ifndef TERM_CHARMM36_TORSION_H
+#define TERM_CHARMM36_TORSION_H
 
 #include <boost/type_traits/is_base_of.hpp>
 #include "energy/energy_term.h"
@@ -28,12 +28,12 @@
 namespace phaistos {
 
 //! Torsion energy term
-class TermGromacsTorsion: public EnergyTermCommon<TermGromacsTorsion, ChainFB> {
+class TermCharmm36Torsion: public EnergyTermCommon<TermCharmm36Torsion, ChainFB> {
 
 private:
 
      //! For convenience, define local EnergyTermCommon
-     typedef phaistos::EnergyTermCommon<TermGromacsTorsion, ChainFB> EnergyTermCommon;
+     typedef phaistos::EnergyTermCommon<TermCharmm36Torsion, ChainFB> EnergyTermCommon;
 
      //! Number of interactions calculated
      int counter;
@@ -50,12 +50,12 @@ public:
      //! \param chain Molecule chain
      //! \param settings Local Settings object
      //! \param random_number_engine Object from which random number generators can be created.
-     TermGromacsTorsion(ChainFB *chain,
+     TermCharmm36Torsion(ChainFB *chain,
                         const Settings &settings=Settings(),
                         RandomNumberEngine *random_number_engine = &random_global)
-          : EnergyTermCommon(chain, "gromacs-torsion", settings, random_number_engine) {
+          : EnergyTermCommon(chain, "charmm36-torsion", settings, random_number_engine) {
 
-          std::string filename = "/home/andersx/phaistos_dev/modules/gromacs/src/energy/charmm22_cmap/charmm22_torsion.itp";
+          std::string filename = "/home/andersx/phaistos_dev/modules/charmm36/src/energy/charmm22_cmap/charmm22_torsion.itp";
           std::vector<DihedralType9Parameter> dihedral_type_9_parameters = read_dihedral_type_9_parameters(filename);
 
           dihedral_angles = generate_dihedral_pairs(this->chain, dihedral_type_9_parameters);
@@ -67,7 +67,7 @@ public:
      //! \param random_number_engine Object from which random number generators can be created.
      //! \param thread_index Index indicating in which thread|rank the copy exists
      //! \param chain Molecule chain
-     TermGromacsTorsion(const TermGromacsTorsion &other,
+     TermCharmm36Torsion(const TermCharmm36Torsion &other,
                         RandomNumberEngine *random_number_engine,
                         int thread_index, ChainFB *chain)
           : EnergyTermCommon(other, random_number_engine, thread_index, chain),

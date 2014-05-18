@@ -17,8 +17,8 @@
 // along with Phaistos.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-#ifndef TERM_GROMACS_VDW_H
-#define TERM_GROMACS_VDW_H
+#ifndef TERM_CHARMM36_VDW_H
+#define TERM_CHARMM36_VDW_H
 
 #include <string>
 
@@ -83,12 +83,12 @@ const double exp_eef1 [350] = {
           0.0};
 
 //! Gromacs van der Waals interaction term
-class TermGromacsVdw: public EnergyTermCommon<TermGromacsVdw, ChainFB> {
+class TermCharmm36Vdw: public EnergyTermCommon<TermCharmm36Vdw, ChainFB> {
 
 protected:
 
      //! For convenience, define local EnergyTermCommon
-     typedef phaistos::EnergyTermCommon<TermGromacsVdw, ChainFB> EnergyTermCommon;
+     typedef phaistos::EnergyTermCommon<TermCharmm36Vdw, ChainFB> EnergyTermCommon;
 
      //! Number of interactions calculated
      int counter;
@@ -115,17 +115,17 @@ public:
      //! \param chain Molecule chain
      //! \param settings Local Settings object
      //! \param random_number_engine Object from which random number generators can be created.
-     TermGromacsVdw(ChainFB *chain,
+     TermCharmm36Vdw(ChainFB *chain,
                     const Settings &settings = Settings(),
                     RandomNumberEngine *random_number_engine = &random_global)
-          : EnergyTermCommon(chain, "gromacs-vdw", settings, random_number_engine) {
+          : EnergyTermCommon(chain, "charmm36-vdw", settings, random_number_engine) {
 
 
               initialize();
-              std::string non_bonded_filename = "/home/andersx/phaistos_dev/modules/gromacs/src/energy/charmm22_cmap/charmm22_vdw.itp";
+              std::string non_bonded_filename = "/home/andersx/phaistos_dev/modules/charmm36/src/energy/charmm22_cmap/charmm22_vdw.itp";
               non_bonded_parameters = read_nonbonded_parameters(non_bonded_filename);
 
-              std::string non_bonded_14_filename = "/home/andersx/phaistos_dev/modules/gromacs/src/energy/charmm22_cmap/charmm22_vdw14.itp";
+              std::string non_bonded_14_filename = "/home/andersx/phaistos_dev/modules/charmm36/src/energy/charmm22_cmap/charmm22_vdw14.itp";
               non_bonded_14_parameters = read_nonbonded_14_parameters(non_bonded_14_filename);
 
               // std::cout << non_bonded_parameters[1].atom_type << std::endl;
@@ -156,7 +156,7 @@ public:
      //! \param random_number_engine Object from which random number generators can be created.
      //! \param thread_index Index indicating in which thread|rank the copy exists
      //! \param chain Molecule chain
-     TermGromacsVdw(const TermGromacsVdw &other,
+     TermCharmm36Vdw(const TermCharmm36Vdw &other,
                  RandomNumberEngine *random_number_engine,
                  int thread_index, ChainFB *chain)
           : EnergyTermCommon(other, random_number_engine, thread_index, chain),
@@ -174,7 +174,7 @@ public:
           const double two_pi_3_2 = 2.0*M_PI*sqrt(M_PI);
           const double phys_t = 298.15;
 
-          std::string settings_solvation_filename = "/home/andersx/phaistos_dev/modules/gromacs/src/energy/solvpar_17.inp";
+          std::string settings_solvation_filename = "/home/andersx/phaistos_dev/modules/charmm36/src/energy/solvpar_17.inp";
           std::ifstream f_h((settings_solvation_filename).c_str());
           if (!f_h) {
                printf("# ERROR: EEF1 input: unable to open file '%s'\n", (settings_solvation_filename).c_str() );
@@ -451,7 +451,7 @@ public:
           // printf("       coulomb-SR E = %12.4f kJ/mol\n", coul_energy);
           // printf("           vdW-SR E = %12.4f kJ/mol\n", vdw_energy);
           // printf("          EEF1-SB E = %12.4f kcal/mol\n", eef1_sb_energy);
-          // GROMACS energies are in kJ/mol, and need to return in kcal/mol
+          // CHARMM36 energies are in kJ/mol, and need to return in kcal/mol
           //const double total_energy_in_kcal_mol = (coul_energy + vdw_energy) / 4.184;
           //return total_energy_in_kcal_mol;
 

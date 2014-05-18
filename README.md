@@ -1,4 +1,4 @@
-force-field
+CHARMM36/EEF1-SB
 ===========
 
-GROMACS force fields for PHAISTOS
+CHARMM36 force fields with the EEF1-SB solvent model for phaistos

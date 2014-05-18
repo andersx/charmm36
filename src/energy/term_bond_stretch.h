@@ -17,8 +17,8 @@
 // along with Phaistos.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-#ifndef TERM_GROMACS_BONDSTRETCH_H
-#define TERM_GROMACS_BONDSTRETCH_H
+#ifndef TERM_CHARMM36_BONDSTRETCH_H
+#define TERM_CHARMM36_BONDSTRETCH_H
 
 #include <boost/type_traits/is_base_of.hpp>
 #include "energy/energy_term.h"
@@ -28,12 +28,12 @@ namespace phaistos {
 
 
 //! bondstretch energy term
-class TermGromacsBondStretch: public EnergyTermCommon<TermGromacsBondStretch, ChainFB> {
+class TermCharmm36BondStretch: public EnergyTermCommon<TermCharmm36BondStretch, ChainFB> {
 
 private:
 
      //! For convenience, define local EnergyTermCommon
-     typedef phaistos::EnergyTermCommon<TermGromacsBondStretch, ChainFB> EnergyTermCommon;
+     typedef phaistos::EnergyTermCommon<TermCharmm36BondStretch, ChainFB> EnergyTermCommon;
 
 public:
 
@@ -46,12 +46,12 @@ public:
      //! \param chain Molecule chain
      //! \param settings Local Settings object
      //! \param random_number_engine Object from which random number generators can be created.
-     TermGromacsBondStretch(ChainFB *chain,
+     TermCharmm36BondStretch(ChainFB *chain,
                             const Settings &settings=Settings(),
                             RandomNumberEngine *random_number_engine = &random_global)
-          : EnergyTermCommon(chain, "gromacs-bond-stretch", settings, random_number_engine) {
+          : EnergyTermCommon(chain, "charmm36-bond-stretch", settings, random_number_engine) {
 
-          std::string filename = "/home/andersx/phaistos_dev/modules/gromacs/src/energy/charmm22_cmap/charmm22_bond.itp";
+          std::string filename = "/home/andersx/phaistos_dev/modules/charmm36/src/energy/charmm22_cmap/charmm22_bond.itp";
           std::vector<BondedPairParameter> bonded_pair_parameters = read_bonded_pair_parameters(filename);
           this->bonded_pairs = generate_bonded_pairs(this->chain, bonded_pair_parameters);
 
@@ -62,7 +62,7 @@ public:
      //! \param random_number_engine Object from which random number generators can be created.
      //! \param thread_index Index indicating in which thread|rank the copy exists
      //! \param chain Molecule chain
-     TermGromacsBondStretch(const TermGromacsBondStretch &other,
+     TermCharmm36BondStretch(const TermCharmm36BondStretch &other,
                             RandomNumberEngine *random_number_engine,
                             int thread_index, ChainFB *chain)
           : EnergyTermCommon(other, random_number_engine, thread_index, chain),

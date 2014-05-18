@@ -17,14 +17,14 @@
 // along with Phaistos.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-#ifndef TERM_GROMACS_CMAP_H
-#define TERM_GROMACS_CMAP_H
+#ifndef TERM_CHARMM36_CMAP_H
+#define TERM_CHARMM36_CMAP_H
 
 #include <boost/type_traits/is_base_of.hpp>
 #include "energy/energy_term.h"
 
 
-namespace gromacs_cmap {
+namespace charmm36_cmap {
 
 const int cmap_coeff_matrix[] = {
     1, 0, -3,  2, 0, 0,  0,  0, -3,  0,  9, -6,  2,  0, -6,  4,
@@ -61,17 +61,17 @@ void parse_cmap_parameters()
 
 
 
-} // end namespace gromacs_cmap
+} // end namespace charmm36_cmap
 
 namespace phaistos {
 
 //! Torsion energy term
-class TermGromacsCmap: public EnergyTermCommon<TermGromacsTorsion, ChainFB> {
+class TermCharmm36Cmap: public EnergyTermCommon<TermCharmm36Torsion, ChainFB> {
 
 private:
 
      //! For convenience, define local EnergyTermCommon
-     typedef phaistos::EnergyTermCommon<TermGromacsCmap, ChainFB> EnergyTermCommon;
+     typedef phaistos::EnergyTermCommon<TermCharmm36Cmap, ChainFB> EnergyTermCommon;
 
      //! Number of interactions calculated
      int counter;
@@ -85,10 +85,10 @@ public:
      //! \param chain Molecule chain
      //! \param settings Local Settings object
      //! \param random_number_engine Object from which random number generators can be created.
-     TermGromacsCmap(ChainFB *chain,
+     TermCharmm36Cmap(ChainFB *chain,
                         const Settings &settings=Settings(),
                         RandomNumberEngine *random_number_engine = &random_global)
-          : EnergyTermCommon(chain, "gromacs-cmap", settings, random_number_engine) {
+          : EnergyTermCommon(chain, "charmm36-cmap", settings, random_number_engine) {
 
      }
 
@@ -97,7 +97,7 @@ public:
      //! \param random_number_engine Object from which random number generators can be created.
      //! \param thread_index Index indicating in which thread|rank the copy exists
      //! \param chain Molecule chain
-     TermGromacsCmap(const TermGromacsCmap &other,
+     TermCharmm36Cmap(const TermCharmm36Cmap &other,
                         RandomNumberEngine *random_number_engine,
                         int thread_index, ChainFB *chain)
           : EnergyTermCommon(other, random_number_engine, thread_index, chain),
@@ -139,7 +139,7 @@ public:
 
 
 
-    // CMAP table lookup and interpolation algorightm from GROMACS
+    // CMAP table lookup and interpolation algorightm from CHARMM36
     // Needs input:
     // Phi, Psi, dihedral type, parsed cmap.itp, gridspace
     double cmap_dihedral_energy() {

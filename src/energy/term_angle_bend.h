@@ -17,8 +17,8 @@
 // along with Phaistos.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-#ifndef TERM_GROMACS_ANGLEBEND_H
-#define TERM_GROMACS_ANGLEBEND_H
+#ifndef TERM_CHARMM36_ANGLEBEND_H
+#define TERM_CHARMM36_ANGLEBEND_H
 
 #include <boost/type_traits/is_base_of.hpp>
 #include "energy/energy_term.h"
@@ -29,7 +29,7 @@ namespace phaistos {
 
 //! OPLS anglebend energy term - base class containing all functionality
 template<typename DERIVED_CLASS>
-class TermGromacsAngleBendBase: public EnergyTermCommon<DERIVED_CLASS,ChainFB> {
+class TermCharmm36AngleBendBase: public EnergyTermCommon<DERIVED_CLASS,ChainFB> {
 
           //! For convenience, define local EnergyTermCommon
           typedef phaistos::EnergyTermCommon<DERIVED_CLASS, ChainFB> EnergyTermCommon;
@@ -61,11 +61,11 @@ class TermGromacsAngleBendBase: public EnergyTermCommon<DERIVED_CLASS,ChainFB> {
      //! \param name Energy term name
      //! \param settings Local Settings object
      //! \param random_number_engine Object from which random number generators can be created.
-     TermGromacsAngleBendBase(ChainFB *chain, std::string name, const Settings &settings = Settings(),
+     TermCharmm36AngleBendBase(ChainFB *chain, std::string name, const Settings &settings = Settings(),
                               RandomNumberEngine *random_number_engine = &random_global) :
           EnergyTermCommon(chain, name, settings, random_number_engine),settings(settings) {
 
-          std::string filename = "/home/andersx/phaistos_dev/modules/gromacs/src/energy/charmm22_cmap/charmm22_angle_bend.itp";
+          std::string filename = "/home/andersx/phaistos_dev/modules/charmm36/src/energy/charmm22_cmap/charmm22_angle_bend.itp";
           std::vector<AngleBendParameter> angle_bend_parameters = read_angle_bend_parameters(filename);
           this->angle_bend_pairs = generate_angle_bend_pairs(this->chain, angle_bend_parameters);
      }
@@ -75,7 +75,7 @@ class TermGromacsAngleBendBase: public EnergyTermCommon<DERIVED_CLASS,ChainFB> {
      //! \param random_number_engine Object from which random number generators can be created.
      //! \param thread_index Index indicating in which thread|rank the copy exists
      //! \param chain Molecule chain
-     TermGromacsAngleBendBase(const TermGromacsAngleBendBase &other,
+     TermCharmm36AngleBendBase(const TermCharmm36AngleBendBase &other,
                               RandomNumberEngine *random_number_engine,
                               int thread_index, ChainFB *chain) :
           EnergyTermCommon(other, random_number_engine, thread_index, chain),
@@ -161,26 +161,26 @@ class TermGromacsAngleBendBase: public EnergyTermCommon<DERIVED_CLASS,ChainFB> {
 
 
 //! anglebend energy term
-class TermGromacsAngleBend: public TermGromacsAngleBendBase<TermGromacsAngleBend> {
+class TermCharmm36AngleBend: public TermCharmm36AngleBendBase<TermCharmm36AngleBend> {
 
 public:
 
      //! For convenience, define local TermAngleBendBase
-     typedef phaistos::TermGromacsAngleBendBase<TermGromacsAngleBend> TermGromacsAngleBendBase;
+     typedef phaistos::TermCharmm36AngleBendBase<TermCharmm36AngleBend> TermCharmm36AngleBendBase;
 
      //! Reuse base-class Settings object
-     typedef TermGromacsAngleBendBase::Settings Settings;
+     typedef TermCharmm36AngleBendBase::Settings Settings;
 
      //! Constructor
-     TermGromacsAngleBend(ChainFB *chain, const Settings &settings = Settings(),
+     TermCharmm36AngleBend(ChainFB *chain, const Settings &settings = Settings(),
                           RandomNumberEngine *random_number_engine = &random_global)
-          : TermGromacsAngleBendBase(chain, "gromacs-angle-bend", settings, random_number_engine) {}
+          : TermCharmm36AngleBendBase(chain, "charmm36-angle-bend", settings, random_number_engine) {}
 
      //! Copy constructor
-     TermGromacsAngleBend(const TermGromacsAngleBend &other,
+     TermCharmm36AngleBend(const TermCharmm36AngleBend &other,
                           RandomNumberEngine *random_number_engine,
                           int thread_index, ChainFB *chain)
-          : TermGromacsAngleBendBase(other, random_number_engine, thread_index, chain) {
+          : TermCharmm36AngleBendBase(other, random_number_engine, thread_index, chain) {
      }
 
 

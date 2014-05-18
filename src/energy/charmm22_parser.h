@@ -17,8 +17,8 @@
 // along with Phaistos.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-#ifndef TERM_GROMACS_PARSER_H
-#define TERM_GROMACS_PARSER_H
+#ifndef TERM_CHARMM36_PARSER_H
+#define TERM_CHARMM36_PARSER_H
 
 #include <string>
 #include <math.h>
@@ -138,7 +138,7 @@ std::vector<NonBonded14Parameter> read_nonbonded_14_parameters(const std::string
 
 // Returns the atom type according to the CHARMM36 force field
 // as implemented in CHARMM ... note that these are slightly
-// different that the atom types defined in GROMACS.
+// different that the atom types defined in CHARMM36.
 std::string get_charmm36_atom_type(Atom *atom) {
 
     using namespace definitions;

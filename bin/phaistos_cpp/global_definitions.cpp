@@ -24,10 +24,10 @@ struct EnergyInitialization {
           for (int i=0; i<option.occurrences(); ++i) {
 
                // Settings typedef
-               typedef TermGromacsAngleBend::Settings Settings;
+               typedef TermCharmm36AngleBend::Settings Settings;
 
                // Add energy term
-               energy->add_term(new TermGromacsAngleBend(chain,
+               energy->add_term(new TermCharmm36AngleBend(chain,
                                                    options.get_settings<Settings>(option,i)));
           }
 
@@ -36,10 +36,10 @@ struct EnergyInitialization {
           for (int i=0; i<option.occurrences(); ++i) {
 
                // Settings typedef
-               typedef TermGromacsBondStretch::Settings Settings;
+               typedef TermCharmm36BondStretch::Settings Settings;
 
                // Add energy term
-               energy->add_term(new TermGromacsBondStretch(chain,
+               energy->add_term(new TermCharmm36BondStretch(chain,
                                                    options.get_settings<Settings>(option,i)));
           }
 
@@ -48,10 +48,10 @@ struct EnergyInitialization {
           for (int i=0; i<option.occurrences(); ++i) {
 
                // Settings typedef
-               typedef TermGromacsCoulomb::Settings Settings;
+               typedef TermCharmm36Coulomb::Settings Settings;
 
                // Add energy term
-               energy->add_term(new TermGromacsCoulomb(chain,
+               energy->add_term(new TermCharmm36Coulomb(chain,
                                                    options.get_settings<Settings>(option,i)));
           }
 
@@ -60,10 +60,10 @@ struct EnergyInitialization {
           for (int i=0; i<option.occurrences(); ++i) {
 
                // Settings typedef
-               typedef TermGromacsEef1::Settings Settings;
+               typedef TermCharmm36Eef1::Settings Settings;
 
                // Add energy term
-               energy->add_term(new TermGromacsEef1(chain,
+               energy->add_term(new TermCharmm36Eef1(chain,
                                                    options.get_settings<Settings>(option,i)));
           }
           // Torsion
@@ -71,10 +71,10 @@ struct EnergyInitialization {
           for (int i=0; i<option.occurrences(); ++i) {
 
                // Settings typedef
-               typedef TermGromacsTorsion::Settings Settings;
+               typedef TermCharmm36Torsion::Settings Settings;
 
                // Add energy term
-               energy->add_term(new TermGromacsTorsion(chain,
+               energy->add_term(new TermCharmm36Torsion(chain,
                                                    options.get_settings<Settings>(option,i)));
           }
           // Improper torsion
@@ -82,10 +82,10 @@ struct EnergyInitialization {
           for (int i=0; i<option.occurrences(); ++i) {
 
                // Settings typedef
-               typedef TermGromacsImptor::Settings Settings;
+               typedef TermCharmm36Imptor::Settings Settings;
 
                // Add energy term
-               energy->add_term(new TermGromacsImptor(chain,
+               energy->add_term(new TermCharmm36Imptor(chain,
                                                    options.get_settings<Settings>(option,i)));
           }
           // Lennard Jones
@@ -93,10 +93,10 @@ struct EnergyInitialization {
           for (int i=0; i<option.occurrences(); ++i) {
 
                // Settings typedef
-               typedef TermGromacsVdw::Settings Settings;
+               typedef TermCharmm36Vdw::Settings Settings;
 
                // Add energy term
-               energy->add_term(new TermGromacsVdw(chain,
+               energy->add_term(new TermCharmm36Vdw(chain,
                                                    options.get_settings<Settings>(option,i)));
           }
           // Non-bonded cached terms
@@ -104,10 +104,10 @@ struct EnergyInitialization {
           for (int i=0; i<option.occurrences(); ++i) {
 
                // Settings typedef
-               typedef TermGromacsNonBondedCached::Settings Settings;
+               typedef TermCharmm36NonBondedCached::Settings Settings;
 
                // Add energy term
-               energy->add_term(new TermGromacsNonBondedCached(chain,
+               energy->add_term(new TermCharmm36NonBondedCached(chain,
                                                    options.get_settings<Settings>(option,i)));
           }
      }

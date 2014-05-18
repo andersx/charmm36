@@ -17,8 +17,8 @@
 // along with Phaistos.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-#ifndef TERM_GROMACS_NON_BONDED_CACHED_H
-#define TERM_GROMACS_NON_BONDED_CACHED_H
+#ifndef TERM_CHARMM36_NON_BONDED_CACHED_H
+#define TERM_CHARMM36_NON_BONDED_CACHED_H
 
 #include <string>
 
@@ -31,12 +31,12 @@
 namespace phaistos {
 
 //! Gromacs van der Waals interaction term
-class TermGromacsNonBondedCached: public EnergyTermCommon<TermGromacsNonBondedCached, ChainFB> {
+class TermCharmm36NonBondedCached: public EnergyTermCommon<TermCharmm36NonBondedCached, ChainFB> {
 
 protected:
 
      //! For convenience, define local EnergyTermCommon
-     typedef phaistos::EnergyTermCommon<TermGromacsNonBondedCached, ChainFB> EnergyTermCommon;
+     typedef phaistos::EnergyTermCommon<TermCharmm36NonBondedCached, ChainFB> EnergyTermCommon;
 
      //! Number of interactions calculated
      int counter;
@@ -69,15 +69,15 @@ public:
      //! \param chain Molecule chain
      //! \param settings Local Settings object
      //! \param random_number_engine Object from which random number generators can be created.
-     TermGromacsNonBondedCached(ChainFB *chain,
+     TermCharmm36NonBondedCached(ChainFB *chain,
                     const Settings &settings = Settings(),
                     RandomNumberEngine *random_number_engine = &random_global)
-          : EnergyTermCommon(chain, "gromacs-non-bonded-cached", settings, random_number_engine) {
+          : EnergyTermCommon(chain, "charmm36-non-bonded-cached", settings, random_number_engine) {
 
-              std::string non_bonded_filename = "/home/andersx/phaistos_dev/modules/gromacs/src/energy/charmm22_cmap/charmm22_vdw.itp";
+              std::string non_bonded_filename = "/home/andersx/phaistos_dev/modules/charmm36/src/energy/charmm22_cmap/charmm22_vdw.itp";
               non_bonded_parameters = read_nonbonded_parameters(non_bonded_filename);
 
-              std::string non_bonded_14_filename = "/home/andersx/phaistos_dev/modules/gromacs/src/energy/charmm22_cmap/charmm22_vdw14.itp";
+              std::string non_bonded_14_filename = "/home/andersx/phaistos_dev/modules/charmm36/src/energy/charmm22_cmap/charmm22_vdw14.itp";
               non_bonded_14_parameters = read_nonbonded_14_parameters(non_bonded_14_filename);
 
               non_bonded_pairs = generate_non_bonded_pairs_cached(this->chain,
@@ -178,7 +178,7 @@ public:
      //! \param random_number_engine Object from which random number generators can be created.
      //! \param thread_index Index indicating in which thread|rank the copy exists
      //! \param chain Molecule chain
-     TermGromacsNonBondedCached(const TermGromacsNonBondedCached &other,
+     TermCharmm36NonBondedCached(const TermCharmm36NonBondedCached &other,
                  RandomNumberEngine *random_number_engine,
                  int thread_index, ChainFB *chain)
           : EnergyTermCommon(other, random_number_engine, thread_index, chain),

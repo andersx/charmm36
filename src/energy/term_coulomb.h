@@ -18,8 +18,8 @@
 // along with Phaistos.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-#ifndef TERM_GROMACS_COULOMB_H
-#define TERM_GROMACS_COULOMB_H
+#ifndef TERM_CHARMM36_COULOMB_H
+#define TERM_CHARMM36_COULOMB_H
 
 #include <boost/type_traits/is_base_of.hpp>
 #include "energy/energy_term.h"
@@ -30,12 +30,12 @@ namespace phaistos {
 
 
 //! partial coulomb interaction term
-class TermGromacsCoulomb: public EnergyTermCommon<TermGromacsCoulomb, ChainFB> {
+class TermCharmm36Coulomb: public EnergyTermCommon<TermCharmm36Coulomb, ChainFB> {
 
 private:
 
      //! For convenience, define local EnergyTermCommon
-     typedef phaistos::EnergyTermCommon<TermGromacsCoulomb, ChainFB> EnergyTermCommon;
+     typedef phaistos::EnergyTermCommon<TermCharmm36Coulomb, ChainFB> EnergyTermCommon;
 
 
      //! Number of interactions in the last evaluation
@@ -76,10 +76,10 @@ public:
      //! \param other Source object from which copy is made
      //! \param random_number_engine Object from which random number generators can be created.
      //! \param chain Molecule chain
-     TermGromacsCoulomb(ChainFB *chain,
+     TermCharmm36Coulomb(ChainFB *chain,
                         const Settings &settings = Settings(),
                         RandomNumberEngine *random_number_engine = &random_global)
-          : EnergyTermCommon(chain, "gromacs-coulomb", settings, random_number_engine) {
+          : EnergyTermCommon(chain, "charmm36-coulomb", settings, random_number_engine) {
 
      }
 
@@ -88,7 +88,7 @@ public:
      //! \param random_number_engine Object from which random number generators can be created.
      //! \param thread_index Index indicating in which thread|rank the copy exists
      //! \param chain Molecule chain
-     TermGromacsCoulomb(const TermGromacsCoulomb &other,
+     TermCharmm36Coulomb(const TermCharmm36Coulomb &other,
                         RandomNumberEngine *random_number_engine,
                         int thread_index, ChainFB *chain)
           : EnergyTermCommon(other, random_number_engine, thread_index, chain),

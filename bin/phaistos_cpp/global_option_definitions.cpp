@@ -33,7 +33,7 @@ struct EnergyOptions {
           for (int counter = occurrences[prefix+"-gromacs-angle-bend"]; counter > 0; counter--) {
 
                // Create settings object
-               typedef TermGromacsAngleBend EnergyTerm;
+               typedef TermCharmm36AngleBend EnergyTerm;
                typedef EnergyTerm::Settings Settings;
                boost::shared_ptr<Settings> settings(
                     SETTINGS_MODIFIER().template modify<EnergyTerm>(new Settings(), prefix));
@@ -62,7 +62,7 @@ struct EnergyOptions {
           for (int counter = occurrences[prefix+"-gromacs-bond-stretch"]; counter > 0; counter--) {
 
                // Create settings object
-               typedef TermGromacsBondStretch EnergyTerm;
+               typedef TermCharmm36BondStretch EnergyTerm;
                typedef EnergyTerm::Settings Settings;
                boost::shared_ptr<Settings> settings(
                     SETTINGS_MODIFIER().template modify<EnergyTerm>(new Settings(), prefix));
@@ -86,7 +86,7 @@ struct EnergyOptions {
           for (int counter = occurrences[prefix+"-gromacs-coulomb"]; counter > 0; counter--) {
 
                // Create settings object
-               typedef TermGromacsCoulomb EnergyTerm;
+               typedef TermCharmm36Coulomb EnergyTerm;
                typedef EnergyTerm::Settings Settings;
                boost::shared_ptr<Settings> settings(
                     SETTINGS_MODIFIER().template modify<EnergyTerm>(new Settings(), prefix));
@@ -120,7 +120,7 @@ struct EnergyOptions {
           for (int counter = occurrences[prefix+"-gromacs-eef1"]; counter > 0; counter--) {
 
                // Create settings object
-               typedef TermGromacsEef1 EnergyTerm;
+               typedef TermCharmm36Eef1 EnergyTerm;
                typedef EnergyTerm::Settings Settings;
                boost::shared_ptr<Settings> settings(
                     SETTINGS_MODIFIER().template modify<EnergyTerm>(new Settings(), prefix));
@@ -151,7 +151,7 @@ struct EnergyOptions {
           for (int counter = occurrences[prefix+"-gromacs-torsion"]; counter > 0; counter--) {
 
                // Create settings object
-               typedef TermGromacsTorsion EnergyTerm;
+               typedef TermCharmm36Torsion EnergyTerm;
                typedef EnergyTerm::Settings Settings;
                boost::shared_ptr<Settings> settings(
                     SETTINGS_MODIFIER().template modify<EnergyTerm>(new Settings(), prefix));
@@ -175,7 +175,7 @@ struct EnergyOptions {
           for (int counter = occurrences[prefix+"-gromacs-imptor"]; counter > 0; counter--) {
 
                // Create settings object
-               typedef TermGromacsImptor EnergyTerm;
+               typedef TermCharmm36Imptor EnergyTerm;
                typedef EnergyTerm::Settings Settings;
                boost::shared_ptr<Settings> settings(
                     SETTINGS_MODIFIER().template modify<EnergyTerm>(new Settings(), prefix));
@@ -199,7 +199,7 @@ struct EnergyOptions {
           for (int counter = occurrences[prefix+"-gromacs-vdw"]; counter > 0; counter--) {
 
                // Create settings object
-               typedef TermGromacsVdw EnergyTerm;
+               typedef TermCharmm36Vdw EnergyTerm;
                typedef EnergyTerm::Settings Settings;
                boost::shared_ptr<Settings> settings(
                     SETTINGS_MODIFIER().template modify<EnergyTerm>(new Settings(), prefix));
@@ -223,7 +223,7 @@ struct EnergyOptions {
           for (int counter = occurrences[prefix+"-gromacs-non-bonded-cached"]; counter > 0; counter--) {
 
                // Create settings object
-               typedef TermGromacsNonBondedCached EnergyTerm;
+               typedef TermCharmm36NonBondedCached EnergyTerm;
                typedef EnergyTerm::Settings Settings;
                boost::shared_ptr<Settings> settings(
                     SETTINGS_MODIFIER().template modify<EnergyTerm>(new Settings(), prefix));

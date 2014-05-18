@@ -17,8 +17,8 @@
 // along with Phaistos.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-#ifndef TERM_GROMACS_EEF1_H
-#define TERM_GROMACS_EEF1_H
+#ifndef TERM_CHARMM36_EEF1_H
+#define TERM_CHARMM36_EEF1_H
 
 #include <boost/type_traits/is_base_of.hpp>
 #include <boost/tokenizer.hpp>
@@ -79,12 +79,12 @@ const double exponential [350] = {
 namespace phaistos {
 
 //! partial eef1 interaction term
-class TermGromacsEef1: public EnergyTermCommon<TermGromacsEef1, ChainFB> {
+class TermCharmm36Eef1: public EnergyTermCommon<TermCharmm36Eef1, ChainFB> {
 
 private:
 
      //! For convenience, define local EnergyTermCommon
-     typedef phaistos::EnergyTermCommon<TermGromacsEef1, ChainFB> EnergyTermCommon;
+     typedef phaistos::EnergyTermCommon<TermCharmm36Eef1, ChainFB> EnergyTermCommon;
 
      //! Number of interactions in the last evaluation
      int counter;
@@ -113,7 +113,7 @@ public:
           double temp;
 
           //! Constructor
-          Settings(std::string solvation_filename="/home/andersx/phaistos_dev/modules/gromacs/src/energy/solvpar_17.inp",double temp=298.15)
+          Settings(std::string solvation_filename="/home/andersx/phaistos_dev/modules/charmm36/src/energy/solvpar_17.inp",double temp=298.15)
                : solvation_filename(solvation_filename),temp(temp) {}
 
           //! Output operator
@@ -129,10 +129,10 @@ public:
      //! \param chain Molecule chain
      //! \param settings Local Settings object
      //! \param random_number_engine Object from which random number generators can be created.
-     TermGromacsEef1(ChainFB *chain,
+     TermCharmm36Eef1(ChainFB *chain,
               const Settings &settings=Settings(),
               RandomNumberEngine *random_number_engine = &random_global)
-          : EnergyTermCommon(chain, "gromacs-eef1", settings, random_number_engine) {
+          : EnergyTermCommon(chain, "charmm36-eef1", settings, random_number_engine) {
 
           initialize();
 
@@ -144,7 +144,7 @@ public:
      //! \param random_number_engine Object from which random number generators can be created.
      //! \param thread_index Index indicating in which thread|rank the copy exists
      //! \param chain Molecule chain
-     TermGromacsEef1(const TermGromacsEef1 &other,
+     TermCharmm36Eef1(const TermCharmm36Eef1 &other,
                      RandomNumberEngine *random_number_engine,
                      int thread_index, ChainFB *chain)
           : EnergyTermCommon(other, random_number_engine, thread_index, chain),
@@ -154,7 +154,7 @@ public:
 
      // Returns the atom type according to the CHARMM36 force field
      // as implemented in CHARMM ... note that these are slightly
-     // different that the atom types defined in GROMACS.
+     // different that the atom types defined in CHARMM36.
      std::string get_charmm36_atom_type(Atom *atom) {
 
         using namespace definitions;

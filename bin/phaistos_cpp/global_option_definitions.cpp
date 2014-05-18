@@ -30,7 +30,7 @@ struct EnergyOptions {
           ModeDefinitions mode_definitions(target, chain);
 
           // Angle Bend
-          for (int counter = occurrences[prefix+"-gromacs-angle-bend"]; counter > 0; counter--) {
+          for (int counter = occurrences[prefix+"-charmm36-angle-bend"]; counter > 0; counter--) {
 
                // Create settings object
                typedef TermCharmm36AngleBend EnergyTerm;
@@ -47,8 +47,8 @@ struct EnergyOptions {
                target.add(
                     target.create_options(
                          DefineEnergyCommonOptions(),
-                         "Gromacs angle bend term (" + prefix + ")",
-                         prefix+"-gromacs-angle-bend", settings,
+                         "Charmm36 angle bend term (" + prefix + ")",
+                         prefix+"-charmm36-angle-bend", settings,
                          make_vector(
                              make_vector(std::string("omit-sidechains"),
                              std::string("Whether to omit sidechains??"),
@@ -59,7 +59,7 @@ struct EnergyOptions {
           }
 
           // Bond Stretch
-          for (int counter = occurrences[prefix+"-gromacs-bond-stretch"]; counter > 0; counter--) {
+          for (int counter = occurrences[prefix+"-charmm36-bond-stretch"]; counter > 0; counter--) {
 
                // Create settings object
                typedef TermCharmm36BondStretch EnergyTerm;
@@ -76,14 +76,14 @@ struct EnergyOptions {
                target.add(
                     target.create_options(
                          DefineEnergyCommonOptions(),
-                         "Gromacs bond stretch term (" + prefix + ")",
-                         prefix+"-gromacs-bond-stretch", settings,
+                         "Charmm36 bond stretch term (" + prefix + ")",
+                         prefix+"-charmm36-bond-stretch", settings,
                          make_vector()),
                     super_group, counter==1);
           }
 
           // Coulomb
-          for (int counter = occurrences[prefix+"-gromacs-coulomb"]; counter > 0; counter--) {
+          for (int counter = occurrences[prefix+"-charmm36-coulomb"]; counter > 0; counter--) {
 
                // Create settings object
                typedef TermCharmm36Coulomb EnergyTerm;
@@ -100,8 +100,8 @@ struct EnergyOptions {
                target.add(
                     target.create_options(
                          DefineEnergyCommonOptions(),
-                         "Gromacs Coulomb term (" + prefix + ")",
-                         prefix+"-gromacs-coulomb", settings,
+                         "Charmm36 Coulomb term (" + prefix + ")",
+                         prefix+"-charmm36-coulomb", settings,
                          make_vector(
                              make_vector(std::string("e14factor"),
                                          std::string("E14FAC-coulomb"),
@@ -117,7 +117,7 @@ struct EnergyOptions {
           }
 
           // Coulomb
-          for (int counter = occurrences[prefix+"-gromacs-eef1"]; counter > 0; counter--) {
+          for (int counter = occurrences[prefix+"-charmm36-eef1"]; counter > 0; counter--) {
 
                // Create settings object
                typedef TermCharmm36Eef1 EnergyTerm;
@@ -134,8 +134,8 @@ struct EnergyOptions {
                target.add(
                     target.create_options(
                          DefineEnergyCommonOptions(),
-                         "Gromacs EEF1 solvation term (" + prefix + ")",
-                         prefix+"-gromacs-eef1", settings,
+                         "Charmm36 EEF1 solvation term (" + prefix + ")",
+                         prefix+"-charmm36-eef1", settings,
                          make_vector(
                              make_vector(std::string("solvation-filename"),
                                          std::string("solvation-filename"),
@@ -148,7 +148,7 @@ struct EnergyOptions {
           }
 
           // Torsion
-          for (int counter = occurrences[prefix+"-gromacs-torsion"]; counter > 0; counter--) {
+          for (int counter = occurrences[prefix+"-charmm36-torsion"]; counter > 0; counter--) {
 
                // Create settings object
                typedef TermCharmm36Torsion EnergyTerm;
@@ -165,14 +165,14 @@ struct EnergyOptions {
                target.add(
                     target.create_options(
                          DefineEnergyCommonOptions(),
-                         "Gromacs torsion term (" + prefix + ")",
-                         prefix+"-gromacs-torsion", settings,
+                         "Charmm36 torsion term (" + prefix + ")",
+                         prefix+"-charmm36-torsion", settings,
                          make_vector()),
                          super_group, counter==1);
           }
 
           // Improper torsion
-          for (int counter = occurrences[prefix+"-gromacs-imptor"]; counter > 0; counter--) {
+          for (int counter = occurrences[prefix+"-charmm36-imptor"]; counter > 0; counter--) {
 
                // Create settings object
                typedef TermCharmm36Imptor EnergyTerm;
@@ -189,14 +189,14 @@ struct EnergyOptions {
                target.add(
                     target.create_options(
                          DefineEnergyCommonOptions(),
-                         "Gromacs improper torsion term (" + prefix + ")",
-                         prefix+"-gromacs-imptor", settings,
+                         "Charmm36 improper torsion term (" + prefix + ")",
+                         prefix+"-charmm36-imptor", settings,
                          make_vector()),
                          super_group, counter==1);
           }
 
           // Lennard Jones
-          for (int counter = occurrences[prefix+"-gromacs-vdw"]; counter > 0; counter--) {
+          for (int counter = occurrences[prefix+"-charmm36-vdw"]; counter > 0; counter--) {
 
                // Create settings object
                typedef TermCharmm36Vdw EnergyTerm;
@@ -213,14 +213,14 @@ struct EnergyOptions {
                target.add(
                     target.create_options(
                          DefineEnergyCommonOptions(),
-                         "Gromacs van der Waals term (" + prefix + ")",
-                         prefix+"-gromacs-vdw", settings,
+                         "Charmm36 van der Waals term (" + prefix + ")",
+                         prefix+"-charmm36-vdw", settings,
                          make_vector()),
                     super_group, counter==1);
           }
 
           // Non-Bonded chaced
-          for (int counter = occurrences[prefix+"-gromacs-non-bonded-cached"]; counter > 0; counter--) {
+          for (int counter = occurrences[prefix+"-charmm36-non-bonded-cached"]; counter > 0; counter--) {
 
                // Create settings object
                typedef TermCharmm36NonBondedCached EnergyTerm;
@@ -238,7 +238,7 @@ struct EnergyOptions {
                     target.create_options(
                          DefineEnergyCommonOptions(),
                          "Cached van der Waal + Coulomb + EEF1-SB terms (" + prefix + ")",
-                         prefix+"-gromacs-non-bonded-cached", settings,
+                         prefix+"-charmm36-non-bonded-cached", settings,
                          make_vector()),
                     super_group, counter==1);
           }

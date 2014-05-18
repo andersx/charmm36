@@ -20,7 +20,7 @@ struct EnergyInitialization {
           Options::OptionValue option;
 
           // Angle Bend
-          option = options[prefix+"-gromacs-angle-bend"];
+          option = options[prefix+"-charmm36-angle-bend"];
           for (int i=0; i<option.occurrences(); ++i) {
 
                // Settings typedef
@@ -32,7 +32,7 @@ struct EnergyInitialization {
           }
 
           // Bond Stretch
-          option = options[prefix+"-gromacs-bond-stretch"];
+          option = options[prefix+"-charmm36-bond-stretch"];
           for (int i=0; i<option.occurrences(); ++i) {
 
                // Settings typedef
@@ -44,7 +44,7 @@ struct EnergyInitialization {
           }
 
           // Coulomb
-          option = options[prefix+"-gromacs-coulomb"];
+          option = options[prefix+"-charmm36-coulomb"];
           for (int i=0; i<option.occurrences(); ++i) {
 
                // Settings typedef
@@ -56,7 +56,7 @@ struct EnergyInitialization {
           }
 
           // EEF1
-          option = options[prefix+"-gromacs-eef1"];
+          option = options[prefix+"-charmm36-eef1"];
           for (int i=0; i<option.occurrences(); ++i) {
 
                // Settings typedef
@@ -67,7 +67,7 @@ struct EnergyInitialization {
                                                    options.get_settings<Settings>(option,i)));
           }
           // Torsion
-          option = options[prefix+"-gromacs-torsion"];
+          option = options[prefix+"-charmm36-torsion"];
           for (int i=0; i<option.occurrences(); ++i) {
 
                // Settings typedef
@@ -78,7 +78,7 @@ struct EnergyInitialization {
                                                    options.get_settings<Settings>(option,i)));
           }
           // Improper torsion
-          option = options[prefix+"-gromacs-imptor"];
+          option = options[prefix+"-charmm36-imptor"];
           for (int i=0; i<option.occurrences(); ++i) {
 
                // Settings typedef
@@ -89,7 +89,7 @@ struct EnergyInitialization {
                                                    options.get_settings<Settings>(option,i)));
           }
           // Lennard Jones
-          option = options[prefix+"-gromacs-vdw"];
+          option = options[prefix+"-charmm36-vdw"];
           for (int i=0; i<option.occurrences(); ++i) {
 
                // Settings typedef
@@ -100,7 +100,7 @@ struct EnergyInitialization {
                                                    options.get_settings<Settings>(option,i)));
           }
           // Non-bonded cached terms
-          option = options[prefix+"-gromacs-non-bonded-cached"];
+          option = options[prefix+"-charmm36-non-bonded-cached"];
           for (int i=0; i<option.occurrences(); ++i) {
 
                // Settings typedef

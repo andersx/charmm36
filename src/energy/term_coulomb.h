@@ -28,177 +28,89 @@
 namespace phaistos {
 
 
-
 //! partial coulomb interaction term
 class TermCharmm36Coulomb: public EnergyTermCommon<TermCharmm36Coulomb, ChainFB> {
 
-private:
+protected:
 
      //! For convenience, define local EnergyTermCommon
      typedef phaistos::EnergyTermCommon<TermCharmm36Coulomb, ChainFB> EnergyTermCommon;
 
-
-     //! Number of interactions in the last evaluation
-     int counter;
-
-     // float fast_inv_sqrt(float x);
-
 public:
 
-     //! Local settings class
-     const class Settings: public EnergyTerm<ChainFB>::SettingsClassicEnergy {
-     public:
+     //! Use same settings as base class
+     typedef EnergyTerm<ChainFB>::SettingsClassicEnergy Settings;
 
-          //! Scaling for 1-4 interactions
-          double E14FAC;
+     std::vector<topology::NonBondedPair> non_bonded_pairs;
 
-          //! Dielectric constant
-          double EPS;
-
-          //! Whether to use distance-dependent dielectric constant
-          bool RDIE;
-
-          //! Constructor
-          Settings(double E14FAC=1.0,double EPS=1.0, bool RDIE=false)
-               : E14FAC(E14FAC),EPS(EPS),RDIE(RDIE){}
-
-          //! Output operator
-          friend std::ostream &operator<<(std::ostream &o, const Settings &settings) {
-               o << "E14FAC-coulomb:" << settings.E14FAC << "\n";
-               o << "Dielectric constant:" << settings.EPS << "\n";
-               o << "Distance-dependent-dielectric:" << settings.RDIE << "\n";
-               o << static_cast<const EnergyTerm<ChainFB>::Settings>(settings);
-               return o;
-          }
-     } settings;    //!< Local settings object
-
-     //! Copy constructor
-     //! \param other Source object from which copy is made
-     //! \param random_number_engine Object from which random number generators can be created.
+     //! Constructor.
      //! \param chain Molecule chain
+     //! \param settings Local Settings object
+     //! \param random_number_engine Object from which random number generators can be created.
      TermCharmm36Coulomb(ChainFB *chain,
-                        const Settings &settings = Settings(),
-                        RandomNumberEngine *random_number_engine = &random_global)
+                    const Settings &settings = Settings(),
+                    RandomNumberEngine *random_number_engine = &random_global)
           : EnergyTermCommon(chain, "charmm36-coulomb", settings, random_number_engine) {
 
+              std::string non_bonded_filename
+                  = "/home/andersx/phaistos_dev/modules/charmm36/src/energy/charmm22_cmap/charmm22_vdw.itp";
+
+              std::vector<topology::NonBondedParameter> non_bonded_parameters
+                  = topology::read_nonbonded_parameters(non_bonded_filename);
+
+              std::string non_bonded_14_filename
+                  = "/home/andersx/phaistos_dev/modules/charmm36/src/energy/charmm22_cmap/charmm22_vdw14.itp";
+
+              std::vector<topology::NonBonded14Parameter> non_bonded_14_parameters =
+                  topology::read_nonbonded_14_parameters(non_bonded_14_filename);
+
+              non_bonded_pairs = topology::generate_non_bonded_pairs_cached(this->chain,
+                                                           non_bonded_parameters,
+                                                           non_bonded_14_parameters);
      }
 
-     //! Copy constructor
+     //! Copy constructor.
      //! \param other Source object from which copy is made
      //! \param random_number_engine Object from which random number generators can be created.
      //! \param thread_index Index indicating in which thread|rank the copy exists
      //! \param chain Molecule chain
      TermCharmm36Coulomb(const TermCharmm36Coulomb &other,
-                        RandomNumberEngine *random_number_engine,
-                        int thread_index, ChainFB *chain)
+                 RandomNumberEngine *random_number_engine,
+                 int thread_index, ChainFB *chain)
           : EnergyTermCommon(other, random_number_engine, thread_index, chain),
-            counter(other.counter){
+            non_bonded_pairs(other.non_bonded_pairs) {}
 
-     }
 
-     //! Evaluate coulomb interaction between 2 atoms
-     //! \param atom1 First atom
-     //! \param atom2 Second atom
-     //! \param chg1 Coulomb of atom1
-     //! \param chg2 Coulomb of atom2
-     //! \return Coulomb energy for atom pair
-     double calculate_contribution(Atom *atom1, Atom *atom2) {
-
-          int d = chain_distance<ChainFB>(atom1,atom2); //6s @ 500 iterations
-
-          if (d > 3) {
-               return calc_coulomb_energy(atom1,atom2);
-          } else if (d < 3) {
-               return 0.0;
-          } else {//d==3
-               return (settings.E14FAC)*calc_coulomb_energy(atom1,atom2);
-          }
-     }
-
-     //! Evaluate coulomb interaction between 2 atoms
-     //! \param atom1 First atom
-     //! \param atom2 Second atom
-     //! \param chg1 Coulomb of atom1
-     //! \param chg2 Coulomb of atom2
-     //! \return Coulomb energy for atom pair
-     double calculate_rdie_contribution(Atom *atom1, Atom *atom2) {
-
-          int d = chain_distance<ChainFB>(atom1,atom2); //6s @ 500 iterations
-
-          if (d > 3) {
-               return calc_rdie_coulomb_energy(atom1,atom2);
-          } else if (d < 3) {
-               return 0.0;
-          } else {//d==3
-               return (settings.E14FAC)*calc_rdie_coulomb_energy(atom1,atom2);
-          }
-     }
-
-     //! Evaluate a coulomb interaction between two atoms
-     //! \param atom1 First atom
-     //! \param atom2 Second atom
-     //! \param chg1 Coulomb of atom1
-     //! \param chg2 Coulomb of atom2
-     //! \return Coulomb energy for atom pair
-     double calc_coulomb_energy(Atom *atom1, Atom *atom2) {
-
-          counter++;
-          const double chg1 = 1.0;
-          const double chg2 = 1.0;
-          double r = (atom1->position - atom2->position).norm();
-          return (chg1*chg2/(settings.EPS*r));
-     }
-     //! Evaluate a coulomb interaction between two atoms
-     //! \param atom1 First atom
-     //! \param atom2 Second atom
-     //! \param chg1 Coulomb of atom1
-     //! \param chg2 Coulomb of atom2
-     //! \return Coulomb energy for atom pair
-     double calc_rdie_coulomb_energy(Atom *atom1, Atom *atom2) {
-
-          counter++;
-          const double chg1 = 1.0;
-          const double chg2 = 1.0;
-          double r = (atom1->position - atom2->position).norm();
-          return (chg1*chg2/(settings.EPS*r*r));
-     }
 
      //! Evaluate chain energy
      //! \param move_info object containing information about last move
      //! \return vdw potential energy of the chain in the object
      double evaluate(MoveInfo *move_info=NULL) {
 
-          double energy_sum=0.0;
-          counter=0;
+          double coul_energy = 0.0;
+          double coul14_energy = 0.0;
 
-          // Duplicated code - but saves many if statements evaluations
-          if(settings.RDIE==false){
+          for (unsigned int i = 0; i < non_bonded_pairs.size(); i++) {
 
-               // Iterate all the atom pairs on the chain
-               for (AtomIterator<ChainFB, definitions::ALL> it1(*this->chain); !it1.end(); ++it1) {
-                    for(AtomIterator<ChainFB, definitions::ALL> it2(it1+1); !it2.end(); ++it2){
+              topology::NonBondedPair pair = non_bonded_pairs[i];
 
-                         Atom *atom1 = &*it1;
-                         Atom *atom2 = &*it2;
-                         energy_sum += calculate_contribution(atom1, atom2);
-                    }
-               }
+               const double r_sq = ((pair.atom1)->position - (pair.atom2)->position).norm_squared();
+               const double inv_r_sq = 100.0 / (r_sq); //shift to nanometers
+               const double coul_energy_temp = pair.qq * sqrt(inv_r_sq);
 
-          } else {
-               // Iterate all the atom pairs on the chain
-               for (AtomIterator<ChainFB, definitions::ALL> it1(*this->chain); !it1.end(); ++it1) {
-                    for(AtomIterator<ChainFB, definitions::ALL> it2(it1+1); !it2.end(); ++it2){
-
-                         Atom *atom1 = &*it1;
-                         Atom *atom2 = &*it2;
-                         energy_sum += calculate_rdie_contribution(atom1, atom2);
-                    }
+               if (pair.is_14_interaction) {
+                    coul14_energy += coul_energy_temp;
+               } else {
+                    coul_energy += coul_energy_temp;
                }
           }
 
-          return energy_sum;
-     }
+          // printf("          Coul-14 E = %12.4f kJ/mol\n", coul14_energy);
+          // printf("          Coul-SR E = %12.4f kJ/mol\n", coul_energy);
 
+          return (coul14_energy + coul_energy) / 4.184;
+
+     }
 };
 
 

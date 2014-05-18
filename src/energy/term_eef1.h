@@ -302,6 +302,8 @@ public:
           // std::cout << energy_sum << " kcal/mol" << std::endl;
           // std::cout << energy_sum*4.184 << " kJ/mol" << std::endl;
 
+          // printf("          EEF1-SB E = %12.4f kJ/mol\n", energy_sum * 4.184);
+          // printf("          EEF1-SB E = %12.4f kcal/mol\n", energy_sum);
           return energy_sum;
      }
 

@@ -424,8 +424,8 @@ std::vector<NonBondedPair> generate_non_bonded_pairs(ChainFB *chain,
 
                    non_bonded_pair.do_eef1 = true;
 
-                   std::string atom_type36_1 = gromacs_parser::get_charmm36_atom_type(atom1);
-                   std::string atom_type36_2 = gromacs_parser::get_charmm36_atom_type(atom2);
+                   std::string atom_type36_1 = charmm_parser::get_charmm36_atom_type(atom1);
+                   std::string atom_type36_2 = charmm_parser::get_charmm36_atom_type(atom2);
 
                    unsigned int index1 = eef1_atom_type_index_map[atom_type36_1];
                    unsigned int index2 = eef1_atom_type_index_map[atom_type36_2];
@@ -474,8 +474,8 @@ std::vector<NonBondedPair> generate_non_bonded_pairs(ChainFB *chain,
 
                    non_bonded_pair.do_eef1 = true;
 
-                   std::string atom_type36_1 = gromacs_parser::get_charmm36_atom_type(atom1);
-                   std::string atom_type36_2 = gromacs_parser::get_charmm36_atom_type(atom2);
+                   std::string atom_type36_1 = charmm_parser::get_charmm36_atom_type(atom1);
+                   std::string atom_type36_2 = charmm_parser::get_charmm36_atom_type(atom2);
 
                    unsigned int index1 = eef1_atom_type_index_map[atom_type36_1];
                    unsigned int index2 = eef1_atom_type_index_map[atom_type36_2];

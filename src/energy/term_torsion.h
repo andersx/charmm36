@@ -22,7 +22,7 @@
 
 #include <boost/type_traits/is_base_of.hpp>
 #include "energy/energy_term.h"
-#include "charmm22_parser.h"
+#include "parsers/topology_parser.h"
 #include "math.h"
 
 namespace phaistos {
@@ -35,11 +35,7 @@ private:
      //! For convenience, define local EnergyTermCommon
      typedef phaistos::EnergyTermCommon<TermCharmm36Torsion, ChainFB> EnergyTermCommon;
 
-     //! Number of interactions calculated
-     int counter;
-
-     std::vector<DihedralAngleType9> dihedral_angles;
-
+     std::vector<topology::DihedralAngleType9> dihedral_angles;
 
 public:
 
@@ -56,9 +52,9 @@ public:
           : EnergyTermCommon(chain, "charmm36-torsion", settings, random_number_engine) {
 
           std::string filename = "/home/andersx/phaistos_dev/modules/charmm36/src/energy/charmm22_cmap/charmm22_torsion.itp";
-          std::vector<DihedralType9Parameter> dihedral_type_9_parameters = read_dihedral_type_9_parameters(filename);
+          std::vector<topology::DihedralType9Parameter> dihedral_type_9_parameters = topology::read_dihedral_type_9_parameters(filename);
 
-          dihedral_angles = generate_dihedral_pairs(this->chain, dihedral_type_9_parameters);
+          dihedral_angles = topology::generate_dihedral_pairs(this->chain, dihedral_type_9_parameters);
 
      }
 
@@ -71,7 +67,6 @@ public:
                         RandomNumberEngine *random_number_engine,
                         int thread_index, ChainFB *chain)
           : EnergyTermCommon(other, random_number_engine, thread_index, chain),
-            counter(other.counter),
             dihedral_angles(other.dihedral_angles) {}
 
      //! Evaluate chain energy
@@ -82,10 +77,9 @@ public:
 
         double e_torsion = 0.0;
 
-        #pragma omp parallel for reduction(+:e_torsion) schedule(static)
         for (unsigned int i = 0; i < this->dihedral_angles.size(); i++) {
 
-            DihedralAngleType9 dihedral = this->dihedral_angles[i];
+            topology::DihedralAngleType9 dihedral = this->dihedral_angles[i];
 
             double angle = calc_dihedral((dihedral.atom1)->position,
                                          (dihedral.atom2)->position,

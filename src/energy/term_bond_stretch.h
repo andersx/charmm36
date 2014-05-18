@@ -22,7 +22,7 @@
 
 #include <boost/type_traits/is_base_of.hpp>
 #include "energy/energy_term.h"
-#include "charmm22_parser.h"
+#include "parsers/topology_parser.h"
 
 namespace phaistos {
 
@@ -40,7 +40,7 @@ public:
      // Use same settings as base class
      typedef EnergyTerm<ChainFB>::SettingsClassicEnergy Settings;
 
-     std::vector<BondedPair> bonded_pairs;
+     std::vector<topology::BondedPair> bonded_pairs;
 
      //! Constructor
      //! \param chain Molecule chain
@@ -52,8 +52,11 @@ public:
           : EnergyTermCommon(chain, "charmm36-bond-stretch", settings, random_number_engine) {
 
           std::string filename = "/home/andersx/phaistos_dev/modules/charmm36/src/energy/charmm22_cmap/charmm22_bond.itp";
-          std::vector<BondedPairParameter> bonded_pair_parameters = read_bonded_pair_parameters(filename);
-          this->bonded_pairs = generate_bonded_pairs(this->chain, bonded_pair_parameters);
+
+          std::vector<topology::BondedPairParameter> bonded_pair_parameters 
+              = topology::read_bonded_pair_parameters(filename);
+
+          this->bonded_pairs = topology::generate_bonded_pairs(this->chain, bonded_pair_parameters);
 
      }
 
@@ -75,10 +78,9 @@ public:
 
           double e_bond = 0.0;
 
-          #pragma omp parallel for reduction(+:e_bond) schedule(static)
           for (unsigned int i = 0; i < this->bonded_pairs.size(); i++){
 
-               BondedPair pair = this->bonded_pairs[i];
+               topology::BondedPair pair = this->bonded_pairs[i];
 
                const double r = ((pair.atom1)->position - (pair.atom2)->position).norm() / 10.0;
                const double kb = pair.kb;

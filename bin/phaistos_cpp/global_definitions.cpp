@@ -100,6 +100,17 @@ struct EnergyInitialization {
                                                    options.get_settings<Settings>(option,i)));
           }
           // Non-bonded cached terms
+          option = options[prefix+"-charmm36-non-bonded"];
+          for (int i=0; i<option.occurrences(); ++i) {
+
+               // Settings typedef
+               typedef TermCharmm36NonBonded::Settings Settings;
+
+               // Add energy term
+               energy->add_term(new TermCharmm36NonBonded(chain,
+                                                   options.get_settings<Settings>(option,i)));
+          }
+          // Non-bonded cached terms
           option = options[prefix+"-charmm36-non-bonded-cached"];
           for (int i=0; i<option.occurrences(); ++i) {
 

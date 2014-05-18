@@ -49,12 +49,7 @@ struct EnergyOptions {
                          DefineEnergyCommonOptions(),
                          "Charmm36 angle bend term (" + prefix + ")",
                          prefix+"-charmm36-angle-bend", settings,
-                         make_vector(
-                             make_vector(std::string("omit-sidechains"),
-                             std::string("Whether to omit sidechains??"),
-                             &settings->omit_sidechains)
-
-                        )),
+                         make_vector()),
                     super_group, counter==1);
           }
 
@@ -102,17 +97,7 @@ struct EnergyOptions {
                          DefineEnergyCommonOptions(),
                          "Charmm36 Coulomb term (" + prefix + ")",
                          prefix+"-charmm36-coulomb", settings,
-                         make_vector(
-                             make_vector(std::string("e14factor"),
-                                         std::string("E14FAC-coulomb"),
-                                          &settings->E14FAC),
-                             make_vector(std::string("epsilon"),
-                                         std::string("Dielectric constant"),
-                                         &settings->EPS),
-                             make_vector(std::string("rdie"),
-                                         std::string("Distance-dependent-dielectric??"),
-                                         &settings->RDIE)
-                        )),
+                         make_vector()),
                     super_group, counter==1);
           }
 
@@ -215,6 +200,30 @@ struct EnergyOptions {
                          DefineEnergyCommonOptions(),
                          "Charmm36 van der Waals term (" + prefix + ")",
                          prefix+"-charmm36-vdw", settings,
+                         make_vector()),
+                    super_group, counter==1);
+          }
+
+          // Non-Bonded
+          for (int counter = occurrences[prefix+"-charmm36-non-bonded"]; counter > 0; counter--) {
+
+               // Create settings object
+               typedef TermCharmm36NonBonded EnergyTerm;
+               typedef EnergyTerm::Settings Settings;
+               boost::shared_ptr<Settings> settings(
+                    SETTINGS_MODIFIER().template modify<EnergyTerm>(new Settings(), prefix));
+
+               // If temperature has been specified, set weight based on that value
+               if(target.has_key("temperature")) {
+                    settings->weight = temperature_to_one_over_k(target["temperature"].as<double>());
+               }
+
+               // Add options
+               target.add(
+                    target.create_options(
+                         DefineEnergyCommonOptions(),
+                         "Van der Waal + Coulomb + EEF1-SB terms (" + prefix + ")",
+                         prefix+"-charmm36-non-bonded", settings,
                          make_vector()),
                     super_group, counter==1);
           }

@@ -21,7 +21,7 @@
 #define TERM_CHARMM36_IMPTOR_H
 
 #include "energy/energy_term.h"
-#include "charmm22_parser.h"
+#include "parsers/topology_parser.h"
 
 namespace phaistos {
 
@@ -38,7 +38,7 @@ public:
      //! Use same settings as base class
      typedef EnergyTerm<ChainFB>::SettingsClassicEnergy Settings;
 
-     std::vector<Imptor> imptors;
+     std::vector<topology::Imptor> imptors;
 
      //! Constructor.
      //! \param chain Molecule chain
@@ -50,8 +50,8 @@ public:
           : EnergyTermCommon(chain, "charmm36-imptor", settings, random_number_engine) {
 
           std::string filename = "/home/andersx/phaistos_dev/modules/charmm36/src/energy/charmm22_cmap/charmm22_imptor.itp";
-          std::vector<DihedralType2Parameter> dihedral_type_2_parameters = read_dihedral_type_2_parameters(filename);
-          imptors = generate_imptors(this->chain, dihedral_type_2_parameters);
+          std::vector<topology::DihedralType2Parameter> dihedral_type_2_parameters = topology::read_dihedral_type_2_parameters(filename);
+          imptors = topology::generate_imptors(this->chain, dihedral_type_2_parameters);
 
      }
 
@@ -73,10 +73,10 @@ public:
      double evaluate(MoveInfo *move_info=NULL) {
 
           double energy_imptor = 0.0;
-          #pragma omp parallel for reduction(+:energy_imptor) schedule(static)
+
           for (unsigned int i = 0; i < imptors.size(); i++) {
 
-               Imptor imptor = imptors[i];
+               topology::Imptor imptor = imptors[i];
 
                const double phi = calc_dihedral((imptor.atom1)->position,
                                                 (imptor.atom2)->position,
@@ -98,7 +98,7 @@ public:
 
 
 
-        // printf("           imptor E = %12.4f kJ/mol\n", energy_imptor);
+          // printf("           imptor E = %12.4f kJ/mol\n", energy_imptor);
 
           return energy_imptor / 4.184;
      }

@@ -45,8 +45,6 @@ public:
      //! Use same settings as base class
      typedef EnergyTerm<ChainFB>::SettingsClassicEnergy Settings;
 
-     std::vector<topology::NonBondedParameter> non_bonded_parameters;
-     std::vector<topology::NonBonded14Parameter> non_bonded_14_parameters;
      std::vector<topology::NonBondedPair> non_bonded_pairs;
 
      //! Constructor.
@@ -58,13 +56,19 @@ public:
                     RandomNumberEngine *random_number_engine = &random_global)
           : EnergyTermCommon(chain, "charmm36-vdw", settings, random_number_engine) {
 
-              std::string non_bonded_filename = "/home/andersx/phaistos_dev/modules/charmm36/src/energy/charmm22_cmap/charmm22_vdw.itp";
-              non_bonded_parameters = topology::read_nonbonded_parameters(non_bonded_filename);
+              std::string non_bonded_filename
+                  = "/home/andersx/phaistos_dev/modules/charmm36/src/energy/charmm22_cmap/charmm22_vdw.itp";
 
-              std::string non_bonded_14_filename = "/home/andersx/phaistos_dev/modules/charmm36/src/energy/charmm22_cmap/charmm22_vdw14.itp";
-              non_bonded_14_parameters = topology::read_nonbonded_14_parameters(non_bonded_14_filename);
+              std::vector<topology::NonBondedParameter> non_bonded_parameters
+                  = topology::read_nonbonded_parameters(non_bonded_filename);
 
-              non_bonded_pairs = generate_non_bonded_pairs_cached(this->chain,
+              std::string non_bonded_14_filename
+                  = "/home/andersx/phaistos_dev/modules/charmm36/src/energy/charmm22_cmap/charmm22_vdw14.itp";
+
+              std::vector<topology::NonBonded14Parameter> non_bonded_14_parameters =
+                  topology::read_nonbonded_14_parameters(non_bonded_14_filename);
+
+              non_bonded_pairs = topology::generate_non_bonded_pairs_cached(this->chain,
                                                            non_bonded_parameters,
                                                            non_bonded_14_parameters);
      }
@@ -90,7 +94,6 @@ public:
           double vdw_energy = 0.0;
           double vdw14_energy = 0.0;
 
-          // #pragma omp parallel for reduction(+:vdw_energy,vdw14_energy) schedule(static)
           for (unsigned int i = 0; i < non_bonded_pairs.size(); i++) {
 
               topology::NonBondedPair pair = non_bonded_pairs[i];

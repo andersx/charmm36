@@ -1,3 +1,0 @@
-  551  pdb2gmx -f sandr.pdb -o sandr.gro
-  554  editconf -bt cubic -f sandr.gro -o sandr_box.pdb -c -d 1.0
-  556  grompp -f mini.mdp -c sandr_box.pdb -p topol.top 

@@ -17,8 +17,8 @@
 // along with Phaistos.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-#ifndef TERM_CHARMM36_PARSER_H
-#define TERM_CHARMM36_PARSER_H
+#ifndef TERM_TOPOLOGY_PARSER_H
+#define TERM_TOPOLOGY_PARSER_H
 
 #include <string>
 #include <math.h>
@@ -27,8 +27,12 @@
 #include "energy/energy_term.h"
 #include "protein/iterators/pair_iterator_chaintree.h"
 
-namespace phaistos {
+#include "charmm36_charmm.h"
+#include "charmm36_gromacs.h"
 
+namespace topology {
+
+using namespace phaistos;
 
 
 struct NonBondedParameter{
@@ -252,8 +256,8 @@ std::vector<NonBondedPair> generate_non_bonded_pairs_cached(ChainFB *chain,
 
         Atom *atom1 = &*it1;
 
-        std::string atom_type1 = get_charmm22_atom_type(atom1);
-        double atom_charge1 = get_charmm22_atom_charge(atom1);
+        std::string atom_type1 = gromacs_parser::get_charmm36_atom_type(atom1);
+        double atom_charge1 = gromacs_parser::get_charmm36_atom_charge(atom1);
 
         NonBondedParameter parameter1 = get_non_bonded_parameter(atom_type1, non_bonded_parameters);
 
@@ -272,8 +276,8 @@ std::vector<NonBondedPair> generate_non_bonded_pairs_cached(ChainFB *chain,
             int d = chain_distance<ChainFB>(atom1,atom2);
             // int test_atom_index = 295;
 
-            std::string atom_type2 = get_charmm22_atom_type(atom2);
-            double atom_charge2 = get_charmm22_atom_charge(atom2);
+            std::string atom_type2 = gromacs_parser::get_charmm36_atom_type(atom2);
+            double atom_charge2 = gromacs_parser::get_charmm36_atom_charge(atom2);
 
 
 
@@ -361,8 +365,8 @@ std::vector<NonBondedPair> generate_non_bonded_pairs(ChainFB *chain,
 
         Atom *atom1 = &*it1;
 
-        std::string atom_type1 = get_charmm22_atom_type(atom1);
-        double atom_charge1 = get_charmm22_atom_charge(atom1);
+        std::string atom_type1 = gromacs_parser::get_charmm36_atom_type(atom1);
+        double atom_charge1 = gromacs_parser::get_charmm36_atom_charge(atom1);
 
         NonBondedParameter parameter1 = get_non_bonded_parameter(atom_type1, non_bonded_parameters);
 
@@ -381,8 +385,8 @@ std::vector<NonBondedPair> generate_non_bonded_pairs(ChainFB *chain,
             int d = chain_distance<ChainFB>(atom1,atom2);
             // int test_atom_index = 295;
 
-            std::string atom_type2 = get_charmm22_atom_type(atom2);
-            double atom_charge2 = get_charmm22_atom_charge(atom2);
+            std::string atom_type2 = gromacs_parser::get_charmm36_atom_type(atom2);
+            double atom_charge2 = gromacs_parser::get_charmm36_atom_charge(atom2);
 
 
 
@@ -410,30 +414,9 @@ std::vector<NonBondedPair> generate_non_bonded_pairs(ChainFB *chain,
                non_bonded_pair.c12 = 4 * epsilon_effective * std::pow(sigma_effective, 12.0);
 
                non_bonded_pair.is_14_interaction = false;
-               //  if ((std::fabs(parameter1.atom_charge - atom_charge1) > 0.001) ||
-               //      (std::fabs(parameter2.atom_charge - atom_charge2) > 0.001) ) std::cout << "ERROR";
-               //  std::cout << "   " << i
-               //            << "   " << j
-               //            << "   " << atom_type1
-               //            << "   " << atom_type2
-               //          //  << "   " << parameter1.sigma
-               //          //  << "   " << parameter2.sigma
-               //          //  << "   " << parameter1.epsilon
-               //          //  << "   " << parameter2.epsilon
-               //            << "   " << parameter1.atom_charge
-               //            << "   " << atom_charge1
-               //            << "   " << parameter2.atom_charge
-               //            << "   " << atom_charge2
-               //          //  << "   " << non_bonded_pair.c6
-               //          //  << "   " << non_bonded_pair.c12
-               //            << std::endl;
 
-
-               non_bonded_pair.is_14_interaction = false;
                non_bonded_pair.i1 = i;
                non_bonded_pair.i2 = j;
-
-
 
                if (!(atom1->mass == definitions::atom_h_weight) &&
                    !(chain_distance<ChainFB>(atom1,atom2) < 3) &&
@@ -441,8 +424,8 @@ std::vector<NonBondedPair> generate_non_bonded_pairs(ChainFB *chain,
 
                    non_bonded_pair.do_eef1 = true;
 
-                   std::string atom_type36_1 = get_charmm36_atom_type(atom1);
-                   std::string atom_type36_2 = get_charmm36_atom_type(atom2);
+                   std::string atom_type36_1 = gromacs_parser::get_charmm36_atom_type(atom1);
+                   std::string atom_type36_2 = gromacs_parser::get_charmm36_atom_type(atom2);
 
                    unsigned int index1 = eef1_atom_type_index_map[atom_type36_1];
                    unsigned int index2 = eef1_atom_type_index_map[atom_type36_2];
@@ -454,55 +437,10 @@ std::vector<NonBondedPair> generate_non_bonded_pairs(ChainFB *chain,
                    non_bonded_pair.lambda1 = lambda[index1];
                    non_bonded_pair.lambda2 = lambda[index2];
 
-               } else { non_bonded_pair.do_eef1 = false;}
+               } else { 
+                   non_bonded_pair.do_eef1 = false;
+               }
                non_bonded_pairs.push_back(non_bonded_pair);
-//               } else if (d == 3) {
-//               NonBondedPair non_bonded_pair;
-//
-//               double epsilon_effective = sqrt(parameter1.epsilon * parameter2.epsilon);
-//               double sigma_effective   = 0.5 * (parameter1.sigma + parameter2.sigma);
-//               // std::cout << "   " << epsilon_effective << "   " << sigma_effective << std::endl;
-//
-//               non_bonded_pair.atom1 = atom1;
-//               non_bonded_pair.atom2 = atom2;
-//               non_bonded_pair.q1 = atom_charge1;
-//               non_bonded_pair.q2 = atom_charge2;
-//               non_bonded_pair.sigma1 = parameter1.sigma;
-//               non_bonded_pair.sigma2 = parameter2.sigma;
-//               non_bonded_pair.epsilon1 = parameter1.epsilon;
-//               non_bonded_pair.epsilon2 = parameter2.epsilon;
-//               non_bonded_pair.sigma_effective = sigma_effective;
-//               non_bonded_pair.epsilon_effective = epsilon_effective;
-//               non_bonded_pair.qq  = non_bonded_pair.q1 * non_bonded_pair.q2 * 138.935455;
-//               non_bonded_pair.c6  = 4 * epsilon_effective * std::pow(sigma_effective, 6.0);
-//               non_bonded_pair.c12 = 4 * epsilon_effective * std::pow(sigma_effective, 12.0);
-//
-//               non_bonded_pair.is_14_interaction = false;
-//               //  if ((std::fabs(parameter1.atom_charge - atom_charge1) > 0.001) ||
-//               //      (std::fabs(parameter2.atom_charge - atom_charge2) > 0.001) ) std::cout << "ERROR";
-//               //  std::cout << "   " << i
-//               //            << "   " << j
-//               //            << "   " << atom_type1
-//               //            << "   " << atom_type2
-//               //          //  << "   " << parameter1.sigma
-//               //          //  << "   " << parameter2.sigma
-//               //          //  << "   " << parameter1.epsilon
-//               //          //  << "   " << parameter2.epsilon
-//               //            << "   " << parameter1.atom_charge
-//               //            << "   " << atom_charge1
-//               //            << "   " << parameter2.atom_charge
-//               //            << "   " << atom_charge2
-//               //          //  << "   " << non_bonded_pair.c6
-//               //          //  << "   " << non_bonded_pair.c12
-//               //            << std::endl;
-//
-//
-//               non_bonded_pair.is_14_interaction = true;
-//               non_bonded_pair.i1 = i;
-//               non_bonded_pair.i2 = j;
-//
-//               non_bonded_pairs.push_back(non_bonded_pair);
-//               }
 
              } else if (d == 3) {
 
@@ -536,8 +474,8 @@ std::vector<NonBondedPair> generate_non_bonded_pairs(ChainFB *chain,
 
                    non_bonded_pair.do_eef1 = true;
 
-                   std::string atom_type36_1 = get_charmm36_atom_type(atom1);
-                   std::string atom_type36_2 = get_charmm36_atom_type(atom2);
+                   std::string atom_type36_1 = gromacs_parser::get_charmm36_atom_type(atom1);
+                   std::string atom_type36_2 = gromacs_parser::get_charmm36_atom_type(atom2);
 
                    unsigned int index1 = eef1_atom_type_index_map[atom_type36_1];
                    unsigned int index2 = eef1_atom_type_index_map[atom_type36_2];
@@ -681,10 +619,10 @@ std::vector<DihedralAngleType9> generate_dihedral_pairs(ChainFB *chain,
 
                         // std::cout << atom1 << atom2 << atom3 << atom4 << std::endl;
 
-                        std::string type1 = get_charmm22_atom_type(atom1);
-                        std::string type2 = get_charmm22_atom_type(atom2);
-                        std::string type3 = get_charmm22_atom_type(atom3);
-                        std::string type4 = get_charmm22_atom_type(atom4);
+                        std::string type1 = gromacs_parser::get_charmm36_atom_type(atom1);
+                        std::string type2 = gromacs_parser::get_charmm36_atom_type(atom2);
+                        std::string type3 = gromacs_parser::get_charmm36_atom_type(atom3);
+                        std::string type4 = gromacs_parser::get_charmm36_atom_type(atom4);
 
                         for (unsigned int i = 0; i < dihedral_angle_type_9_parameters.size(); i++) {
 
@@ -839,7 +777,7 @@ std::vector<BondedPair> generate_bonded_pairs(ChainFB *chain,
 
     for (AtomIterator<ChainFB,definitions::ALL> it1(*(chain)); !it1.end(); ++it1) {
         Atom *atom1 = &*it1;
-        std::string type1 = get_charmm22_atom_type(atom1);
+        std::string type1 = gromacs_parser::get_charmm36_atom_type(atom1);
 
         for (CovalentBondIterator<ChainFB> it2(atom1, CovalentBondIterator<ChainFB>::DEPTH_1_ONLY);
             !it2.end(); ++it2) {
@@ -848,7 +786,7 @@ std::vector<BondedPair> generate_bonded_pairs(ChainFB *chain,
             if (atom1->residue->index < atom2->residue->index ||
                 (atom1->residue->index == atom2->residue->index && atom1->index < atom2->index)) {
 
-                std::string type2 = get_charmm22_atom_type(atom2);
+                std::string type2 = gromacs_parser::get_charmm36_atom_type(atom2);
 
                 for (unsigned int i = 0; i < bonded_pair_parameters.size(); i++) {
 
@@ -953,12 +891,12 @@ std::vector<AngleBendPair> generate_angle_bend_pairs(ChainFB *chain,
     for (AtomIterator<ChainFB,definitions::ALL> it1(*(chain)); !it1.end(); ++it1) {
         Atom *atom2 = &*it1;
 
-        std::string type2 = get_charmm22_atom_type(atom2);
+        std::string type2 = gromacs_parser::get_charmm36_atom_type(atom2);
         for (CovalentBondIterator<ChainFB> it2(atom2, CovalentBondIterator<ChainFB>::DEPTH_1_ONLY);
             !it2.end(); ++it2) {
 
             Atom *atom1 = &*it2;
-            std::string type1 = get_charmm22_atom_type(atom1);
+            std::string type1 = gromacs_parser::get_charmm36_atom_type(atom1);
 
             CovalentBondIterator<ChainFB> it3(it2);
             // Fancy way to discard it3 = it1
@@ -966,7 +904,7 @@ std::vector<AngleBendPair> generate_angle_bend_pairs(ChainFB *chain,
             for (; !it3.end(); ++it3) {
                 Atom *atom3 = &*it3;
 
-                std::string type3 = get_charmm22_atom_type(atom3);
+                std::string type3 = gromacs_parser::get_charmm36_atom_type(atom3);
 
                 bool found_this_parameter = false;
 
@@ -1083,10 +1021,10 @@ Imptor atoms_to_imptor(std::vector<Atom*> atoms,
     imptor.atom3 = atoms[2];
     imptor.atom4 = atoms[3];
 
-    std::string type1 = get_charmm22_atom_type(atoms[0]);
-    std::string type2 = get_charmm22_atom_type(atoms[1]);
-    std::string type3 = get_charmm22_atom_type(atoms[2]);
-    std::string type4 = get_charmm22_atom_type(atoms[3]);
+    std::string type1 = gromacs_parser::get_charmm36_atom_type(atoms[0]);
+    std::string type2 = gromacs_parser::get_charmm36_atom_type(atoms[1]);
+    std::string type3 = gromacs_parser::get_charmm36_atom_type(atoms[2]);
+    std::string type4 = gromacs_parser::get_charmm36_atom_type(atoms[3]);
 
     bool found_parameter = false;
 

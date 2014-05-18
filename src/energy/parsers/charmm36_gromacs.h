@@ -29,8 +29,9 @@
 
 namespace gromacs_parser {
 
-std::string get_charmm36_atom_type(Atom *atom) {
+std::string get_charmm36_atom_type(phaistos::Atom *atom) {
 
+    using namespace phaistos;
     using namespace definitions;
 
     Residue *res = atom->residue;
@@ -448,8 +449,9 @@ std::string get_charmm36_atom_type(Atom *atom) {
 
 }
 
-double get_charmm36_atom_charge(Atom *atom) {
+double get_charmm36_atom_charge(phaistos::Atom *atom) {
 
+    using namespace phaistos;
     using namespace definitions;
 
     Residue *res = atom->residue;

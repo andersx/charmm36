@@ -30,22 +30,12 @@
 #include "charmm36_charmm.h"
 #include "charmm36_gromacs.h"
 
+#include "topology_items.h"
+
 namespace topology {
 
 using namespace phaistos;
 
-
-struct NonBondedParameter{
-
-    std::string atom_type;
-    unsigned int atom_number;
-    double atom_mass;
-    double atom_charge;
-    std::string atom_ptype;
-    double sigma;
-    double epsilon;
-
-};
 
 std::vector<NonBondedParameter> read_nonbonded_parameters(const std::string filename) {
 
@@ -90,16 +80,6 @@ std::vector<NonBondedParameter> read_nonbonded_parameters(const std::string file
 }
 
 
-struct NonBonded14Parameter{
-
-    std::string atom_type1;
-    std::string atom_type2;
-    unsigned int pair_function;
-    double sigma;
-    double epsilon;
-
-};
-
 std::vector<NonBonded14Parameter> read_nonbonded_14_parameters(const std::string filename) {
 
     std::ifstream input_stream(filename.c_str());
@@ -141,36 +121,6 @@ std::vector<NonBonded14Parameter> read_nonbonded_14_parameters(const std::string
 }
 
 
-
-struct NonBondedPair{
-    Atom *atom1;
-    Atom *atom2;
-    double q1;
-    double q2;
-    double qq;
-    double sigma1;
-    double sigma2;
-    double epsilon1;
-    double epsilon2;
-    double sigma_effective;
-    double epsilon_effective;
-    double c6;
-    double c12;
-    bool is_14_interaction;
-    int i1;
-    int i2;
-
-    bool do_eef1;
-    double fac_12;
-    double fac_21;
-    double R_vdw_1;
-    double R_vdw_2;
-    double lambda1;
-    double lambda2;
-
-};
-
-
 NonBondedParameter get_non_bonded_parameter(std::string atom_type,
         std::vector<NonBondedParameter> non_bonded_parameters) {
 
@@ -207,16 +157,6 @@ NonBonded14Parameter get_non_bonded14_parameter(std::string atom_type1, std::str
 
         }
     }
-// struct NonBonded14Parameter{
-//
-//     std::string atom_type1;
-//     std::string atom_type2;
-//     unsigned int pair_function;
-//     double sigma;
-//     double epsilon;
-//
-// };
-
 
     if (!found_parameter) {
 
@@ -225,11 +165,6 @@ NonBonded14Parameter get_non_bonded14_parameter(std::string atom_type1, std::str
 
         parameter.atom_type1 = atom_type1;
         parameter.atom_type2 = atom_type1;
-
-        // const double sigma1 = parameter1.sigma;
-        // const double sigma2 = parameter2.sigma;
-        // const double epsilon1 = parameter1.epsilon;
-        // const double epsilon2 = parameter2.epsilon;
 
         const double epsilon_effective = sqrt(parameter1.epsilon * parameter2.epsilon);
         const double sigma_effective   = 0.5 * (parameter1.sigma + parameter2.sigma);
@@ -490,42 +425,12 @@ std::vector<NonBondedPair> generate_non_bonded_pairs(ChainFB *chain,
                } else { non_bonded_pair.do_eef1 = false;}
 
                 non_bonded_pairs.push_back(non_bonded_pair);
-         }
-
-
-// struct NonBonded14Parameter{
-//
-//     std::string atom_type1;
-//     std::string atom_type2;
-//     unsigned int pair_function;
-//     double sigma;
-//     double epsilon;
-//
-// };
-//
-            // std::cout << atom2<< i << parameter2.get_atom_type() << std::endl;
-
-            // if ((d == 3) && ((i==test_atom_index)||(j==test_atom_index))) {
-            //      std::cout << atom1 << atom2 << "   " << i << "   " << j << "   " << d << std::endl;
-            // }
+            }
         }
     }
 
     return non_bonded_pairs;
 }
-
-
-struct DihedralType9Parameter {
-
-    std::string type1;
-    std::string type2;
-    std::string type3;
-    std::string type4;
-    double phi0;
-    double cp;
-    unsigned int mult;
-
-};
 
 
 std::vector<DihedralType9Parameter> read_dihedral_type_9_parameters(const std::string filename) {
@@ -570,19 +475,6 @@ std::vector<DihedralType9Parameter> read_dihedral_type_9_parameters(const std::s
 
     return parameters;
 }
-
-
-struct DihedralAngleType9 {
-
-    Atom *atom1;
-    Atom *atom2;
-    Atom *atom3;
-    Atom *atom4;
-    double phi0;
-    double cp;
-    unsigned int mult;
-
-};
 
 
 std::vector<DihedralAngleType9> generate_dihedral_pairs(ChainFB *chain,
@@ -711,14 +603,6 @@ std::vector<DihedralAngleType9> generate_dihedral_pairs(ChainFB *chain,
 }
 
 
-struct BondedPairParameter {
-    std::string type1;
-    std::string type2;
-    double kb;
-    double r0;
-};
-
-
 std::vector<BondedPairParameter> read_bonded_pair_parameters(const std::string filename) {
 
     std::ifstream input_stream(filename.c_str());
@@ -758,15 +642,6 @@ std::vector<BondedPairParameter> read_bonded_pair_parameters(const std::string f
 
     return parameters;
 }
-
-
-struct BondedPair {
-    Atom *atom1;
-    Atom *atom2;
-    double kb;
-    double r0;
-};
-
 
 
 std::vector<BondedPair> generate_bonded_pairs(ChainFB *chain,
@@ -815,18 +690,6 @@ std::vector<BondedPair> generate_bonded_pairs(ChainFB *chain,
 }
 
 
-
-struct AngleBendParameter {
-    std::string type1;
-    std::string type2;
-    std::string type3;
-    double theta0;
-    double k0;
-    double r13;
-    double kub;
-};
-
-
 std::vector<AngleBendParameter> read_angle_bend_parameters(const std::string filename) {
 
     std::ifstream input_stream(filename.c_str());
@@ -869,18 +732,6 @@ std::vector<AngleBendParameter> read_angle_bend_parameters(const std::string fil
 
     return parameters;
 }
-
-
-
-struct AngleBendPair {
-    Atom *atom1;
-    Atom *atom2;
-    Atom *atom3;
-    double theta0;
-    double k0;
-    double r13;
-    double kub;
-};
 
 
 std::vector<AngleBendPair> generate_angle_bend_pairs(ChainFB *chain,
@@ -943,19 +794,6 @@ std::vector<AngleBendPair> generate_angle_bend_pairs(ChainFB *chain,
 }
 
 
-
-struct DihedralType2Parameter {
-
-    std::string type1;
-    std::string type2;
-    std::string type3;
-    std::string type4;
-    double phi0;
-    double cp;
-
-};
-
-
 std::vector<DihedralType2Parameter> read_dihedral_type_2_parameters(const std::string filename) {
 
     std::ifstream input_stream(filename.c_str());
@@ -999,18 +837,6 @@ std::vector<DihedralType2Parameter> read_dihedral_type_2_parameters(const std::s
 }
 
 
-struct Imptor {
-
-    Atom *atom1;
-    Atom *atom2;
-    Atom *atom3;
-    Atom *atom4;
-    double phi0;
-    double cp;
-
-};
-
-
 Imptor atoms_to_imptor(std::vector<Atom*> atoms,
     std::vector<DihedralType2Parameter> imptor_parameters) {
 
@@ -1048,8 +874,6 @@ Imptor atoms_to_imptor(std::vector<Atom*> atoms,
         std::cout << "ERROR: DIDN'T FIND PARAMETER" << std::endl;
 
     return imptor;
-
-
 }
 
 
@@ -1180,11 +1004,8 @@ std::vector<Imptor> generate_imptors(ChainFB *chain,
 
         }
 
-
         Residue *previous_residue = res->get_neighbour(-1);
         Residue *next_residue     = res->get_neighbour(+1);
-
-        // std::cout << *res << std::endl;
 
          //N   -C  CA  HN
          if (!(res->terminal_status == NTERM)) {
@@ -1224,20 +1045,11 @@ std::vector<Imptor> generate_imptors(ChainFB *chain,
              imptors.push_back(bb_imptor);
          }
 
-
-
-
-
-
-
-
-
-
     }
 
     return imptors;
 
 }
 
-} // End namespace phaistos
+} // End namespace topology
 #endif

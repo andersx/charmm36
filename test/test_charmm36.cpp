@@ -26,6 +26,7 @@
 #include "energy/term_vdw.h"
 #include "energy/term_coulomb.h"
 #include "energy/term_eef1.h"
+#include "energy/term_cmap.h"
 
 
 #include "energy/observable.h"
@@ -44,7 +45,6 @@ void test_terms(ChainFB *chain, int n=1) {
      Energy<ChainFB> energy(chain);
 
      // Add terms
-
      energy.add_term( new TermCharmm36BondStretch(chain) );
      energy.add_term( new TermCharmm36AngleBend(chain) );
      energy.add_term( new TermCharmm36Torsion(chain) );
@@ -52,6 +52,7 @@ void test_terms(ChainFB *chain, int n=1) {
      energy.add_term( new TermCharmm36Imptor(chain) );
      energy.add_term( new TermCharmm36Coulomb(chain) );
      energy.add_term( new TermCharmm36Eef1(chain) );
+     energy.add_term( new TermCharmm36Cmap(chain) );
 
 
 

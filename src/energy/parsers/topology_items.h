@@ -172,5 +172,5 @@ struct Imptor {
 };
 
 
-} // End namespace phaistos
+} // End namespace topology
 #endif

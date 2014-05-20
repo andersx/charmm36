@@ -121,6 +121,28 @@ struct EnergyInitialization {
                energy->add_term(new TermCharmm36NonBondedCached(chain,
                                                    options.get_settings<Settings>(option,i)));
           }
+          // CMAP term
+          option = options[prefix+"-charmm36-cmap"];
+          for (int i=0; i<option.occurrences(); ++i) {
+
+               // Settings typedef
+               typedef TermCharmm36Cmap::Settings Settings;
+
+               // Add energy term
+               energy->add_term(new TermCharmm36Cmap(chain,
+                                                options.get_settings<Settings>(option,i)));
+          }
+          // CMAP term
+          option = options[prefix+"-charmm36-bonded-cached"];
+          for (int i=0; i<option.occurrences(); ++i) {
+
+               // Settings typedef
+               typedef TermCharmm36BondedCached::Settings Settings;
+
+               // Add energy term
+               energy->add_term(new TermCharmm36BondedCached(chain,
+                                                options.get_settings<Settings>(option,i)));
+          }
      }
 
 };

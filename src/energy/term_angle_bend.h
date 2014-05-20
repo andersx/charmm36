@@ -1,5 +1,5 @@
 // term_angle_bend.h --- angle-bend energy term
-// Copyright (C) 2009-2011 Kristoffer Enøe Johansson, Wouter Boomsma
+// Copyright (C) 2014 Anders S. Christensn
 //
 // This file is part of Phaistos
 //

@@ -246,12 +246,59 @@ struct EnergyOptions {
                target.add(
                     target.create_options(
                          DefineEnergyCommonOptions(),
-                         "Cached van der Waal + Coulomb + EEF1-SB terms (" + prefix + ")",
+                         "Cached CHARMM36 van der Waal + Coulomb terms and  EEF1-SB solvent model (" + prefix + ")",
                          prefix+"-charmm36-non-bonded-cached", settings,
                          make_vector()),
                     super_group, counter==1);
           }
 
+          // CMAP term
+          for (int counter = occurrences[prefix+"-charmm36-cmap"]; counter > 0; counter--) {
+
+               // Create settings object
+               typedef TermCharmm36Cmap EnergyTerm;
+               typedef EnergyTerm::Settings Settings;
+               boost::shared_ptr<Settings> settings(
+                    SETTINGS_MODIFIER().template modify<EnergyTerm>(new Settings(), prefix));
+
+               // If temperature has been specified, set weight based on that value
+               if(target.has_key("temperature")) {
+                    settings->weight = temperature_to_one_over_k(target["temperature"].as<double>());
+               }
+
+               // Add options
+               target.add(
+                    target.create_options(
+                         DefineEnergyCommonOptions(),
+                         "CHARMM36 CMAP correction map (" + prefix + ")",
+                         prefix+"-charmm36-cmap", settings,
+                         make_vector()),
+                    super_group, counter==1);
+          }
+
+          // Bonded cached terms
+          for (int counter = occurrences[prefix+"-charmm36-bonded-cached"]; counter > 0; counter--) {
+
+               // Create settings object
+               typedef TermCharmm36BondedCached EnergyTerm;
+               typedef EnergyTerm::Settings Settings;
+               boost::shared_ptr<Settings> settings(
+                    SETTINGS_MODIFIER().template modify<EnergyTerm>(new Settings(), prefix));
+
+               // If temperature has been specified, set weight based on that value
+               if(target.has_key("temperature")) {
+                    settings->weight = temperature_to_one_over_k(target["temperature"].as<double>());
+               }
+
+               // Add options
+               target.add(
+                    target.create_options(
+                         DefineEnergyCommonOptions(),
+                         "CHARMM36 CMAP correction map (" + prefix + ")",
+                         prefix+"-charmm36-bonded-cached", settings,
+                         make_vector()),
+                    super_group, counter==1);
+          }
 
      }
 

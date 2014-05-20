@@ -29,6 +29,14 @@
 
 namespace topology {
 
+
+struct CmapPair {
+    phaistos::Residue *residue;
+    unsigned int cmap_type_index;
+    int residue_index;
+};
+
+
 struct NonBondedParameter{
 
     std::string atom_type;

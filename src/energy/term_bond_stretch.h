@@ -1,5 +1,5 @@
 // term_bond_stretch.h --- bond-stretch energy term
-// Copyright (C) 2009-2011 Kristoffer Enøe Johansson
+// Copyright (C) 2014 Anders S. Christensen
 //
 // This file is part of Phaistos
 //

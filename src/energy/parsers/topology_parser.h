@@ -37,6 +37,90 @@ namespace topology {
 using namespace phaistos;
 
 
+std::vector<CmapPair> generate_cmap_pairs(ChainFB *chain) {
+
+    using namespace definitions;
+    using namespace gromacs_parser;
+
+    std::vector<CmapPair> cmap_pairs;
+
+    int i = -1;
+
+    for (ResidueIterator<ChainFB> it(*(chain)); !(it).end(); ++it) {
+
+          i += 1;
+          Residue *res = &*it;
+
+          if (res->terminal_status == definitions::NTERM) continue;
+          if (res->terminal_status == definitions::CTERM) continue;
+
+          std::string type1 = get_charmm36_atom_type((*(res->get_neighbour(-1)))[C]);
+          std::string type2 = get_charmm36_atom_type((*res)[N]);
+          std::string type3 = get_charmm36_atom_type((*res)[CA]);
+          std::string type4 = get_charmm36_atom_type((*res)[C]);
+          std::string type5 = get_charmm36_atom_type((*(res->get_neighbour(+1)))[N]);
+
+          // std::cout << type1<< std::endl;
+          // std::cout << type2<< std::endl;
+          // std::cout << type3<< std::endl;
+          // std::cout << type4<< std::endl;
+          // std::cout << type5<< std::endl;
+          // std::cout << std::endl;
+
+          CmapPair cmap_pair;
+
+          cmap_pair.residue = res;
+          cmap_pair.residue_index = i;
+
+          if ((type1 == "C") &&
+              (type2 == "NH1") &&
+              (type3 == "CT1") &&
+              (type4 == "C") &&
+              (type5 == "NH1")) {
+                cmap_pair.cmap_type_index = 0;
+          } else if ((type1 == "C") &&
+                     (type2 == "NH1") &&
+                     (type3 == "CT1") &&
+                     (type4 == "C") &&
+                     (type5 == "N")) {
+                cmap_pair.cmap_type_index = 1;
+          } else if ((type1 == "C") &&
+                     (type2 == "N") &&
+                     (type3 == "CP1") &&
+                     (type4 == "C") &&
+                     (type5 == "NH1")) {
+                cmap_pair.cmap_type_index = 2;
+          } else if ((type1 == "C") &&
+                     (type2 == "N") &&
+                     (type3 == "CP1") &&
+                     (type4 == "C") &&
+                     (type5 == "N")) {
+                cmap_pair.cmap_type_index = 3;
+          } else if ((type1 == "C") &&
+                     (type2 == "NH1") &&
+                     (type3 == "CT2") &&
+                     (type4 == "C") &&
+                     (type5 == "NH1")) {
+                cmap_pair.cmap_type_index = 4;
+          } else if ((type1 == "C") &&
+                     (type2 == "NH1") &&
+                     (type3 == "CT2") &&
+                     (type4 == "C") &&
+                     (type5 == "N")) {
+                cmap_pair.cmap_type_index = 5;
+          } else {
+                std::cerr << "# Error: Unknown CMAP for residue" << *res << " .\n";
+                exit(EXIT_FAILURE);
+          }
+
+          cmap_pairs.push_back(cmap_pair);
+    }
+
+    return cmap_pairs;
+}
+
+
+
 std::vector<NonBondedParameter> read_nonbonded_parameters(const std::string filename) {
 
     std::ifstream input_stream(filename.c_str());

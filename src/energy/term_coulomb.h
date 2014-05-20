@@ -1,6 +1,5 @@
 // term_coulomb.h ---  coulomb-coulomb interaction energy term
-// Copyright (C) 2009-2011 Kristoffer Enøe Johansson,
-// Anders S. Christensen
+// Copyright (C) 2014 Anders S. Christensen
 //
 // This file is part of Phaistos
 //

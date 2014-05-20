@@ -178,14 +178,46 @@ public:
 
                         const double coul_energy_temp = pair.qq * sqrt(inv_r_sq)/ 4.184;
 
+                        double eef1_sb_energy_temp = 0.0;
+
+                        // If the pair has a contribution to EEF1-SB
+                        if ((pair.do_eef1) && (r_sq < 81.0)) {
+
+                            // From Sandro's code
+                            const double r_ij = std::sqrt(r_sq);
+
+                            double R_min_i = pair.R_vdw_1;
+                            double R_min_j = pair.R_vdw_2;
+
+                            double lambda_i = pair.lambda1;
+                            double lambda_j = pair.lambda2;
+
+                            const double arg_ij = std::fabs((r_ij - R_min_i)/lambda_i);
+                            const double arg_ji = std::fabs((r_ij - R_min_j)/lambda_j);
+
+                            int bin_ij = int(arg_ij*100);
+                            int bin_ji = int(arg_ji*100);
+
+                            double exp_ij = 0.0;
+                            double exp_ji = 0.0;
+
+                            if (bin_ij < 350) exp_ij = charmm_parser::exp_eef1[bin_ij];
+                            if (bin_ji < 350) exp_ji = charmm_parser::exp_eef1[bin_ji];
+
+                            double cont_ij = -pair.fac_12*exp_ij/r_sq;
+                            double cont_ji = -pair.fac_21*exp_ji/r_sq;
+
+                            // Add to local EEF1-SB energy
+                            eef1_sb_energy_temp += cont_ij + cont_ji;
+
+                        }
                         // Add to matrix element
-                        this->cached_residue_pairs[i][j].energy_old += vdw_energy_temp + coul_energy_temp;
-                        this->cached_residue_pairs[i][j].energy_new += vdw_energy_temp + coul_energy_temp;
+                        this->cached_residue_pairs[i][j].energy_old += vdw_energy_temp + coul_energy_temp + eef1_sb_energy_temp;
+                        this->cached_residue_pairs[i][j].energy_new += vdw_energy_temp + coul_energy_temp + eef1_sb_energy_temp;
 
                         //Add to toal energies
-                        total_energy     += vdw_energy_temp + coul_energy_temp;
-                        total_energy_old += vdw_energy_temp + coul_energy_temp;
-
+                        total_energy     += vdw_energy_temp + coul_energy_temp + eef1_sb_energy_temp;
+                        total_energy_old += vdw_energy_temp + coul_energy_temp + eef1_sb_energy_temp;
                     }
                 }
             }
@@ -433,6 +465,74 @@ public:
 
         // Add delta energy for the move to total energy.
         total_energy += delta_energy_local;
+
+
+
+        double check_energy = 0.0;
+
+        for (int i = 0; i < this->chain->size(); i++) {
+            for (int j = 0; j < this->chain->size(); j++) {
+
+                double matrix_energy = 0.0;
+                // Sum over all interactions in that matrix element
+                for (unsigned int k = 0; k < this->cached_residue_pairs[i][j].pairs.size(); k++) {
+
+                    topology::NonBondedPair pair = this->cached_residue_pairs[i][j].pairs[k];
+
+                    const double r_sq = ((pair.atom1)->position - (pair.atom2)->position).norm_squared();
+                    const double inv_r_sq = 100.0 / (r_sq); //shift to nanometers
+                    const double inv_r_sq6 = inv_r_sq * inv_r_sq * inv_r_sq;
+                    const double inv_r_sq12 = inv_r_sq6 * inv_r_sq6;
+                    const double vdw_energy_temp = (pair.c12 * inv_r_sq12 - pair.c6 * inv_r_sq6) / 4.184;
+
+                    const double coul_energy_temp = pair.qq * sqrt(inv_r_sq)/ 4.184;
+
+                    double eef1_sb_energy_temp = 0.0;
+
+                    // If the pair has a contribution to EEF1-SB
+                    if ((pair.do_eef1) && (r_sq < 81.0)) {
+
+                        // From Sandro's code
+                        const double r_ij = std::sqrt(r_sq);
+
+                        double R_min_i = pair.R_vdw_1;
+                        double R_min_j = pair.R_vdw_2;
+
+                        double lambda_i = pair.lambda1;
+                        double lambda_j = pair.lambda2;
+
+                        const double arg_ij = std::fabs((r_ij - R_min_i)/lambda_i);
+                        const double arg_ji = std::fabs((r_ij - R_min_j)/lambda_j);
+
+                        int bin_ij = int(arg_ij*100);
+                        int bin_ji = int(arg_ji*100);
+
+                        double exp_ij = 0.0;
+                        double exp_ji = 0.0;
+
+                        if (bin_ij < 350) exp_ij = charmm_parser::exp_eef1[bin_ij];
+                        if (bin_ji < 350) exp_ji = charmm_parser::exp_eef1[bin_ji];
+
+                        double cont_ij = -pair.fac_12*exp_ij/r_sq;
+                        double cont_ji = -pair.fac_21*exp_ji/r_sq;
+
+                        // Add to local EEF1-SB energy
+                        eef1_sb_energy_temp += cont_ij + cont_ji;
+
+                    }
+                    // Add to matrix element
+                    matrix_energy += vdw_energy_temp + coul_energy_temp + eef1_sb_energy_temp;
+
+                }
+
+                std::cout << "ASC Delta matrix ij " << i << "  " << j << "  " <<  matrix_energy - this->cached_residue_pairs[i][j].energy_new << std::endl;
+                check_energy += matrix_energy;
+            }
+        }
+
+
+        std::cout << "INDEX  " << start_index  << "   " << end_index << std::endl;
+
 
         // Return energy.
         return total_energy;

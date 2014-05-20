@@ -294,7 +294,7 @@ struct EnergyOptions {
                target.add(
                     target.create_options(
                          DefineEnergyCommonOptions(),
-                         "CHARMM36 CMAP correction map (" + prefix + ")",
+                         "CHARMM36 bonded terms (cached) (" + prefix + ")",
                          prefix+"-charmm36-bonded-cached", settings,
                          make_vector()),
                     super_group, counter==1);

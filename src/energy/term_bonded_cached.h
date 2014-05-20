@@ -54,10 +54,20 @@ public:
           std::vector<topology::BondedPair> bonded_pairs;
           std::vector<topology::Imptor> imptors;
           std::vector<topology::DihedralAngleType9> dihedral_angles;
+          topology::CmapPair cmap_pair;
+
+          bool has_cmap;
+
           double energy_new;
           double energy_old;
 
      };
+
+     //! Table which contains the CMAP correction tables
+     //! in Gromacs' 
+     std::vector<std::vector<double> > cmapdata;
+
+     //! Vector containing all terms in the CMAP correction.
 
      std::vector<BondedCachedResidue> bonded_cached_residues;
 
@@ -75,6 +85,10 @@ public:
                     const Settings &settings = Settings(),
                     RandomNumberEngine *random_number_engine = &random_global)
           : EnergyTermCommon(chain, "charmm36-bonded-cached", settings, random_number_engine) {
+
+          // Get CMAP data from the Gromacs code.
+          this->cmapdata = charmm36_cmap::setup_cmap();
+          std::vector<topology::CmapPair> cmap_pairs = topology::generate_cmap_pairs(this->chain);
 
           // Read angle-bend parameters.
           std::string filename = "/home/andersx/phaistos_dev/modules/charmm36/src/energy/charmm22_cmap/charmm22_angle_bend.itp";
@@ -165,6 +179,19 @@ public:
 
          }
 
+          for (unsigned int i = 0; i < this->bonded_cached_residues.size(); i ++) {
+               this->bonded_cached_residues[i].has_cmap = false;
+          }
+          // Sort CMAP parameters
+          for (unsigned int i = 0; i < cmap_pairs.size(); i++){
+
+               topology::CmapPair pair = cmap_pairs[i];
+
+               int index = pair.residue_index;
+               this->bonded_cached_residues[index].cmap_pair = pair;
+               this->bonded_cached_residues[index].has_cmap = true;
+
+         }
 
          this->energy_new  = 0.0;
          this->energy_old  = 0.0;
@@ -180,8 +207,8 @@ public:
 
          }
 
-        std::cout << this->energy_new << std::endl;
-        std::cout << this->energy_new / 4.184 << std::endl;
+        // std::cout << this->energy_new << std::endl;
+        // std::cout << this->energy_new / 4.184 << std::endl;
 
      }
 
@@ -261,7 +288,18 @@ public:
 
                energy_sum += e_torsion_temp;
 
-         }
+          }
+
+          if (cached_residue.has_cmap) {
+                const int residue_index = cached_residue.cmap_pair.residue_index;
+                const unsigned int cmap_type_index = cached_residue.cmap_pair.cmap_type_index;
+                // const unsigned int cmap_type_index = 0;
+
+                const double phi = (*(this->chain))[residue_index].get_phi();
+                const double psi = (*(this->chain))[residue_index].get_psi();
+
+                energy_sum += kernel::cmap_energy(phi, psi, cmap_type_index, this->cmapdata);
+          }
 
           return energy_sum;
 
@@ -278,6 +316,7 @@ public:
                  RandomNumberEngine *random_number_engine,
                  int thread_index, ChainFB *chain)
           : EnergyTermCommon(other, random_number_engine, thread_index, chain),
+            cmapdata(other.cmapdata),
             bonded_cached_residues(other.bonded_cached_residues),
             energy_new(other.energy_new),
             energy_old(other.energy_old),
@@ -295,34 +334,20 @@ public:
           this->start_index = 0;
           this->end_index = this->chain->size() - 1;
 
-
           // If these are set explicitly by the move, read these here.
           if (move_info) {
-              this->start_index = move_info->modified_positions_start - 1;
-              //is->start_index = move_info->modified_positions_start;
-
-              // modified_positions_end is one more than the index of the last residue
-              // which moved during last move.
-              this->end_index = move_info->modified_positions_end;
-
-              // printf("ASC: Moved residues:  %4d   %4d\n", move_info->modified_positions_start, move_info->modified_positions_end);
+              this->start_index = std::max(0, move_info->modified_positions_start - 1);
+              this->end_index = std::min(move_info->modified_positions_end + 1, this->chain->size() - 1);
           }
 
-
-          if (this->start_index < 0 ) this->start_index = 0 ;
-          if (this->end_index > this->chain->size() - 1) this->end_index = this->chain->size() - 1;
-
-          // Local delta energy required for OpenMP.
+          // Local delta energy required for OpenMP -- can't just write to this->energy_new.
           double delta_energy_local = 0.0;
-
-          // printf("ASC: start end:  %4d   %4d\n", this->start_index, this->end_index+1);
 
           #pragma omp parallel for reduction(+:delta_energy_local) schedule(static)
           for (int i = this->start_index; i < this->end_index+1; i ++) {
 
-               // printf("ASC: Recomputing residue:  %4d\n", i);
-
-               const double residue_energy = calculate_cached_residue_energy(bonded_cached_residues[i]);
+               const double residue_energy = 
+                    calculate_cached_residue_energy(bonded_cached_residues[i]);
 
                this->bonded_cached_residues[i].energy_new = residue_energy;
 
@@ -330,18 +355,12 @@ public:
                                    - this->bonded_cached_residues[i].energy_old;
           }
 
-
-         //double energy_check = 0.0;
-
-         //for (int i = 0; i < this->bonded_cached_residues.size(); i ++) {
-
-         //    energy_check += calculate_cached_residue_energy(bonded_cached_residues[i]);
-
-
-         //}
-
           this->energy_new  += delta_energy_local;
 
+          // double energy_check = 0.0;
+          // for (unsigned int i = 0; i < this->bonded_cached_residues.size(); i ++) {
+          //      energy_check += calculate_cached_residue_energy(bonded_cached_residues[i]);
+          // }
           // printf("ASC: Delta check - actual:  %24.14f\n", energy_check - this->energy_new);
 
           return this->energy_new/4.184;

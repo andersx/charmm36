@@ -267,6 +267,9 @@ public:
           counter=0;
 
           unsigned int i_atom = 0;
+
+          double dGref_total = 0.0;
+
           // Iterate all the atom pairs on the chain
           for (AtomIterator<ChainFB, definitions::ALL> it1(*this->chain); !it1.end(); ++it1) {
                i_atom++;
@@ -276,6 +279,7 @@ public:
                if (atom1->mass == definitions::atom_h_weight) continue;
 
                energy_sum += dGref[index1];
+               dGref_total += dGref[index1];
 
                unsigned int j_atom = 0;
 
@@ -298,9 +302,6 @@ public:
                }
 
           }
-
-          // std::cout << energy_sum << " kcal/mol" << std::endl;
-          // std::cout << energy_sum*4.184 << " kJ/mol" << std::endl;
 
           // printf("          EEF1-SB E = %12.4f kJ/mol\n", energy_sum * 4.184);
           // printf("          EEF1-SB E = %12.4f kcal/mol\n", energy_sum);

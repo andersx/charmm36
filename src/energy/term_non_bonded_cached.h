@@ -38,23 +38,6 @@ protected:
      //! For convenience, define local EnergyTermCommon
      typedef phaistos::EnergyTermCommon<TermCharmm36NonBondedCached, ChainFB> EnergyTermCommon;
 
-     //! Number of interactions calculated
-     int counter;
-
-     //! Lookup tables containing parameters
-     std::vector<double> dGref;
-     std::vector< std::vector<double> > factors;
-     std::vector<double> vdw_radii;
-     std::vector<double> lambda;
-
-     std::map<std::string, unsigned int> eef1_atom_type_index_map;
-
-     double dGref_total;
-public:
-
-     //! Use same settings as base class
-     typedef EnergyTerm<ChainFB>::SettingsClassicEnergy Settings;
-
      struct CachedResiduePair {
 
         double energy_old;
@@ -64,13 +47,16 @@ public:
 
      };
 
-
-     std::vector<topology::NonBondedPair> non_bonded_pairs;
+     //! Lookup tables containing parameters
      std::vector< std::vector<CachedResiduePair> > cached_residue_pairs;
      double total_energy;
      double total_energy_old;
      std::vector<std::vector<unsigned int> > cache_indexes;
 
+public:
+
+     //! Use same settings as base class
+     typedef EnergyTerm<ChainFB>::SettingsClassicEnergy Settings;
 
      //! Constructor.
      //! \param chain Molecule chain
@@ -81,30 +67,37 @@ public:
                     RandomNumberEngine *random_number_engine = &random_global)
           : EnergyTermCommon(chain, "charmm36-non-bonded-cached", settings, random_number_engine) {
 
-              initialize();
-              std::string non_bonded_filename
-                  = "/home/andersx/phaistos_dev/modules/charmm36/src/energy/charmm22_cmap/charmm22_vdw.itp";
+          std::vector<double> dGref;
+          std::vector< std::vector<double> > factors;
+          std::vector<double> vdw_radii;
+          std::vector<double> lambda;
+          std::map<std::string, unsigned int> eef1_atom_type_index_map;
 
-              std::vector<topology::NonBondedParameter> non_bonded_parameters
-                  = topology::read_nonbonded_parameters(non_bonded_filename);
+          initialize(dGref, factors, vdw_radii, lambda, eef1_atom_type_index_map);
 
-              std::string non_bonded_14_filename
-                  = "/home/andersx/phaistos_dev/modules/charmm36/src/energy/charmm22_cmap/charmm22_vdw14.itp";
+          std::string non_bonded_filename
+              = "/home/andersx/phaistos_dev/modules/charmm36/src/energy/charmm22_cmap/charmm22_vdw.itp";
 
-              std::vector<topology::NonBonded14Parameter> non_bonded_14_parameters
-                  = topology::read_nonbonded_14_parameters(non_bonded_14_filename);
+          std::vector<topology::NonBondedParameter> non_bonded_parameters
+              = topology::read_nonbonded_parameters(non_bonded_filename);
 
-              //non_bonded_pairs = topology::generate_non_bonded_pairs_cached(this->chain,
-              //                                             non_bonded_parameters,
-              //                                             non_bonded_14_parameters);
-              non_bonded_pairs = generate_non_bonded_pairs(this->chain,
-                                                           non_bonded_parameters,
-                                                           non_bonded_14_parameters,
-                                                           dGref,
-                                                           factors,
-                                                           vdw_radii,
-                                                           lambda,
-                                                           eef1_atom_type_index_map);
+          std::string non_bonded_14_filename
+              = "/home/andersx/phaistos_dev/modules/charmm36/src/energy/charmm22_cmap/charmm22_vdw14.itp";
+
+          std::vector<topology::NonBonded14Parameter> non_bonded_14_parameters
+              = topology::read_nonbonded_14_parameters(non_bonded_14_filename);
+
+          std::vector<topology::NonBondedPair> non_bonded_pairs
+              = generate_non_bonded_pairs(this->chain,
+                                          non_bonded_parameters,
+                                          non_bonded_14_parameters,
+                                          dGref,
+                                          factors,
+                                          vdw_radii,
+                                          lambda,
+                                          eef1_atom_type_index_map);
+
+            double dGref_total = 0.0;
 
             for (AtomIterator<ChainFB, definitions::ALL> it(*this->chain); !it.end(); ++it) {
 
@@ -119,7 +112,7 @@ public:
             // Fill up cached matrix and set energy to zero
             for (int i = 0; i < this->chain->size(); i++) {
 
-                // Dummy residue pair 
+                // Dummy residue pair
                 std::vector<CachedResiduePair> temp_pair_vector;
                 this->cached_residue_pairs.push_back(temp_pair_vector);
 
@@ -151,10 +144,8 @@ public:
             }
 
             // Initialize total energies
-            //total_energy = 0.0;
-            //total_energy_old = 0.0;
-            total_energy = dGref_total;
-            total_energy_old = dGref_total;
+            this->total_energy = dGref_total;
+            this->total_energy_old = dGref_total;
 
             // Calculate energy for each cache matrix element
             for (int i = 0; i < this->chain->size(); i++) {
@@ -216,13 +207,13 @@ public:
                         this->cached_residue_pairs[i][j].energy_new += vdw_energy_temp + coul_energy_temp + eef1_sb_energy_temp;
 
                         //Add to toal energies
-                        total_energy     += vdw_energy_temp + coul_energy_temp + eef1_sb_energy_temp;
-                        total_energy_old += vdw_energy_temp + coul_energy_temp + eef1_sb_energy_temp;
+                        this->total_energy     += vdw_energy_temp + coul_energy_temp + eef1_sb_energy_temp;
+                        this->total_energy_old += vdw_energy_temp + coul_energy_temp + eef1_sb_energy_temp;
                     }
                 }
             }
 
-            std::cout << "Total constructor energy " << total_energy << std::endl;
+            // std::cout << "Total constructor energy " << this->total_energy << std::endl;
 
 
             cache_indexes = get_cache_indexes(0, this->chain->size() -1);
@@ -265,18 +256,19 @@ public:
                  RandomNumberEngine *random_number_engine,
                  int thread_index, ChainFB *chain)
           : EnergyTermCommon(other, random_number_engine, thread_index, chain),
-            counter(other.counter),
-            non_bonded_pairs(other.non_bonded_pairs),
             cached_residue_pairs(other.cached_residue_pairs),
             total_energy(other.total_energy),
             total_energy_old(other.total_energy_old),
             cache_indexes(other.cache_indexes) {
-                std::cout << "Executed copy constructor" << std::endl;
             }
 
 
      // Big long initialize code from Sandro
-     void initialize() {
+     void initialize(std::vector<double> &dGref,
+                     std::vector< std::vector<double> > &factors,
+                     std::vector<double> &vdw_radii,
+                     std::vector<double> &lambda,
+                     std::map<std::string, unsigned int> &eef1_atom_type_index_map) {
 
           // Read parameter file
           std::vector<std::string> atoms;
@@ -372,6 +364,21 @@ public:
 
      }
 
+     // //! Newton's method to determine inverse square roots.
+     // inline double fast_inv_sqrt(double number) {
+
+     //      long long i;
+     //      double x2, y;
+     //      const double threehalfs = 1.5;
+     //      x2 = number * 0.5;
+     //      y  = number;
+     //      i  = * ( long long * ) &y;
+     //      i  = 0x5fe6ec85e7de30da - ( i >> 1 );
+     //      y  = * ( double * ) &i;
+     //      y  = y * ( threehalfs - ( x2 * y * y ) );
+     //      y  = y * ( threehalfs - ( x2 * y * y ) );
+     //      return y;
+     // }
 
      //! Evaluate chain energy
      //! \param move_info object containing information about last move
@@ -413,12 +420,16 @@ public:
                 topology::NonBondedPair pair = this->cached_residue_pairs[i][j].pairs[k];
 
                 const double r_sq = ((pair.atom1)->position - (pair.atom2)->position).norm_squared();
-                const double inv_r_sq = 100.0 / (r_sq); //shift to nanometers
-                const double inv_r_sq6 = inv_r_sq * inv_r_sq * inv_r_sq;
+
+                // const double inv_r = fast_inv_sqrt(r_sq);
+                const double inv_r = 1.0 / std::sqrt(r_sq);
+
+                const double inv_r_sq = inv_r * inv_r; //shift to nanometers
+                const double inv_r_sq6 = inv_r_sq * inv_r_sq * inv_r_sq * 1000000.0;
                 const double inv_r_sq12 = inv_r_sq6 * inv_r_sq6;
 
-                const double vdw_energy_temp = (pair.c12 * inv_r_sq12 - pair.c6 * inv_r_sq6) / 4.184;
-                const double coul_energy_temp = pair.qq * sqrt(inv_r_sq)/ 4.184;
+                const double vdw_energy_temp = (pair.c12 * inv_r_sq12 - pair.c6 * inv_r_sq6);
+                const double coul_energy_temp = pair.qq * inv_r * 10.0;
 
                 double eef1_sb_energy_temp = 0.0;
 
@@ -426,7 +437,7 @@ public:
                 if ((pair.do_eef1) && (r_sq < 81.0)) {
 
                     // From Sandro's code
-                    const double r_ij = std::sqrt(r_sq);
+                    const double r_ij = r_sq * inv_r;
 
                     double R_min_i = pair.R_vdw_1;
                     double R_min_j = pair.R_vdw_2;
@@ -446,15 +457,17 @@ public:
                     if (bin_ij < 350) exp_ij = charmm_parser::exp_eef1[bin_ij];
                     if (bin_ji < 350) exp_ji = charmm_parser::exp_eef1[bin_ji];
 
-                    double cont_ij = -pair.fac_12*exp_ij/r_sq;
-                    double cont_ji = -pair.fac_21*exp_ji/r_sq;
+                    double cont_ij = -pair.fac_12*exp_ij * inv_r_sq;
+                    double cont_ji = -pair.fac_21*exp_ji * inv_r_sq;
 
                     // Add to local EEF1-SB energy
                     eef1_sb_energy_temp += cont_ij + cont_ji;
 
                 }
                 // Add diatomic contribution to interaction energy of the residue pair ij.
-                this->cached_residue_pairs[i][j].energy_new += vdw_energy_temp + coul_energy_temp + eef1_sb_energy_temp;
+                this->cached_residue_pairs[i][j].energy_new += vdw_energy_temp/4.184
+                                                            + coul_energy_temp/4.184
+                                                            + eef1_sb_energy_temp;
             }
 
             // Compute delta energy for the residue pair ij (I.e. subtract old, add new)
@@ -464,75 +477,7 @@ public:
         }
 
         // Add delta energy for the move to total energy.
-        total_energy += delta_energy_local;
-
-
-
-        double check_energy = 0.0;
-
-        for (int i = 0; i < this->chain->size(); i++) {
-            for (int j = 0; j < this->chain->size(); j++) {
-
-                double matrix_energy = 0.0;
-                // Sum over all interactions in that matrix element
-                for (unsigned int k = 0; k < this->cached_residue_pairs[i][j].pairs.size(); k++) {
-
-                    topology::NonBondedPair pair = this->cached_residue_pairs[i][j].pairs[k];
-
-                    const double r_sq = ((pair.atom1)->position - (pair.atom2)->position).norm_squared();
-                    const double inv_r_sq = 100.0 / (r_sq); //shift to nanometers
-                    const double inv_r_sq6 = inv_r_sq * inv_r_sq * inv_r_sq;
-                    const double inv_r_sq12 = inv_r_sq6 * inv_r_sq6;
-                    const double vdw_energy_temp = (pair.c12 * inv_r_sq12 - pair.c6 * inv_r_sq6) / 4.184;
-
-                    const double coul_energy_temp = pair.qq * sqrt(inv_r_sq)/ 4.184;
-
-                    double eef1_sb_energy_temp = 0.0;
-
-                    // If the pair has a contribution to EEF1-SB
-                    if ((pair.do_eef1) && (r_sq < 81.0)) {
-
-                        // From Sandro's code
-                        const double r_ij = std::sqrt(r_sq);
-
-                        double R_min_i = pair.R_vdw_1;
-                        double R_min_j = pair.R_vdw_2;
-
-                        double lambda_i = pair.lambda1;
-                        double lambda_j = pair.lambda2;
-
-                        const double arg_ij = std::fabs((r_ij - R_min_i)/lambda_i);
-                        const double arg_ji = std::fabs((r_ij - R_min_j)/lambda_j);
-
-                        int bin_ij = int(arg_ij*100);
-                        int bin_ji = int(arg_ji*100);
-
-                        double exp_ij = 0.0;
-                        double exp_ji = 0.0;
-
-                        if (bin_ij < 350) exp_ij = charmm_parser::exp_eef1[bin_ij];
-                        if (bin_ji < 350) exp_ji = charmm_parser::exp_eef1[bin_ji];
-
-                        double cont_ij = -pair.fac_12*exp_ij/r_sq;
-                        double cont_ji = -pair.fac_21*exp_ji/r_sq;
-
-                        // Add to local EEF1-SB energy
-                        eef1_sb_energy_temp += cont_ij + cont_ji;
-
-                    }
-                    // Add to matrix element
-                    matrix_energy += vdw_energy_temp + coul_energy_temp + eef1_sb_energy_temp;
-
-                }
-
-                std::cout << "ASC Delta matrix ij " << i << "  " << j << "  " <<  matrix_energy - this->cached_residue_pairs[i][j].energy_new << std::endl;
-                check_energy += matrix_energy;
-            }
-        }
-
-
-        std::cout << "INDEX  " << start_index  << "   " << end_index << std::endl;
-
+        this->total_energy += delta_energy_local;
 
         // Return energy.
         return total_energy;

@@ -111,8 +111,8 @@ public:
                }
           }
 
-          // printf("           vdW-14 E = %12.4f kJ/mol\n", vdw14_energy);
-          // printf("           vdW-SR E = %12.4f kJ/mol\n", vdw_energy);
+          printf("           vdW-14 E = %12.4f kJ/mol\n", vdw14_energy);
+          printf("           vdW-SR E = %12.4f kJ/mol\n", vdw_energy);
 
           return (vdw14_energy + vdw_energy) / 4.184;
      }

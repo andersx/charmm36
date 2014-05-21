@@ -37,10 +37,11 @@ namespace topology {
 using namespace phaistos;
 
 
+
 std::vector<CmapPair> generate_cmap_pairs(ChainFB *chain) {
 
     using namespace definitions;
-    using namespace gromacs_parser;
+    // using namespace gromacs_parser;
 
     std::vector<CmapPair> cmap_pairs;
 
@@ -54,11 +55,11 @@ std::vector<CmapPair> generate_cmap_pairs(ChainFB *chain) {
           if (res->terminal_status == definitions::NTERM) continue;
           if (res->terminal_status == definitions::CTERM) continue;
 
-          std::string type1 = get_charmm36_atom_type((*(res->get_neighbour(-1)))[C]);
-          std::string type2 = get_charmm36_atom_type((*res)[N]);
-          std::string type3 = get_charmm36_atom_type((*res)[CA]);
-          std::string type4 = get_charmm36_atom_type((*res)[C]);
-          std::string type5 = get_charmm36_atom_type((*(res->get_neighbour(+1)))[N]);
+          std::string type1 = charmm_parser::get_charmm36_atom_type((*(res->get_neighbour(-1)))[C]);
+          std::string type2 = charmm_parser::get_charmm36_atom_type((*res)[N]);
+          std::string type3 = charmm_parser::get_charmm36_atom_type((*res)[CA]);
+          std::string type4 = charmm_parser::get_charmm36_atom_type((*res)[C]);
+          std::string type5 = charmm_parser::get_charmm36_atom_type((*(res->get_neighbour(+1)))[N]);
 
           // std::cout << type1<< std::endl;
           // std::cout << type2<< std::endl;
@@ -275,8 +276,8 @@ std::vector<NonBondedPair> generate_non_bonded_pairs_cached(ChainFB *chain,
 
         Atom *atom1 = &*it1;
 
-        std::string atom_type1 = gromacs_parser::get_charmm36_atom_type(atom1);
-        double atom_charge1 = gromacs_parser::get_charmm36_atom_charge(atom1);
+        std::string atom_type1 = charmm_parser::get_charmm36_atom_type(atom1);
+        double atom_charge1 = charmm_parser::get_charmm36_atom_charge(atom1);
 
         NonBondedParameter parameter1 = get_non_bonded_parameter(atom_type1, non_bonded_parameters);
 
@@ -295,8 +296,8 @@ std::vector<NonBondedPair> generate_non_bonded_pairs_cached(ChainFB *chain,
             int d = chain_distance<ChainFB>(atom1,atom2);
             // int test_atom_index = 295;
 
-            std::string atom_type2 = gromacs_parser::get_charmm36_atom_type(atom2);
-            double atom_charge2 = gromacs_parser::get_charmm36_atom_charge(atom2);
+            std::string atom_type2 = charmm_parser::get_charmm36_atom_type(atom2);
+            double atom_charge2 = charmm_parser::get_charmm36_atom_charge(atom2);
 
 
 
@@ -365,6 +366,7 @@ std::vector<NonBondedPair> generate_non_bonded_pairs_cached(ChainFB *chain,
     return non_bonded_pairs;
 }
 
+
 std::vector<NonBondedPair> generate_non_bonded_pairs(ChainFB *chain,
                     std::vector<NonBondedParameter> non_bonded_parameters,
                     std::vector<NonBonded14Parameter> non_bonded_14_parameters,
@@ -384,15 +386,13 @@ std::vector<NonBondedPair> generate_non_bonded_pairs(ChainFB *chain,
 
         Atom *atom1 = &*it1;
 
-        std::string atom_type1 = gromacs_parser::get_charmm36_atom_type(atom1);
-        double atom_charge1 = gromacs_parser::get_charmm36_atom_charge(atom1);
+        //std::string atom_type1 = gromacs_parser::get_charmm36_atom_type(atom1);
+        //double atom_charge1 = gromacs_parser::get_charmm36_atom_charge(atom1);
+
+        std::string atom_type1 = charmm_parser::get_charmm36_atom_type(atom1);
+        double atom_charge1 = charmm_parser::get_charmm36_atom_charge(atom1);
 
         NonBondedParameter parameter1 = get_non_bonded_parameter(atom_type1, non_bonded_parameters);
-
-        // printf("ASC: XYZ = %7.3f  %7.3f %7.3f     q = %5.3f      ", // ix*10.0, iy*10.0, iz*10.0, charge[i]);
-        //     (atom1->position)[0], (atom1->position)[1], (atom1->position)[2], atom_charge1);
-
-        // std::cout << atom1 << std::endl;
 
 
         for (AtomIterator<ChainFB, definitions::ALL> it2(*chain); !it2.end(); ++it2) {
@@ -404,8 +404,8 @@ std::vector<NonBondedPair> generate_non_bonded_pairs(ChainFB *chain,
             int d = chain_distance<ChainFB>(atom1,atom2);
             // int test_atom_index = 295;
 
-            std::string atom_type2 = gromacs_parser::get_charmm36_atom_type(atom2);
-            double atom_charge2 = gromacs_parser::get_charmm36_atom_charge(atom2);
+            std::string atom_type2 = charmm_parser::get_charmm36_atom_type(atom2);
+            double atom_charge2 = charmm_parser::get_charmm36_atom_charge(atom2);
 
 
 
@@ -595,10 +595,10 @@ std::vector<DihedralAngleType9> generate_dihedral_pairs(ChainFB *chain,
 
                         // std::cout << atom1 << atom2 << atom3 << atom4 << std::endl;
 
-                        std::string type1 = gromacs_parser::get_charmm36_atom_type(atom1);
-                        std::string type2 = gromacs_parser::get_charmm36_atom_type(atom2);
-                        std::string type3 = gromacs_parser::get_charmm36_atom_type(atom3);
-                        std::string type4 = gromacs_parser::get_charmm36_atom_type(atom4);
+                        std::string type1 = charmm_parser::get_charmm36_atom_type(atom1);
+                        std::string type2 = charmm_parser::get_charmm36_atom_type(atom2);
+                        std::string type3 = charmm_parser::get_charmm36_atom_type(atom3);
+                        std::string type4 = charmm_parser::get_charmm36_atom_type(atom4);
 
                         for (unsigned int i = 0; i < dihedral_angle_type_9_parameters.size(); i++) {
 
@@ -736,7 +736,7 @@ std::vector<BondedPair> generate_bonded_pairs(ChainFB *chain,
 
     for (AtomIterator<ChainFB,definitions::ALL> it1(*(chain)); !it1.end(); ++it1) {
         Atom *atom1 = &*it1;
-        std::string type1 = gromacs_parser::get_charmm36_atom_type(atom1);
+        std::string type1 = charmm_parser::get_charmm36_atom_type(atom1);
 
         for (CovalentBondIterator<ChainFB> it2(atom1, CovalentBondIterator<ChainFB>::DEPTH_1_ONLY);
             !it2.end(); ++it2) {
@@ -745,7 +745,7 @@ std::vector<BondedPair> generate_bonded_pairs(ChainFB *chain,
             if (atom1->residue->index < atom2->residue->index ||
                 (atom1->residue->index == atom2->residue->index && atom1->index < atom2->index)) {
 
-                std::string type2 = gromacs_parser::get_charmm36_atom_type(atom2);
+                std::string type2 = charmm_parser::get_charmm36_atom_type(atom2);
 
                 for (unsigned int i = 0; i < bonded_pair_parameters.size(); i++) {
 
@@ -826,12 +826,12 @@ std::vector<AngleBendPair> generate_angle_bend_pairs(ChainFB *chain,
     for (AtomIterator<ChainFB,definitions::ALL> it1(*(chain)); !it1.end(); ++it1) {
         Atom *atom2 = &*it1;
 
-        std::string type2 = gromacs_parser::get_charmm36_atom_type(atom2);
+        std::string type2 = charmm_parser::get_charmm36_atom_type(atom2);
         for (CovalentBondIterator<ChainFB> it2(atom2, CovalentBondIterator<ChainFB>::DEPTH_1_ONLY);
             !it2.end(); ++it2) {
 
             Atom *atom1 = &*it2;
-            std::string type1 = gromacs_parser::get_charmm36_atom_type(atom1);
+            std::string type1 = charmm_parser::get_charmm36_atom_type(atom1);
 
             CovalentBondIterator<ChainFB> it3(it2);
             // Fancy way to discard it3 = it1
@@ -839,7 +839,7 @@ std::vector<AngleBendPair> generate_angle_bend_pairs(ChainFB *chain,
             for (; !it3.end(); ++it3) {
                 Atom *atom3 = &*it3;
 
-                std::string type3 = gromacs_parser::get_charmm36_atom_type(atom3);
+                std::string type3 = charmm_parser::get_charmm36_atom_type(atom3);
 
                 bool found_this_parameter = false;
 
@@ -931,10 +931,10 @@ Imptor atoms_to_imptor(std::vector<Atom*> atoms,
     imptor.atom3 = atoms[2];
     imptor.atom4 = atoms[3];
 
-    std::string type1 = gromacs_parser::get_charmm36_atom_type(atoms[0]);
-    std::string type2 = gromacs_parser::get_charmm36_atom_type(atoms[1]);
-    std::string type3 = gromacs_parser::get_charmm36_atom_type(atoms[2]);
-    std::string type4 = gromacs_parser::get_charmm36_atom_type(atoms[3]);
+    std::string type1 = charmm_parser::get_charmm36_atom_type(atoms[0]);
+    std::string type2 = charmm_parser::get_charmm36_atom_type(atoms[1]);
+    std::string type3 = charmm_parser::get_charmm36_atom_type(atoms[2]);
+    std::string type4 = charmm_parser::get_charmm36_atom_type(atoms[3]);
 
     bool found_parameter = false;
 

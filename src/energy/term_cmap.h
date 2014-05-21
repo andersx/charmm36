@@ -91,17 +91,16 @@ public:
 
           for (unsigned int i = 0; i < this->cmap_pairs.size(); i++) {
 
-              const int residue_index = (this->cmap_pairs)[i].residue_index;
-              const unsigned int cmap_type_index = (this->cmap_pairs)[i].cmap_type_index;
-              // const unsigned int cmap_type_index = 0;
-
-              const double phi = (*(this->chain))[residue_index].get_phi();
-              const double psi = (*(this->chain))[residue_index].get_psi();
+               const int residue_index = (this->cmap_pairs)[i].residue_index;
+               const unsigned int cmap_type_index = (this->cmap_pairs)[i].cmap_type_index;
+               const double phi = (*(this->chain))[residue_index].get_phi();
+               const double psi = (*(this->chain))[residue_index].get_psi();
 
                cmap_energy += kernel::cmap_energy(phi, psi, cmap_type_index, this->cmapdata);
 
-               // printf("             CMAP E = %12.4f kJ/mol\n", cmap_energy);
           }
+
+          printf("             CMAP E = %12.4f kJ/mol\n", cmap_energy);
 
           return cmap_energy / 4.184;
      }

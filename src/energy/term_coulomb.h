@@ -104,8 +104,8 @@ public:
                }
           }
 
-          // printf("          Coul-14 E = %12.4f kJ/mol\n", coul14_energy);
-          // printf("          Coul-SR E = %12.4f kJ/mol\n", coul_energy);
+          printf("          Coul-14 E = %12.4f kJ/mol\n", coul14_energy);
+          printf("          Coul-SR E = %12.4f kJ/mol\n", coul_energy);
 
           return (coul14_energy + coul_energy) / 4.184;
 

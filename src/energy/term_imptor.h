@@ -98,7 +98,7 @@ public:
 
 
 
-          // printf("           imptor E = %12.4f kJ/mol\n", energy_imptor);
+          printf("           imptor E = %12.4f kJ/mol\n", energy_imptor);
 
           return energy_imptor / 4.184;
      }

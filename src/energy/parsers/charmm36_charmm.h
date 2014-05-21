@@ -135,7 +135,7 @@ std::string get_charmm36_atom_type(phaistos::Atom *atom) {
         atom_map[HB2] = "HA2";
         atom_map[HB3] = "HA2";
         atom_map[SG]  = "S";
-        atom_map[HG1] = "HS";
+        atom_map[HG] = "HS";
         atom_map[C]   = "C";
         atom_map[O]   = "O";
         break;
@@ -562,6 +562,427 @@ std::string get_charmm36_atom_type(phaistos::Atom *atom) {
 
 }
 
+double get_charmm36_atom_charge(phaistos::Atom *atom) {
+
+    using namespace phaistos;
+    using namespace definitions;
+
+    Residue *res = atom->residue;
+    std::map<AtomEnum, double> atom_map;
+
+    switch (res->residue_type) {
+    case definitions::ALA:
+        atom_map[N]   = -0.47;
+        atom_map[H]   = 0.31;
+        atom_map[CA]  = 0.07;
+        atom_map[HA]  = 0.09;
+        atom_map[CB]  = -0.27;
+        atom_map[HB1] = 0.09;
+        atom_map[HB2] = 0.09;
+        atom_map[HB3] = 0.09;
+        atom_map[C]   = 0.51;
+        atom_map[O]   = -0.51;
+        break;
+
+    case ARG:
+        atom_map[N]   = -0.47;
+        atom_map[H]   = 0.31;
+        atom_map[CA]  = 0.07;
+        atom_map[HA]  = 0.09;
+        atom_map[CB]  = -0.18;
+        atom_map[HB2] = 0.09;
+        atom_map[HB3] = 0.09;
+        atom_map[CG]  = -0.18;
+        atom_map[HG2] = 0.09;
+        atom_map[HG3] = 0.09;
+        atom_map[CD]  = 0.20;
+        atom_map[HD2] = 0.09;
+        atom_map[HD3] = 0.09;
+        atom_map[NE]  = -0.70;
+        atom_map[HE]  = 0.44;
+        atom_map[CZ]  = 0.64;
+        atom_map[NH1] = -0.80;
+        atom_map[HH11]= 0.46;
+        atom_map[HH12]= 0.46;
+        atom_map[NH2] = -0.80;
+        atom_map[HH21]= 0.46;
+        atom_map[HH22]= 0.46;
+        atom_map[C]   = 0.51;
+        atom_map[O]   = -0.51;
+        break;
+
+    case ASN:
+        atom_map[N]   =  -0.47;
+        atom_map[H]   =  0.31;
+        atom_map[CA]  =  0.07;
+        atom_map[HA]  =  0.09;
+        atom_map[CB]  =  -0.18;
+        atom_map[HB2] =  0.09;
+        atom_map[HB3] =  0.09;
+        atom_map[CG]  =  0.55;
+        atom_map[OD1] =  -0.55;
+        atom_map[ND2] =  -0.62;
+        atom_map[HD21]=  0.32;
+        atom_map[HD22]=  0.30;
+        atom_map[C]   =  0.51;
+        atom_map[O]   =  -0.51;
+        break;
+
+    case ASP:
+        atom_map[N]   = -0.47;
+        atom_map[H]   = 0.31;
+        atom_map[CA]  = 0.07;
+        atom_map[HA]  = 0.09;
+        atom_map[CB]  = -0.28;
+        atom_map[HB2] = 0.09;
+        atom_map[HB3] = 0.09;
+        atom_map[CG]  = 0.62;
+        atom_map[OD1] = -0.76;
+        atom_map[OD2] = -0.76;
+        atom_map[C]   = 0.51;
+        atom_map[O]   = -0.51;
+        break;
+
+    case CYS:
+        atom_map[N]   = -0.47;
+        atom_map[H]   = 0.31;
+        atom_map[CA]  = 0.07;
+        atom_map[HA]  = 0.09;
+        atom_map[CB]  = -0.11;
+        atom_map[HB2] = 0.09;
+        atom_map[HB3] = 0.09;
+        atom_map[SG]  = -0.23;
+        atom_map[HG]  = 0.16;
+        atom_map[C]   = 0.51;
+        atom_map[O]   = -0.51;
+        break;
+
+    case GLN:
+        atom_map[N]    = -0.47;
+        atom_map[H]    = 0.31;
+        atom_map[CA]   = 0.07;
+        atom_map[HA]   = 0.09;
+        atom_map[CB]   = -0.18;
+        atom_map[HB2]  = 0.09;
+        atom_map[HB3]  = 0.09;
+        atom_map[CG]   = -0.18;
+        atom_map[HG2]  = 0.09;
+        atom_map[HG3]  = 0.09;
+        atom_map[CD]   = 0.55;
+        atom_map[OE1]  = -0.55;
+        atom_map[NE2]  = -0.62;
+        atom_map[HE21] =  0.32;
+        atom_map[HE22] =  0.30;
+        atom_map[C]    = 0.51;
+        atom_map[O]    = -0.51;
+        break;
+
+    case GLU:
+        atom_map[N]   = -0.47;
+        atom_map[H]   = 0.31;
+        atom_map[CA]  = 0.07;
+        atom_map[HA]  = 0.09;
+        atom_map[CB]  = -0.18;
+        atom_map[HB2] = 0.09;
+        atom_map[HB3] = 0.09;
+        atom_map[CG]  = -0.28;
+        atom_map[HG2] = 0.09;
+        atom_map[HG3] = 0.09;
+        atom_map[CD]  = 0.62;
+        atom_map[OE1] = -0.76;
+        atom_map[OE2] = -0.76;
+        atom_map[C]   = 0.51;
+        atom_map[O]   = -0.51;
+        break;
+
+    case GLY:
+        atom_map[N]    = -0.47;
+        atom_map[H]    = 0.31;
+        atom_map[CA]   = -0.02;
+        atom_map[HA2]  = 0.09;
+        atom_map[HA3]  = 0.09;
+        atom_map[C]    = 0.51;
+        atom_map[O]    = -0.51;
+        break;
+
+    case HIS:
+        atom_map[N]    = -0.47;
+        atom_map[H]    = 0.31;
+        atom_map[CA]   = 0.07;
+        atom_map[HA]   = 0.09;
+        atom_map[CB]   = -0.05;
+        atom_map[HB2]  = 0.09;
+        atom_map[HB3]  = 0.09;
+        atom_map[CD2]  = 0.19;
+        atom_map[HD2]  = 0.13;
+        atom_map[CG]   = 0.19;
+        atom_map[NE2]  = -0.51;
+        atom_map[HE2]  = 0.44;
+        atom_map[ND1]  = -0.51;
+        atom_map[HD1]  = 0.44;
+        atom_map[CE1]  = 0.32;
+        atom_map[HE1]  = 0.18;
+        atom_map[C]    = 0.51;
+        atom_map[O]    = -0.51;
+        break;
+
+    case ILE:
+        atom_map[N]    = -0.47;
+        atom_map[H]    = 0.31;
+        atom_map[CA]   = 0.07;
+        atom_map[HA]   = 0.09;
+        atom_map[CB]   = -0.09;
+        atom_map[HB]   = 0.09;
+        atom_map[CG2]  = -0.27;
+        atom_map[HG21] =  0.09;
+        atom_map[HG22] =  0.09;
+        atom_map[HG23] =  0.09;
+        atom_map[CG1]  = -0.18;
+        atom_map[HG12] =  0.09;
+        atom_map[HG13] =  0.09;
+        atom_map[CD1]  = -0.27;
+        atom_map[HD11] = 0.09;
+        atom_map[HD12] = 0.09;
+        atom_map[HD13] = 0.09;
+        atom_map[C]    = 0.51;
+        atom_map[O]    = -0.51;
+        break;
+
+    case LEU:
+        atom_map[N]    = -0.47;
+        atom_map[H]    = 0.31;
+        atom_map[CA]   = 0.07;
+        atom_map[HA]   = 0.09;
+        atom_map[CB]   = -0.18;
+        atom_map[HB2]  = 0.09;
+        atom_map[HB3]  = 0.09;
+        atom_map[CG]   = -0.09;
+        atom_map[HG]   = 0.09;
+        atom_map[CD1]  = -0.27;
+        atom_map[HD11] = 0.09;
+        atom_map[HD12] = 0.09;
+        atom_map[HD13] = 0.09;
+        atom_map[CD2]  = -0.27;
+        atom_map[HD21] = 0.09;
+        atom_map[HD22] = 0.09;
+        atom_map[HD23] = 0.09;
+        atom_map[C]    = 0.51;
+        atom_map[O]    = -0.51;
+        break;
+
+    case LYS:
+        atom_map[N]    = -0.47;
+        atom_map[H]    = 0.31;
+        atom_map[CA]   = 0.07;
+        atom_map[HA]   = 0.09;
+        atom_map[CB]   = -0.18;
+        atom_map[HB2]  = 0.09;
+        atom_map[HB3]  = 0.09;
+        atom_map[CG]   = -0.18;
+        atom_map[HG2]  = 0.09;
+        atom_map[HG3]  = 0.09;
+        atom_map[CD]   = -0.18;
+        atom_map[HD2]  = 0.09;
+        atom_map[HD3]  = 0.09;
+        atom_map[CE]   = 0.21;
+        atom_map[HE2]  = 0.05;
+        atom_map[HE3]  = 0.05;
+        atom_map[NZ]   = -0.30;
+        atom_map[HZ1]  = 0.33;
+        atom_map[HZ2]  = 0.33;
+        atom_map[HZ3]  = 0.33;
+        atom_map[C]    = 0.51;
+        atom_map[O]    = -0.51;
+        break;
+
+    case MET:
+        atom_map[N]    = -0.47;
+        atom_map[H]    = 0.31;
+        atom_map[CA]   = 0.07;
+        atom_map[HA]   = 0.09;
+        atom_map[CB]   = -0.18;
+        atom_map[HB2]  = 0.09;
+        atom_map[HB3]  = 0.09;
+        atom_map[CG]   = -0.14;
+        atom_map[HG2]  = 0.09;
+        atom_map[HG3]  = 0.09;
+        atom_map[SD]   = -0.09;
+        atom_map[CE]   = -0.22;
+        atom_map[HE1]  = 0.09;
+        atom_map[HE2]  = 0.09;
+        atom_map[HE3]  = 0.09;
+        atom_map[C]    = 0.51;
+        atom_map[O]    = -0.51;
+        break;
+
+    case PHE:
+        atom_map[N]    = -0.47;
+        atom_map[H]    = 0.31;
+        atom_map[CA]   = 0.07;
+        atom_map[HA]   = 0.09;
+        atom_map[CB]   = -0.18;
+        atom_map[HB2]  = 0.09;
+        atom_map[HB3]  = 0.09;
+        atom_map[CG]   = 0.00;
+        atom_map[CD1]  = -0.115;
+        atom_map[HD1]  = 0.115;
+        atom_map[CE1]  = -0.115;
+        atom_map[HE1]  = 0.115;
+        atom_map[CZ]   = -0.115;
+        atom_map[HZ]   = 0.115;
+        atom_map[CD2]  = -0.115;
+        atom_map[HD2]  = 0.115;
+        atom_map[CE2]  = -0.115;
+        atom_map[HE2]  = 0.115;
+        atom_map[C]    = 0.51;
+        atom_map[O]    = -0.51;
+        break;
+
+    case PRO:
+        atom_map[N]    = -0.29;
+        atom_map[CD]   = 0.00;
+        atom_map[HD2]  = 0.09;
+        atom_map[HD3]  = 0.09;
+        atom_map[CA]   = 0.02;
+        atom_map[HA]   = 0.09;
+        atom_map[CB]   = -0.18;
+        atom_map[HB2]  = 0.09;
+        atom_map[HB3]  = 0.09;
+        atom_map[CG]   = -0.18;
+        atom_map[HG2]  = 0.09;
+        atom_map[HG3]  = 0.09;
+        atom_map[C]    = 0.51;
+        atom_map[O]    = -0.51;
+        break;
+
+    case SER:
+        atom_map[N]    = -0.47;
+        atom_map[H]    = 0.31;
+        atom_map[CA]   = 0.07;
+        atom_map[HA]   = 0.09;
+        atom_map[CB]   = 0.05;
+        atom_map[HB2]  = 0.09;
+        atom_map[HB3]  = 0.09;
+        atom_map[OG]   = -0.66;
+        atom_map[HG]   = 0.43;
+        atom_map[C]    = 0.51;
+        atom_map[O]    = -0.51;
+        break;
+
+    case THR:
+        atom_map[N]    = -0.47;
+        atom_map[H]    = 0.31;
+        atom_map[CA]   = 0.07;
+        atom_map[HA]   = 0.09;
+        atom_map[CB]   = 0.14;
+        atom_map[HB]   = 0.09;
+        atom_map[OG1]  = -0.66;
+        atom_map[HG1]  = 0.43;
+        atom_map[CG2]  = -0.27;
+        atom_map[HG21] = 0.09;
+        atom_map[HG22] = 0.09;
+        atom_map[HG23] = 0.09;
+        atom_map[C]    = 0.51;
+        atom_map[O]    = -0.51;
+        break;
+
+    case TRP:
+        atom_map[N]    = -0.47;
+        atom_map[H]    = 0.31;
+        atom_map[CA]   = 0.07;
+        atom_map[HA]   = 0.09;
+        atom_map[CB]   = -0.18;
+        atom_map[HB2]  = 0.09;
+        atom_map[HB3]  = 0.09;
+        atom_map[CG]   = -0.03;
+        atom_map[CD1]  = 0.035;
+        atom_map[HD1]  = 0.115;
+        atom_map[NE1]  = -0.61;
+        atom_map[HE1]  = 0.38;
+        atom_map[CE2]  = 0.13;
+        atom_map[CD2]  = -0.02;
+        atom_map[CE3]  = -0.115;
+        atom_map[HE3]  = 0.115;
+        atom_map[CZ3]  = -0.115;
+        atom_map[HZ3]  = 0.115;
+        atom_map[CZ2]  = -0.115;
+        atom_map[HZ2]  = 0.115;
+        atom_map[CH2]  = -0.115;
+        atom_map[HH2]  = 0.115;
+        atom_map[C]    = 0.51;
+        atom_map[O]    = -0.51;
+        break;
+
+    case TYR:
+        atom_map[N]    = -0.47;
+        atom_map[H]    = 0.31;
+        atom_map[CA]   = 0.07;
+        atom_map[HA]   = 0.09;
+        atom_map[CB]   = -0.18;
+        atom_map[HB2]  = 0.09;
+        atom_map[HB3]  = 0.09;
+        atom_map[CG]   = 0.00;
+        atom_map[CD1]  = -0.115;
+        atom_map[HD1]  = 0.115;
+        atom_map[CE1]  = -0.115;
+        atom_map[HE1]  = 0.115;
+        atom_map[CZ]   = 0.11;
+        atom_map[OH]   = -0.54;
+        atom_map[HH]   = 0.43;
+        atom_map[CD2]  = -0.115;
+        atom_map[HD2]  = 0.115;
+        atom_map[CE2]  = -0.115;
+        atom_map[HE2]  = 0.115;
+        atom_map[C]    = 0.51;
+        atom_map[O]    = -0.51;
+        break;
+
+    case VAL:
+        atom_map[N]    = -0.47;
+        atom_map[H]    = 0.31;
+        atom_map[CA]   = 0.07;
+        atom_map[HA]   = 0.09;
+        atom_map[CB]   = -0.09;
+        atom_map[HB]   = 0.09;
+        atom_map[CG1]  = -0.27;
+        atom_map[HG11] = 0.09;
+        atom_map[HG12] = 0.09;
+        atom_map[HG13] = 0.09;
+        atom_map[CG2]  = -0.27;
+        atom_map[HG21] = 0.09;
+        atom_map[HG22] = 0.09;
+        atom_map[HG23] = 0.09;
+        atom_map[C]    = 0.51;
+        atom_map[O]    = -0.51;
+        break;
+
+    default:
+        std::cout << "ASC: Unknown residue type: " << atom->residue << std::endl;
+        break;
+    };
+
+
+    if (atom->residue->terminal_status == NTERM) {
+        atom_map[N]    = -0.3;
+        atom_map[H1]   = 0.33;
+        atom_map[H2]   = 0.33;
+        atom_map[H3]   = 0.33;
+        atom_map[HA]   = 0.10;
+        atom_map[CA]   = 0.21;
+    }
+
+    if (atom->residue->terminal_status == CTERM) {
+        atom_map[C]    = 0.34;
+        atom_map[O]    = -0.67;
+        atom_map[OXT]  = -0.67;
+    }
+
+    if (atom_map.count(atom->atom_type) < 1)
+        std::cout << "ASC: NOT found atom: " << atom << std::endl;
+
+    return atom_map[atom->atom_type];
+
+}
 
 const double exp_eef1 [350] = {
           0.99998,0.99978,0.99938,0.99878,0.99798,0.99698,

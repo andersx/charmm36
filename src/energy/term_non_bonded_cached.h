@@ -364,21 +364,22 @@ public:
 
      }
 
-     // //! Newton's method to determine inverse square roots.
-     // inline double fast_inv_sqrt(double number) {
+     //! Newton's method to determine inverse square roots.
+     inline double fast_inv_sqrt(double number) {
 
-     //      long long i;
-     //      double x2, y;
-     //      const double threehalfs = 1.5;
-     //      x2 = number * 0.5;
-     //      y  = number;
-     //      i  = * ( long long * ) &y;
-     //      i  = 0x5fe6ec85e7de30da - ( i >> 1 );
-     //      y  = * ( double * ) &i;
-     //      y  = y * ( threehalfs - ( x2 * y * y ) );
-     //      y  = y * ( threehalfs - ( x2 * y * y ) );
-     //      return y;
-     // }
+          long long i;
+          double x2, y;
+          const double threehalfs = 1.5;
+          x2 = number * 0.5;
+          y  = number;
+          i  = * ( long long * ) &y;
+          // i  = 0x5fe6ec85e7de30da - ( i >> 1 );
+          i  = 0x5fe6eb50c7b537a9 - ( i >> 1 );
+          y  = * ( double * ) &i;
+          y  = y * ( threehalfs - ( x2 * y * y ) );
+          y  = y * ( threehalfs - ( x2 * y * y ) );
+          return y;
+     }
 
      //! Evaluate chain energy
      //! \param move_info object containing information about last move
@@ -421,8 +422,9 @@ public:
 
                 const double r_sq = ((pair.atom1)->position - (pair.atom2)->position).norm_squared();
 
-                // const double inv_r = fast_inv_sqrt(r_sq);
-                const double inv_r = 1.0 / std::sqrt(r_sq);
+                // Use fast_inv_sqrt for 15% speed increase.
+                const double inv_r = fast_inv_sqrt(r_sq);
+                // const double inv_r = 1.0 / std::sqrt(r_sq);
 
                 const double inv_r_sq = inv_r * inv_r; //shift to nanometers
                 const double inv_r_sq6 = inv_r_sq * inv_r_sq * inv_r_sq * 1000000.0;

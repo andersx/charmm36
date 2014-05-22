@@ -101,7 +101,8 @@ public:
 
           }
 
-          printf("     urey-bradley E = %12.4f kJ/mol\n", energy_sum);
+          printf("     urey-bradley E = %15.6f kJ/mol\n", energy_sum);
+          printf("     urey-bradley E = %15.6f kcal/mol\n", energy_sum / 4.184);
 
           return energy_sum / 4.184;
 

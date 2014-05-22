@@ -94,20 +94,54 @@ public:
               topology::NonBondedPair pair = non_bonded_pairs[i];
 
                const double r_sq = ((pair.atom1)->position - (pair.atom2)->position).norm_squared();
-               const double inv_r_sq = 100.0 / (r_sq); //shift to nanometers
-               const double coul_energy_temp = pair.qq * sqrt(inv_r_sq);
+
+               // This is the energy if no distance dependent di-electric constant is used.
+               // const double inv_r_sq = 100.0 / (r_sq); // 100.0 due to shift to nanometers
+               // const double coul_energy_temp = pair.qq * sqrt(inv_r_sq);
+
+               // Here a distance dependent dieelectric constant of eps_r = 1.5 * r is used.
+               // The factor of 10.0 here is because the pair.qq assumes distances in nanometers,
+               // while the factor of 1.5 in eps_r assumes that r is in angstrom.
+               const double coul_energy_temp = pair.qq / (r_sq * 1.5) * 10.0;
 
                if (pair.is_14_interaction) {
                     coul14_energy += coul_energy_temp;
+// printf("ASC: L14COL: %5d %5d %5d  r = %8.4f  XYZ = %8.4f %8.4f %8.4f   XYZ2 = %8.4f %8.4f %8.4f   q1 = %6.3f  q2 = %6.3f  qq = %7.3f  ecoul = %7.3f\n",
+// 0,0,0,
+// ((pair.atom1)->position - (pair.atom2)->position).norm(),
+// (pair.atom1)->position[0],
+// (pair.atom1)->position[1],
+// (pair.atom1)->position[2],
+// (pair.atom2)->position[0],
+// (pair.atom2)->position[1],
+// (pair.atom2)->position[2],
+// pair.q1, pair.q2, pair.qq, coul_energy_temp);
+
                } else {
                     coul_energy += coul_energy_temp;
+// printf("ASC: LnCOL: %5d %5d %5d  r = %8.4f  XYZ = %8.4f %8.4f %8.4f   XYZ2 = %8.4f %8.4f %8.4f   q1 = %6.3f  q2 = %6.3f  qq = %7.3f  ecoul = %7.3f\n",
+// 0,0,0,
+// ((pair.atom1)->position - (pair.atom2)->position).norm(),
+// (pair.atom1)->position[0],
+// (pair.atom1)->position[1],
+// (pair.atom1)->position[2],
+// (pair.atom2)->position[0],
+// (pair.atom2)->position[1],
+// (pair.atom2)->position[2],
+// pair.q1, pair.q2, pair.qq, coul_energy_temp);
                }
           }
 
-          printf("          Coul-14 E = %12.4f kJ/mol\n", coul14_energy);
-          printf("          Coul-SR E = %12.4f kJ/mol\n", coul_energy);
+          const double total_energy = (coul14_energy + coul_energy) / 4.184;
 
-          return (coul14_energy + coul_energy) / 4.184;
+          printf("          Coul-14 E = %15.6f kJ/mol\n", coul14_energy);
+          printf("          Coul-14 E = %15.6f kcal/mol\n", coul14_energy/4.184);
+          printf("          Coul-SR E = %15.6f kJ/mol\n", coul_energy);
+          printf("          Coul-SR E = %15.6f kcal/mol\n", coul_energy/4.184);
+          printf("       Coul-total E = %15.6f kJ/mol\n", total_energy * 4.184);
+          printf("       Coul-total E = %15.6f kcal/mol\n", total_energy);
+
+          return total_energy;
 
      }
 };

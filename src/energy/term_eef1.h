@@ -303,8 +303,8 @@ public:
 
           }
 
-          // printf("          EEF1-SB E = %12.4f kJ/mol\n", energy_sum * 4.184);
-          // printf("          EEF1-SB E = %12.4f kcal/mol\n", energy_sum);
+          printf("          EEF1-SB E = %15.6f kJ/mol\n", energy_sum * 4.184);
+          printf("          EEF1-SB E = %15.6f kcal/mol\n", energy_sum);
           return energy_sum;
      }
 

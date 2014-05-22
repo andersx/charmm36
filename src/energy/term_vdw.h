@@ -111,10 +111,17 @@ public:
                }
           }
 
-          printf("           vdW-14 E = %12.4f kJ/mol\n", vdw14_energy);
-          printf("           vdW-SR E = %12.4f kJ/mol\n", vdw_energy);
+          const double total_energy = (vdw14_energy + vdw_energy) / 4.184;
 
-          return (vdw14_energy + vdw_energy) / 4.184;
+          printf("           vdW-14 E = %15.6f kJ/mol\n", vdw14_energy);
+          printf("           vdW-14 E = %15.6f kcal/mol\n", vdw14_energy / 4.184);
+          printf("           vdW-SR E = %15.6f kJ/mol\n", vdw_energy);
+          printf("           vdW-SR E = %15.6f kcal/mol\n", vdw_energy / 4.184);
+          printf("        vdW-total E = %15.6f kJ/mol\n", total_energy * 4.184);
+          printf("        vdW-total E = %15.6f kcal/mol\n", total_energy);
+
+          return total_energy;
+
      }
 };
 

@@ -255,8 +255,8 @@ std::string get_charmm36_atom_type(phaistos::Atom *atom) {
             atom_map[NE2]  = "NR1";
             atom_map[HE2]  = "H";
             atom_map[ND1]  = "NR2";
-            atom_map[CE1]  = "CPH1";
-            atom_map[HE1]  = "HR3";
+            atom_map[CE1]  = "CPH2";
+            atom_map[HE1]  = "HR1";
             atom_map[C]    = "C";
             atom_map[O]    = "O";
         }
@@ -641,6 +641,25 @@ double get_charmm36_atom_charge(phaistos::Atom *atom) {
         atom_map[OD2] = -0.76;
         atom_map[C]   = 0.51;
         atom_map[O]   = -0.51;
+
+        if (res->has_atom(HD1)){
+            atom_map[CB]  = -0.21;
+            atom_map[HB2] = 0.09;
+            atom_map[HB3] = 0.09;
+            atom_map[CG]  = 0.75;
+            atom_map[OD1] = -0.61;
+            atom_map[OD2] = -0.55;
+            atom_map[HD1] = 0.44;
+        }
+        if (res->has_atom(HD2)){
+            atom_map[CB]  = -0.21;
+            atom_map[HB2] = 0.09;
+            atom_map[HB3] = 0.09;
+            atom_map[CG]  = 0.75;
+            atom_map[OD1] = -0.55;
+            atom_map[OD2] = -0.61;
+            atom_map[HD2] = 0.44;
+        }
         break;
 
     case CYS:
@@ -693,6 +712,20 @@ double get_charmm36_atom_charge(phaistos::Atom *atom) {
         atom_map[OE2] = -0.76;
         atom_map[C]   = 0.51;
         atom_map[O]   = -0.51;
+        if (res->has_atom(HE1)){
+            atom_map[CG]  = -0.21;
+            atom_map[CD]  = 0.75;
+            atom_map[OE1] = -0.61;
+            atom_map[OE2] = -0.55;
+            atom_map[HE1] = 0.44;
+        }
+        if (res->has_atom(HE2)){
+            atom_map[CG]  = -0.21;
+            atom_map[CD]  = 0.75;
+            atom_map[OE1] = -0.55;
+            atom_map[OE2] = -0.61;
+            atom_map[HE2] = 0.44;
+        }
         break;
 
     case GLY:
@@ -706,24 +739,65 @@ double get_charmm36_atom_charge(phaistos::Atom *atom) {
         break;
 
     case HIS:
-        atom_map[N]    = -0.47;
-        atom_map[H]    = 0.31;
-        atom_map[CA]   = 0.07;
-        atom_map[HA]   = 0.09;
-        atom_map[CB]   = -0.05;
-        atom_map[HB2]  = 0.09;
-        atom_map[HB3]  = 0.09;
-        atom_map[CD2]  = 0.19;
-        atom_map[HD2]  = 0.13;
-        atom_map[CG]   = 0.19;
-        atom_map[NE2]  = -0.51;
-        atom_map[HE2]  = 0.44;
-        atom_map[ND1]  = -0.51;
-        atom_map[HD1]  = 0.44;
-        atom_map[CE1]  = 0.32;
-        atom_map[HE1]  = 0.18;
-        atom_map[C]    = 0.51;
-        atom_map[O]    = -0.51;
+        if ( (res->has_atom(HD1)) && (res->has_atom(HE2))) {
+        // HSP
+            atom_map[N]    = -0.470;
+            atom_map[H]    =  0.310;
+            atom_map[CA]   =  0.070;
+            atom_map[HA]   =  0.090;
+            atom_map[CB]   = -0.050;
+            atom_map[HB2]  =  0.090;
+            atom_map[HB3]  =  0.090;
+            atom_map[CD2]  =  0.190;
+            atom_map[HD2]  =  0.130;
+            atom_map[CG]   =  0.190;
+            atom_map[NE2]  = -0.510;
+            atom_map[HE2]  =  0.440;
+            atom_map[ND1]  = -0.510;
+            atom_map[HD1]  =  0.440;
+            atom_map[CE1]  =  0.320;
+            atom_map[HE1]  =  0.180;
+            atom_map[C]    =  0.510;
+            atom_map[O]    = -0.510;
+        } else if (res->has_atom(HD1)) {
+        // HSD
+            atom_map[N]    = -0.470;
+            atom_map[H]    =  0.310;
+            atom_map[CA]   =  0.070;
+            atom_map[HA]   =  0.090;
+            atom_map[CB]   = -0.090;
+            atom_map[HB2]  =  0.090;
+            atom_map[HB3]  =  0.090;
+            atom_map[CG]   = -0.050;
+            atom_map[ND1]  = -0.360;
+            atom_map[HD1]  =  0.320;
+            atom_map[CD2]  =  0.220;
+            atom_map[HD2]  =  0.100;
+            atom_map[CE1]  =  0.250;
+            atom_map[HE1]  =  0.130;
+            atom_map[NE2]  = -0.700;
+            atom_map[C]    =  0.510;
+            atom_map[O]    = -0.510;
+        } else {
+        // HSE
+            atom_map[N]    = -0.470;
+            atom_map[H]    =  0.310;
+            atom_map[CA]   =  0.070;
+            atom_map[HA]   =  0.090;
+            atom_map[CB]   = -0.080;
+            atom_map[HB2]  =  0.090;
+            atom_map[HB3]  =  0.090;
+            atom_map[CG]   =  0.220;
+            atom_map[CD2]  = -0.050;
+            atom_map[HD2]  =  0.090;
+            atom_map[NE2]  = -0.360;
+            atom_map[HE2]  =  0.320;
+            atom_map[ND1]  = -0.700;
+            atom_map[CE1]  =  0.250;
+            atom_map[HE1]  =  0.130;
+            atom_map[C]    =  0.510;
+            atom_map[O]    = -0.510;
+        }
         break;
 
     case ILE:
@@ -895,20 +969,20 @@ double get_charmm36_atom_charge(phaistos::Atom *atom) {
         atom_map[HB2]  = 0.09;
         atom_map[HB3]  = 0.09;
         atom_map[CG]   = -0.03;
-        atom_map[CD1]  = 0.035;
-        atom_map[HD1]  = 0.115;
-        atom_map[NE1]  = -0.61;
-        atom_map[HE1]  = 0.38;
-        atom_map[CE2]  = 0.13;
-        atom_map[CD2]  = -0.02;
-        atom_map[CE3]  = -0.115;
-        atom_map[HE3]  = 0.115;
-        atom_map[CZ3]  = -0.115;
-        atom_map[HZ3]  = 0.115;
-        atom_map[CZ2]  = -0.115;
-        atom_map[HZ2]  = 0.115;
-        atom_map[CH2]  = -0.115;
-        atom_map[HH2]  = 0.115;
+        atom_map[CD1]  = -0.150;
+        atom_map[HD1]  = 0.220;
+        atom_map[NE1]  = -0.510;
+        atom_map[HE1]  = 0.370;
+        atom_map[CE2]  = 0.240;
+        atom_map[CD2]  = 0.110;
+        atom_map[CE3]  = -0.250;
+        atom_map[HE3]  = 0.170;
+        atom_map[CZ3]  = -0.200;
+        atom_map[HZ3]  = 0.140;
+        atom_map[CZ2]  = -0.270;
+        atom_map[HZ2]  = 0.160;
+        atom_map[CH2]  = -0.140;
+        atom_map[HH2]  = 0.140;
         atom_map[C]    = 0.51;
         atom_map[O]    = -0.51;
         break;

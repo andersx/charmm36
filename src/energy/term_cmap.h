@@ -100,7 +100,8 @@ public:
 
           }
 
-          printf("             CMAP E = %12.4f kJ/mol\n", cmap_energy);
+          printf("             CMAP E = %15.6f kJ/mol\n", cmap_energy);
+          printf("             CMAP E = %15.6f kcal/mol\n", cmap_energy / 4.184);
 
           return cmap_energy / 4.184;
      }

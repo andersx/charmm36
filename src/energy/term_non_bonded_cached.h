@@ -404,6 +404,7 @@ public:
         // Local delta energy required for OpenMP.
         double delta_energy_local = 0.0;
 
+        const double ten_over_one_point_five = 10.0 / 1.5;
         // Loop over all pairs which must be recomputed
         #pragma omp parallel for reduction(+:delta_energy_local) schedule(static)
         for (unsigned int k = 0; k < this->cache_indexes.size(); k++) {
@@ -425,15 +426,15 @@ public:
 
                 // Use fast_inv_sqrt for 15% speed increase.
                 // const double inv_r = fast_inv_sqrt(r_sq);
-                const double inv_r = 1.0 / std::sqrt(r_sq);
+                // const double inv_r = 1.0 / std::sqrt(r_sq);
 
-                const double inv_r_sq = inv_r * inv_r; //shift to nanometers
+                const double inv_r_sq = 1.0 / r_sq; //shift to nanometers
                 const double inv_r_sq6 = inv_r_sq * inv_r_sq * inv_r_sq * 1000000.0;
                 const double inv_r_sq12 = inv_r_sq6 * inv_r_sq6;
 
                 const double vdw_energy_temp = (pair.c12 * inv_r_sq12 - pair.c6 * inv_r_sq6);
                 // const double coul_energy_temp = pair.qq * inv_r * 10.0;
-                const double coul_energy_temp = pair.qq / (r_sq * 1.5) * 10.0;
+                const double coul_energy_temp = pair.qq * inv_r_sq * ten_over_one_point_five;
 
                 double eef1_sb_energy_temp = 0.0;
 
@@ -441,7 +442,7 @@ public:
                 if ((pair.do_eef1) && (r_sq < 81.0)) {
 
                     // From Sandro's code
-                    const double r_ij = r_sq * inv_r;
+                    const double r_ij = std::sqrt(r_sq);
 
                     double R_min_i = pair.R_vdw_1;
                     double R_min_j = pair.R_vdw_2;

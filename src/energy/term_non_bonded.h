@@ -229,7 +229,8 @@ public:
                const double inv_r_sq12 = inv_r_sq6 * inv_r_sq6;
                const double vdw_energy_temp = pair.c12 * inv_r_sq12 - pair.c6 * inv_r_sq6;
 
-               const double coul_energy_temp = pair.qq * sqrt(inv_r_sq);
+               // const double coul_energy_temp = pair.qq * sqrt(inv_r_sq);
+               const double coul_energy_temp = pair.qq / (r_sq * 1.5) * 10.0;
 
                energy_sum += vdw_energy_temp + coul_energy_temp;
 

@@ -167,7 +167,8 @@ public:
                         const double inv_r_sq12 = inv_r_sq6 * inv_r_sq6;
                         const double vdw_energy_temp = (pair.c12 * inv_r_sq12 - pair.c6 * inv_r_sq6) / 4.184;
 
-                        const double coul_energy_temp = pair.qq * sqrt(inv_r_sq)/ 4.184;
+                        // const double coul_energy_temp = pair.qq * sqrt(inv_r_sq)/ 4.184;
+                        const double coul_energy_temp = pair.qq / (r_sq * 1.5) * 10.0;
 
                         double eef1_sb_energy_temp = 0.0;
 
@@ -431,7 +432,8 @@ public:
                 const double inv_r_sq12 = inv_r_sq6 * inv_r_sq6;
 
                 const double vdw_energy_temp = (pair.c12 * inv_r_sq12 - pair.c6 * inv_r_sq6);
-                const double coul_energy_temp = pair.qq * inv_r * 10.0;
+                // const double coul_energy_temp = pair.qq * inv_r * 10.0;
+                const double coul_energy_temp = pair.qq / (r_sq * 1.5) * 10.0;
 
                 double eef1_sb_energy_temp = 0.0;
 

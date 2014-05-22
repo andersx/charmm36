@@ -1050,6 +1050,7 @@ double get_charmm36_atom_charge(phaistos::Atom *atom) {
             atom_map[CA]   = 0.21;
             break;
         }
+    }
 
     // Neutral CTERM is currently not supported in Phaistos.
     if (atom->residue->terminal_status == CTERM) {
@@ -1606,6 +1607,8 @@ double get_eef1_sb_atom_charge(phaistos::Atom *atom) {
             atom_map[CA]   = 0.20;
             break;
         }
+
+    }
 
     // Neutral CTERM is currently not supported in Phaistos.
     if (atom->residue->terminal_status == CTERM) {

@@ -617,8 +617,7 @@ std::vector<DihedralAngleType9> generate_dihedral_pairs(ChainFB *chain,
                                 found_this_parameter = true;
 
                                 dihedral_angle_type_9s.push_back(dihedral_angle_type_9);
-                            }
-                            if ((p.type1 == type4) && (p.type2 == type3) && (p.type3 == type2)&& (p.type4 == type1)) {
+                            } else if ((p.type1 == type4) && (p.type2 == type3) && (p.type3 == type2)&& (p.type4 == type1)) {
                                 DihedralAngleType9 dihedral_angle_type_9;
                                 dihedral_angle_type_9.atom1 = atom4;
                                 dihedral_angle_type_9.atom2 = atom3;
@@ -649,8 +648,7 @@ std::vector<DihedralAngleType9> generate_dihedral_pairs(ChainFB *chain,
                                     found_this_parameter = true;
                                     dihedral_angle_type_9s.push_back(dihedral_angle_type_9);
                                     break;
-                                }
-                                if ((p.type1 == "X") && (p.type2 == type3) && (p.type3 == type2)&& (p.type4 == "X")) {
+                                } else if ((p.type1 == "X") && (p.type2 == type3) && (p.type3 == type2)&& (p.type4 == "X")) {
                                     DihedralAngleType9 dihedral_angle_type_9;
                                     dihedral_angle_type_9.atom1 = atom4;
                                     dihedral_angle_type_9.atom2 = atom3;

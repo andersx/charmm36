@@ -277,7 +277,8 @@ std::vector<NonBondedPair> generate_non_bonded_pairs_cached(ChainFB *chain,
         Atom *atom1 = &*it1;
 
         std::string atom_type1 = charmm_parser::get_charmm36_atom_type(atom1);
-        double atom_charge1 = charmm_parser::get_charmm36_atom_charge(atom1);
+        //double atom_charge1 = charmm_parser::get_charmm36_atom_charge(atom1);
+        double atom_charge1 = charmm_parser::get_eef1_sb_atom_charge(atom1);
 
         NonBondedParameter parameter1 = get_non_bonded_parameter(atom_type1, non_bonded_parameters);
 
@@ -297,7 +298,8 @@ std::vector<NonBondedPair> generate_non_bonded_pairs_cached(ChainFB *chain,
             // int test_atom_index = 295;
 
             std::string atom_type2 = charmm_parser::get_charmm36_atom_type(atom2);
-            double atom_charge2 = charmm_parser::get_charmm36_atom_charge(atom2);
+            // double atom_charge2 = charmm_parser::get_charmm36_atom_charge(atom2);
+            double atom_charge2 = charmm_parser::get_eef1_sb_atom_charge(atom2);
 
 
 
@@ -390,7 +392,8 @@ std::vector<NonBondedPair> generate_non_bonded_pairs(ChainFB *chain,
         //double atom_charge1 = gromacs_parser::get_charmm36_atom_charge(atom1);
 
         std::string atom_type1 = charmm_parser::get_charmm36_atom_type(atom1);
-        double atom_charge1 = charmm_parser::get_charmm36_atom_charge(atom1);
+        // double atom_charge1 = charmm_parser::get_charmm36_atom_charge(atom1);
+        double atom_charge1 = charmm_parser::get_eef1_sb_atom_charge(atom1);
 
         NonBondedParameter parameter1 = get_non_bonded_parameter(atom_type1, non_bonded_parameters);
 
@@ -405,7 +408,7 @@ std::vector<NonBondedPair> generate_non_bonded_pairs(ChainFB *chain,
             // int test_atom_index = 295;
 
             std::string atom_type2 = charmm_parser::get_charmm36_atom_type(atom2);
-            double atom_charge2 = charmm_parser::get_charmm36_atom_charge(atom2);
+            double atom_charge2 = charmm_parser::get_eef1_sb_atom_charge(atom2);
 
 
 

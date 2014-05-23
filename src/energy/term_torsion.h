@@ -107,7 +107,7 @@ public:
         double energy_psi = 0.0;
 
         const double delta_psi = 227.0 / 180.0 * M_PI;
-        const double k_psi = 1.5;
+        const double k_psi = 0.5;
 
         for(ResidueIterator<ChainFB> res(*(this->chain)); !(res).end(); ++res) {
 

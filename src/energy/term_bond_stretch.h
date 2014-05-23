@@ -51,7 +51,7 @@ public:
                             RandomNumberEngine *random_number_engine = &random_global)
           : EnergyTermCommon(chain, "charmm36-bond-stretch", settings, random_number_engine) {
 
-          std::string filename = "/home/andersx/phaistos_dev/modules/charmm36/src/energy/charmm22_cmap/charmm22_bond.itp";
+          std::string filename = "/home/andersx/phaistos_dev/modules/charmm36/src/energy/parameters/bond_stretch.itp";
 
           std::vector<topology::BondedPairParameter> bonded_pair_parameters 
               = topology::read_bonded_pair_parameters(filename);

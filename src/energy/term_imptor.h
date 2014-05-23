@@ -49,7 +49,7 @@ public:
                     RandomNumberEngine *random_number_engine = &random_global)
           : EnergyTermCommon(chain, "charmm36-imptor", settings, random_number_engine) {
 
-          std::string filename = "/home/andersx/phaistos_dev/modules/charmm36/src/energy/charmm22_cmap/charmm22_imptor.itp";
+          std::string filename = "/home/andersx/phaistos_dev/modules/charmm36/src/energy/parameters/imptor.itp";
           std::vector<topology::DihedralType2Parameter> dihedral_type_2_parameters = topology::read_dihedral_type_2_parameters(filename);
           imptors = topology::generate_imptors(this->chain, dihedral_type_2_parameters);
 

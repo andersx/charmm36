@@ -76,13 +76,13 @@ public:
           initialize(dGref, factors, vdw_radii, lambda, eef1_atom_type_index_map);
 
           std::string non_bonded_filename
-              = "/home/andersx/phaistos_dev/modules/charmm36/src/energy/charmm22_cmap/charmm22_vdw.itp";
+              = "/home/andersx/phaistos_dev/modules/charmm36/src/energy/parameters/vdw.itp";
 
           std::vector<topology::NonBondedParameter> non_bonded_parameters
               = topology::read_nonbonded_parameters(non_bonded_filename);
 
           std::string non_bonded_14_filename
-              = "/home/andersx/phaistos_dev/modules/charmm36/src/energy/charmm22_cmap/charmm22_vdw14.itp";
+              = "/home/andersx/phaistos_dev/modules/charmm36/src/energy/parameters/vdw14.itp";
 
           std::vector<topology::NonBonded14Parameter> non_bonded_14_parameters
               = topology::read_nonbonded_14_parameters(non_bonded_14_filename);
@@ -280,7 +280,7 @@ public:
           const double two_pi_3_2 = 2.0*M_PI*sqrt(M_PI);
           const double phys_t = 298.15;
 
-          std::string settings_solvation_filename = "/home/andersx/phaistos_dev/modules/charmm36/src/energy/solvpar_17.inp";
+          std::string settings_solvation_filename = "/home/andersx/phaistos_dev/modules/charmm36/src/energy/parameters/solvpar_17.inp";
           std::ifstream f_h((settings_solvation_filename).c_str());
           if (!f_h) {
                printf("# ERROR: EEF1 input: unable to open file '%s'\n", (settings_solvation_filename).c_str() );

@@ -51,7 +51,7 @@ public:
                         RandomNumberEngine *random_number_engine = &random_global)
           : EnergyTermCommon(chain, "charmm36-torsion", settings, random_number_engine) {
 
-          std::string filename = "/home/andersx/phaistos_dev/modules/charmm36/src/energy/charmm22_cmap/charmm22_torsion.itp";
+          std::string filename = "/home/andersx/phaistos_dev/modules/charmm36/src/energy/parameters/torsion.itp";
           std::vector<topology::DihedralType9Parameter> dihedral_type_9_parameters = topology::read_dihedral_type_9_parameters(filename);
 
           dihedral_angles = topology::generate_dihedral_pairs(this->chain, dihedral_type_9_parameters);

@@ -62,7 +62,8 @@ public:
           double temp;
 
           //! Constructor
-          Settings(std::string solvation_filename="/home/andersx/phaistos_dev/modules/charmm36/src/energy/solvpar_17.inp",double temp=298.15)
+          Settings(std::string solvation_filename 
+                  = "/home/andersx/phaistos_dev/modules/charmm36/src/energy/parameters/solvpar_17.inp",double temp=298.15)
                : solvation_filename(solvation_filename),temp(temp) {}
 
           //! Output operator

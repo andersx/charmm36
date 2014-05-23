@@ -57,13 +57,13 @@ public:
           : EnergyTermCommon(chain, "charmm36-vdw", settings, random_number_engine) {
 
               std::string non_bonded_filename
-                  = "/home/andersx/phaistos_dev/modules/charmm36/src/energy/charmm22_cmap/charmm22_vdw.itp";
+                  = "/home/andersx/phaistos_dev/modules/charmm36/src/energy/parameters/vdw.itp";
 
               std::vector<topology::NonBondedParameter> non_bonded_parameters
                   = topology::read_nonbonded_parameters(non_bonded_filename);
 
               std::string non_bonded_14_filename
-                  = "/home/andersx/phaistos_dev/modules/charmm36/src/energy/charmm22_cmap/charmm22_vdw14.itp";
+                  = "/home/andersx/phaistos_dev/modules/charmm36/src/energy/parameters/vdw14.itp";
 
               std::vector<topology::NonBonded14Parameter> non_bonded_14_parameters =
                   topology::read_nonbonded_14_parameters(non_bonded_14_filename);

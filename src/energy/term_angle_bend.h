@@ -57,7 +57,7 @@ public:
                     RandomNumberEngine *random_number_engine = &random_global)
           : EnergyTermCommon(chain, "charmm36-angle-bend", settings, random_number_engine) {
 
-          std::string filename = "/home/andersx/phaistos_dev/modules/charmm36/src/energy/charmm22_cmap/charmm22_angle_bend.itp";
+          std::string filename = "/home/andersx/phaistos_dev/modules/charmm36/src/energy/parameters/angle_bend.itp";
           std::vector<topology::AngleBendParameter> angle_bend_parameters = topology::read_angle_bend_parameters(filename);
           this->angle_bend_pairs = topology::generate_angle_bend_pairs(this->chain, angle_bend_parameters);
      }

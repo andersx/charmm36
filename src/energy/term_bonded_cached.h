@@ -91,13 +91,13 @@ public:
           std::vector<topology::CmapPair> cmap_pairs = topology::generate_cmap_pairs(this->chain);
 
           // Read angle-bend parameters.
-          std::string filename = "/home/andersx/phaistos_dev/modules/charmm36/src/energy/charmm22_cmap/charmm22_angle_bend.itp";
+          std::string filename = "/home/andersx/phaistos_dev/modules/charmm36/src/energy/parameters/angle_bend.itp";
           std::vector<topology::AngleBendParameter> angle_bend_parameters = topology::read_angle_bend_parameters(filename);
 
           std::vector<topology::AngleBendPair> angle_bend_pairs = topology::generate_angle_bend_pairs(this->chain, angle_bend_parameters);
 
           // Read bond-stretch parameters.
-          filename = "/home/andersx/phaistos_dev/modules/charmm36/src/energy/charmm22_cmap/charmm22_bond.itp";
+          filename = "/home/andersx/phaistos_dev/modules/charmm36/src/energy/parameters/bond_stretch.itp";
 
           std::vector<topology::BondedPairParameter> bonded_pair_parameters
               = topology::read_bonded_pair_parameters(filename);
@@ -105,12 +105,12 @@ public:
           std::vector<topology::BondedPair> bonded_pairs = topology::generate_bonded_pairs(this->chain, bonded_pair_parameters);
 
           // Read improper torsion parameters.
-          filename = "/home/andersx/phaistos_dev/modules/charmm36/src/energy/charmm22_cmap/charmm22_imptor.itp";
+          filename = "/home/andersx/phaistos_dev/modules/charmm36/src/energy/parameters/imptor.itp";
           std::vector<topology::DihedralType2Parameter> dihedral_type_2_parameters = topology::read_dihedral_type_2_parameters(filename);
           std::vector<topology::Imptor> imptors = topology::generate_imptors(this->chain, dihedral_type_2_parameters);
 
           // Get proper torsion parameters.
-          filename = "/home/andersx/phaistos_dev/modules/charmm36/src/energy/charmm22_cmap/charmm22_torsion.itp";
+          filename = "/home/andersx/phaistos_dev/modules/charmm36/src/energy/parameters/torsion.itp";
           std::vector<topology::DihedralType9Parameter> dihedral_type_9_parameters = topology::read_dihedral_type_9_parameters(filename);
 
           std::vector<topology::DihedralAngleType9> dihedral_angles = topology::generate_dihedral_pairs(this->chain, dihedral_type_9_parameters);

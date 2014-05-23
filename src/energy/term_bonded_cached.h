@@ -363,23 +363,25 @@ public:
           // }
           // printf("ASC: Delta check - actual:  %24.14f\n", energy_check - this->energy_new);
 
-        double energy_psi = 0.0;
+          // double energy_psi = 0.0;
 
-        const double delta_psi = 227.0 / 180.0 * M_PI;
-        const double k_psi = 0.5;
+          // const double delta_psi = 227.0 / 180.0 * M_PI;
+          // const double k_psi = 0.5;
 
-        for(ResidueIterator<ChainFB> res(*(this->chain)); !(res).end(); ++res) {
+          // for(ResidueIterator<ChainFB> res(*(this->chain)); !(res).end(); ++res) {
 
-            if (res->terminal_status == definitions::NTERM) continue;
-            if (res->terminal_status == definitions::CTERM) continue;
+          //     if (res->terminal_status == definitions::NTERM) continue;
+          //     if (res->terminal_status == definitions::CTERM) continue;
 
-            const double psi = res->get_psi();
+          //     const double psi = res->get_psi();
 
-            const double energy_psi_temp = k_psi * (1.0 + std::cos(psi - delta_psi));
-            energy_psi += energy_psi_temp;
-        }
+          //     const double energy_psi_temp = k_psi * (1.0 + std::cos(psi - delta_psi));
+          //     energy_psi += energy_psi_temp;
+          // }
 
-          return this->energy_new/4.184 + energy_psi;
+          // return this->energy_new/4.184 + energy_psi;
+
+          return this->energy_new/4.184;
      }
 
 

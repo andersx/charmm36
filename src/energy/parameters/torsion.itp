@@ -1,4 +1,12 @@
 ;      i        j        k        l  func         phi0         kphi  mult
+; SB E_psi correction parameters
+        N       C       CT1     CT1     9  -103.000000     2.092000     1
+        N       C       CT1     CT2     9  -103.000000     2.092000     1
+        N       C       CT1     CT3     9  -103.000000     2.092000     1
+        NH1     C       CT1     CT1     9  -103.000000     2.092000     1
+        NH1     C       CT1     CT2     9  -103.000000     2.092000     1
+        NH1     C       CT1     CT3     9  -103.000000     2.092000     1
+; CHARMM36 normal parameters
      NH2      CT1        C        O     9     0.000000     0.000000     1
      NH2      CT1        C      NH1     9     0.000000     0.000000     1
        H      NH2      CT1      CT1     9     0.000000     0.000000     1

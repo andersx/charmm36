@@ -1582,29 +1582,35 @@ double get_eef1_sb_atom_charge(phaistos::Atom *atom) {
     if (atom->residue->terminal_status == NTERM) {
         switch (res->residue_type) {
         case GLY:
-            atom_map[N]    = -0.3;
-            atom_map[H1]   = 0.33;
-            atom_map[H2]   = 0.33;
-            atom_map[H3]   = 0.33;
-            atom_map[HA2]  = 0.05; //Unsure, but necessary for charge = 0
-            atom_map[HA3]  = 0.05; //Unsure, but necessary for charge = 0
-            atom_map[CA]   = 0.30;
-            break;
-        case PRO:
-            atom_map[N]    = -0.07;
-            atom_map[H1]   = 0.24;
-            atom_map[H2]   = 0.24;
-            atom_map[H3]   = 0.24;
-            atom_map[CA]   = 0.16;
-            atom_map[CD]   = 0.16;
-            break;
-        default:
             atom_map[N]    = -0.9;
             atom_map[H1]   = 0.2;
             atom_map[H2]   = 0.2;
             atom_map[H3]   = 0.2;
-            atom_map[HA]   = 0.10;
+            atom_map[HA2]  = 0.05;
+            atom_map[HA3]  = 0.05;
             atom_map[CA]   = 0.20;
+            break;
+        case PRO:
+            // atom_map[N]    = -0.07;
+            // atom_map[H1]   = 0.24;
+            // atom_map[H2]   = 0.24;
+            // atom_map[H3]   = 0.24;
+            // atom_map[CA]   = 0.16;
+            // atom_map[CD]   = 0.16;
+            atom_map[N]    = -0.67;
+            atom_map[H1]   = 0.14;
+            atom_map[H2]   = 0.14;
+            atom_map[H3]   = 0.14;
+            atom_map[CA]   = 0.06;
+            atom_map[CD]   = 0.06;
+            break;
+        default:
+            atom_map[N]    = -0.9;
+            atom_map[H1]   = 0.3;
+            atom_map[H2]   = 0.3;
+            atom_map[H3]   = 0.3;
+            atom_map[HA]   = 0.00;
+            atom_map[CA]   = 0.00;
             break;
         }
 

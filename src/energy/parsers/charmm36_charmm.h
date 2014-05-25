@@ -550,6 +550,7 @@ std::string get_charmm36_atom_type(phaistos::Atom *atom) {
 
 
 double get_charmm36_atom_charge(phaistos::Atom *atom) {
+// double get_eef1_sb_atom_charge(phaistos::Atom *atom) {
 
     using namespace phaistos;
     using namespace definitions;
@@ -1066,6 +1067,7 @@ double get_charmm36_atom_charge(phaistos::Atom *atom) {
 
 }
 
+// double get_charmm36_atom_charge(phaistos::Atom *atom) {
 double get_eef1_sb_atom_charge(phaistos::Atom *atom) {
 
     using namespace phaistos;
@@ -1618,7 +1620,7 @@ double get_eef1_sb_atom_charge(phaistos::Atom *atom) {
 
     // Neutral CTERM is currently not supported in Phaistos.
     if (atom->residue->terminal_status == CTERM) {
-        atom_map[C]    = 0.1;
+        atom_map[C]    = 1.0;
         atom_map[O]    = -0.5;
         atom_map[OXT]  = -0.5;
     }

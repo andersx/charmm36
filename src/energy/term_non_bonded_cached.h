@@ -428,8 +428,8 @@ public:
                 // const double inv_r = fast_inv_sqrt(r_sq);
                 // const double inv_r = 1.0 / std::sqrt(r_sq);
 
-                const double inv_r_sq = 1.0 / r_sq; //shift to nanometers
-                const double inv_r_sq6 = inv_r_sq * inv_r_sq * inv_r_sq * 1000000.0;
+                const double inv_r_sq = 1.0 / r_sq;
+                const double inv_r_sq6 = inv_r_sq * inv_r_sq * inv_r_sq * 1000000.0; //shift to nanometers^6
                 const double inv_r_sq12 = inv_r_sq6 * inv_r_sq6;
 
                 const double vdw_energy_temp = (pair.c12 * inv_r_sq12 - pair.c6 * inv_r_sq6);

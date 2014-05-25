@@ -104,29 +104,10 @@ public:
         }
 
 
-        //double energy_psi = 0.0;
-
-        //const double delta_psi = 227.0 / 180.0 * M_PI;
-        //const double k_psi = 0.5;
-
-        //for(ResidueIterator<ChainFB> res(*(this->chain)); !(res).end(); ++res) {
-
-        //    if (res->terminal_status == definitions::NTERM) continue;
-        //    if (res->terminal_status == definitions::CTERM) continue;
-
-        //    const double psi = res->get_psi();
-
-        //    const double energy_psi_temp = k_psi * (1.0 + std::cos(psi - delta_psi));
-        //    energy_psi += energy_psi_temp;
-        //}
-
-
-        //printf("    EEF1-SB E_psi E = %15.6f kJ/mol\n", energy_psi * 4.184);
-        //printf("    EEF1-SB E_psi E = %15.6f kcal/mol\n", energy_psi);
         printf("          torsion E = %15.6f kJ/mol\n", e_torsion);
         printf("          torsion E = %15.6f kcal/mol\n", e_torsion / 4.184);
-        // return e_torsion / 4.184 + energy_psi;
-        return e_torsion / 4.184; // + energy_psi;
+
+        return e_torsion / 4.184;
 
      }
 

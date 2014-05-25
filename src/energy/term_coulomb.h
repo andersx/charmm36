@@ -106,31 +106,44 @@ public:
 
                if (pair.is_14_interaction) {
                     coul14_energy += coul_energy_temp;
-// printf("ASC: L14COL: %5d %5d %5d  r = %8.4f  XYZ = %8.4f %8.4f %8.4f   XYZ2 = %8.4f %8.4f %8.4f   q1 = %6.3f  q2 = %6.3f  qq = %7.3f  ecoul = %7.3f\n",
-// 0,0,0,
-// ((pair.atom1)->position - (pair.atom2)->position).norm(),
-// (pair.atom1)->position[0],
-// (pair.atom1)->position[1],
-// (pair.atom1)->position[2],
-// (pair.atom2)->position[0],
-// (pair.atom2)->position[1],
-// (pair.atom2)->position[2],
-// pair.q1, pair.q2, pair.qq, coul_energy_temp);
+                    // printf("ASC: L14COL: r = %15.9f  XYZ = %8.4f %8.4f %8.4f   XYZ2 = %8.4f %8.4f %8.4f   q1 = %6.3f  q2 = %6.3f  qq = %7.3f  ecoul = %15.9f\n",
+                    // 0,0,0,
+                    // ((pair.atom1)->position - (pair.atom2)->position).norm(),
+                    // (pair.atom1)->position[0],
+                    // (pair.atom1)->position[1],
+                    // (pair.atom1)->position[2],
+                    // (pair.atom2)->position[0],
+                    // (pair.atom2)->position[1],
+                    // (pair.atom2)->position[2],
+                    // pair.q1, pair.q2, pair.qq, coul_energy_temp);
 
                } else {
                     coul_energy += coul_energy_temp;
-// printf("ASC: LnCOL: %5d %5d %5d  r = %8.4f  XYZ = %8.4f %8.4f %8.4f   XYZ2 = %8.4f %8.4f %8.4f   q1 = %6.3f  q2 = %6.3f  qq = %7.3f  ecoul = %7.3f\n",
-// 0,0,0,
-// ((pair.atom1)->position - (pair.atom2)->position).norm(),
-// (pair.atom1)->position[0],
-// (pair.atom1)->position[1],
-// (pair.atom1)->position[2],
-// (pair.atom2)->position[0],
-// (pair.atom2)->position[1],
-// (pair.atom2)->position[2],
-// pair.q1, pair.q2, pair.qq, coul_energy_temp);
+                    // printf("ASC: LSRCOL: r = %15.9f  XYZ = %8.4f %8.4f %8.4f   XYZ2 = %8.4f %8.4f %8.4f   q1 = %6.3f  q2 = %6.3f  qq = %7.3f  ecoul = %15.9f\n",
+                    // 0,0,0,
+                    // ((pair.atom1)->position - (pair.atom2)->position).norm(),
+                    // (pair.atom1)->position[0],
+                    // (pair.atom1)->position[1],
+                    // (pair.atom1)->position[2],
+                    // (pair.atom2)->position[0],
+                    // (pair.atom2)->position[1],
+                    // (pair.atom2)->position[2],
+                    // pair.q1, pair.q2, pair.qq, coul_energy_temp);
                }
           }
+
+          // for (AtomIterator<ChainFB, definitions::ALL> it(*chain); !it.end(); ++it) {
+
+          //     Atom *atom = &*it;
+
+          //     std::cout << charmm_parser::get_charmm36_atom_type(atom) << "  "
+          //               << charmm_parser::get_eef1_sb_atom_charge(atom) << "  "
+          //               << *atom << std::endl;
+
+
+          // }
+
+
 
           const double total_energy = (coul14_energy + coul_energy) / 4.184;
 

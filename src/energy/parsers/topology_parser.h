@@ -152,7 +152,8 @@ std::vector<NonBondedParameter> read_nonbonded_parameters(const std::string file
         parameter.atom_type   = boost::lexical_cast<std::string >(split_line[0]);
         parameter.atom_number = boost::lexical_cast<unsigned int>(split_line[1]);
         parameter.atom_mass   = boost::lexical_cast<double      >(split_line[2]);
-        parameter.atom_charge = boost::lexical_cast<double      >(split_line[3]);
+        // parameter.atom_charge = boost::lexical_cast<double      >(split_line[3]);
+        parameter.atom_charge = 0.0;
         parameter.atom_ptype  = boost::lexical_cast<std::string >(split_line[4]);
         parameter.sigma       = boost::lexical_cast<double      >(split_line[5]);
         parameter.epsilon     = boost::lexical_cast<double      >(split_line[6]);

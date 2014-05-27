@@ -36,13 +36,13 @@ namespace topology {
 
 using namespace phaistos;
 
+// facel = 1 / (4 * pi * epsilon_0)
 // Gromacs constant
-const double felec_gromacs = 138.935455;
+// const double felec_gromacs = 138.935455;
 
-// charmm constant
-// We uses the felec from gromacs, but compensate for
-// differences between gromacs and charmm.
-const double felec = felec_gromacs / 332.0636930 * 332.0716;
+// CHARMM program definition of facel us 332.0716
+// here we convert it to Gromacs units.
+const double felec = 4.184 * 332.0716/10.0;
 
 std::vector<CmapPair> generate_cmap_pairs(ChainFB *chain) {
 

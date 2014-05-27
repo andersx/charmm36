@@ -104,7 +104,8 @@ std::string get_charmm36_atom_type(phaistos::Atom *atom) {
         atom_map[H]   = "H";
         atom_map[CA]  = "CT1";
         atom_map[HA]  = "HB1";
-        atom_map[CB]  = "CT2A";
+        // atom_map[CB]  = "CT2A"; // CT2A in CHARM36
+        atom_map[CB]  = "CT2"; // CT2 in EEF1-SB
         atom_map[HB2] = "HA2";
         atom_map[HB3] = "HA2";
         atom_map[CG]  = "CC";
@@ -1593,18 +1594,10 @@ double get_eef1_sb_atom_charge(phaistos::Atom *atom) {
             atom_map[CA]   = 0.20;
             break;
         case PRO:
-            // atom_map[N]    = -0.07;
-            // atom_map[H1]   = 0.24;
-            // atom_map[H2]   = 0.24;
-            // atom_map[H3]   = 0.24;
-            // atom_map[CA]   = 0.16;
-            // atom_map[CD]   = 0.16;
-            atom_map[N]    = -0.67;
-            atom_map[H1]   = 0.14;
-            atom_map[H2]   = 0.14;
-            atom_map[H3]   = 0.14;
-            atom_map[CA]   = 0.06;
-            atom_map[CD]   = 0.06;
+            atom_map[N]    = -0.69;
+            atom_map[H1]   = 0.2;
+            atom_map[H2]   = 0.2;
+            atom_map[H3]   = 0.2;
             break;
         default:
             atom_map[N]    = -0.9;

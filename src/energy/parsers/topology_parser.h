@@ -36,7 +36,13 @@ namespace topology {
 
 using namespace phaistos;
 
+// Gromacs constant
+const double felec_gromacs = 138.935455;
 
+// charmm constant
+// We uses the felec from gromacs, but compensate for
+// differences between gromacs and charmm.
+const double felec = felec_gromacs / 332.0636930 * 332.0716;
 
 std::vector<CmapPair> generate_cmap_pairs(ChainFB *chain) {
 
@@ -323,7 +329,7 @@ std::vector<NonBondedPair> generate_non_bonded_pairs_cached(ChainFB *chain,
                non_bonded_pair.epsilon2 = parameter2.epsilon;
                non_bonded_pair.sigma_effective = sigma_effective;
                non_bonded_pair.epsilon_effective = epsilon_effective;
-               non_bonded_pair.qq  = non_bonded_pair.q1 * non_bonded_pair.q2 * 138.935455;
+               non_bonded_pair.qq  = non_bonded_pair.q1 * non_bonded_pair.q2 * felec;
                non_bonded_pair.c6  = 4 * epsilon_effective * std::pow(sigma_effective, 6.0);
                non_bonded_pair.c12 = 4 * epsilon_effective * std::pow(sigma_effective, 12.0);
 
@@ -355,7 +361,7 @@ std::vector<NonBondedPair> generate_non_bonded_pairs_cached(ChainFB *chain,
                 non_bonded_pair.epsilon2 = parameter2.epsilon;
                 non_bonded_pair.sigma_effective = parameter14.sigma;
                 non_bonded_pair.epsilon_effective = parameter14.epsilon;
-                non_bonded_pair.qq  = non_bonded_pair.q1 * non_bonded_pair.q2 * 138.935455;
+                non_bonded_pair.qq  = non_bonded_pair.q1 * non_bonded_pair.q2 * felec;
                 non_bonded_pair.c6  = 4 * parameter14.epsilon * std::pow(parameter14.sigma, 6.0);
                 non_bonded_pair.c12 = 4 * parameter14.epsilon * std::pow(parameter14.sigma, 12.0);
 
@@ -432,7 +438,7 @@ std::vector<NonBondedPair> generate_non_bonded_pairs(ChainFB *chain,
                non_bonded_pair.epsilon2 = parameter2.epsilon;
                non_bonded_pair.sigma_effective = sigma_effective;
                non_bonded_pair.epsilon_effective = epsilon_effective;
-               non_bonded_pair.qq  = non_bonded_pair.q1 * non_bonded_pair.q2 * 138.935455;
+               non_bonded_pair.qq  = non_bonded_pair.q1 * non_bonded_pair.q2 * felec;
                non_bonded_pair.c6  = 4 * epsilon_effective * std::pow(sigma_effective, 6.0);
                non_bonded_pair.c12 = 4 * epsilon_effective * std::pow(sigma_effective, 12.0);
 
@@ -485,7 +491,7 @@ std::vector<NonBondedPair> generate_non_bonded_pairs(ChainFB *chain,
                 non_bonded_pair.epsilon2 = parameter2.epsilon;
                 non_bonded_pair.sigma_effective = parameter14.sigma;
                 non_bonded_pair.epsilon_effective = parameter14.epsilon;
-                non_bonded_pair.qq  = non_bonded_pair.q1 * non_bonded_pair.q2 * 138.935455;
+                non_bonded_pair.qq  = non_bonded_pair.q1 * non_bonded_pair.q2 * felec;
                 non_bonded_pair.c6  = 4 * parameter14.epsilon * std::pow(parameter14.sigma, 6.0);
                 non_bonded_pair.c12 = 4 * parameter14.epsilon * std::pow(parameter14.sigma, 12.0);
 

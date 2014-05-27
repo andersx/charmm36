@@ -79,6 +79,8 @@ public:
      double evaluate(MoveInfo *move_info = NULL) {
 
           double energy_sum = 0.0;
+          double energy_angle = 0.0;
+          double energy_urey = 0.0;
 
           for (unsigned int i = 0; i < this->angle_bend_pairs.size(); i++){
 
@@ -92,17 +94,23 @@ public:
                const double dtheta = theta - pair.theta0 * M_PI / 180.0;
                const double energy_angle_bend_temp = 0.5 * pair.k0 * dtheta * dtheta; 
 
+               energy_angle += energy_angle_bend_temp;
                // Urey-Bradley part
                const double r13 = ((pair.atom1)->position - (pair.atom3)->position).norm() / 10.0;
                const double dr = r13 - pair.r13;
                const double energy_urey_bradley_temp = 0.5 * pair.kub * dr * dr;
 
+                energy_urey += energy_urey_bradley_temp;
                energy_sum += energy_angle_bend_temp + energy_urey_bradley_temp;
 
           }
 
-          printf("     urey-bradley E = %15.6f kJ/mol\n", energy_sum);
-          printf("     urey-bradley E = %15.6f kcal/mol\n", energy_sum / 4.184);
+          printf("       angle-bend E = %15.6f kJ/mol\n", energy_angle);
+          printf("       angle-bend E = %15.6f kcal/mol\n", energy_angle / 4.184);
+          printf("     urey-bradley E = %15.6f kJ/mol\n", energy_urey);
+          printf("     urey-bradley E = %15.6f kcal/mol\n", energy_urey / 4.184);
+          printf(" angle-bend-total E = %15.6f kJ/mol\n", energy_sum);
+          printf(" angle-bend-total E = %15.6f kcal/mol\n", energy_sum / 4.184);
 
           return energy_sum / 4.184;
 

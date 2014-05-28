@@ -1,0 +1,11 @@
+ENER ENR:  Eval#     ENERgy      Delta-E         GRMS
+ENER INTERN:          BONDs       ANGLes       UREY-b    DIHEdrals    IMPRopers
+ENER CROSS:           CMAPs        PMF1D        PMF2D        PRIMO
+ENER EXTERN:        VDWaals         ELEC       HBONds          ASP         USER
+ ----------       ---------    ---------    ---------    ---------    ---------
+ENER>        0     14.84721      0.00000     13.56683
+ENER INTERN>        7.13406     10.06576      1.13223     27.34427      4.16951
+ENER CROSS>        -0.19730      0.00000      0.00000      0.00000
+ENER EXTERN>       14.88130     24.70593      0.00000    -74.38856      0.00000
+ ----------       ---------    ---------    ---------    ---------    ---------
+  

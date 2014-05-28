@@ -1,0 +1,49 @@
+* Energy evaluation
+*
+! Read topoly and parameter file
+read rtf card name @topology
+read param card name @parameter
+
+! Setup molecule from PDB file
+open read card unit 10 name @{pdb}
+read sequ pdb unit 10
+generate setup prot first NTER last CTER
+rewind unit 10
+bomlev -1
+read coor pdb unit 10
+close unit 10
+!print coor
+define test select segid protein .and. ( .not. hydrogen ) .and. ( .not. init ) show end
+ic para
+ic fill preserve
+ic build
+hbuild sele all end
+print coor
+
+!Begin parsing of energy options
+
+eef1 setup temp 298.15 unit 95 name "/home/andersx/dev/force_field/test_cases/eef1sb_dist/solvpar_eef1sb.inp"
+
+! parse non-bonded options - CDIE type
+!NBONds NBXMod  5 ATOM CDIEl -
+!CUTNB 999.00 CTOFnb 999.0 EPS 1.0 E14Fac 1.0 WMIN 999.0 ! -
+
+! parse non-bonded options - RDIE type
+!NBONds NBXMod  5 ATOM RDIEl -
+!CUTNB 999.00 CTOFnb 999.0 EPS 1.5 E14Fac 1.0 WMIN 999.0 ! -
+nbonds elec  switch  group  rdie vdw  vswitch vgroup -
+cutnb 900.0 ctofnb 800.0 ctonnb 700.0 -
+wmin 600.0 eps 1.5 e14f 1.0 nbxm 5 
+
+! do generate list
+UPDAte
+
+eef1 print
+
+! calculate "just" the energy
+GETE
+
+
+! Exit script
+stop
+

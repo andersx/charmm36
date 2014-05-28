@@ -1,0 +1,96 @@
+ Parameter: TOPOLOGY <- "../EEF1SB_DIST/TOP_ALL36_PROT_EEF1SB.RTF"
+ Parameter: PARAMETER <- "../EEF1SB_DIST/PARAM_ALL36_EEF1SB.PRM"
+ Parameter: PDB <- "CLEAN_ATTTTTTTTTTA.PDB"
+1
+                 Chemistry at HARvard Macromolecular Mechanics
+           (CHARMM) - Developmental Version 37b1     August 15, 2012            
+                               SVN revision 197M                                
+       Copyright(c) 1984-2001  President and Fellows of Harvard College
+                              All Rights Reserved
+       Current operating system: Linux-3.11.0-19-generic(x86_64)@awesome        
+                 Created on  5/28/14 at 12:20:14 by user: andersx     
+
+            Maximum number of ATOMS:     25140, and RESidues:        8380
+ RDTITL> * ENERGY EVALUATION
+ RDTITL> *
+  
+ CHARMM>    ! Read topoly and parameter file
+ CHARMM>    read rtf card name @topology
+ Parameter: TOPOLOGY -> "../EEF1SB_DIST/TOP_ALL36_PROT_EEF1SB.RTF"
+ VOPEN> Attempting to open::../eef1sb_dist/top_all36_prot_eef1sb.rtf::
+ MAINIO> Residue topology file being read from unit  90.
+ TITLE> *>>>>>>>>CHARMM36 ALL-HYDROGEN TOPOLOGY FILE FOR PROTEINS <<<<<<
+ TITLE> *>>>>> INCLUDES PHI, PSI CROSS TERM MAP (CMAP) CORRECTION <<<<<<<
+ TITLE> *>>>>>>>>>>>>>>>>>>>>>>>>>> MAY 2011 <<<<<<<<<<<<<<<<<<<<<<<<<<<<
+ TITLE> * ALL COMMENTS TO THE CHARMM WEB SITE: WWW.CHARMM.ORG
+ TITLE> *             PARAMETER SET DISCUSSION FORUM
+ TITLE> *
+ VCLOSE: Closing unit   90 with status "KEEP"
+  
+ CHARMM>    read param card name @parameter
+ Parameter: PARAMETER -> "../EEF1SB_DIST/PARAM_ALL36_EEF1SB.PRM"
+ VOPEN> Attempting to open::../eef1sb_dist/param_all36_eef1sb.prm::
+
+          PARAMETER FILE BEING READ FROM UNIT 90
+ TITLE> *>>>> CHARMM36 ALL-HYDROGEN PARAMETER FILE FOR PROTEINS <<<<<<<<<<
+ TITLE> *>>>>> INCLUDES PHI, PSI CROSS TERM MAP (CMAP) CORRECTION <<<<<<<
+ TITLE> *>>>>>>>>>>>>>>>>>>>>>>>>>> FEB. 2012 <<<<<<<<<<<<<<<<<<<<<<<<<<<<
+ TITLE> * ALL COMMENTS TO THE CHARMM WEB SITE: WWW.CHARMM.ORG
+ TITLE> *             PARAMETER SET DISCUSSION FORUM
+ TITLE> *
+ PARMIO> NONBOND, HBOND lists and IMAGE atoms cleared.
+ VCLOSE: Closing unit   90 with status "KEEP"
+  
+ CHARMM>     
+  
+ CHARMM>    ! Setup molecule from PDB file
+ CHARMM>    open read card unit 10 name @{pdb}
+ Parameter: PDB -> "CLEAN_ATTTTTTTTTTA.PDB"
+ VOPEN> Attempting to open::clean_atttttttttta.pdb::
+ OPNLGU> Unit  10 cannot be opened as CLEAN_ATTTTTTTTTTA.PDB                                                                                                                                                                                                                                          
+
+      ***** LEVEL  0 WARNING FROM <OPNLGU> *****
+      ***** "OPEN" not possible.
+      ******************************************
+      BOMLEV (  0) IS REACHED - TERMINATING. WRNLEV IS  5
+
+
+                                                  
+                            /---------\           
+                           /           \          
+                          /             \         
+                         /               \        
+                         !  XXXX   XXXX  !        
+                         !  XXXX   XXXX  !        
+                         !  XXX     XXX  !        
+                         !       X       !        
+                          --\   XXX   /--         
+                           ! !  XXX  ! !          
+                           ! !       ! !          
+                           ! I I I I I !          
+                           !  I I I I  !          
+                            \         /           
+                             --     --            
+                               \---/              
+                        XXX             XXX       
+                       XXXX             XXXX      
+                       XXXXX           XXXXX      
+                          XXX         XXX         
+                            XXX     XXX           
+                               XXXXX              
+                              XXX XXX             
+                            XXX     XXX           
+                          XXX         XXX         
+                       XXXXX           XXXXX      
+                       XXXX             XXXX      
+                        XXX             XXX       
+                                                  
+                                                  
+ Execution terminated due to the detection of a fatal error.
+
+                    ABNORMAL TERMINATION
+                    MOST SEVERE WARNING WAS AT LEVEL  0
+
+                    $$$$$ JOB ACCOUNTING INFORMATION $$$$$
+                     ELAPSED TIME:     0.05  SECONDS 
+                         CPU TIME:     0.05  SECONDS 

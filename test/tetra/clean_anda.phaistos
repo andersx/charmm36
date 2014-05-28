@@ -1,0 +1,40 @@
+Setting up force field ... 
+Init ok! 
+     bond-stretch E =       23.492747 kJ/mol
+     bond-stretch E =        5.614901 kcal/mol
+       angle-bend E =       35.039265 kJ/mol
+       angle-bend E =        8.374585 kcal/mol
+     urey-bradley E =        8.346799 kJ/mol
+     urey-bradley E =        1.994933 kcal/mol
+ angle-bend-total E =       43.386064 kJ/mol
+ angle-bend-total E =       10.369518 kcal/mol
+          torsion E =      172.507180 kJ/mol
+          torsion E =       41.230206 kcal/mol
+           vdW-14 E =       30.581275 kJ/mol
+           vdW-14 E =        7.309100 kcal/mol
+           vdW-SR E =      -17.800312 kJ/mol
+           vdW-SR E =       -4.254377 kcal/mol
+        vdW-total E =       12.780962 kJ/mol
+        vdW-total E =        3.054723 kcal/mol
+           imptor E =       10.622919 kJ/mol
+           imptor E =        2.538938 kcal/mol
+          Coul-14 E =      303.519426 kJ/mol
+          Coul-14 E =       72.542884 kcal/mol
+          Coul-SR E =     -290.788262 kJ/mol
+          Coul-SR E =      -69.500063 kcal/mol
+       Coul-total E =       12.731164 kJ/mol
+       Coul-total E =        3.042821 kcal/mol
+          EEF1-SB E =     -367.402685 kJ/mol
+          EEF1-SB E =      -87.811349 kcal/mol
+             CMAP E =       -5.619915 kJ/mol
+             CMAP E =       -1.343192 kcal/mol
+Total Energy: -39.1165
+    Energy terms:
+        charmm36-bond-stretch: 	9.42502
+        charmm36-angle-bend: 	17.406
+        charmm36-torsion: 	69.2079
+        charmm36-vdw: 	5.12757
+        charmm36-imptor: 	4.26179
+        charmm36-coulomb: 	5.1076
+        charmm36-eef1: 	-147.398
+        charmm36-cmap: 	-2.25464

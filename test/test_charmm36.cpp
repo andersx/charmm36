@@ -19,7 +19,11 @@
 #include "protein/chain_fb.h"
 #include "energy/energy.h"
 
+#include <boost/tokenizer.hpp>
+
 #include "energy/term_bond_stretch.h"
+#include "energy/term_bonded_cached.h"
+#include "energy/term_non_bonded_cached.h"
 #include "energy/term_angle_bend.h"
 #include "energy/term_torsion.h"
 #include "energy/term_imptor.h"
@@ -53,6 +57,8 @@ void test_terms(ChainFB *chain, int n=1) {
      energy.add_term( new TermCharmm36Coulomb(chain) );
      energy.add_term( new TermCharmm36Eef1(chain) );
      energy.add_term( new TermCharmm36Cmap(chain) );
+     energy.add_term( new TermCharmm36BondedCached(chain) );
+     energy.add_term( new TermCharmm36NonBondedCached(chain) );
 
 
 

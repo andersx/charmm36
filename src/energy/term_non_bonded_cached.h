@@ -23,6 +23,8 @@
 #include <string>
 
 #include <boost/type_traits/is_base_of.hpp>
+#include <boost/tokenizer.hpp>
+
 #include "energy/energy_term.h"
 
 #include "parsers/topology_parser.h"
@@ -57,6 +59,57 @@ public:
 
      //! Use same settings as base class
      typedef EnergyTerm<ChainFB>::SettingsClassicEnergy Settings;
+
+     double calculate_interaction_energy(topology::NonBondedInteraction &interaction) {
+
+          const double r_sq = ((interaction.atom1)->position - (interaction.atom2)->position).norm_squared();
+
+          const double inv_r_sq = 1.0 / r_sq;
+          const double inv_r_sq6 = inv_r_sq * inv_r_sq * inv_r_sq * charmm36_constants::ANGS6_TO_NM6; //shift to nanometers^6
+          const double inv_r_sq12 = inv_r_sq6 * inv_r_sq6;
+
+          const double vdw_energy = (interaction.c12 * inv_r_sq12 - interaction.c6 * inv_r_sq6);
+          const double coul_energy = interaction.qq * inv_r_sq * charmm36_constants::TEN_OVER_ONE_POINT_FIVE;
+
+          double eef1_sb_energy = 0.0;
+
+          // If the pair has a contribution to EEF1-SB
+          if ((interaction.do_eef1) && (r_sq < 81.0)) {
+
+              // From Sandro's code
+              const double r_ij = std::sqrt(r_sq);
+
+              double R_min_i = interaction.R_vdw_1;
+              double R_min_j = interaction.R_vdw_2;
+
+              double lambda_i = interaction.lambda1;
+              double lambda_j = interaction.lambda2;
+
+              const double arg_ij = std::fabs((r_ij - R_min_i)/lambda_i);
+              const double arg_ji = std::fabs((r_ij - R_min_j)/lambda_j);
+
+              int bin_ij = int(arg_ij*100);
+              int bin_ji = int(arg_ji*100);
+
+              double exp_ij = 0.0;
+              double exp_ji = 0.0;
+
+              if (bin_ij < 350) exp_ij = charmm36_constants::EXP_EEF1[bin_ij];
+              if (bin_ji < 350) exp_ji = charmm36_constants::EXP_EEF1[bin_ji];
+
+              double cont_ij = -interaction.fac_12*exp_ij * inv_r_sq;
+              double cont_ji = -interaction.fac_21*exp_ji * inv_r_sq;
+
+              // Add to local EEF1-SB energy
+              eef1_sb_energy += cont_ij + cont_ji;
+
+          }
+
+          return vdw_energy * charmm36_constants::KJ_TO_KCAL
+               + coul_energy * charmm36_constants::KJ_TO_KCAL
+               + eef1_sb_energy;
+     }
+
 
 
      void setup_caches() {
@@ -108,33 +161,33 @@ public:
             for (int i = 0; i < this->chain->size(); i++) {
 
                 // Dummy residue pair
-                std::vector<CachedResidueInteraction> temp_pair_vector;
-                this->cached_residue_interactions.push_back(temp_pair_vector);
+                std::vector<CachedResidueInteraction> temp_interaction_vector;
+                this->cached_residue_interactions.push_back(temp_interaction_vector);
 
                 for (int j = 0; j < this->chain->size(); j++) {
 
                     // Initialize residue pair and push back
-                    CachedResidueInteraction temp_pair;
-                    temp_pair.energy_old = 0.0;
-                    temp_pair.energy_new = 0.0;
-                    this->cached_residue_interactions[i].push_back(temp_pair);
+                    CachedResidueInteraction temp_interaction;
+                    temp_interaction.energy_old = 0.0;
+                    temp_interaction.energy_new = 0.0;
+                    this->cached_residue_interactions[i].push_back(temp_interaction);
                 }
             }
 
             // Fill atom pairs in cache matrix
             for (unsigned int i = 0; i < non_bonded_interactions.size(); i++) {
 
-                topology::NonBondedInteraction pair = non_bonded_interactions[i];
+                topology::NonBondedInteraction interaction = non_bonded_interactions[i];
 
                 // Get the residue indexes of the atoms involved in this pair
-                int residue1_index = (pair.atom1)->residue->index;
-                int residue2_index = (pair.atom2)->residue->index;
+                int residue1_index = (interaction.atom1)->residue->index;
+                int residue2_index = (interaction.atom2)->residue->index;
 
                 // Make sure we only fill out the upper triangle of the cache matrix
                 if (residue2_index > residue1_index) {
-                    this->cached_residue_interactions[residue2_index][residue1_index].interactions.push_back(pair);
+                    this->cached_residue_interactions[residue2_index][residue1_index].interactions.push_back(interaction);
                 } else {
-                    this->cached_residue_interactions[residue1_index][residue2_index].interactions.push_back(pair);
+                    this->cached_residue_interactions[residue1_index][residue2_index].interactions.push_back(interaction);
                 }
             }
 
@@ -154,57 +207,17 @@ public:
                     // Sum over all interactions in that matrix element
                     for (unsigned int k = 0; k < this->cached_residue_interactions[i][j].interactions.size(); k++) {
 
-                        topology::NonBondedInteraction pair = this->cached_residue_interactions[i][j].interactions[k];
+                        topology::NonBondedInteraction interaction = this->cached_residue_interactions[i][j].interactions[k];
 
-                        const double r_sq = ((pair.atom1)->position - (pair.atom2)->position).norm_squared();
-                        const double inv_r_sq = 100.0 / (r_sq); //shift to nanometers
-                        const double inv_r_sq6 = inv_r_sq * inv_r_sq * inv_r_sq;
-                        const double inv_r_sq12 = inv_r_sq6 * inv_r_sq6;
-                        const double vdw_energy_temp = (pair.c12 * inv_r_sq12 - pair.c6 * inv_r_sq6) * charmm36_constants::KJ_TO_KCAL;
+                        double interaction_energy = calculate_interaction_energy(interaction);
 
-                        // const double coul_energy_temp = pair.qq * sqrt(inv_r_sq)/ 4.184;
-                        const double coul_energy_temp = pair.qq / (r_sq * 1.5) * 10.0;// * charmm36_constants::KJ_TO_KCAL;
-
-                        double eef1_sb_energy_temp = 0.0;
-
-                        // If the pair has a contribution to EEF1-SB
-                        if ((pair.do_eef1) && (r_sq < 81.0)) {
-
-                            // From Sandro's code
-                            const double r_ij = std::sqrt(r_sq);
-
-                            double R_min_i = pair.R_vdw_1;
-                            double R_min_j = pair.R_vdw_2;
-
-                            double lambda_i = pair.lambda1;
-                            double lambda_j = pair.lambda2;
-
-                            const double arg_ij = std::fabs((r_ij - R_min_i)/lambda_i);
-                            const double arg_ji = std::fabs((r_ij - R_min_j)/lambda_j);
-
-                            int bin_ij = int(arg_ij*100);
-                            int bin_ji = int(arg_ji*100);
-
-                            double exp_ij = 0.0;
-                            double exp_ji = 0.0;
-
-                            if (bin_ij < 350) exp_ij = charmm36_constants::EEF_EXP1[bin_ij];
-                            if (bin_ji < 350) exp_ji = charmm36_constants::EEF_EXP1[bin_ji];
-
-                            double cont_ij = -pair.fac_12*exp_ij/r_sq;
-                            double cont_ji = -pair.fac_21*exp_ji/r_sq;
-
-                            // Add to local EEF1-SB energy
-                            eef1_sb_energy_temp += cont_ij + cont_ji;
-
-                        }
                         // Add to matrix element
-                        this->cached_residue_interactions[i][j].energy_old += vdw_energy_temp + coul_energy_temp + eef1_sb_energy_temp;
-                        this->cached_residue_interactions[i][j].energy_new += vdw_energy_temp + coul_energy_temp + eef1_sb_energy_temp;
+                        this->cached_residue_interactions[i][j].energy_old += interaction_energy;
+                        this->cached_residue_interactions[i][j].energy_new += interaction_energy;
 
                         //Add to toal energies
-                        this->total_energy     += vdw_energy_temp + coul_energy_temp + eef1_sb_energy_temp;
-                        this->total_energy_old += vdw_energy_temp + coul_energy_temp + eef1_sb_energy_temp;
+                        this->total_energy     += interaction_energy;
+                        this->total_energy_old += interaction_energy;
                     }
                 }
             }
@@ -417,7 +430,6 @@ public:
         // Local delta energy required for OpenMP.
         double delta_energy_local = 0.0;
 
-        const double ten_over_one_point_five = 10.0 / 1.5;
         // Loop over all pairs which must be recomputed
         #pragma omp parallel for reduction(+:delta_energy_local) schedule(static)
         for (unsigned int k = 0; k < this->cache_indexes.size(); k++) {
@@ -427,70 +439,23 @@ public:
             unsigned int j = this->cache_indexes[k][1];
 
             // Reset interaction energy of the residue pair ij.
-            this->cached_residue_pairs[i][j].energy_new = 0.0;
+            this->cached_residue_interactions[i][j].energy_new = 0.0;
 
             // Loop over all pairs of atoms, k, in the residue pair ij.
-            for (unsigned int k = 0; k < this->cached_residue_pairs[i][j].pairs.size(); k++) {
+            for (unsigned int k = 0; k < this->cached_residue_interactions[i][j].interactions.size(); k++) {
 
                 // Make local copy of atom pair k.
-                topology::NonBondedPair pair = this->cached_residue_pairs[i][j].pairs[k];
+                topology::NonBondedInteraction interaction = this->cached_residue_interactions[i][j].interactions[k];
 
-                const double r_sq = ((pair.atom1)->position - (pair.atom2)->position).norm_squared();
+                double interaction_energy = calculate_interaction_energy(interaction);
 
-                // Use fast_inv_sqrt for 15% speed increase.
-                // const double inv_r = fast_inv_sqrt(r_sq);
-                // const double inv_r = 1.0 / std::sqrt(r_sq);
-
-                const double inv_r_sq = 1.0 / r_sq;
-                const double inv_r_sq6 = inv_r_sq * inv_r_sq * inv_r_sq * charmm36_constants::ANGS6_TO_NM6; //shift to nanometers^6
-                const double inv_r_sq12 = inv_r_sq6 * inv_r_sq6;
-
-                const double vdw_energy_temp = (pair.c12 * inv_r_sq12 - pair.c6 * inv_r_sq6);
-                // const double coul_energy_temp = pair.qq * inv_r * 10.0;
-                const double coul_energy_temp = pair.qq * inv_r_sq * ten_over_one_point_five;
-
-                double eef1_sb_energy_temp = 0.0;
-
-                // If the pair has a contribution to EEF1-SB
-                if ((pair.do_eef1) && (r_sq < 81.0)) {
-
-                    // From Sandro's code
-                    const double r_ij = std::sqrt(r_sq);
-
-                    double R_min_i = pair.R_vdw_1;
-                    double R_min_j = pair.R_vdw_2;
-
-                    double lambda_i = pair.lambda1;
-                    double lambda_j = pair.lambda2;
-
-                    const double arg_ij = std::fabs((r_ij - R_min_i)/lambda_i);
-                    const double arg_ji = std::fabs((r_ij - R_min_j)/lambda_j);
-
-                    int bin_ij = int(arg_ij*100);
-                    int bin_ji = int(arg_ji*100);
-
-                    double exp_ij = 0.0;
-                    double exp_ji = 0.0;
-
-                    if (bin_ij < 350) exp_ij = charmm_parser::exp_eef1[bin_ij];
-                    if (bin_ji < 350) exp_ji = charmm_parser::exp_eef1[bin_ji];
-
-                    double cont_ij = -pair.fac_12*exp_ij * inv_r_sq;
-                    double cont_ji = -pair.fac_21*exp_ji * inv_r_sq;
-
-                    // Add to local EEF1-SB energy
-                    eef1_sb_energy_temp += cont_ij + cont_ji;
-
-                }
                 // Add diatomic contribution to interaction energy of the residue pair ij.
-                this->cached_residue_pairs[i][j].energy_new += vdw_energy_temp * charmm36_constants::KJ_TO_KCAL
-                                                            + coul_energy_temp * charmm36_constants::KJ_TO_KCAL
-                                                            + eef1_sb_energy_temp;
+                this->cached_residue_interactions[i][j].energy_new += interaction_energy;
             }
 
             // Compute delta energy for the residue pair ij (I.e. subtract old, add new)
-            delta_energy_local += this->cached_residue_pairs[i][j].energy_new
-                                - this->cached_residue_pairs[i][j].energy_old;
+            delta_energy_local += this->cached_residue_interactions[i][j].energy_new
+                                - this->cached_residue_interactions[i][j].energy_old;
 
         }
 
@@ -510,7 +475,7 @@ public:
         for (unsigned int k = 0; k < this->cache_indexes.size(); k++) {
             unsigned int i = this->cache_indexes[k][0];
             unsigned int j = this->cache_indexes[k][1];
-            this->cached_residue_pairs[i][j].energy_old = this->cached_residue_pairs[i][j].energy_new;
+            this->cached_residue_interactions[i][j].energy_old = this->cached_residue_interactions[i][j].energy_new;
         }
 
         //Backup total energy
@@ -525,7 +490,7 @@ public:
         for (unsigned int k = 0; k < this->cache_indexes.size(); k++) {
             unsigned int i = this->cache_indexes[k][0];
             unsigned int j = this->cache_indexes[k][1];
-            this->cached_residue_pairs[i][j].energy_new = this->cached_residue_pairs[i][j].energy_old;
+            this->cached_residue_interactions[i][j].energy_new = this->cached_residue_interactions[i][j].energy_old;
         }
 
         // Restore total energy

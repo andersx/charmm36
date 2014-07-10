@@ -12,11 +12,11 @@ const double KJ_TO_KCAL = 1.0 / KCAL_TO_KJ;
 const double NM_TO_ANGS = 10.0;
 const double ANGS_TO_NM = 1.0 / NM_TO_ANGS;
 
-// const double ANGS2_TO_NM2 = 100.0;
-// const double NM2_TO_ANGS2 = 1.0 / ANGS2_TO_NM2;
-// 
-// const double ANGS6_TO_NM6 = 1000000.0;
-// const double NM6_TO_ANGS6 = 1.0 / ANGS2_TO_NM2;
+const double ANGS2_TO_NM2 = 100.0;
+const double NM2_TO_ANGS2 = 1.0 / ANGS2_TO_NM2;
+
+const double ANGS6_TO_NM6 = 1000000.0;
+const double NM6_TO_ANGS6 = 1.0 / ANGS2_TO_NM2;
 
 // facel = 1 / (4 * pi * epsilon_0)
 // Gromacs constant
@@ -24,6 +24,8 @@ const double ANGS_TO_NM = 1.0 / NM_TO_ANGS;
 // CHARMM program definition of facel us 332.0716
 // here we convert it to Gromacs units (
 const double FELEC = 332.0716 * ANGS_TO_NM * KCAL_TO_KJ;
+
+const double TEN_OVER_ONE_POINT_FIVE = 10.0 / 1.5;
 
 const double EXP_EEF1 [350] = {
     0.99998,0.99978,0.99938,0.99878,0.99798,0.99698,

@@ -121,7 +121,7 @@ public:
                // Here a distance dependent dieelectric constant of eps_r = 1.5 * r is used.
                // The factor of 10.0 here is because the pair.qq assumes distances in nanometers,
                // while the factor of 1.5 in eps_r assumes that r is in angstrom.
-               const double coul_energy_temp = pair.qq / (r_sq * 1.5) * 10.0;
+               const double coul_energy_temp = pair.qq / (r_sq * 1.5) * charmm36_constants::NM_TO_ANGS;
 
                if (pair.is_14_interaction) {
                     coul14_energy += coul_energy_temp;

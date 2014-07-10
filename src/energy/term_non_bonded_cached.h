@@ -28,6 +28,7 @@
 #include "energy/energy_term.h"
 
 #include "parsers/topology_parser.h"
+#include "parsers/eef1_sb_parser.h"
 #include "constants.h"
 
 namespace phaistos {
@@ -65,7 +66,7 @@ public:
           const double r_sq = ((interaction.atom1)->position - (interaction.atom2)->position).norm_squared();
 
           const double inv_r_sq = 1.0 / r_sq;
-          const double inv_r_sq6 = inv_r_sq * inv_r_sq * inv_r_sq * charmm36_constants::ANGS6_TO_NM6; //shift to nanometers^6
+          const double inv_r_sq6 = inv_r_sq * inv_r_sq * inv_r_sq * charmm36_constants::NM6_TO_ANGS6; //shift to nanometers^6
           const double inv_r_sq12 = inv_r_sq6 * inv_r_sq6;
 
           const double vdw_energy = (interaction.c12 * inv_r_sq12 - interaction.c6 * inv_r_sq6);
@@ -150,7 +151,7 @@ public:
             for (AtomIterator<ChainFB, definitions::ALL> it(*this->chain); !it.end(); ++it) {
 
                 Atom *atom = &*it;
-                std::string atom_type = charmm_parser::get_charmm36_atom_type(atom);
+                std::string atom_type = eef1_sb_parser::get_atom_type(atom);
 
                 unsigned int index = eef1_atom_type_index_map[atom_type];
 
@@ -225,7 +226,7 @@ public:
             std::cout << "Total constructor energy " << this->total_energy << std::endl;
 
 
-            cache_indexes = get_cache_indexes(0, this->chain->size() -1);
+            this->cache_indexes = get_cache_indexes(0, this->chain->size() -1);
      }
 
 
@@ -279,10 +280,7 @@ public:
      TermCharmm36NonBondedCached(const TermCharmm36NonBondedCached &other,
                  RandomNumberEngine *random_number_engine,
                  int thread_index, ChainFB *chain)
-          : EnergyTermCommon(other, random_number_engine, thread_index, chain),
-            total_energy(other.total_energy),
-            total_energy_old(other.total_energy_old)
-    {
+          : EnergyTermCommon(other, random_number_engine, thread_index, chain) {
 
           std::cout << "Setup thread # " << thread_index << std::endl;
           setup_caches();
@@ -463,7 +461,7 @@ public:
         this->total_energy += delta_energy_local;
 
         // Return energy.
-        return total_energy;
+        return this->total_energy;
 
      }
 
@@ -479,7 +477,7 @@ public:
         }
 
         //Backup total energy
-        total_energy_old = total_energy;
+        this->total_energy_old = this->total_energy;
     }
 
 
@@ -494,7 +492,7 @@ public:
         }
 
         // Restore total energy
-        total_energy = total_energy_old;
+        this->total_energy = this->total_energy_old;
     }
 
 };

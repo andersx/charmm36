@@ -21,14 +21,9 @@
 #define TERM_CHARMM36_BONDED_CACHED_H
 
 #include <string>
-#include <limits>
 
-#include <boost/type_traits/is_base_of.hpp>
 #include "energy/energy_term.h"
-#include "protein/iterators/pair_iterator_chaintree.h"
-
 #include "parsers/topology_parser.h"
-
 #include "term_cmap_tables.h"
 
 namespace phaistos {
@@ -364,7 +359,7 @@ public:
           for (int i = this->start_index; i < this->end_index+1; i ++) {
 
                const double residue_energy = 
-                    calculate_cached_residue_energy(bonded_cached_residues[i]);
+                    calculate_cached_residue_energy(this->bonded_cached_residues[i]);
 
                this->bonded_cached_residues[i].energy_new = residue_energy;
 

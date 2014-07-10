@@ -23,15 +23,13 @@
 #include <string>
 #include <math.h>
 
-#include <boost/type_traits/is_base_of.hpp>
-#include "energy/energy_term.h"
 #include "protein/iterators/pair_iterator_chaintree.h"
 
-#include "charmm36_charmm.h"
-
+#include "eef1_sb_parser.h"
 #include "topology_items.h"
-
 #include "../constants.h"
+
+
 namespace topology {
 
 std::vector<CmapInteraction> generate_cmap_interactions(phaistos::ChainFB *chain) {
@@ -51,11 +49,11 @@ std::vector<CmapInteraction> generate_cmap_interactions(phaistos::ChainFB *chain
           if (res->terminal_status == NTERM) continue;
           if (res->terminal_status == CTERM) continue;
 
-          std::string type1 = charmm_parser::get_charmm36_atom_type((*(res->get_neighbour(-1)))[C]);
-          std::string type2 = charmm_parser::get_charmm36_atom_type((*res)[N]);
-          std::string type3 = charmm_parser::get_charmm36_atom_type((*res)[CA]);
-          std::string type4 = charmm_parser::get_charmm36_atom_type((*res)[C]);
-          std::string type5 = charmm_parser::get_charmm36_atom_type((*(res->get_neighbour(+1)))[N]);
+          std::string type1 = eef1_sb_parser::get_atom_type((*(res->get_neighbour(-1)))[C]);
+          std::string type2 = eef1_sb_parser::get_atom_type((*res)[N]);
+          std::string type3 = eef1_sb_parser::get_atom_type((*res)[CA]);
+          std::string type4 = eef1_sb_parser::get_atom_type((*res)[C]);
+          std::string type5 = eef1_sb_parser::get_atom_type((*(res->get_neighbour(+1)))[N]);
 
           // std::cout << type1<< std::endl;
           // std::cout << type2<< std::endl;
@@ -148,7 +146,6 @@ std::vector<NonBondedParameter> read_nonbonded_parameters(const std::string file
         parameter.atom_type   = boost::lexical_cast<std::string >(split_line[0]);
         parameter.atom_number = boost::lexical_cast<unsigned int>(split_line[1]);
         parameter.atom_mass   = boost::lexical_cast<double      >(split_line[2]);
-        // parameter.atom_charge = boost::lexical_cast<double      >(split_line[3]);
         parameter.atom_charge = 0.0;
         parameter.atom_ptype  = boost::lexical_cast<std::string >(split_line[4]);
         parameter.sigma       = boost::lexical_cast<double      >(split_line[5]);
@@ -261,6 +258,13 @@ NonBonded14Parameter get_non_bonded14_parameter(const std::string &atom_type1,
 
 }
 
+struct AtomTypeInfo {
+    phaistos::Atom  *atom;
+    NonBondedParameter non_bonded_parameter;
+    std::string atom_type;
+    double charge;
+};
+
 std::vector<NonBondedInteraction> generate_non_bonded_interactions(phaistos::ChainFB *chain,
     const std::vector<NonBondedParameter> &non_bonded_parameters,
     const std::vector<NonBonded14Parameter> &non_bonded_14_parameters) {
@@ -269,35 +273,42 @@ std::vector<NonBondedInteraction> generate_non_bonded_interactions(phaistos::Cha
 
     std::vector<NonBondedInteraction> non_bonded_interactions;
 
-    int i = -1;
+    std::vector<AtomTypeInfo> atom_type_infos;
+
     for (AtomIterator<ChainFB, definitions::ALL> it1(*chain); !it1.end(); ++it1) {
-        i++;
-        int j = -1;
+
+        AtomTypeInfo atom_type_info;
 
         Atom *atom1 = &*it1;
 
-        std::string atom_type1 = charmm_parser::get_charmm36_atom_type(atom1);
-        //double atom_charge1 = charmm_parser::get_charmm36_atom_charge(atom1);
-        double atom_charge1 = charmm_parser::get_eef1_sb_atom_charge(atom1);
+        atom_type_info.atom = atom1;
+        atom_type_info.atom_type = eef1_sb_parser::get_atom_type(atom1);
+        atom_type_info.charge = eef1_sb_parser::get_atom_charge(atom1);
+        atom_type_info.non_bonded_parameter = get_non_bonded_parameter(atom_type_info.atom_type,
+                                                                       non_bonded_parameters);
 
-        NonBondedParameter parameter1 = get_non_bonded_parameter(atom_type1, non_bonded_parameters);
+        atom_type_infos.push_back(atom_type_info);
+    }
+    
 
-        for (AtomIterator<ChainFB, definitions::ALL> it2(*chain); !it2.end(); ++it2) {
+    for (unsigned int i = 0; i < atom_type_infos.size(); i++) {
 
-            j++;
+
+        Atom *atom1 = atom_type_infos[i].atom;
+        const std::string atom_type1 = atom_type_infos[i].atom_type;
+        const double atom_charge1 = atom_type_infos[i].charge;
+        const NonBondedParameter parameter1 = atom_type_infos[i].non_bonded_parameter;
+
+        for (unsigned int j = 0; j < atom_type_infos.size(); j++) {
+
             if (i > j) continue;
 
-            Atom *atom2 = &*it2;
-            int d = chain_distance<ChainFB>(atom1,atom2);
-            // int test_atom_index = 295;
+            Atom *atom2 = atom_type_infos[j].atom;
+            const std::string atom_type2 = atom_type_infos[j].atom_type;
+            const double atom_charge2 = atom_type_infos[j].charge;
+            const NonBondedParameter parameter2 = atom_type_infos[j].non_bonded_parameter;
 
-            std::string atom_type2 = charmm_parser::get_charmm36_atom_type(atom2);
-            // double atom_charge2 = charmm_parser::get_charmm36_atom_charge(atom2);
-            double atom_charge2 = charmm_parser::get_eef1_sb_atom_charge(atom2);
-
-
-
-            NonBondedParameter parameter2 = get_non_bonded_parameter(atom_type2, non_bonded_parameters);
+            const int d = chain_distance<ChainFB>(atom1,atom2);
 
             if (d > 3) {
                NonBondedInteraction non_bonded_interaction;
@@ -362,6 +373,7 @@ std::vector<NonBondedInteraction> generate_non_bonded_interactions(phaistos::Cha
 }
 
 
+
 std::vector<NonBondedInteraction> generate_non_bonded_interactions_cached(phaistos::ChainFB *chain,
                     const std::vector<NonBondedParameter> &non_bonded_parameters,
                     const std::vector<NonBonded14Parameter> &non_bonded_14_parameters,
@@ -376,35 +388,42 @@ std::vector<NonBondedInteraction> generate_non_bonded_interactions_cached(phaist
 
     std::vector<NonBondedInteraction> non_bonded_interactions;
 
-    int i = -1;
+    std::vector<AtomTypeInfo> atom_type_infos;
+
     for (AtomIterator<ChainFB, definitions::ALL> it1(*chain); !it1.end(); ++it1) {
-        i++;
-        int j = -1;
+
+        AtomTypeInfo atom_type_info;
 
         Atom *atom1 = &*it1;
 
-        //std::string atom_type1 = gromacs_parser::get_charmm36_atom_type(atom1);
-        //double atom_charge1 = gromacs_parser::get_charmm36_atom_charge(atom1);
+        atom_type_info.atom = atom1;
+        atom_type_info.atom_type = eef1_sb_parser::get_atom_type(atom1);
+        atom_type_info.charge = eef1_sb_parser::get_atom_charge(atom1);
+        atom_type_info.non_bonded_parameter = get_non_bonded_parameter(atom_type_info.atom_type,
+                                                                       non_bonded_parameters);
 
-        std::string atom_type1 = charmm_parser::get_charmm36_atom_type(atom1);
-        // double atom_charge1 = charmm_parser::get_charmm36_atom_charge(atom1);
-        double atom_charge1 = charmm_parser::get_eef1_sb_atom_charge(atom1);
+        atom_type_infos.push_back(atom_type_info);
+    }
+    
 
-        NonBondedParameter parameter1 = get_non_bonded_parameter(atom_type1, non_bonded_parameters);
+    for (unsigned int i = 0; i < atom_type_infos.size(); i++) {
 
 
-        for (AtomIterator<ChainFB, definitions::ALL> it2(*chain); !it2.end(); ++it2) {
+        Atom *atom1 = atom_type_infos[i].atom;
+        const std::string atom_type1 = atom_type_infos[i].atom_type;
+        const double atom_charge1 = atom_type_infos[i].charge;
+        const NonBondedParameter parameter1 = atom_type_infos[i].non_bonded_parameter;
 
-            j++;
+        for (unsigned int j = 0; j < atom_type_infos.size(); j++) {
+
             if (i > j) continue;
 
-            Atom *atom2 = &*it2;
-            int d = chain_distance<ChainFB>(atom1,atom2);
+            Atom *atom2 = atom_type_infos[j].atom;
+            const std::string atom_type2 = atom_type_infos[j].atom_type;
+            const double atom_charge2 = atom_type_infos[j].charge;
+            const NonBondedParameter parameter2 = atom_type_infos[j].non_bonded_parameter;
 
-            std::string atom_type2 = charmm_parser::get_charmm36_atom_type(atom2);
-            double atom_charge2 = charmm_parser::get_eef1_sb_atom_charge(atom2);
-
-            NonBondedParameter parameter2 = get_non_bonded_parameter(atom_type2, non_bonded_parameters);
+            const int d = chain_distance<ChainFB>(atom1,atom2);
 
             if (d > 3) {
                NonBondedInteraction non_bonded_interaction;
@@ -428,8 +447,8 @@ std::vector<NonBondedInteraction> generate_non_bonded_interactions_cached(phaist
 
                non_bonded_interaction.is_14_interaction = false;
 
-               non_bonded_interaction.i1 = i;
-               non_bonded_interaction.i2 = j;
+              non_bonded_interaction.i1 = i;
+              non_bonded_interaction.i2 = j;
 
                if (!(atom1->mass == definitions::atom_h_weight) &&
                    !(chain_distance<ChainFB>(atom1,atom2) < 3) &&
@@ -437,8 +456,8 @@ std::vector<NonBondedInteraction> generate_non_bonded_interactions_cached(phaist
 
                    non_bonded_interaction.do_eef1 = true;
 
-                   std::string atom_type36_1 = charmm_parser::get_charmm36_atom_type(atom1);
-                   std::string atom_type36_2 = charmm_parser::get_charmm36_atom_type(atom2);
+                   std::string atom_type36_1 = atom_type_infos[i].atom_type;
+                   std::string atom_type36_2 = atom_type_infos[j].atom_type;
 
                    unsigned int index1 = eef1_atom_type_index_map[atom_type36_1];
                    unsigned int index2 = eef1_atom_type_index_map[atom_type36_2];
@@ -459,8 +478,8 @@ std::vector<NonBondedInteraction> generate_non_bonded_interactions_cached(phaist
 
 
                 NonBonded14Parameter parameter14 = get_non_bonded14_parameter(atom_type1, atom_type2,
-                                                                            non_bonded_14_parameters,
-                                                                            non_bonded_parameters);
+                                                                              non_bonded_14_parameters,
+                                                                              non_bonded_parameters);
 
                 NonBondedParameter parameter2 = get_non_bonded_parameter(atom_type2, non_bonded_parameters);
                 NonBondedInteraction non_bonded_interaction;
@@ -487,8 +506,8 @@ std::vector<NonBondedInteraction> generate_non_bonded_interactions_cached(phaist
 
                    non_bonded_interaction.do_eef1 = true;
 
-                   std::string atom_type36_1 = charmm_parser::get_charmm36_atom_type(atom1);
-                   std::string atom_type36_2 = charmm_parser::get_charmm36_atom_type(atom2);
+                   std::string atom_type36_1 = atom_type_infos[i].atom_type;
+                   std::string atom_type36_2 = atom_type_infos[j].atom_type;
 
                    unsigned int index1 = eef1_atom_type_index_map[atom_type36_1];
                    unsigned int index2 = eef1_atom_type_index_map[atom_type36_2];
@@ -578,8 +597,6 @@ std::vector<TorsionInteraction> generate_torsion_interactions(phaistos::ChainFB 
 
             if(chain_distance<ChainFB>(atom2,atom3) != 1)
                 continue;
-            // this->counter++;
-            // std::cout << counter << atom2 << atom3 << std::endl;
             for (CovalentBondIterator<ChainFB> it1(atom2, CovalentBondIterator<ChainFB>::DEPTH_1_ONLY);
                 !it1.end(); ++it1) {
                 Atom *atom1 = &*it1;
@@ -591,12 +608,10 @@ std::vector<TorsionInteraction> generate_torsion_interactions(phaistos::ChainFB 
 
                         bool found_this_parameter = false;
 
-                        // std::cout << atom1 << atom2 << atom3 << atom4 << std::endl;
-
-                        std::string type1 = charmm_parser::get_charmm36_atom_type(atom1);
-                        std::string type2 = charmm_parser::get_charmm36_atom_type(atom2);
-                        std::string type3 = charmm_parser::get_charmm36_atom_type(atom3);
-                        std::string type4 = charmm_parser::get_charmm36_atom_type(atom4);
+                        std::string type1 = eef1_sb_parser::get_atom_type(atom1);
+                        std::string type2 = eef1_sb_parser::get_atom_type(atom2);
+                        std::string type3 = eef1_sb_parser::get_atom_type(atom3);
+                        std::string type4 = eef1_sb_parser::get_atom_type(atom4);
 
                         for (unsigned int i = 0; i < torsion_parameters.size(); i++) {
 
@@ -662,16 +677,7 @@ std::vector<TorsionInteraction> generate_torsion_interactions(phaistos::ChainFB 
                             if (!found_this_parameter) {
                                 std::cout << "ASC: TORERR COULD NOT FIND DIHEDRAL PARAM" << atom1 << atom2 << atom3 << atom4 << std::endl;
                                 std::cout << "ASC: TORERR COULD NOT FIND DIHEDRAL PARAM   " << type1 << "  " << type2 << "  " << type3 << "  " << type4 << "  " << std::endl;
-                            } else {
-
-                                // std::cout << "ASC: TOR FOUND DIHEDRAL PARAM" << atom1 << atom2 << atom3 << atom4 << std::endl;
                             }
-
-                            // std::cout << "ASC: TORERR COULD NOT FIND DIHEDRAL PARAM" << atom1 << atom2 << atom3 << atom4 << std::endl;
-                            // std::cout << "ASC: TORERR COULD NOT FIND DIHEDRAL PARAM   " << type1 << "  " << type2 << "  " << type3 << "  " << type4 << "  " << std::endl;
-                        } else {
-
-                            // std::cout << "ASC: TOR FOUND DIHEDRAL PARAM" << atom1 << atom2 << atom3 << atom4 << std::endl;
                         }
                     }
                 }
@@ -700,7 +706,6 @@ std::vector<BondedPairParameter> read_bonded_pair_parameters(const std::string &
 
         boost::trim(line);
 
-        // std::cout << line << std::endl;
         if (line.size() == 0 || line[0] == ';') {
             continue;
         }
@@ -733,7 +738,7 @@ std::vector<BondedPairInteraction> generate_bonded_pair_interactions(phaistos::C
 
     for (AtomIterator<ChainFB,definitions::ALL> it1(*(chain)); !it1.end(); ++it1) {
         Atom *atom1 = &*it1;
-        std::string type1 = charmm_parser::get_charmm36_atom_type(atom1);
+        std::string type1 = eef1_sb_parser::get_atom_type(atom1);
 
         for (CovalentBondIterator<ChainFB> it2(atom1, CovalentBondIterator<ChainFB>::DEPTH_1_ONLY);
             !it2.end(); ++it2) {
@@ -742,7 +747,7 @@ std::vector<BondedPairInteraction> generate_bonded_pair_interactions(phaistos::C
             if (atom1->residue->index < atom2->residue->index ||
                 (atom1->residue->index == atom2->residue->index && atom1->index < atom2->index)) {
 
-                std::string type2 = charmm_parser::get_charmm36_atom_type(atom2);
+                std::string type2 = eef1_sb_parser::get_atom_type(atom2);
 
                 for (unsigned int i = 0; i < bonded_pair_parameters.size(); i++) {
 
@@ -825,12 +830,12 @@ std::vector<AngleBendInteraction> generate_angle_bend_interactions(phaistos::Cha
     for (AtomIterator<ChainFB,definitions::ALL> it1(*(chain)); !it1.end(); ++it1) {
         Atom *atom2 = &*it1;
 
-        std::string type2 = charmm_parser::get_charmm36_atom_type(atom2);
+        std::string type2 = eef1_sb_parser::get_atom_type(atom2);
         for (CovalentBondIterator<ChainFB> it2(atom2, CovalentBondIterator<ChainFB>::DEPTH_1_ONLY);
             !it2.end(); ++it2) {
 
             Atom *atom1 = &*it2;
-            std::string type1 = charmm_parser::get_charmm36_atom_type(atom1);
+            std::string type1 = eef1_sb_parser::get_atom_type(atom1);
 
             CovalentBondIterator<ChainFB> it3(it2);
             // Fancy way to discard it3 = it1
@@ -838,7 +843,7 @@ std::vector<AngleBendInteraction> generate_angle_bend_interactions(phaistos::Cha
             for (; !it3.end(); ++it3) {
                 Atom *atom3 = &*it3;
 
-                std::string type3 = charmm_parser::get_charmm36_atom_type(atom3);
+                std::string type3 = eef1_sb_parser::get_atom_type(atom3);
 
                 bool found_this_parameter = false;
 
@@ -930,10 +935,10 @@ ImptorInteraction atoms_to_imptor(const std::vector<phaistos::Atom*> &atoms,
     imptor.atom3 = atoms[2];
     imptor.atom4 = atoms[3];
 
-    std::string type1 = charmm_parser::get_charmm36_atom_type(atoms[0]);
-    std::string type2 = charmm_parser::get_charmm36_atom_type(atoms[1]);
-    std::string type3 = charmm_parser::get_charmm36_atom_type(atoms[2]);
-    std::string type4 = charmm_parser::get_charmm36_atom_type(atoms[3]);
+    std::string type1 = eef1_sb_parser::get_atom_type(atoms[0]);
+    std::string type2 = eef1_sb_parser::get_atom_type(atoms[1]);
+    std::string type3 = eef1_sb_parser::get_atom_type(atoms[2]);
+    std::string type4 = eef1_sb_parser::get_atom_type(atoms[3]);
 
     bool found_parameter = false;
 

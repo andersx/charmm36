@@ -23,7 +23,7 @@
 #include <boost/type_traits/is_base_of.hpp>
 #include <boost/tokenizer.hpp>
 #include "energy/energy_term.h"
-#include "parsers/charmm36_charmm.h"
+#include "parsers/eef1_sb_parser.h"
 
 namespace phaistos {
 
@@ -253,7 +253,7 @@ public:
      //! Return index in parameter table corresponding to the atomtype
      int get_index(Atom *atom){
 
-          std::string atom_type = charmm_parser::get_charmm36_atom_type(atom);
+          std::string atom_type = eef1_sb_parser::get_atom_type(atom);
           unsigned int eef1_atom_type_index = eef1_atom_type_index_map[atom_type];
 
           return (int)eef1_atom_type_index;
@@ -304,7 +304,7 @@ public:
 
           }
 
-          printf("          EEF1-SB E = %15.6f kJ/mol\n", energy_sum * 4.184);
+          printf("          EEF1-SB E = %15.6f kJ/mol\n", energy_sum * charmm36_constants::KCAL_TO_KJ);
           printf("          EEF1-SB E = %15.6f kcal/mol\n", energy_sum);
           return energy_sum;
      }

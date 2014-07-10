@@ -118,7 +118,7 @@ public:
               topology::NonBondedInteraction pair = this->non_bonded_interactions[i];
 
                const double r_sq = ((pair.atom1)->position - (pair.atom2)->position).norm_squared();
-               const double inv_r_sq = 100.0 / (r_sq); //shift to nanometers
+               const double inv_r_sq = charmm36_constants::NM2_TO_ANGS2 / (r_sq);
                const double inv_r_sq6 = inv_r_sq * inv_r_sq * inv_r_sq;
                const double inv_r_sq12 = inv_r_sq6 * inv_r_sq6;
                const double vdw_energy_temp = pair.c12 * inv_r_sq12 - pair.c6 * inv_r_sq6;

@@ -21,15 +21,22 @@
 #define TERM_CHARMM36_CHARMM_PARSER_H
 
 #include <string>
+#include <math.h>
 
-namespace charmm36_parser {
+#include <boost/type_traits/is_base_of.hpp>
+#include "energy/energy_term.h"
+#include "protein/iterators/pair_iterator_chaintree.h"
 
+namespace eef1_sb_parser {
 
 // Returns the atom type according to the CHARMM36 force field
-// as implemented in the CHARMM program ... note that these are 
-// slightly different that the atom types defined in CHARMM36 
-// in GROMACS.
-std::string get_atom_type(phaistos::Atom *atom) {
+// as implemented in CHARMM ... note that these are slightly
+// different that the atom types defined in CHARMM36 in Gromacs.
+
+//! Returns the atom type according to the CHARMM36-EEF1-SB force field    
+//! \param atom Pointer the atom for which the type is to be determined
+//! \returns A string with the CHARMM36-EEF1-SB atom type
+std::string get_atom_type(const phaistos::Atom *atom) {
 
     using namespace phaistos;
     using namespace definitions;
@@ -545,7 +552,9 @@ std::string get_atom_type(phaistos::Atom *atom) {
 
 }
 
-
+//! Returns the atom charge according to the CHARMM36-EEF1-SB force field    
+//! \param atom Pointer the atom for which the charge is to be determined
+//! \returns A double containing the CHARMM36-EEF1-SB atom charge
 double get_atom_charge(phaistos::Atom *atom) {
 
     using namespace phaistos;
@@ -630,7 +639,7 @@ double get_atom_charge(phaistos::Atom *atom) {
         atom_map[CA]  = 0.07;
         atom_map[HA]  = 0.09;
         atom_map[CB]  = -0.28;
-        // atom_map[HB2] = 0.09; // 
+        // atom_map[HB2] = 0.09; //
         // atom_map[HB3] = 0.09; //
         atom_map[HB2] = 0.14; //
         atom_map[HB3] = 0.14; //
@@ -1103,6 +1112,5 @@ double get_atom_charge(phaistos::Atom *atom) {
 
 }
 
-
-} // End namespace
+} // End namespace gromacs parser
 #endif

@@ -21,11 +21,6 @@
 #define TERM_TOPOLOGY__H
 
 #include <string>
-#include <math.h>
-
-#include <boost/type_traits/is_base_of.hpp>
-#include "energy/energy_term.h"
-#include "protein/iterators/pair_iterator_chaintree.h"
 
 namespace topology {
 
@@ -35,6 +30,7 @@ struct CmapInteraction {
     unsigned int cmap_type_index;
     int residue_index;
 };
+
 
 
 struct NonBondedParameter {
@@ -114,8 +110,6 @@ struct TorsionInteraction {
     unsigned int mult;
 
 };
-
-
 
 
 struct BondedPairParameter {

@@ -22,12 +22,7 @@
 
 #include <string>
 
-#include <boost/tokenizer.hpp>
-
-#include <boost/type_traits/is_base_of.hpp>
 #include "energy/energy_term.h"
-#include "protein/iterators/pair_iterator_chaintree.h"
-
 #include "parsers/topology_parser.h"
 
 namespace phaistos {

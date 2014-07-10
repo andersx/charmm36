@@ -20,7 +20,7 @@
 #ifndef TERM_CHARMM36_BONDSTRETCH_H
 #define TERM_CHARMM36_BONDSTRETCH_H
 
-#include <boost/type_traits/is_base_of.hpp>
+#include <string>
 #include "energy/energy_term.h"
 #include "parsers/topology_parser.h"
 
@@ -90,7 +90,7 @@ public:
 
                topology::BondedPairInteraction pair = this->bonded_pair_interactions[i];
 
-               const double r = ((pair.atom1)->position - (pair.atom2)->position).norm() / 10.0;
+               const double r = ((pair.atom1)->position - (pair.atom2)->position).norm() * charmm36_constants::ANGS_TO_NM;
                const double kb = pair.kb;
                const double r0 = pair.r0;
 
@@ -103,9 +103,9 @@ public:
           }
 
           printf("     bond-stretch E = %15.6f kJ/mol\n", e_bond);
-          printf("     bond-stretch E = %15.6f kcal/mol\n", e_bond/4.184);
+          printf("     bond-stretch E = %15.6f kcal/mol\n", e_bond * charmm36_constants::KJ_TO_KCAL);
 
-          return e_bond / 4.184;
+          return e_bond * charmm36_constants::KJ_TO_KCAL;
      }
 
 };

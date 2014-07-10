@@ -30,14 +30,14 @@
 namespace topology {
 
 
-struct CmapPair {
+struct CmapInteraction {
     phaistos::Residue *residue;
     unsigned int cmap_type_index;
     int residue_index;
 };
 
 
-struct NonBondedParameter{
+struct NonBondedParameter {
 
     std::string atom_type;
     unsigned int atom_number;
@@ -50,7 +50,7 @@ struct NonBondedParameter{
 };
 
 
-struct NonBonded14Parameter{
+struct NonBonded14Parameter {
 
     std::string atom_type1;
     std::string atom_type2;
@@ -61,7 +61,7 @@ struct NonBonded14Parameter{
 };
 
 
-struct NonBondedPair{
+struct NonBondedInteraction {
     phaistos::Atom *atom1;
     phaistos::Atom *atom2;
     double q1;
@@ -90,7 +90,7 @@ struct NonBondedPair{
 };
 
 
-struct DihedralType9Parameter {
+struct TorsionParameter {
 
     std::string type1;
     std::string type2;
@@ -103,7 +103,7 @@ struct DihedralType9Parameter {
 };
 
 
-struct DihedralAngleType9 {
+struct TorsionInteraction {
 
     phaistos::Atom *atom1;
     phaistos::Atom *atom2;
@@ -126,7 +126,7 @@ struct BondedPairParameter {
 };
 
 
-struct BondedPair {
+struct BondedPairInteraction {
     phaistos::Atom *atom1;
     phaistos::Atom *atom2;
     double kb;
@@ -145,7 +145,7 @@ struct AngleBendParameter {
 };
 
 
-struct AngleBendPair {
+struct AngleBendInteraction {
     phaistos::Atom *atom1;
     phaistos::Atom *atom2;
     phaistos::Atom *atom3;
@@ -156,7 +156,7 @@ struct AngleBendPair {
 };
 
 
-struct DihedralType2Parameter {
+struct ImptorParameter {
 
     std::string type1;
     std::string type2;
@@ -168,7 +168,7 @@ struct DihedralType2Parameter {
 };
 
 
-struct Imptor {
+struct ImptorInteraction {
 
     phaistos::Atom *atom1;
     phaistos::Atom *atom2;

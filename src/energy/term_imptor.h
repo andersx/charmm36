@@ -38,7 +38,7 @@ public:
      //! Use same settings as base class
      typedef EnergyTerm<ChainFB>::SettingsClassicEnergy Settings;
 
-     std::vector<topology::Imptor> imptors;
+     std::vector<topology::ImptorInteraction> imptor_interactions;
 
      //! Constructor.
      //! \param chain Molecule chain
@@ -50,8 +50,8 @@ public:
           : EnergyTermCommon(chain, "charmm36-imptor", settings, random_number_engine) {
 
           std::string filename = "/home/andersx/phaistos_dev/modules/charmm36/src/energy/parameters/imptor.itp";
-          std::vector<topology::DihedralType2Parameter> dihedral_type_2_parameters = topology::read_dihedral_type_2_parameters(filename);
-          imptors = topology::generate_imptors(this->chain, dihedral_type_2_parameters);
+          std::vector<topology::ImptorParameter> imptor_parameters = topology::read_imptor_parameters(filename);
+          this->imptor_interactions = topology::generate_imptor_interactions(this->chain, imptor_parameters);
 
      }
 
@@ -63,9 +63,12 @@ public:
      TermCharmm36Imptor(const TermCharmm36Imptor &other,
                  RandomNumberEngine *random_number_engine,
                  int thread_index, ChainFB *chain)
-          : EnergyTermCommon(other, random_number_engine, thread_index, chain),
-            imptors(other.imptors) {}
+          : EnergyTermCommon(other, random_number_engine, thread_index, chain) {
 
+          std::string filename = "/home/andersx/phaistos_dev/modules/charmm36/src/energy/parameters/imptor.itp";
+          std::vector<topology::ImptorParameter> imptor_parameters = topology::read_imptor_parameters(filename);
+          this->imptor_interactions = topology::generate_imptor_interactions(this->chain, imptor_parameters);
+     }
 
      //! Evaluate
      //! \param move_info object containing information about last move
@@ -74,34 +77,25 @@ public:
 
           double energy_imptor = 0.0;
 
-          for (unsigned int i = 0; i < imptors.size(); i++) {
+          for (unsigned int i = 0; i < this->imptor_interactions.size(); i++) {
 
-               topology::Imptor imptor = imptors[i];
+               topology::ImptorInteraction imptor = this->imptor_interactions[i];
 
                const double phi = calc_dihedral((imptor.atom1)->position,
                                                 (imptor.atom2)->position,
                                                 (imptor.atom3)->position,
                                                 (imptor.atom4)->position);
 
-               const double dphi = phi - imptor.phi0 / 180.0 * M_PI;
+               const double dphi = phi - imptor.phi0 * charmm36_constants::DEG_TO_RAD;
                const double energy_imptor_temp = 0.5 * imptor.cp * dphi * dphi;
 
                energy_imptor += energy_imptor_temp;
-              // printf("ASC: IMP XYZ1 = %8.4f %8.4f %8.4f   XYZ2 = %8.4f %8.4f %8.4f   XYZ3 = %8.4f %8.4f %8.4f   XYZ4 = %8.4f %8.4f %8.4f   a = %15.10f   phi0 = %9.4f   cp = %12.4f   eimp = %14.10f\n",
-
-              //         (imptor.atom1)->position[0], (imptor.atom1)->position[1], (imptor.atom1)->position[2],
-              //         (imptor.atom2)->position[0], (imptor.atom2)->position[1], (imptor.atom2)->position[2],
-              //         (imptor.atom3)->position[0], (imptor.atom3)->position[1], (imptor.atom3)->position[2],
-              //         (imptor.atom4)->position[0], (imptor.atom4)->position[1], (imptor.atom4)->position[2],
-              //         phi *180.0 / M_PI, imptor.phi0, imptor.cp, energy_imptor_temp);
           }
 
-
-
           printf("           imptor E = %15.6f kJ/mol\n", energy_imptor);
-          printf("           imptor E = %15.6f kcal/mol\n", energy_imptor/4.184);
+          printf("           imptor E = %15.6f kcal/mol\n", energy_imptor * charmm36_constants::KJ_TO_KCAL);
 
-          return energy_imptor / 4.184;
+          return energy_imptor * charmm36_constants::KJ_TO_KCAL;
      }
 
 };

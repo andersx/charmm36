@@ -40,7 +40,7 @@ public:
      // Use same settings as base class
      typedef EnergyTerm<ChainFB>::SettingsClassicEnergy Settings;
 
-     std::vector<topology::BondedPair> bonded_pairs;
+     std::vector<topology::BondedPairInteraction> bonded_pair_interactions;
 
      //! Constructor
      //! \param chain Molecule chain
@@ -56,7 +56,7 @@ public:
           std::vector<topology::BondedPairParameter> bonded_pair_parameters 
               = topology::read_bonded_pair_parameters(filename);
 
-          this->bonded_pairs = topology::generate_bonded_pairs(this->chain, bonded_pair_parameters);
+          this->bonded_pair_interactions = topology::generate_bonded_pair_interactions(this->chain, bonded_pair_parameters);
 
      }
 
@@ -68,8 +68,16 @@ public:
      TermCharmm36BondStretch(const TermCharmm36BondStretch &other,
                             RandomNumberEngine *random_number_engine,
                             int thread_index, ChainFB *chain)
-          : EnergyTermCommon(other, random_number_engine, thread_index, chain),
-          bonded_pairs(other.bonded_pairs) {}
+          : EnergyTermCommon(other, random_number_engine, thread_index, chain) {
+
+          std::string filename = "/home/andersx/phaistos_dev/modules/charmm36/src/energy/parameters/bond_stretch.itp";
+
+          std::vector<topology::BondedPairParameter> bonded_pair_parameters 
+              = topology::read_bonded_pair_parameters(filename);
+
+          this->bonded_pair_interactions = topology::generate_bonded_pair_interactions(this->chain, bonded_pair_parameters);
+
+     }
 
      //! Evaluate chain energy
      //! \param move_info object containing information about last move
@@ -78,9 +86,9 @@ public:
 
           double e_bond = 0.0;
 
-          for (unsigned int i = 0; i < this->bonded_pairs.size(); i++){
+          for (unsigned int i = 0; i < this->bonded_pair_interactions.size(); i++){
 
-               topology::BondedPair pair = this->bonded_pairs[i];
+               topology::BondedPairInteraction pair = this->bonded_pair_interactions[i];
 
                const double r = ((pair.atom1)->position - (pair.atom2)->position).norm() / 10.0;
                const double kb = pair.kb;

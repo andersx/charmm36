@@ -24,9 +24,9 @@
 
 #include <boost/type_traits/is_base_of.hpp>
 #include "energy/energy_term.h"
-#include "protein/iterators/pair_iterator_chaintree.h"
 
 #include "parsers/topology_parser.h"
+#include "constants.h"
 
 namespace phaistos {
 
@@ -38,17 +38,17 @@ protected:
      //! For convenience, define local EnergyTermCommon
      typedef phaistos::EnergyTermCommon<TermCharmm36NonBondedCached, ChainFB> EnergyTermCommon;
 
-     struct CachedResiduePair {
+     struct CachedResidueInteraction {
 
         double energy_old;
         double energy_new;
 
-        std::vector<topology::NonBondedPair> pairs;
+        std::vector<topology::NonBondedInteraction> interactions;
 
      };
 
      //! Lookup tables containing parameters
-     std::vector< std::vector<CachedResiduePair> > cached_residue_pairs;
+     std::vector< std::vector<CachedResidueInteraction> > cached_residue_interactions;
      double total_energy;
      double total_energy_old;
      std::vector<std::vector<unsigned int> > cache_indexes;
@@ -58,14 +58,9 @@ public:
      //! Use same settings as base class
      typedef EnergyTerm<ChainFB>::SettingsClassicEnergy Settings;
 
-     //! Constructor.
-     //! \param chain Molecule chain
-     //! \param settings Local Settings object
-     //! \param random_number_engine Object from which random number generators can be created.
-     TermCharmm36NonBondedCached(ChainFB *chain,
-                    const Settings &settings = Settings(),
-                    RandomNumberEngine *random_number_engine = &random_global)
-          : EnergyTermCommon(chain, "charmm36-non-bonded-cached", settings, random_number_engine) {
+
+     void setup_caches() {
+
 
           std::vector<double> dGref;
           std::vector< std::vector<double> > factors;
@@ -87,15 +82,15 @@ public:
           std::vector<topology::NonBonded14Parameter> non_bonded_14_parameters
               = topology::read_nonbonded_14_parameters(non_bonded_14_filename);
 
-          std::vector<topology::NonBondedPair> non_bonded_pairs
-              = generate_non_bonded_pairs(this->chain,
-                                          non_bonded_parameters,
-                                          non_bonded_14_parameters,
-                                          dGref,
-                                          factors,
-                                          vdw_radii,
-                                          lambda,
-                                          eef1_atom_type_index_map);
+          std::vector<topology::NonBondedInteraction> non_bonded_interactions
+              = topology::generate_non_bonded_interactions_cached(this->chain,
+                                                                  non_bonded_parameters,
+                                                                  non_bonded_14_parameters,
+                                                                  dGref,
+                                                                  factors,
+                                                                  vdw_radii,
+                                                                  lambda,
+                                                                  eef1_atom_type_index_map);
 
             double dGref_total = 0.0;
 
@@ -113,23 +108,23 @@ public:
             for (int i = 0; i < this->chain->size(); i++) {
 
                 // Dummy residue pair
-                std::vector<CachedResiduePair> temp_pair_vector;
-                this->cached_residue_pairs.push_back(temp_pair_vector);
+                std::vector<CachedResidueInteraction> temp_pair_vector;
+                this->cached_residue_interactions.push_back(temp_pair_vector);
 
                 for (int j = 0; j < this->chain->size(); j++) {
 
                     // Initialize residue pair and push back
-                    CachedResiduePair temp_pair;
+                    CachedResidueInteraction temp_pair;
                     temp_pair.energy_old = 0.0;
                     temp_pair.energy_new = 0.0;
-                    this->cached_residue_pairs[i].push_back(temp_pair);
+                    this->cached_residue_interactions[i].push_back(temp_pair);
                 }
             }
 
             // Fill atom pairs in cache matrix
-            for (unsigned int i = 0; i < non_bonded_pairs.size(); i++) {
+            for (unsigned int i = 0; i < non_bonded_interactions.size(); i++) {
 
-                topology::NonBondedPair pair = non_bonded_pairs[i];
+                topology::NonBondedInteraction pair = non_bonded_interactions[i];
 
                 // Get the residue indexes of the atoms involved in this pair
                 int residue1_index = (pair.atom1)->residue->index;
@@ -137,9 +132,9 @@ public:
 
                 // Make sure we only fill out the upper triangle of the cache matrix
                 if (residue2_index > residue1_index) {
-                    this->cached_residue_pairs[residue2_index][residue1_index].pairs.push_back(pair);
+                    this->cached_residue_interactions[residue2_index][residue1_index].interactions.push_back(pair);
                 } else {
-                    this->cached_residue_pairs[residue1_index][residue2_index].pairs.push_back(pair);
+                    this->cached_residue_interactions[residue1_index][residue2_index].interactions.push_back(pair);
                 }
             }
 
@@ -152,23 +147,23 @@ public:
                 for (int j = 0; j < this->chain->size(); j++) {
 
                     // Reset matrix element energies
-                    this->cached_residue_pairs[i][j].energy_old = 0.0;
-                    this->cached_residue_pairs[i][j].energy_new = 0.0;
+                    this->cached_residue_interactions[i][j].energy_old = 0.0;
+                    this->cached_residue_interactions[i][j].energy_new = 0.0;
                     // if (j > i) continue;
 
                     // Sum over all interactions in that matrix element
-                    for (unsigned int k = 0; k < this->cached_residue_pairs[i][j].pairs.size(); k++) {
+                    for (unsigned int k = 0; k < this->cached_residue_interactions[i][j].interactions.size(); k++) {
 
-                        topology::NonBondedPair pair = this->cached_residue_pairs[i][j].pairs[k];
+                        topology::NonBondedInteraction pair = this->cached_residue_interactions[i][j].interactions[k];
 
                         const double r_sq = ((pair.atom1)->position - (pair.atom2)->position).norm_squared();
                         const double inv_r_sq = 100.0 / (r_sq); //shift to nanometers
                         const double inv_r_sq6 = inv_r_sq * inv_r_sq * inv_r_sq;
                         const double inv_r_sq12 = inv_r_sq6 * inv_r_sq6;
-                        const double vdw_energy_temp = (pair.c12 * inv_r_sq12 - pair.c6 * inv_r_sq6) / 4.184;
+                        const double vdw_energy_temp = (pair.c12 * inv_r_sq12 - pair.c6 * inv_r_sq6) * charmm36_constants::KJ_TO_KCAL;
 
                         // const double coul_energy_temp = pair.qq * sqrt(inv_r_sq)/ 4.184;
-                        const double coul_energy_temp = pair.qq / (r_sq * 1.5) * 10.0;
+                        const double coul_energy_temp = pair.qq / (r_sq * 1.5) * 10.0;// * charmm36_constants::KJ_TO_KCAL;
 
                         double eef1_sb_energy_temp = 0.0;
 
@@ -193,8 +188,8 @@ public:
                             double exp_ij = 0.0;
                             double exp_ji = 0.0;
 
-                            if (bin_ij < 350) exp_ij = charmm_parser::exp_eef1[bin_ij];
-                            if (bin_ji < 350) exp_ji = charmm_parser::exp_eef1[bin_ji];
+                            if (bin_ij < 350) exp_ij = charmm36_constants::EEF_EXP1[bin_ij];
+                            if (bin_ji < 350) exp_ji = charmm36_constants::EEF_EXP1[bin_ji];
 
                             double cont_ij = -pair.fac_12*exp_ij/r_sq;
                             double cont_ji = -pair.fac_21*exp_ji/r_sq;
@@ -204,8 +199,8 @@ public:
 
                         }
                         // Add to matrix element
-                        this->cached_residue_pairs[i][j].energy_old += vdw_energy_temp + coul_energy_temp + eef1_sb_energy_temp;
-                        this->cached_residue_pairs[i][j].energy_new += vdw_energy_temp + coul_energy_temp + eef1_sb_energy_temp;
+                        this->cached_residue_interactions[i][j].energy_old += vdw_energy_temp + coul_energy_temp + eef1_sb_energy_temp;
+                        this->cached_residue_interactions[i][j].energy_new += vdw_energy_temp + coul_energy_temp + eef1_sb_energy_temp;
 
                         //Add to toal energies
                         this->total_energy     += vdw_energy_temp + coul_energy_temp + eef1_sb_energy_temp;
@@ -214,11 +209,26 @@ public:
                 }
             }
 
-            // std::cout << "Total constructor energy " << this->total_energy << std::endl;
+            std::cout << "Total constructor energy " << this->total_energy << std::endl;
 
 
             cache_indexes = get_cache_indexes(0, this->chain->size() -1);
+     }
 
+
+     //! Constructor.
+     //! \param chain Molecule chain
+     //! \param settings Local Settings object
+     //! \param random_number_engine Object from which random number generators can be created.
+     TermCharmm36NonBondedCached(ChainFB *chain,
+                    const Settings &settings = Settings(),
+                    RandomNumberEngine *random_number_engine = &random_global)
+          : EnergyTermCommon(chain, "charmm36-non-bonded-cached", settings, random_number_engine) {
+
+
+          std::cout << "Setup master thread" << std::endl;
+          setup_caches();
+          std::cout << "Done!" << std::endl;
      }
 
 
@@ -257,11 +267,14 @@ public:
                  RandomNumberEngine *random_number_engine,
                  int thread_index, ChainFB *chain)
           : EnergyTermCommon(other, random_number_engine, thread_index, chain),
-            cached_residue_pairs(other.cached_residue_pairs),
             total_energy(other.total_energy),
-            total_energy_old(other.total_energy_old),
-            cache_indexes(other.cache_indexes) {
-            }
+            total_energy_old(other.total_energy_old)
+    {
+
+          std::cout << "Setup thread # " << thread_index << std::endl;
+          setup_caches();
+          std::cout << "Done!" << std::endl;
+     }
 
 
      // Big long initialize code from Sandro
@@ -429,7 +442,7 @@ public:
                 // const double inv_r = 1.0 / std::sqrt(r_sq);
 
                 const double inv_r_sq = 1.0 / r_sq;
-                const double inv_r_sq6 = inv_r_sq * inv_r_sq * inv_r_sq * 1000000.0; //shift to nanometers^6
+                const double inv_r_sq6 = inv_r_sq * inv_r_sq * inv_r_sq * charmm36_constants::ANGS6_TO_NM6; //shift to nanometers^6
                 const double inv_r_sq12 = inv_r_sq6 * inv_r_sq6;
 
                 const double vdw_energy_temp = (pair.c12 * inv_r_sq12 - pair.c6 * inv_r_sq6);
@@ -470,8 +483,8 @@ public:
 
                 }
                 // Add diatomic contribution to interaction energy of the residue pair ij.
-                this->cached_residue_pairs[i][j].energy_new += vdw_energy_temp/4.184
-                                                            + coul_energy_temp/4.184
+                this->cached_residue_pairs[i][j].energy_new += vdw_energy_temp * charmm36_constants::KJ_TO_KCAL
+                                                            + coul_energy_temp * charmm36_constants::KJ_TO_KCAL
                                                             + eef1_sb_energy_temp;
             }
 
@@ -503,6 +516,8 @@ public:
         //Backup total energy
         total_energy_old = total_energy;
     }
+
+
 
     void reject() {
 

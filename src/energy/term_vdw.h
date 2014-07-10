@@ -45,7 +45,7 @@ public:
      //! Use same settings as base class
      typedef EnergyTerm<ChainFB>::SettingsClassicEnergy Settings;
 
-     std::vector<topology::NonBondedPair> non_bonded_pairs;
+     std::vector<topology::NonBondedInteraction> non_bonded_interactions;
 
      //! Constructor.
      //! \param chain Molecule chain
@@ -68,9 +68,10 @@ public:
               std::vector<topology::NonBonded14Parameter> non_bonded_14_parameters =
                   topology::read_nonbonded_14_parameters(non_bonded_14_filename);
 
-              non_bonded_pairs = topology::generate_non_bonded_pairs_cached(this->chain,
-                                                           non_bonded_parameters,
-                                                           non_bonded_14_parameters);
+              this->non_bonded_interactions = 
+                  topology::generate_non_bonded_interactions(this->chain,
+                                                             non_bonded_parameters,
+                                                             non_bonded_14_parameters);
      }
 
      //! Copy constructor.
@@ -81,8 +82,26 @@ public:
      TermCharmm36Vdw(const TermCharmm36Vdw &other,
                  RandomNumberEngine *random_number_engine,
                  int thread_index, ChainFB *chain)
-          : EnergyTermCommon(other, random_number_engine, thread_index, chain),
-            non_bonded_pairs(other.non_bonded_pairs) {}
+          : EnergyTermCommon(other, random_number_engine, thread_index, chain) {
+
+
+              std::string non_bonded_filename
+                  = "/home/andersx/phaistos_dev/modules/charmm36/src/energy/parameters/vdw.itp";
+
+              std::vector<topology::NonBondedParameter> non_bonded_parameters
+                  = topology::read_nonbonded_parameters(non_bonded_filename);
+
+              std::string non_bonded_14_filename
+                  = "/home/andersx/phaistos_dev/modules/charmm36/src/energy/parameters/vdw14.itp";
+
+              std::vector<topology::NonBonded14Parameter> non_bonded_14_parameters =
+                  topology::read_nonbonded_14_parameters(non_bonded_14_filename);
+
+              this->non_bonded_interactions = 
+                  topology::generate_non_bonded_interactions(this->chain,
+                                                             non_bonded_parameters,
+                                                             non_bonded_14_parameters);
+     }
 
 
 
@@ -94,9 +113,9 @@ public:
           double vdw_energy = 0.0;
           double vdw14_energy = 0.0;
 
-          for (unsigned int i = 0; i < non_bonded_pairs.size(); i++) {
+          for (unsigned int i = 0; i < this->non_bonded_interactions.size(); i++) {
 
-              topology::NonBondedPair pair = non_bonded_pairs[i];
+              topology::NonBondedInteraction pair = this->non_bonded_interactions[i];
 
                const double r_sq = ((pair.atom1)->position - (pair.atom2)->position).norm_squared();
                const double inv_r_sq = 100.0 / (r_sq); //shift to nanometers
@@ -111,13 +130,13 @@ public:
                }
           }
 
-          const double total_energy = (vdw14_energy + vdw_energy) / 4.184;
+          const double total_energy = (vdw14_energy + vdw_energy) * charmm36_constants::KJ_TO_KCAL;
 
           printf("           vdW-14 E = %15.6f kJ/mol\n", vdw14_energy);
-          printf("           vdW-14 E = %15.6f kcal/mol\n", vdw14_energy / 4.184);
+          printf("           vdW-14 E = %15.6f kcal/mol\n", vdw14_energy * charmm36_constants::KJ_TO_KCAL);
           printf("           vdW-SR E = %15.6f kJ/mol\n", vdw_energy);
-          printf("           vdW-SR E = %15.6f kcal/mol\n", vdw_energy / 4.184);
-          printf("        vdW-total E = %15.6f kJ/mol\n", total_energy * 4.184);
+          printf("           vdW-SR E = %15.6f kcal/mol\n", vdw_energy * charmm36_constants::KJ_TO_KCAL);
+          printf("        vdW-total E = %15.6f kJ/mol\n", total_energy * charmm36_constants::KCAL_TO_KJ);
           printf("        vdW-total E = %15.6f kcal/mol\n", total_energy);
 
           return total_energy;

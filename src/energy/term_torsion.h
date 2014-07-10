@@ -35,7 +35,7 @@ private:
      //! For convenience, define local EnergyTermCommon
      typedef phaistos::EnergyTermCommon<TermCharmm36Torsion, ChainFB> EnergyTermCommon;
 
-     std::vector<topology::DihedralAngleType9> dihedral_angles;
+     std::vector<topology::TorsionInteraction> torsion_interactions;
 
 public:
 
@@ -52,9 +52,8 @@ public:
           : EnergyTermCommon(chain, "charmm36-torsion", settings, random_number_engine) {
 
           std::string filename = "/home/andersx/phaistos_dev/modules/charmm36/src/energy/parameters/torsion.itp";
-          std::vector<topology::DihedralType9Parameter> dihedral_type_9_parameters = topology::read_dihedral_type_9_parameters(filename);
-
-          dihedral_angles = topology::generate_dihedral_pairs(this->chain, dihedral_type_9_parameters);
+          std::vector<topology::TorsionParameter> torsion_parameters = topology::read_torsion_parameters(filename);
+          this->torsion_interactions= topology::generate_torsion_interactions(this->chain, torsion_parameters);
 
      }
 
@@ -66,9 +65,13 @@ public:
      TermCharmm36Torsion(const TermCharmm36Torsion &other,
                         RandomNumberEngine *random_number_engine,
                         int thread_index, ChainFB *chain)
-          : EnergyTermCommon(other, random_number_engine, thread_index, chain),
-            dihedral_angles(other.dihedral_angles) {}
+          : EnergyTermCommon(other, random_number_engine, thread_index, chain) {
 
+          std::string filename = "/home/andersx/phaistos_dev/modules/charmm36/src/energy/parameters/torsion.itp";
+          std::vector<topology::TorsionParameter> torsion_parameters = topology::read_torsion_parameters(filename);
+          this->torsion_interactions= topology::generate_torsion_interactions(this->chain, torsion_parameters);
+
+     }
      //! Evaluate chain energy
      //! \param move_info object containing information about last move
      //! \return torsional potential energy of the chain in the object
@@ -77,35 +80,23 @@ public:
 
         double e_torsion = 0.0;
 
-        for (unsigned int i = 0; i < this->dihedral_angles.size(); i++) {
+        for (unsigned int i = 0; i < this->torsion_interactions.size(); i++) {
 
-            topology::DihedralAngleType9 dihedral = this->dihedral_angles[i];
+            topology::TorsionInteraction torsion = this->torsion_interactions[i];
 
-            double angle = calc_dihedral((dihedral.atom1)->position,
-                                         (dihedral.atom2)->position,
-                                         (dihedral.atom3)->position,
-                                         (dihedral.atom4)->position);
+            double angle = calc_dihedral((torsion.atom1)->position,
+                                         (torsion.atom2)->position,
+                                         (torsion.atom3)->position,
+                                         (torsion.atom4)->position);
 
-            // const double mdphi = dihedral.mult * angle - dihedral.phi0 * gmx_deg2rad;
-            // const double v1 = 1.0 + cos(mdphi);
-            // const double e_torsion_temp = v1 * dihedral.cp;
-
-            const double e_torsion_temp = dihedral.cp * cos(dihedral.mult * angle - dihedral.phi0 / 180.0 * M_PI) + dihedral.cp;
+            const double e_torsion_temp = torsion.cp * std::cos(torsion.mult * angle - torsion.phi0 * charmm36_constants::DEG_TO_RAD) + torsion.cp;
 
             e_torsion += e_torsion_temp;
 
-             // printf("ASC: TOR XYZ1 = %8.4f %8.4f %8.4f   XYZ2 = %8.4f %8.4f %8.4f   XYZ3 = %8.4f %8.4f %8.4f   XYZ4 = %8.4f %8.4f %8.4f   a = %15.10f   phi0 = %9.4f   cp = %8.4f   mult = %d   etor = %14.10f\n",
-
-             //         (dihedral.atom1)->position[0], (dihedral.atom1)->position[1], (dihedral.atom1)->position[2],
-             //         (dihedral.atom2)->position[0], (dihedral.atom2)->position[1], (dihedral.atom2)->position[2],
-             //         (dihedral.atom3)->position[0], (dihedral.atom3)->position[1], (dihedral.atom3)->position[2],
-             //         (dihedral.atom4)->position[0], (dihedral.atom4)->position[1], (dihedral.atom4)->position[2],
-             //         angle *180.0 / M_PI, dihedral.phi0, dihedral.cp, dihedral.mult, e_torsion_temp);
         }
 
-
         printf("          torsion E = %15.6f kJ/mol\n", e_torsion);
-        printf("          torsion E = %15.6f kcal/mol\n", e_torsion / 4.184);
+        printf("          torsion E = %15.6f kcal/mol\n", e_torsion * charmm36_constants::KJ_TO_KCAL);
 
         return e_torsion / 4.184;
 

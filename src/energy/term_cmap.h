@@ -29,7 +29,6 @@
 #include "protein/definitions.h"
 
 #include "parsers/topology_parser.h"
-#include "kernels/kernel_cmap.h"
 #include "term_cmap_tables.h"
 
 namespace phaistos {
@@ -47,10 +46,10 @@ public:
 
      //! Table which contains the CMAP correction tables
      //! in Gromacs' 
-     std::vector<std::vector<double> > cmapdata;
+     std::vector<std::vector<double> > cmap_data;
 
      //! Vector containing all terms in the CMAP correction.
-     std::vector<topology::CmapPair> cmap_pairs;
+     std::vector<topology::CmapInteraction> cmap_interactions;
 
      //! Use same settings as base class
      typedef EnergyTerm<ChainFB>::SettingsClassicEnergy Settings;
@@ -65,8 +64,8 @@ public:
           : EnergyTermCommon(chain, "charmm36-cmap", settings, random_number_engine) {
 
           // Get CMAP data from the Gromacs code.
-          this->cmapdata = charmm36_cmap::setup_cmap();
-          this->cmap_pairs = topology::generate_cmap_pairs(this->chain);
+          this->cmap_data = charmm36_cmap::setup_cmap();
+          this->cmap_interactions = topology::generate_cmap_interactions(this->chain);
      }
 
      //! Copy constructor.
@@ -77,10 +76,13 @@ public:
      TermCharmm36Cmap(const TermCharmm36Cmap &other,
                         RandomNumberEngine *random_number_engine,
                         int thread_index, ChainFB *chain)
-          : EnergyTermCommon(other, random_number_engine, thread_index, chain),
-            cmapdata(other.cmapdata),
-            cmap_pairs(other.cmap_pairs) {}
+          : EnergyTermCommon(other, random_number_engine, thread_index, chain) {
 
+          // Get CMAP data from the Gromacs code.
+          this->cmap_data = charmm36_cmap::setup_cmap();
+          this->cmap_interactions = topology::generate_cmap_interactions(this->chain);
+
+     }
 
      //! Evaluate chain energy
      //! \param move_info object containing information about last move
@@ -89,21 +91,22 @@ public:
 
           double cmap_energy = 0.0;
 
-          for (unsigned int i = 0; i < this->cmap_pairs.size(); i++) {
+          for (unsigned int i = 0; i < this->cmap_interactions.size(); i++) {
 
-               const int residue_index = (this->cmap_pairs)[i].residue_index;
-               const unsigned int cmap_type_index = (this->cmap_pairs)[i].cmap_type_index;
+               const int residue_index = (this->cmap_interactions)[i].residue_index;
+               const unsigned int cmap_type_index = (this->cmap_interactions)[i].cmap_type_index;
                const double phi = (*(this->chain))[residue_index].get_phi();
                const double psi = (*(this->chain))[residue_index].get_psi();
 
-               cmap_energy += kernel::cmap_energy(phi, psi, cmap_type_index, this->cmapdata);
+               cmap_energy += charmm36_cmap::cmap_energy(phi, psi, cmap_type_index, this->cmap_data);
 
           }
 
+          
           printf("             CMAP E = %15.6f kJ/mol\n", cmap_energy);
-          printf("             CMAP E = %15.6f kcal/mol\n", cmap_energy / 4.184);
+          printf("             CMAP E = %15.6f kcal/mol\n", cmap_energy * charmm36_constants::KJ_TO_KCAL);
 
-          return cmap_energy / 4.184;
+          return cmap_energy  * charmm36_constants::KJ_TO_KCAL;
      }
 
 };

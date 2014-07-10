@@ -46,7 +46,7 @@ public:
      //! Use same settings as base class
      typedef EnergyTerm<ChainFB>::SettingsClassicEnergy Settings;
 
-     std::vector<topology::AngleBendPair> angle_bend_pairs;
+     std::vector<topology::AngleBendInteraction> angle_bend_interactions;
 
      //! Constructor.
      //! \param chain Molecule chain
@@ -59,7 +59,7 @@ public:
 
           std::string filename = "/home/andersx/phaistos_dev/modules/charmm36/src/energy/parameters/angle_bend.itp";
           std::vector<topology::AngleBendParameter> angle_bend_parameters = topology::read_angle_bend_parameters(filename);
-          this->angle_bend_pairs = topology::generate_angle_bend_pairs(this->chain, angle_bend_parameters);
+          this->angle_bend_interactions = topology::generate_angle_bend_interactions(this->chain, angle_bend_parameters);
      }
 
      //! Copy constructor.
@@ -70,8 +70,13 @@ public:
      TermCharmm36AngleBend(const TermCharmm36AngleBend &other,
                  RandomNumberEngine *random_number_engine,
                  int thread_index, ChainFB *chain)
-          : EnergyTermCommon(other, random_number_engine, thread_index, chain),
-            angle_bend_pairs(other.angle_bend_pairs) {}
+          : EnergyTermCommon(other, random_number_engine, thread_index, chain) {
+
+          std::string filename = "/home/andersx/phaistos_dev/modules/charmm36/src/energy/parameters/angle_bend.itp";
+          std::vector<topology::AngleBendParameter> angle_bend_parameters = topology::read_angle_bend_parameters(filename);
+          this->angle_bend_interactions = topology::generate_angle_bend_interactions(this->chain, angle_bend_parameters);
+
+     }
 
      //! Evaluate chain energy
      //! \param move_info object containing information about last move
@@ -82,37 +87,45 @@ public:
           double energy_angle = 0.0;
           double energy_urey = 0.0;
 
-          for (unsigned int i = 0; i < this->angle_bend_pairs.size(); i++){
+          for (unsigned int i = 0; i < this->angle_bend_interactions.size(); i++){
 
-               topology::AngleBendPair pair = this->angle_bend_pairs[i];
+               topology::AngleBendInteraction interaction = this->angle_bend_interactions[i];
 
-               const double theta = calc_angle((pair.atom1)->position,
-                                               (pair.atom2)->position,
-                                               (pair.atom3)->position);
+               const double theta = calc_angle((interaction.atom1)->position,
+                                               (interaction.atom2)->position,
+                                               (interaction.atom3)->position);
 
                // Angle bend part
-               const double dtheta = theta - pair.theta0 * M_PI / 180.0;
-               const double energy_angle_bend_temp = 0.5 * pair.k0 * dtheta * dtheta; 
+               const double dtheta = theta - interaction.theta0 * M_PI / 180.0;
+               const double energy_angle_bend_temp = 0.5 * interaction.k0 * dtheta * dtheta; 
 
                energy_angle += energy_angle_bend_temp;
-               // Urey-Bradley part
-               const double r13 = ((pair.atom1)->position - (pair.atom3)->position).norm() / 10.0;
-               const double dr = r13 - pair.r13;
-               const double energy_urey_bradley_temp = 0.5 * pair.kub * dr * dr;
 
-                energy_urey += energy_urey_bradley_temp;
+               // Urey-Bradley part
+               const double r13 = ((interaction.atom1)->position - (interaction.atom3)->position).norm() * charmm36_constants::ANGS_TO_NM;
+               const double dr = r13 - interaction.r13;
+               const double energy_urey_bradley_temp = 0.5 * interaction.kub * dr * dr;
+
+               energy_urey += energy_urey_bradley_temp;
                energy_sum += energy_angle_bend_temp + energy_urey_bradley_temp;
 
           }
 
-          printf("       angle-bend E = %15.6f kJ/mol\n", energy_angle);
-          printf("       angle-bend E = %15.6f kcal/mol\n", energy_angle / 4.184);
-          printf("     urey-bradley E = %15.6f kJ/mol\n", energy_urey);
-          printf("     urey-bradley E = %15.6f kcal/mol\n", energy_urey / 4.184);
-          printf(" angle-bend-total E = %15.6f kJ/mol\n", energy_sum);
-          printf(" angle-bend-total E = %15.6f kcal/mol\n", energy_sum / 4.184);
+          if (settings.debug >= 0) {
 
-          return energy_sum / 4.184;
+               printf("       angle-bend E = %15.6f kJ/mol\n", energy_angle);
+               printf("       angle-bend E = %15.6f kcal/mol\n", 
+                       energy_angle * charmm36_constants::KJ_TO_KCAL);
+               printf("     urey-bradley E = %15.6f kJ/mol\n", energy_urey);
+               printf("     urey-bradley E = %15.6f kcal/mol\n",
+                       energy_urey * charmm36_constants::KJ_TO_KCAL);
+               printf(" angle-bend-total E = %15.6f kJ/mol\n", energy_sum);
+               printf(" angle-bend-total E = %15.6f kcal/mol\n",
+                       energy_sum * charmm36_constants::KJ_TO_KCAL);
+
+          }
+
+          return energy_sum * charmm36_constants::KJ_TO_KCAL;
 
      }
 

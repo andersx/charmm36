@@ -28,28 +28,18 @@
 #include "protein/iterators/pair_iterator_chaintree.h"
 
 #include "charmm36_charmm.h"
-#include "charmm36_gromacs.h"
 
 #include "topology_items.h"
 
+#include "../constants.h"
 namespace topology {
 
-using namespace phaistos;
+std::vector<CmapInteraction> generate_cmap_interactions(phaistos::ChainFB *chain) {
 
-// facel = 1 / (4 * pi * epsilon_0)
-// Gromacs constant
-// const double felec_gromacs = 138.935455;
-
-// CHARMM program definition of facel us 332.0716
-// here we convert it to Gromacs units.
-const double felec = 4.184 * 332.0716/10.0;
-
-std::vector<CmapPair> generate_cmap_pairs(ChainFB *chain) {
-
+    using namespace phaistos;
     using namespace definitions;
-    // using namespace gromacs_parser;
 
-    std::vector<CmapPair> cmap_pairs;
+    std::vector<CmapInteraction> cmap_interactions;
 
     int i = -1;
 
@@ -58,8 +48,8 @@ std::vector<CmapPair> generate_cmap_pairs(ChainFB *chain) {
           i += 1;
           Residue *res = &*it;
 
-          if (res->terminal_status == definitions::NTERM) continue;
-          if (res->terminal_status == definitions::CTERM) continue;
+          if (res->terminal_status == NTERM) continue;
+          if (res->terminal_status == CTERM) continue;
 
           std::string type1 = charmm_parser::get_charmm36_atom_type((*(res->get_neighbour(-1)))[C]);
           std::string type2 = charmm_parser::get_charmm36_atom_type((*res)[N]);
@@ -74,56 +64,56 @@ std::vector<CmapPair> generate_cmap_pairs(ChainFB *chain) {
           // std::cout << type5<< std::endl;
           // std::cout << std::endl;
 
-          CmapPair cmap_pair;
+          CmapInteraction cmap_interaction;
 
-          cmap_pair.residue = res;
-          cmap_pair.residue_index = i;
+          cmap_interaction.residue = res;
+          cmap_interaction.residue_index = i;
 
           if ((type1 == "C") &&
               (type2 == "NH1") &&
               (type3 == "CT1") &&
               (type4 == "C") &&
               (type5 == "NH1")) {
-                cmap_pair.cmap_type_index = 0;
+                cmap_interaction.cmap_type_index = 0;
           } else if ((type1 == "C") &&
                      (type2 == "NH1") &&
                      (type3 == "CT1") &&
                      (type4 == "C") &&
                      (type5 == "N")) {
-                cmap_pair.cmap_type_index = 1;
+                cmap_interaction.cmap_type_index = 1;
           } else if ((type1 == "C") &&
                      (type2 == "N") &&
                      (type3 == "CP1") &&
                      (type4 == "C") &&
                      (type5 == "NH1")) {
-                cmap_pair.cmap_type_index = 2;
+                cmap_interaction.cmap_type_index = 2;
           } else if ((type1 == "C") &&
                      (type2 == "N") &&
                      (type3 == "CP1") &&
                      (type4 == "C") &&
                      (type5 == "N")) {
-                cmap_pair.cmap_type_index = 3;
+                cmap_interaction.cmap_type_index = 3;
           } else if ((type1 == "C") &&
                      (type2 == "NH1") &&
                      (type3 == "CT2") &&
                      (type4 == "C") &&
                      (type5 == "NH1")) {
-                cmap_pair.cmap_type_index = 4;
+                cmap_interaction.cmap_type_index = 4;
           } else if ((type1 == "C") &&
                      (type2 == "NH1") &&
                      (type3 == "CT2") &&
                      (type4 == "C") &&
                      (type5 == "N")) {
-                cmap_pair.cmap_type_index = 5;
+                cmap_interaction.cmap_type_index = 5;
           } else {
-                std::cerr << "# Error: Unknown CMAP for residue" << *res << " .\n";
+                std::cerr << "# Error: Unknown CMAP parameters for residue" << *res << " .\n";
                 exit(EXIT_FAILURE);
           }
 
-          cmap_pairs.push_back(cmap_pair);
+          cmap_interactions.push_back(cmap_interaction);
     }
 
-    return cmap_pairs;
+    return cmap_interactions;
 }
 
 
@@ -172,7 +162,7 @@ std::vector<NonBondedParameter> read_nonbonded_parameters(const std::string file
 }
 
 
-std::vector<NonBonded14Parameter> read_nonbonded_14_parameters(const std::string filename) {
+std::vector<NonBonded14Parameter> read_nonbonded_14_parameters(const std::string &filename) {
 
     std::ifstream input_stream(filename.c_str());
 
@@ -213,8 +203,8 @@ std::vector<NonBonded14Parameter> read_nonbonded_14_parameters(const std::string
 }
 
 
-NonBondedParameter get_non_bonded_parameter(std::string atom_type,
-        std::vector<NonBondedParameter> non_bonded_parameters) {
+NonBondedParameter get_non_bonded_parameter(const std::string &atom_type,
+        const std::vector<NonBondedParameter> &non_bonded_parameters) {
 
     NonBondedParameter parameter;
 
@@ -229,9 +219,10 @@ NonBondedParameter get_non_bonded_parameter(std::string atom_type,
 
 }
 
-NonBonded14Parameter get_non_bonded14_parameter(std::string atom_type1, std::string atom_type2,
-        std::vector<NonBonded14Parameter> non_bonded14_parameters,
-        std::vector<NonBondedParameter> non_bonded_parameters) {
+NonBonded14Parameter get_non_bonded14_parameter(const std::string &atom_type1, 
+        const std::string &atom_type2,
+        const std::vector<NonBonded14Parameter> &non_bonded14_parameters,
+        const std::vector<NonBondedParameter> &non_bonded_parameters) {
 
     NonBonded14Parameter parameter;
     bool found_parameter = false;
@@ -270,11 +261,13 @@ NonBonded14Parameter get_non_bonded14_parameter(std::string atom_type1, std::str
 
 }
 
-std::vector<NonBondedPair> generate_non_bonded_pairs_cached(ChainFB *chain,
-                    std::vector<NonBondedParameter> non_bonded_parameters,
-                    std::vector<NonBonded14Parameter> non_bonded_14_parameters) {
+std::vector<NonBondedInteraction> generate_non_bonded_interactions(phaistos::ChainFB *chain,
+    const std::vector<NonBondedParameter> &non_bonded_parameters,
+    const std::vector<NonBonded14Parameter> &non_bonded_14_parameters) {
 
-    std::vector<NonBondedPair> non_bonded_pairs;
+    using namespace phaistos;
+
+    std::vector<NonBondedInteraction> non_bonded_interactions;
 
     int i = -1;
     for (AtomIterator<ChainFB, definitions::ALL> it1(*chain); !it1.end(); ++it1) {
@@ -288,12 +281,6 @@ std::vector<NonBondedPair> generate_non_bonded_pairs_cached(ChainFB *chain,
         double atom_charge1 = charmm_parser::get_eef1_sb_atom_charge(atom1);
 
         NonBondedParameter parameter1 = get_non_bonded_parameter(atom_type1, non_bonded_parameters);
-
-        // printf("ASC: XYZ = %7.3f  %7.3f %7.3f     q = %5.3f      ", // ix*10.0, iy*10.0, iz*10.0, charge[i]);
-        //     (atom1->position)[0], (atom1->position)[1], (atom1->position)[2], atom_charge1);
-
-        // std::cout << atom1 << std::endl;
-
 
         for (AtomIterator<ChainFB, definitions::ALL> it2(*chain); !it2.end(); ++it2) {
 
@@ -313,80 +300,81 @@ std::vector<NonBondedPair> generate_non_bonded_pairs_cached(ChainFB *chain,
             NonBondedParameter parameter2 = get_non_bonded_parameter(atom_type2, non_bonded_parameters);
 
             if (d > 3) {
-               NonBondedPair non_bonded_pair;
+               NonBondedInteraction non_bonded_interaction;
 
-               double epsilon_effective = sqrt(parameter1.epsilon * parameter2.epsilon);
+               double epsilon_effective = std::sqrt(parameter1.epsilon * parameter2.epsilon);
                double sigma_effective   = 0.5 * (parameter1.sigma + parameter2.sigma);
-               // std::cout << "   " << epsilon_effective << "   " << sigma_effective << std::endl;
 
-               non_bonded_pair.atom1 = atom1;
-               non_bonded_pair.atom2 = atom2;
-               non_bonded_pair.q1 = atom_charge1;
-               non_bonded_pair.q2 = atom_charge2;
-               non_bonded_pair.sigma1 = parameter1.sigma;
-               non_bonded_pair.sigma2 = parameter2.sigma;
-               non_bonded_pair.epsilon1 = parameter1.epsilon;
-               non_bonded_pair.epsilon2 = parameter2.epsilon;
-               non_bonded_pair.sigma_effective = sigma_effective;
-               non_bonded_pair.epsilon_effective = epsilon_effective;
-               non_bonded_pair.qq  = non_bonded_pair.q1 * non_bonded_pair.q2 * felec;
-               non_bonded_pair.c6  = 4 * epsilon_effective * std::pow(sigma_effective, 6.0);
-               non_bonded_pair.c12 = 4 * epsilon_effective * std::pow(sigma_effective, 12.0);
+               non_bonded_interaction.atom1 = atom1;
+               non_bonded_interaction.atom2 = atom2;
+               non_bonded_interaction.q1 = atom_charge1;
+               non_bonded_interaction.q2 = atom_charge2;
+               non_bonded_interaction.sigma1 = parameter1.sigma;
+               non_bonded_interaction.sigma2 = parameter2.sigma;
+               non_bonded_interaction.epsilon1 = parameter1.epsilon;
+               non_bonded_interaction.epsilon2 = parameter2.epsilon;
+               non_bonded_interaction.sigma_effective = sigma_effective;
+               non_bonded_interaction.epsilon_effective = epsilon_effective;
+               non_bonded_interaction.qq  = non_bonded_interaction.q1 * non_bonded_interaction.q2 * charmm36_constants::FELEC;
+               non_bonded_interaction.c6  = 4 * epsilon_effective * std::pow(sigma_effective, 6.0);
+               non_bonded_interaction.c12 = 4 * epsilon_effective * std::pow(sigma_effective, 12.0);
 
-               non_bonded_pair.is_14_interaction = false;
+               non_bonded_interaction.is_14_interaction = false;
 
-               non_bonded_pair.i1 = i;
-               non_bonded_pair.i2 = j;
+               non_bonded_interaction.i1 = i;
+               non_bonded_interaction.i2 = j;
 
 
-               non_bonded_pairs.push_back(non_bonded_pair);
+               non_bonded_interactions.push_back(non_bonded_interaction);
 
              } else if (d == 3) {
 
 
                 NonBonded14Parameter parameter14 = get_non_bonded14_parameter(atom_type1, atom_type2,
-                                                                            non_bonded_14_parameters,
-                                                                            non_bonded_parameters);
+                                                                              non_bonded_14_parameters,
+                                                                              non_bonded_parameters);
 
                 NonBondedParameter parameter2 = get_non_bonded_parameter(atom_type2, non_bonded_parameters);
-                NonBondedPair non_bonded_pair;
+                NonBondedInteraction non_bonded_interaction;
 
-                non_bonded_pair.atom1 = atom1;
-                non_bonded_pair.atom2 = atom2;
-                non_bonded_pair.q1 = atom_charge1;
-                non_bonded_pair.q2 = atom_charge2;
-                non_bonded_pair.sigma1 = parameter1.sigma;
-                non_bonded_pair.sigma2 = parameter2.sigma;
-                non_bonded_pair.epsilon1 = parameter1.epsilon;
-                non_bonded_pair.epsilon2 = parameter2.epsilon;
-                non_bonded_pair.sigma_effective = parameter14.sigma;
-                non_bonded_pair.epsilon_effective = parameter14.epsilon;
-                non_bonded_pair.qq  = non_bonded_pair.q1 * non_bonded_pair.q2 * felec;
-                non_bonded_pair.c6  = 4 * parameter14.epsilon * std::pow(parameter14.sigma, 6.0);
-                non_bonded_pair.c12 = 4 * parameter14.epsilon * std::pow(parameter14.sigma, 12.0);
+                non_bonded_interaction.atom1 = atom1;
+                non_bonded_interaction.atom2 = atom2;
+                non_bonded_interaction.q1 = atom_charge1;
+                non_bonded_interaction.q2 = atom_charge2;
+                non_bonded_interaction.sigma1 = parameter1.sigma;
+                non_bonded_interaction.sigma2 = parameter2.sigma;
+                non_bonded_interaction.epsilon1 = parameter1.epsilon;
+                non_bonded_interaction.epsilon2 = parameter2.epsilon;
+                non_bonded_interaction.sigma_effective = parameter14.sigma;
+                non_bonded_interaction.epsilon_effective = parameter14.epsilon;
+                non_bonded_interaction.qq  = non_bonded_interaction.q1 * non_bonded_interaction.q2 * charmm36_constants::FELEC;
+                non_bonded_interaction.c6  = 4 * parameter14.epsilon * std::pow(parameter14.sigma, 6.0);
+                non_bonded_interaction.c12 = 4 * parameter14.epsilon * std::pow(parameter14.sigma, 12.0);
 
-                non_bonded_pair.is_14_interaction = true;
+                non_bonded_interaction.is_14_interaction = true;
 
-                non_bonded_pairs.push_back(non_bonded_pair);
+                non_bonded_interactions.push_back(non_bonded_interaction);
             }
         }
     }
 
-    return non_bonded_pairs;
+    return non_bonded_interactions;
 }
 
 
-std::vector<NonBondedPair> generate_non_bonded_pairs(ChainFB *chain,
-                    std::vector<NonBondedParameter> non_bonded_parameters,
-                    std::vector<NonBonded14Parameter> non_bonded_14_parameters,
-                    //! Lookup tables containing parameters
-                    std::vector<double> dGref,
-                    std::vector< std::vector<double> > factors,
-                    std::vector<double> vdw_radii,
-                    std::vector<double> lambda,
-                    std::map<std::string, unsigned int> eef1_atom_type_index_map) {
+std::vector<NonBondedInteraction> generate_non_bonded_interactions_cached(phaistos::ChainFB *chain,
+                    const std::vector<NonBondedParameter> &non_bonded_parameters,
+                    const std::vector<NonBonded14Parameter> &non_bonded_14_parameters,
+                    const std::vector<double> &dGref,
+                    const std::vector< std::vector<double> > &factors,
+                    const std::vector<double> &vdw_radii,
+                    const std::vector<double> &lambda,
+                    // &eef1_atom_type_index_map cannot be const for some reason?
+                    std::map<std::string, unsigned int> &eef1_atom_type_index_map) {
 
-    std::vector<NonBondedPair> non_bonded_pairs;
+    using namespace phaistos;
+
+    std::vector<NonBondedInteraction> non_bonded_interactions;
 
     int i = -1;
     for (AtomIterator<ChainFB, definitions::ALL> it1(*chain); !it1.end(); ++it1) {
@@ -412,46 +400,42 @@ std::vector<NonBondedPair> generate_non_bonded_pairs(ChainFB *chain,
 
             Atom *atom2 = &*it2;
             int d = chain_distance<ChainFB>(atom1,atom2);
-            // int test_atom_index = 295;
 
             std::string atom_type2 = charmm_parser::get_charmm36_atom_type(atom2);
             double atom_charge2 = charmm_parser::get_eef1_sb_atom_charge(atom2);
 
-
-
             NonBondedParameter parameter2 = get_non_bonded_parameter(atom_type2, non_bonded_parameters);
 
             if (d > 3) {
-               NonBondedPair non_bonded_pair;
+               NonBondedInteraction non_bonded_interaction;
 
                double epsilon_effective = sqrt(parameter1.epsilon * parameter2.epsilon);
                double sigma_effective   = 0.5 * (parameter1.sigma + parameter2.sigma);
-               // std::cout << "   " << epsilon_effective << "   " << sigma_effective << std::endl;
 
-               non_bonded_pair.atom1 = atom1;
-               non_bonded_pair.atom2 = atom2;
-               non_bonded_pair.q1 = atom_charge1;
-               non_bonded_pair.q2 = atom_charge2;
-               non_bonded_pair.sigma1 = parameter1.sigma;
-               non_bonded_pair.sigma2 = parameter2.sigma;
-               non_bonded_pair.epsilon1 = parameter1.epsilon;
-               non_bonded_pair.epsilon2 = parameter2.epsilon;
-               non_bonded_pair.sigma_effective = sigma_effective;
-               non_bonded_pair.epsilon_effective = epsilon_effective;
-               non_bonded_pair.qq  = non_bonded_pair.q1 * non_bonded_pair.q2 * felec;
-               non_bonded_pair.c6  = 4 * epsilon_effective * std::pow(sigma_effective, 6.0);
-               non_bonded_pair.c12 = 4 * epsilon_effective * std::pow(sigma_effective, 12.0);
+               non_bonded_interaction.atom1 = atom1;
+               non_bonded_interaction.atom2 = atom2;
+               non_bonded_interaction.q1 = atom_charge1;
+               non_bonded_interaction.q2 = atom_charge2;
+               non_bonded_interaction.sigma1 = parameter1.sigma;
+               non_bonded_interaction.sigma2 = parameter2.sigma;
+               non_bonded_interaction.epsilon1 = parameter1.epsilon;
+               non_bonded_interaction.epsilon2 = parameter2.epsilon;
+               non_bonded_interaction.sigma_effective = sigma_effective;
+               non_bonded_interaction.epsilon_effective = epsilon_effective;
+               non_bonded_interaction.qq  = non_bonded_interaction.q1 * non_bonded_interaction.q2 * charmm36_constants::FELEC;
+               non_bonded_interaction.c6  = 4 * epsilon_effective * std::pow(sigma_effective, 6.0);
+               non_bonded_interaction.c12 = 4 * epsilon_effective * std::pow(sigma_effective, 12.0);
 
-               non_bonded_pair.is_14_interaction = false;
+               non_bonded_interaction.is_14_interaction = false;
 
-               non_bonded_pair.i1 = i;
-               non_bonded_pair.i2 = j;
+               non_bonded_interaction.i1 = i;
+               non_bonded_interaction.i2 = j;
 
                if (!(atom1->mass == definitions::atom_h_weight) &&
                    !(chain_distance<ChainFB>(atom1,atom2) < 3) &&
                    !(atom2->mass == definitions::atom_h_weight)) {
 
-                   non_bonded_pair.do_eef1 = true;
+                   non_bonded_interaction.do_eef1 = true;
 
                    std::string atom_type36_1 = charmm_parser::get_charmm36_atom_type(atom1);
                    std::string atom_type36_2 = charmm_parser::get_charmm36_atom_type(atom2);
@@ -459,17 +443,17 @@ std::vector<NonBondedPair> generate_non_bonded_pairs(ChainFB *chain,
                    unsigned int index1 = eef1_atom_type_index_map[atom_type36_1];
                    unsigned int index2 = eef1_atom_type_index_map[atom_type36_2];
 
-                   non_bonded_pair.fac_12 = factors[index1][index2];
-                   non_bonded_pair.fac_21 = factors[index2][index1];
-                   non_bonded_pair.R_vdw_1 = vdw_radii[index1];
-                   non_bonded_pair.R_vdw_2 = vdw_radii[index2];
-                   non_bonded_pair.lambda1 = lambda[index1];
-                   non_bonded_pair.lambda2 = lambda[index2];
+                   non_bonded_interaction.fac_12 = factors[index1][index2];
+                   non_bonded_interaction.fac_21 = factors[index2][index1];
+                   non_bonded_interaction.R_vdw_1 = vdw_radii[index1];
+                   non_bonded_interaction.R_vdw_2 = vdw_radii[index2];
+                   non_bonded_interaction.lambda1 = lambda[index1];
+                   non_bonded_interaction.lambda2 = lambda[index2];
 
                } else { 
-                   non_bonded_pair.do_eef1 = false;
+                   non_bonded_interaction.do_eef1 = false;
                }
-               non_bonded_pairs.push_back(non_bonded_pair);
+               non_bonded_interactions.push_back(non_bonded_interaction);
 
              } else if (d == 3) {
 
@@ -479,29 +463,29 @@ std::vector<NonBondedPair> generate_non_bonded_pairs(ChainFB *chain,
                                                                             non_bonded_parameters);
 
                 NonBondedParameter parameter2 = get_non_bonded_parameter(atom_type2, non_bonded_parameters);
-                NonBondedPair non_bonded_pair;
+                NonBondedInteraction non_bonded_interaction;
 
-                non_bonded_pair.atom1 = atom1;
-                non_bonded_pair.atom2 = atom2;
-                non_bonded_pair.q1 = atom_charge1;
-                non_bonded_pair.q2 = atom_charge2;
-                non_bonded_pair.sigma1 = parameter1.sigma;
-                non_bonded_pair.sigma2 = parameter2.sigma;
-                non_bonded_pair.epsilon1 = parameter1.epsilon;
-                non_bonded_pair.epsilon2 = parameter2.epsilon;
-                non_bonded_pair.sigma_effective = parameter14.sigma;
-                non_bonded_pair.epsilon_effective = parameter14.epsilon;
-                non_bonded_pair.qq  = non_bonded_pair.q1 * non_bonded_pair.q2 * felec;
-                non_bonded_pair.c6  = 4 * parameter14.epsilon * std::pow(parameter14.sigma, 6.0);
-                non_bonded_pair.c12 = 4 * parameter14.epsilon * std::pow(parameter14.sigma, 12.0);
+                non_bonded_interaction.atom1 = atom1;
+                non_bonded_interaction.atom2 = atom2;
+                non_bonded_interaction.q1 = atom_charge1;
+                non_bonded_interaction.q2 = atom_charge2;
+                non_bonded_interaction.sigma1 = parameter1.sigma;
+                non_bonded_interaction.sigma2 = parameter2.sigma;
+                non_bonded_interaction.epsilon1 = parameter1.epsilon;
+                non_bonded_interaction.epsilon2 = parameter2.epsilon;
+                non_bonded_interaction.sigma_effective = parameter14.sigma;
+                non_bonded_interaction.epsilon_effective = parameter14.epsilon;
+                non_bonded_interaction.qq  = non_bonded_interaction.q1 * non_bonded_interaction.q2 * charmm36_constants::FELEC;
+                non_bonded_interaction.c6  = 4 * parameter14.epsilon * std::pow(parameter14.sigma, 6.0);
+                non_bonded_interaction.c12 = 4 * parameter14.epsilon * std::pow(parameter14.sigma, 12.0);
 
-                non_bonded_pair.is_14_interaction = true;
+                non_bonded_interaction.is_14_interaction = true;
 
                if (!(atom1->mass == definitions::atom_h_weight) &&
                    !(chain_distance<ChainFB>(atom1,atom2) < 3) &&
                    !(atom2->mass == definitions::atom_h_weight)) {
 
-                   non_bonded_pair.do_eef1 = true;
+                   non_bonded_interaction.do_eef1 = true;
 
                    std::string atom_type36_1 = charmm_parser::get_charmm36_atom_type(atom1);
                    std::string atom_type36_2 = charmm_parser::get_charmm36_atom_type(atom2);
@@ -509,25 +493,27 @@ std::vector<NonBondedPair> generate_non_bonded_pairs(ChainFB *chain,
                    unsigned int index1 = eef1_atom_type_index_map[atom_type36_1];
                    unsigned int index2 = eef1_atom_type_index_map[atom_type36_2];
 
-                   non_bonded_pair.fac_12 = factors[index1][index2];
-                   non_bonded_pair.fac_21 = factors[index2][index1];
-                   non_bonded_pair.R_vdw_1 = vdw_radii[index1];
-                   non_bonded_pair.R_vdw_2 = vdw_radii[index2];
-                   non_bonded_pair.lambda1 = lambda[index1];
-                   non_bonded_pair.lambda2 = lambda[index2];
+                   non_bonded_interaction.fac_12 = factors[index1][index2];
+                   non_bonded_interaction.fac_21 = factors[index2][index1];
+                   non_bonded_interaction.R_vdw_1 = vdw_radii[index1];
+                   non_bonded_interaction.R_vdw_2 = vdw_radii[index2];
+                   non_bonded_interaction.lambda1 = lambda[index1];
+                   non_bonded_interaction.lambda2 = lambda[index2];
 
-               } else { non_bonded_pair.do_eef1 = false;}
+               } else { 
+                   non_bonded_interaction.do_eef1 = false;
+               }
 
-                non_bonded_pairs.push_back(non_bonded_pair);
+                non_bonded_interactions.push_back(non_bonded_interaction);
             }
         }
     }
 
-    return non_bonded_pairs;
+    return non_bonded_interactions;
 }
 
 
-std::vector<DihedralType9Parameter> read_dihedral_type_9_parameters(const std::string filename) {
+std::vector<TorsionParameter> read_torsion_parameters(const std::string &filename) {
 
     std::ifstream input_stream(filename.c_str());
 
@@ -536,7 +522,7 @@ std::vector<DihedralType9Parameter> read_dihedral_type_9_parameters(const std::s
         exit(EXIT_FAILURE);
     }
 
-    std::vector<DihedralType9Parameter> parameters;
+    std::vector<TorsionParameter> parameters;
 
     while (input_stream.good()) {
 
@@ -553,7 +539,7 @@ std::vector<DihedralType9Parameter> read_dihedral_type_9_parameters(const std::s
         std::vector<std::string> split_line;
         boost::split(split_line, line, boost::is_any_of(" \t"), boost::token_compress_on);
 
-        DihedralType9Parameter parameter;
+        TorsionParameter parameter;
 
         parameter.type1 = boost::lexical_cast<std::string >(split_line[0]);
         parameter.type2 = boost::lexical_cast<std::string >(split_line[1]);
@@ -571,10 +557,12 @@ std::vector<DihedralType9Parameter> read_dihedral_type_9_parameters(const std::s
 }
 
 
-std::vector<DihedralAngleType9> generate_dihedral_pairs(ChainFB *chain,
-                    std::vector<DihedralType9Parameter> dihedral_angle_type_9_parameters) {
+std::vector<TorsionInteraction> generate_torsion_interactions(phaistos::ChainFB *chain,
+    const std::vector<TorsionParameter> &torsion_parameters) {
 
-    std::vector<DihedralAngleType9> dihedral_angle_type_9s;
+    using namespace phaistos;
+
+    std::vector<TorsionInteraction> torsion_interactions;
 
     // all torsions
     for (AtomIterator<ChainFB, definitions::ALL> it2(*chain); !it2.end(); ++it2) {
@@ -610,65 +598,64 @@ std::vector<DihedralAngleType9> generate_dihedral_pairs(ChainFB *chain,
                         std::string type3 = charmm_parser::get_charmm36_atom_type(atom3);
                         std::string type4 = charmm_parser::get_charmm36_atom_type(atom4);
 
-                        for (unsigned int i = 0; i < dihedral_angle_type_9_parameters.size(); i++) {
+                        for (unsigned int i = 0; i < torsion_parameters.size(); i++) {
 
-                            DihedralType9Parameter p = dihedral_angle_type_9_parameters[i];
-                            // std::cout << p.type1 << type1 << std::endl;
+                            TorsionParameter p = torsion_parameters[i];
 
                             if ((p.type1 == type1) && (p.type2 == type2) && (p.type3 == type3)&& (p.type4 == type4)) {
-                                DihedralAngleType9 dihedral_angle_type_9;
-                                dihedral_angle_type_9.atom1 = atom1;
-                                dihedral_angle_type_9.atom2 = atom2;
-                                dihedral_angle_type_9.atom3 = atom3;
-                                dihedral_angle_type_9.atom4 = atom4;
-                                dihedral_angle_type_9.phi0  = p.phi0;
-                                dihedral_angle_type_9.cp    = p.cp;
-                                dihedral_angle_type_9.mult  = p.mult;
+                                TorsionInteraction torsion_interaction;
+                                torsion_interaction.atom1 = atom1;
+                                torsion_interaction.atom2 = atom2;
+                                torsion_interaction.atom3 = atom3;
+                                torsion_interaction.atom4 = atom4;
+                                torsion_interaction.phi0  = p.phi0;
+                                torsion_interaction.cp    = p.cp;
+                                torsion_interaction.mult  = p.mult;
                                 found_this_parameter = true;
+                                torsion_interactions.push_back(torsion_interaction);
 
-                                dihedral_angle_type_9s.push_back(dihedral_angle_type_9);
                             } else if ((p.type1 == type4) && (p.type2 == type3) && (p.type3 == type2)&& (p.type4 == type1)) {
-                                DihedralAngleType9 dihedral_angle_type_9;
-                                dihedral_angle_type_9.atom1 = atom4;
-                                dihedral_angle_type_9.atom2 = atom3;
-                                dihedral_angle_type_9.atom3 = atom2;
-                                dihedral_angle_type_9.atom4 = atom1;
-                                dihedral_angle_type_9.phi0  = p.phi0;
-                                dihedral_angle_type_9.cp    = p.cp;
-                                dihedral_angle_type_9.mult  = p.mult;
+                                TorsionInteraction torsion_interaction;
+                                torsion_interaction.atom1 = atom4;
+                                torsion_interaction.atom2 = atom3;
+                                torsion_interaction.atom3 = atom2;
+                                torsion_interaction.atom4 = atom1;
+                                torsion_interaction.phi0  = p.phi0;
+                                torsion_interaction.cp    = p.cp;
+                                torsion_interaction.mult  = p.mult;
                                 found_this_parameter = true;
-                                dihedral_angle_type_9s.push_back(dihedral_angle_type_9);
+                                torsion_interactions.push_back(torsion_interaction);
                             }
                         }
-                        if (!found_this_parameter) {
-                            for (unsigned int i = 0; i < dihedral_angle_type_9_parameters.size(); i++) {
 
-                                DihedralType9Parameter p = dihedral_angle_type_9_parameters[i];
-                                // std::cout << p.type1 << type1 << std::endl;
+                        if (!found_this_parameter) {
+                            for (unsigned int i = 0; i < torsion_parameters.size(); i++) {
+
+                                TorsionParameter p = torsion_parameters[i];
 
                                 if ((p.type1 == "X") && (p.type2 == type2) && (p.type3 == type3)&& (p.type4 == "X")) {
-                                    DihedralAngleType9 dihedral_angle_type_9;
-                                    dihedral_angle_type_9.atom1 = atom1;
-                                    dihedral_angle_type_9.atom2 = atom2;
-                                    dihedral_angle_type_9.atom3 = atom3;
-                                    dihedral_angle_type_9.atom4 = atom4;
-                                    dihedral_angle_type_9.phi0  = p.phi0;
-                                    dihedral_angle_type_9.cp    = p.cp;
-                                    dihedral_angle_type_9.mult  = p.mult;
+                                    TorsionInteraction torsion_interaction;
+                                    torsion_interaction.atom1 = atom1;
+                                    torsion_interaction.atom2 = atom2;
+                                    torsion_interaction.atom3 = atom3;
+                                    torsion_interaction.atom4 = atom4;
+                                    torsion_interaction.phi0  = p.phi0;
+                                    torsion_interaction.cp    = p.cp;
+                                    torsion_interaction.mult  = p.mult;
                                     found_this_parameter = true;
-                                    dihedral_angle_type_9s.push_back(dihedral_angle_type_9);
+                                    torsion_interactions.push_back(torsion_interaction);
                                     break;
                                 } else if ((p.type1 == "X") && (p.type2 == type3) && (p.type3 == type2)&& (p.type4 == "X")) {
-                                    DihedralAngleType9 dihedral_angle_type_9;
-                                    dihedral_angle_type_9.atom1 = atom4;
-                                    dihedral_angle_type_9.atom2 = atom3;
-                                    dihedral_angle_type_9.atom3 = atom2;
-                                    dihedral_angle_type_9.atom4 = atom1;
-                                    dihedral_angle_type_9.phi0  = p.phi0;
-                                    dihedral_angle_type_9.cp    = p.cp;
-                                    dihedral_angle_type_9.mult  = p.mult;
+                                    TorsionInteraction torsion_interaction;
+                                    torsion_interaction.atom1 = atom4;
+                                    torsion_interaction.atom2 = atom3;
+                                    torsion_interaction.atom3 = atom2;
+                                    torsion_interaction.atom4 = atom1;
+                                    torsion_interaction.phi0  = p.phi0;
+                                    torsion_interaction.cp    = p.cp;
+                                    torsion_interaction.mult  = p.mult;
                                     found_this_parameter = true;
-                                    dihedral_angle_type_9s.push_back(dihedral_angle_type_9);
+                                    torsion_interactions.push_back(torsion_interaction);
                                     break;
                                 }
                             }
@@ -691,11 +678,11 @@ std::vector<DihedralAngleType9> generate_dihedral_pairs(ChainFB *chain,
             }
         }
     }
-    return dihedral_angle_type_9s;
+    return torsion_interactions;
 }
 
 
-std::vector<BondedPairParameter> read_bonded_pair_parameters(const std::string filename) {
+std::vector<BondedPairParameter> read_bonded_pair_parameters(const std::string &filename) {
 
     std::ifstream input_stream(filename.c_str());
 
@@ -736,10 +723,12 @@ std::vector<BondedPairParameter> read_bonded_pair_parameters(const std::string f
 }
 
 
-std::vector<BondedPair> generate_bonded_pairs(ChainFB *chain,
+std::vector<BondedPairInteraction> generate_bonded_pair_interactions(phaistos::ChainFB *chain,
                     std::vector<BondedPairParameter> bonded_pair_parameters) {
 
-    std::vector<BondedPair> bonded_pairs;
+    using namespace phaistos;
+
+    std::vector<BondedPairInteraction> bonded_pairs;
 
 
     for (AtomIterator<ChainFB,definitions::ALL> it1(*(chain)); !it1.end(); ++it1) {
@@ -762,7 +751,7 @@ std::vector<BondedPair> generate_bonded_pairs(ChainFB *chain,
                     if (((parameter.type1 == type1) && (parameter.type2 == type2)) ||
                         ((parameter.type1 == type2) && (parameter.type2 == type1))) {
 
-                        BondedPair pair;
+                        BondedPairInteraction pair;
                         pair.atom1 = atom1;
                         pair.atom2 = atom2;
                         pair.kb = parameter.kb;
@@ -782,7 +771,7 @@ std::vector<BondedPair> generate_bonded_pairs(ChainFB *chain,
 }
 
 
-std::vector<AngleBendParameter> read_angle_bend_parameters(const std::string filename) {
+std::vector<AngleBendParameter> read_angle_bend_parameters(const std::string &filename) {
 
     std::ifstream input_stream(filename.c_str());
 
@@ -826,10 +815,12 @@ std::vector<AngleBendParameter> read_angle_bend_parameters(const std::string fil
 }
 
 
-std::vector<AngleBendPair> generate_angle_bend_pairs(ChainFB *chain,
-                    std::vector<AngleBendParameter> angle_bend_parameters) {
+std::vector<AngleBendInteraction> generate_angle_bend_interactions(phaistos::ChainFB *chain,
+    const std::vector<AngleBendParameter> &angle_bend_parameters) {
 
-    std::vector<AngleBendPair> angle_bend_pairs;
+    using namespace phaistos;
+
+    std::vector<AngleBendInteraction> angle_bend_interactions;
 
     for (AtomIterator<ChainFB,definitions::ALL> it1(*(chain)); !it1.end(); ++it1) {
         Atom *atom2 = &*it1;
@@ -858,17 +849,17 @@ std::vector<AngleBendPair> generate_angle_bend_pairs(ChainFB *chain,
                     if (((parameter.type1 == type1) && (parameter.type2 == type2) && (parameter.type3 == type3)) ||
                         ((parameter.type1 == type3) && (parameter.type2 == type2) && (parameter.type3 == type1))) {
 
-                        AngleBendPair pair;
-                        pair.atom1 = atom1;
-                        pair.atom2 = atom2;
-                        pair.atom3 = atom3;
-                        pair.theta0 = parameter.theta0;
-                        pair.k0     = parameter.k0;
-                        pair.r13    = parameter.r13;
-                        pair.kub    = parameter.kub;
+                        AngleBendInteraction interaction;
+                        interaction.atom1 = atom1;
+                        interaction.atom2 = atom2;
+                        interaction.atom3 = atom3;
+                        interaction.theta0 = parameter.theta0;
+                        interaction.k0     = parameter.k0;
+                        interaction.r13    = parameter.r13;
+                        interaction.kub    = parameter.kub;
 
                         found_this_parameter = true;
-                        angle_bend_pairs.push_back(pair);
+                        angle_bend_interactions.push_back(interaction);
 
                         break;
                     }
@@ -881,12 +872,12 @@ std::vector<AngleBendPair> generate_angle_bend_pairs(ChainFB *chain,
         }
     }
 
-    return angle_bend_pairs;
+    return angle_bend_interactions;
 
 }
 
 
-std::vector<DihedralType2Parameter> read_dihedral_type_2_parameters(const std::string filename) {
+std::vector<ImptorParameter> read_imptor_parameters(const std::string &filename) {
 
     std::ifstream input_stream(filename.c_str());
 
@@ -895,7 +886,7 @@ std::vector<DihedralType2Parameter> read_dihedral_type_2_parameters(const std::s
         exit(EXIT_FAILURE);
     }
 
-    std::vector<DihedralType2Parameter> parameters;
+    std::vector<ImptorParameter> parameters;
 
     while (input_stream.good()) {
 
@@ -912,7 +903,7 @@ std::vector<DihedralType2Parameter> read_dihedral_type_2_parameters(const std::s
         std::vector<std::string> split_line;
         boost::split(split_line, line, boost::is_any_of(" \t"), boost::token_compress_on);
 
-        DihedralType2Parameter parameter;
+        ImptorParameter parameter;
 
         parameter.type1 = boost::lexical_cast<std::string >(split_line[0]);
         parameter.type2 = boost::lexical_cast<std::string >(split_line[1]);
@@ -929,10 +920,10 @@ std::vector<DihedralType2Parameter> read_dihedral_type_2_parameters(const std::s
 }
 
 
-Imptor atoms_to_imptor(std::vector<Atom*> atoms,
-    std::vector<DihedralType2Parameter> imptor_parameters) {
+ImptorInteraction atoms_to_imptor(const std::vector<phaistos::Atom*> &atoms,
+    const std::vector<ImptorParameter> &imptor_parameters) {
 
-    Imptor imptor;
+    ImptorInteraction imptor;
 
     imptor.atom1 = atoms[0];
     imptor.atom2 = atoms[1];
@@ -948,7 +939,7 @@ Imptor atoms_to_imptor(std::vector<Atom*> atoms,
 
     for (unsigned int i = 0; i < imptor_parameters.size(); i++) {
 
-        DihedralType2Parameter p = imptor_parameters[i];
+        ImptorParameter p = imptor_parameters[i];
 
         if (((p.type1 == type1) && (p.type2 == type2) && (p.type3 == type3) && (p.type4 == type4)) ||
             ((p.type1 == type4) && (p.type2 == type3) && (p.type3 == type2) && (p.type4 == type1)) ||
@@ -969,13 +960,14 @@ Imptor atoms_to_imptor(std::vector<Atom*> atoms,
 }
 
 
-std::vector<Imptor> generate_imptors(ChainFB *chain,
-    std::vector<DihedralType2Parameter> imptor_parameters) {
+std::vector<ImptorInteraction> generate_imptor_interactions(phaistos::ChainFB *chain,
+    const std::vector<ImptorParameter> &imptor_parameters) {
 
+    using namespace phaistos;
     using namespace definitions;
     using namespace vector_utils;
 
-    std::vector<Imptor> imptors;
+    std::vector<ImptorInteraction> imptors;
 
     for (ResidueIterator<ChainFB> res(*(chain)); !(res).end(); ++res) {
 
@@ -1021,7 +1013,7 @@ std::vector<Imptor> generate_imptors(ChainFB *chain,
 
         case HIS:
             if (res->has_atom(HD1) && res->has_atom(HE2)) {
-            	enum_pairs.push_back(make_vector(ND1, 	CG	, CE1,	HD1));
+                enum_pairs.push_back(make_vector(ND1, 	CG	, CE1,	HD1));
             	enum_pairs.push_back(make_vector(ND1, 	CE1	, CG , HD1));
             	enum_pairs.push_back(make_vector(NE2, 	CD2	, CE1,	HE2));
             	enum_pairs.push_back(make_vector(NE2, 	CE1	, CD2,	HE2));
@@ -1085,11 +1077,11 @@ std::vector<Imptor> generate_imptors(ChainFB *chain,
 
         for (unsigned int i = 0; i < enum_pairs.size(); i++) {
 
-            Imptor sc_imptor = atoms_to_imptor(make_vector((*res)[enum_pairs[i][0]],
-                                                           (*res)[enum_pairs[i][1]],
-                                                           (*res)[enum_pairs[i][2]],
-                                                           (*res)[enum_pairs[i][3]]),
-                                               imptor_parameters);
+            ImptorInteraction sc_imptor = atoms_to_imptor(make_vector((*res)[enum_pairs[i][0]],
+                                                                      (*res)[enum_pairs[i][1]],
+                                                                      (*res)[enum_pairs[i][2]],
+                                                                      (*res)[enum_pairs[i][3]]),
+                                                          imptor_parameters);
 
             imptors.push_back(sc_imptor);
 
@@ -1107,7 +1099,7 @@ std::vector<Imptor> generate_imptors(ChainFB *chain,
              if (res->residue_type == PRO)
                 amide_atom = CD;
 
-             Imptor bb_imptor = atoms_to_imptor(make_vector((*res)[N],
+             ImptorInteraction bb_imptor = atoms_to_imptor(make_vector((*res)[N],
                                                             (*previous_residue)[C],
                                                             (*res)[CA],
                                                             (*res)[amide_atom]),
@@ -1119,7 +1111,7 @@ std::vector<Imptor> generate_imptors(ChainFB *chain,
           //C   CA  +N  O
          if (!(res->terminal_status == CTERM)) {
 
-             Imptor bb_imptor = atoms_to_imptor(make_vector((*res)[C],
+             ImptorInteraction bb_imptor = atoms_to_imptor(make_vector((*res)[C],
                                                             (*res)[CA],
                                                             (*next_residue)[N],
                                                             (*res)[O]),
@@ -1128,7 +1120,7 @@ std::vector<Imptor> generate_imptors(ChainFB *chain,
              imptors.push_back(bb_imptor);
          } else if (res->terminal_status == CTERM) {
 
-             Imptor bb_imptor = atoms_to_imptor(make_vector((*res)[C],
+             ImptorInteraction bb_imptor = atoms_to_imptor(make_vector((*res)[C],
                                                             (*res)[CA],
                                                             (*res)[OXT],
                                                             (*res)[O]),

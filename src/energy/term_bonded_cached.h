@@ -29,7 +29,6 @@
 
 #include "parsers/topology_parser.h"
 
-#include "kernels/kernel_cmap.h"
 #include "term_cmap_tables.h"
 
 namespace phaistos {
@@ -48,27 +47,33 @@ public:
      //! Use same settings as base class
      typedef EnergyTerm<ChainFB>::SettingsClassicEnergy Settings;
 
+     //! Struct that holds lists of all interaction the needs 
+     //! to be computed if a residue is changed.
      struct BondedCachedResidue {
 
-          std::vector<topology::AngleBendPair> angle_bend_pairs;
-          std::vector<topology::BondedPair> bonded_pairs;
-          std::vector<topology::Imptor> imptors;
-          std::vector<topology::DihedralAngleType9> dihedral_angles;
-          topology::CmapPair cmap_pair;
+          std::vector<topology::AngleBendInteraction> angle_bend_interactions;
+          std::vector<topology::BondedPairInteraction> bonded_pair_interactions;
+          std::vector<topology::ImptorInteraction> imptor_interactions;
+          std::vector<topology::TorsionInteraction> torsion_interactions;
+          topology::CmapInteraction cmap_interaction;
 
+          // If the CMAP correction has to be computed for this residue, 
+          // i.e. if it is not first or last residue in the chain.
           bool has_cmap;
 
+          // Current energy of the chain.
           double energy_new;
+
+          // Backup of last energy, which is used in caching.
           double energy_old;
 
      };
 
      //! Table which contains the CMAP correction tables
-     //! in Gromacs' 
-     std::vector<std::vector<double> > cmapdata;
+     //! in Gromacs' format
+     std::vector<std::vector<double> > cmap_data;
 
-     //! Vector containing all terms in the CMAP correction.
-
+     //! Vector containing a list of all interaction 
      std::vector<BondedCachedResidue> bonded_cached_residues;
 
      double energy_new;
@@ -77,118 +82,125 @@ public:
      int start_index;
      int end_index;
 
-     //! Constructor.
-     //! \param chain Molecule chain
-     //! \param settings Local Settings object
-     //! \param random_number_engine Object from which random number generators can be created.
-     TermCharmm36BondedCached(ChainFB *chain,
-                    const Settings &settings = Settings(),
-                    RandomNumberEngine *random_number_engine = &random_global)
-          : EnergyTermCommon(chain, "charmm36-bonded-cached", settings, random_number_engine) {
+
+     //! Setup 
+     void setup_caches() {
 
           // Get CMAP data from the Gromacs code.
-          this->cmapdata = charmm36_cmap::setup_cmap();
-          std::vector<topology::CmapPair> cmap_pairs = topology::generate_cmap_pairs(this->chain);
+          this->cmap_data = charmm36_cmap::setup_cmap();
+          std::vector<topology::CmapInteraction> cmap_interactions 
+              = topology::generate_cmap_interactions(this->chain);
+
+          std::string filename;
 
           // Read angle-bend parameters.
-          std::string filename = "/home/andersx/phaistos_dev/modules/charmm36/src/energy/parameters/angle_bend.itp";
-          std::vector<topology::AngleBendParameter> angle_bend_parameters = topology::read_angle_bend_parameters(filename);
+          filename = "/home/andersx/phaistos_dev/modules/charmm36/src/energy/parameters/angle_bend.itp";
+          std::vector<topology::AngleBendParameter> angle_bend_parameters 
+              = topology::read_angle_bend_parameters(filename);
 
-          std::vector<topology::AngleBendPair> angle_bend_pairs = topology::generate_angle_bend_pairs(this->chain, angle_bend_parameters);
+          std::vector<topology::AngleBendInteraction> angle_bend_interactions 
+              = topology::generate_angle_bend_interactions(this->chain, angle_bend_parameters);
 
           // Read bond-stretch parameters.
           filename = "/home/andersx/phaistos_dev/modules/charmm36/src/energy/parameters/bond_stretch.itp";
-
           std::vector<topology::BondedPairParameter> bonded_pair_parameters
               = topology::read_bonded_pair_parameters(filename);
 
-          std::vector<topology::BondedPair> bonded_pairs = topology::generate_bonded_pairs(this->chain, bonded_pair_parameters);
+          std::vector<topology::BondedPairInteraction> bonded_pair_interactions
+              = topology::generate_bonded_pair_interactions(this->chain, bonded_pair_parameters);
 
           // Read improper torsion parameters.
           filename = "/home/andersx/phaistos_dev/modules/charmm36/src/energy/parameters/imptor.itp";
-          std::vector<topology::DihedralType2Parameter> dihedral_type_2_parameters = topology::read_dihedral_type_2_parameters(filename);
-          std::vector<topology::Imptor> imptors = topology::generate_imptors(this->chain, dihedral_type_2_parameters);
+          std::vector<topology::ImptorParameter> imptor_parameters 
+              = topology::read_imptor_parameters(filename);
+          std::vector<topology::ImptorInteraction> imptor_interactions
+              = topology::generate_imptor_interactions(this->chain, imptor_parameters);
 
           // Get proper torsion parameters.
           filename = "/home/andersx/phaistos_dev/modules/charmm36/src/energy/parameters/torsion.itp";
-          std::vector<topology::DihedralType9Parameter> dihedral_type_9_parameters = topology::read_dihedral_type_9_parameters(filename);
+          std::vector<topology::TorsionParameter> torsion_parameters
+              = topology::read_torsion_parameters(filename);
 
-          std::vector<topology::DihedralAngleType9> dihedral_angles = topology::generate_dihedral_pairs(this->chain, dihedral_type_9_parameters);
+          std::vector<topology::TorsionInteraction> torsion_interactions
+              = topology::generate_torsion_interactions(this->chain, torsion_parameters);
 
           // Make room in cache vector for all residues.
           this->bonded_cached_residues.resize(this->chain->size());
 
           // Sort angle_bend_pairs
-          for (unsigned int i = 0; i < angle_bend_pairs.size(); i++){
+          for (unsigned int i = 0; i < angle_bend_interactions.size(); i++){
 
-               topology::AngleBendPair pair = angle_bend_pairs[i];
+               topology::AngleBendInteraction interaction = angle_bend_interactions[i];
 
-               int index = std::numeric_limits<int>::max();
+               int index = std::min((interaction.atom1)->residue->index,
+                                    (interaction.atom2)->residue->index);
 
-               if ((pair.atom1)->residue->index < index) index = (pair.atom1)->residue->index;
-               if ((pair.atom2)->residue->index < index) index = (pair.atom2)->residue->index;
-               if ((pair.atom3)->residue->index < index) index = (pair.atom3)->residue->index;
+               index = std::min((interaction.atom3)->residue->index,
+                                index);
 
-               this->bonded_cached_residues[index].angle_bend_pairs.push_back(pair);
+               this->bonded_cached_residues[index].angle_bend_interactions.push_back(interaction);
 
           }
 
           // Sort bonded_pairs
-          for (unsigned int i = 0; i < bonded_pairs.size(); i++){
+          for (unsigned int i = 0; i < bonded_pair_interactions.size(); i++){
 
-               topology::BondedPair pair = bonded_pairs[i];
+               topology::BondedPairInteraction interaction = bonded_pair_interactions[i];
 
-               int index = std::numeric_limits<int>::max();
+               int index = std::min((interaction.atom1)->residue->index,
+                                    (interaction.atom2)->residue->index);
 
-               if ((pair.atom1)->residue->index < index) index = (pair.atom1)->residue->index;
-               if ((pair.atom2)->residue->index < index) index = (pair.atom2)->residue->index;
-
-               this->bonded_cached_residues[index].bonded_pairs.push_back(pair);
+               this->bonded_cached_residues[index].bonded_pair_interactions.push_back(interaction);
 
           }
 
           // Sort improper torsions
-          for (unsigned int i = 0; i < imptors.size(); i++){
+          for (unsigned int i = 0; i < imptor_interactions.size(); i++){
 
-               topology::Imptor pair = imptors[i];
+               topology::ImptorInteraction interaction = imptor_interactions[i];
 
-               int index = std::numeric_limits<int>::max();
+               int index = std::min((interaction.atom1)->residue->index,
+                                    (interaction.atom2)->residue->index);
 
-               if ((pair.atom1)->residue->index < index) index = (pair.atom1)->residue->index;
-               if ((pair.atom2)->residue->index < index) index = (pair.atom2)->residue->index;
-               if ((pair.atom3)->residue->index < index) index = (pair.atom3)->residue->index;
-               if ((pair.atom4)->residue->index < index) index = (pair.atom4)->residue->index;
+               index = std::min((interaction.atom3)->residue->index,
+                                index);
 
-               this->bonded_cached_residues[index].imptors.push_back(pair);
+               index = std::min((interaction.atom4)->residue->index,
+                                index);
+
+               this->bonded_cached_residues[index].imptor_interactions.push_back(interaction);
 
           }
 
           // Sort proper torsions
-          for (unsigned int i = 0; i < dihedral_angles.size(); i++){
+          for (unsigned int i = 0; i < torsion_interactions.size(); i++){
 
-               topology::DihedralAngleType9 pair = dihedral_angles[i];
+               topology::TorsionInteraction interaction = torsion_interactions[i];
 
-               int index = std::numeric_limits<int>::max();
+               int index = std::min((interaction.atom1)->residue->index,
+                                    (interaction.atom2)->residue->index);
 
-               if ((pair.atom1)->residue->index < index) index = (pair.atom1)->residue->index;
-               if ((pair.atom2)->residue->index < index) index = (pair.atom2)->residue->index;
-               if ((pair.atom3)->residue->index < index) index = (pair.atom3)->residue->index;
-               if ((pair.atom4)->residue->index < index) index = (pair.atom4)->residue->index;
+               index = std::min((interaction.atom3)->residue->index,
+                                index);
 
-               this->bonded_cached_residues[index].dihedral_angles.push_back(pair);
+               index = std::min((interaction.atom4)->residue->index,
+                                index);
 
-         }
+               this->bonded_cached_residues[index].torsion_interactions.push_back(interaction);
+
+          }
 
           for (unsigned int i = 0; i < this->bonded_cached_residues.size(); i ++) {
                this->bonded_cached_residues[i].has_cmap = false;
           }
+
           // Sort CMAP parameters
-          for (unsigned int i = 0; i < cmap_pairs.size(); i++){
+          for (unsigned int i = 0; i < cmap_interactions.size(); i++){
 
-               topology::CmapPair pair = cmap_pairs[i];
+               topology::CmapInteraction interaction = cmap_interactions[i];
 
-               int index = pair.residue_index;
-               this->bonded_cached_residues[index].cmap_pair = pair;
+               int index = interaction.residue_index;
+               this->bonded_cached_residues[index].cmap_interaction = interaction;
                this->bonded_cached_residues[index].has_cmap = true;
 
          }
@@ -207,9 +219,21 @@ public:
 
          }
 
-        // std::cout << this->energy_new << std::endl;
-        // std::cout << this->energy_new / 4.184 << std::endl;
+     }
 
+
+
+     //! Constructor.
+     //! \param chain Molecule chain
+     //! \param settings Local Settings object
+     //! \param random_number_engine Object from which random number generators can be created.
+     TermCharmm36BondedCached(ChainFB *chain,
+                    const Settings &settings = Settings(),
+                    RandomNumberEngine *random_number_engine = &random_global)
+          : EnergyTermCommon(chain, "charmm36-bonded-cached", settings, random_number_engine) {
+
+
+         setup_caches();
      }
 
      double calculate_cached_residue_energy(BondedCachedResidue &cached_residue) {
@@ -218,35 +242,34 @@ public:
           double energy_sum = 0.0;
 
           // Sort angle_bend_pairs
-          for (unsigned int i = 0; i < cached_residue.angle_bend_pairs.size(); i++){
+          for (unsigned int i = 0; i < cached_residue.angle_bend_interactions.size(); i++){
 
-               topology::AngleBendPair pair = cached_residue.angle_bend_pairs[i];
+               topology::AngleBendInteraction interaction = cached_residue.angle_bend_interactions[i];
 
-               const double theta = calc_angle((pair.atom1)->position,
-                                               (pair.atom2)->position,
-                                               (pair.atom3)->position);
+               const double theta = calc_angle((interaction.atom1)->position,
+                                               (interaction.atom2)->position,
+                                               (interaction.atom3)->position);
 
                // Angle bend part
-               const double dtheta = theta - pair.theta0 * M_PI / 180.0;
-               const double energy_angle_bend_temp = 0.5 * pair.k0 * dtheta * dtheta;
+               const double dtheta = theta - interaction.theta0 * charmm36_constants::DEG_TO_RAD;
+               const double energy_angle_bend_temp = 0.5 * interaction.k0 * dtheta * dtheta;
 
                // Urey-Bradley part
-               const double r13 = ((pair.atom1)->position - (pair.atom3)->position).norm() / 10.0;
-               const double dr = r13 - pair.r13;
-               const double energy_urey_bradley_temp = 0.5 * pair.kub * dr * dr;
+               const double r13 = ((interaction.atom1)->position - (interaction.atom3)->position).norm() * charmm36_constants::ANGS_TO_NM;
+               const double dr = r13 - interaction.r13;
+               const double energy_urey_bradley_temp = 0.5 * interaction.kub * dr * dr;
 
                energy_sum += energy_angle_bend_temp + energy_urey_bradley_temp;
 
           }
 
-          // Sort bonded_pairs
-          for (unsigned int i = 0; i < cached_residue.bonded_pairs.size(); i++){
+          for (unsigned int i = 0; i < cached_residue.bonded_pair_interactions.size(); i++){
 
-               topology::BondedPair pair = cached_residue.bonded_pairs[i];
+               topology::BondedPairInteraction interaction = cached_residue.bonded_pair_interactions[i];
 
-               const double r = ((pair.atom1)->position - (pair.atom2)->position).norm() / 10.0;
-               const double kb = pair.kb;
-               const double r0 = pair.r0;
+               const double r = ((interaction.atom1)->position - (interaction.atom2)->position).norm() * charmm36_constants::ANGS_TO_NM;
+               const double kb = interaction.kb;
+               const double r0 = interaction.r0;
 
                const double dr = r - r0;
                const double e_bond_temp = 0.5 * kb * dr * dr;
@@ -256,49 +279,46 @@ public:
 
           }
 
-          // Sort improper torsions
-          for (unsigned int i = 0; i < cached_residue.imptors.size(); i++){
+          for (unsigned int i = 0; i < cached_residue.imptor_interactions.size(); i++){
 
-               topology::Imptor imptor = cached_residue.imptors[i];
+               topology::ImptorInteraction interaction = cached_residue.imptor_interactions[i];
 
-               const double phi = calc_dihedral((imptor.atom1)->position,
-                                                (imptor.atom2)->position,
-                                                (imptor.atom3)->position,
-                                                (imptor.atom4)->position);
+               const double phi = calc_dihedral((interaction.atom1)->position,
+                                                (interaction.atom2)->position,
+                                                (interaction.atom3)->position,
+                                                (interaction.atom4)->position);
 
-               const double dphi = phi - imptor.phi0 / 180.0 * M_PI;
-               const double energy_imptor_temp = 0.5 * imptor.cp * dphi * dphi;
+               const double dphi = phi - interaction.phi0 * charmm36_constants::DEG_TO_RAD;
+               const double energy_imptor_temp = 0.5 * interaction.cp * dphi * dphi;
 
                energy_sum += energy_imptor_temp;
 
 
           }
 
-          // Sort proper torsions
-          for (unsigned int i = 0; i < cached_residue.dihedral_angles.size(); i++){
+          for (unsigned int i = 0; i < cached_residue.torsion_interactions.size(); i++){
 
-               topology::DihedralAngleType9 dihedral = cached_residue.dihedral_angles[i];
+               topology::TorsionInteraction interaction = cached_residue.torsion_interactions[i];
 
-               double angle = calc_dihedral((dihedral.atom1)->position,
-                                            (dihedral.atom2)->position,
-                                            (dihedral.atom3)->position,
-                                            (dihedral.atom4)->position);
+               double angle = calc_dihedral((interaction.atom1)->position,
+                                            (interaction.atom2)->position,
+                                            (interaction.atom3)->position,
+                                            (interaction.atom4)->position);
 
-               const double e_torsion_temp = dihedral.cp * cos(dihedral.mult * angle - dihedral.phi0 / 180.0 * M_PI) + dihedral.cp;
+               const double e_torsion_temp = interaction.cp * std::cos(interaction.mult * angle - interaction.phi0 * charmm36_constants::DEG_TO_RAD) + interaction.cp;
 
                energy_sum += e_torsion_temp;
 
           }
 
           if (cached_residue.has_cmap) {
-                const int residue_index = cached_residue.cmap_pair.residue_index;
-                const unsigned int cmap_type_index = cached_residue.cmap_pair.cmap_type_index;
-                // const unsigned int cmap_type_index = 0;
+                const int residue_index = cached_residue.cmap_interaction.residue_index;
+                const unsigned int cmap_type_index = cached_residue.cmap_interaction.cmap_type_index;
 
                 const double phi = (*(this->chain))[residue_index].get_phi();
                 const double psi = (*(this->chain))[residue_index].get_psi();
 
-                energy_sum += kernel::cmap_energy(phi, psi, cmap_type_index, this->cmapdata);
+                energy_sum += charmm36_cmap::cmap_energy(phi, psi, cmap_type_index, this->cmap_data);
           }
 
           return energy_sum;
@@ -315,13 +335,10 @@ public:
      TermCharmm36BondedCached(const TermCharmm36BondedCached &other,
                  RandomNumberEngine *random_number_engine,
                  int thread_index, ChainFB *chain)
-          : EnergyTermCommon(other, random_number_engine, thread_index, chain),
-            cmapdata(other.cmapdata),
-            bonded_cached_residues(other.bonded_cached_residues),
-            energy_new(other.energy_new),
-            energy_old(other.energy_old),
-            start_index(other.start_index),
-            end_index(other.end_index) {}
+          : EnergyTermCommon(other, random_number_engine, thread_index, chain) {
+
+          setup_caches();
+     }
 
      //! Evaluate chain energy
      //! \param move_info object containing information about last move
@@ -357,13 +374,7 @@ public:
 
           this->energy_new  += delta_energy_local;
 
-          // double energy_check = 0.0;
-          // for (unsigned int i = 0; i < this->bonded_cached_residues.size(); i ++) {
-          //      energy_check += calculate_cached_residue_energy(bonded_cached_residues[i]);
-          // }
-          // printf("ASC: Delta check - actual:  %24.14f\n", energy_check - this->energy_new);
-
-          return this->energy_new/4.184;
+          return this->energy_new * charmm36_constants::KJ_TO_KCAL;
      }
 
 

@@ -237,8 +237,8 @@ public:
           double exp_ij = 0.0;
           double exp_ji = 0.0;
 
-          if (bin_ij < 350) exp_ij = charmm_parser::exp_eef1[bin_ij];
-          if (bin_ji < 350) exp_ji = charmm_parser::exp_eef1[bin_ji];
+          if (bin_ij < 350) exp_ij = charmm36_constants::EXP_EEF1[bin_ij];
+          if (bin_ji < 350) exp_ji = charmm36_constants::EXP_EEF1[bin_ji];
 
           double cont_ij = -factors[index1][index2]*exp_ij/r_ij_sq;
           double cont_ji = -factors[index2][index1]*exp_ji/r_ij_sq;

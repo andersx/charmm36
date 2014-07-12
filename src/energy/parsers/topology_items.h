@@ -60,20 +60,20 @@ struct NonBonded14Parameter {
 struct NonBondedInteraction {
     phaistos::Atom *atom1;
     phaistos::Atom *atom2;
-    double q1;
-    double q2;
+//    double q1;
+//    double q2;
     double qq;
-    double sigma1;
-    double sigma2;
-    double epsilon1;
-    double epsilon2;
-    double sigma_effective;
-    double epsilon_effective;
+//    double sigma1;
+//    double sigma2;
+//    double epsilon1;
+//    double epsilon2;
+//    double sigma_effective;
+//    double epsilon_effective;
     double c6;
     double c12;
     bool is_14_interaction;
-    int i1;
-    int i2;
+//    int i1;
+//    int i2;
 
     bool do_eef1;
     double fac_12;

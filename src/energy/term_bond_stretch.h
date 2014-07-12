@@ -40,6 +40,7 @@ public:
      // Use same settings as base class
      typedef EnergyTerm<ChainFB>::SettingsClassicEnergy Settings;
 
+     //! List of all bonded pair interactions that need to be computed
      std::vector<topology::BondedPairInteraction> bonded_pair_interactions;
 
      //! Constructor
@@ -99,11 +100,12 @@ public:
 
                e_bond += e_bond_temp;
 
-               // printf("ASC: BONDSTRETCH    dr = %14.10f   r0 = %14.10f   kb = %14.10f  vbond = %14.10f\n", dr, r0, kb, e_bond_temp);
           }
 
-          printf("     bond-stretch E = %15.6f kJ/mol\n", e_bond);
-          printf("     bond-stretch E = %15.6f kcal/mol\n", e_bond * charmm36_constants::KJ_TO_KCAL);
+          if (settings.debug > 0) {
+               printf("     bond-stretch E = %15.6f kJ/mol\n", e_bond);
+               printf("     bond-stretch E = %15.6f kcal/mol\n", e_bond * charmm36_constants::KJ_TO_KCAL);
+          }
 
           return e_bond * charmm36_constants::KJ_TO_KCAL;
      }

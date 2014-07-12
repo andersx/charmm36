@@ -355,7 +355,7 @@ public:
           // Local delta energy required for OpenMP -- can't just write to this->energy_new.
           double delta_energy_local = 0.0;
 
-          #pragma omp parallel for reduction(+:delta_energy_local) schedule(static)
+          // #pragma omp parallel for reduction(+:delta_energy_local) schedule(static)
           for (int i = this->start_index; i < this->end_index+1; i ++) {
 
                const double residue_energy = 

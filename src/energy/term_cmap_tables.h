@@ -24,6 +24,7 @@
 
 namespace charmm36_cmap {
 
+//! Matrix used in the CMAP interpolation
 const int cmap_coeff_matrix[] = {
     1, 0, -3,  2, 0, 0,  0,  0, -3,  0,  9, -6,  2,  0, -6,  4,
     0, 0,  0,  0, 0, 0,  0,  0,  3,  0, -9,  6, -2,  0,  6, -4,
@@ -43,6 +44,7 @@ const int cmap_coeff_matrix[] = {
     0, 0,  0,  0, 0, 0, -1,  1,  0,  0,  2, -2,  0,  0, -1,  1
 };
 
+//! Matrix used in the CMAP interpolation
 const int loop_index[4][4] = {
     {0, 4, 8, 12},
     {1, 5, 9, 13},
@@ -569,16 +571,16 @@ std::vector<double> setup_cmap_gromacs(const double *this_grid) {
 // Wrapper
 std::vector<std::vector<double> > setup_cmap () {
 
-    std::vector<std::vector<double> > cmapdata;
+    std::vector<std::vector<double> > cmap_data;
 
-    cmapdata.push_back(setup_cmap_gromacs(grid0));
-    cmapdata.push_back(setup_cmap_gromacs(grid1));
-    cmapdata.push_back(setup_cmap_gromacs(grid2));
-    cmapdata.push_back(setup_cmap_gromacs(grid3));
-    cmapdata.push_back(setup_cmap_gromacs(grid4));
-    cmapdata.push_back(setup_cmap_gromacs(grid5));
+    cmap_data.push_back(setup_cmap_gromacs(grid0));
+    cmap_data.push_back(setup_cmap_gromacs(grid1));
+    cmap_data.push_back(setup_cmap_gromacs(grid2));
+    cmap_data.push_back(setup_cmap_gromacs(grid3));
+    cmap_data.push_back(setup_cmap_gromacs(grid4));
+    cmap_data.push_back(setup_cmap_gromacs(grid5));
 
-    return cmapdata;
+    return cmap_data;
 
 }
 

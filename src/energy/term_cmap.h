@@ -45,7 +45,7 @@ public:
 
 
      //! Table which contains the CMAP correction tables
-     //! in Gromacs' 
+     //! in Gromacs' internal formatting
      std::vector<std::vector<double> > cmap_data;
 
      //! Vector containing all terms in the CMAP correction.
@@ -65,6 +65,8 @@ public:
 
           // Get CMAP data from the Gromacs code.
           this->cmap_data = charmm36_cmap::setup_cmap();
+
+          // Make a list of all CMAP interactions
           this->cmap_interactions = topology::generate_cmap_interactions(this->chain);
      }
 
@@ -80,6 +82,8 @@ public:
 
           // Get CMAP data from the Gromacs code.
           this->cmap_data = charmm36_cmap::setup_cmap();
+
+          // Make a list of all CMAP interactions
           this->cmap_interactions = topology::generate_cmap_interactions(this->chain);
 
      }
@@ -101,10 +105,11 @@ public:
                cmap_energy += charmm36_cmap::cmap_energy(phi, psi, cmap_type_index, this->cmap_data);
 
           }
-
           
-          printf("             CMAP E = %15.6f kJ/mol\n", cmap_energy);
-          printf("             CMAP E = %15.6f kcal/mol\n", cmap_energy * charmm36_constants::KJ_TO_KCAL);
+          if (settings.debug > 0) {
+               printf("             CMAP E = %15.6f kJ/mol\n", cmap_energy);
+               printf("             CMAP E = %15.6f kcal/mol\n", cmap_energy * charmm36_constants::KJ_TO_KCAL);
+          }
 
           return cmap_energy  * charmm36_constants::KJ_TO_KCAL;
      }

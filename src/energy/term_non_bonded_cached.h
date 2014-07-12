@@ -41,19 +41,33 @@ protected:
      //! For convenience, define local EnergyTermCommon
      typedef phaistos::EnergyTermCommon<TermCharmm36NonBondedCached, ChainFB> EnergyTermCommon;
 
+     //! Struct that holds information that need to be computed if
+     //! interactions between two residues change.
      struct CachedResidueInteraction {
 
+        //! Energy before latest move
         double energy_old;
+
+        //! Energy after latest move
         double energy_new;
 
+        //! A list of all interactions that need to be computed
         std::vector<topology::NonBondedInteraction> interactions;
 
      };
 
-     //! Lookup tables containing parameters
+     //! Lookup table containing interactions that need to be recomputed.
+     //! The size is L x L where L is the length of the chain. Only the upper triangle
+     //! is filled.
      std::vector< std::vector<CachedResidueInteraction> > cached_residue_interactions;
+
+     //! The total energy after the latest move
      double total_energy;
+
+     //! The total energy before the latest move
      double total_energy_old;
+
+     //! List of indexes in the cache that need to be recomputed after last move
      std::vector<std::vector<unsigned int> > cache_indexes;
 
 public:
@@ -61,6 +75,24 @@ public:
      //! Use same settings as base class
      typedef EnergyTerm<ChainFB>::SettingsClassicEnergy Settings;
 
+     // //! Newton's method to determine inverse square roots.
+     // inline double fast_inv_sqrt(double number) {
+
+     //      long long i;
+     //      double x2, y;
+     //      const double threehalfs = 1.5;
+     //      x2 = number * 0.5;
+     //      y  = number;
+     //      i  = * ( long long * ) &y;
+     //      // i  = 0x5fe6ec85e7de30da - ( i >> 1 );
+     //      i  = 0x5fe6eb50c7b537a9 - ( i >> 1 );
+     //      y  = * ( double * ) &i;
+     //      y  = y * ( threehalfs - ( x2 * y * y ) );
+     //      y  = y * ( threehalfs - ( x2 * y * y ) );
+     //      return y;
+     // }
+
+     //! Calculate the energy of a diatomic interaction
      double calculate_interaction_energy(topology::NonBondedInteraction &interaction) {
 
           const double r_sq = ((interaction.atom1)->position - (interaction.atom2)->position).norm_squared();
@@ -106,13 +138,12 @@ public:
 
           }
 
-          return vdw_energy * charmm36_constants::KJ_TO_KCAL
-               + coul_energy * charmm36_constants::KJ_TO_KCAL
-               + eef1_sb_energy;
+          return (vdw_energy + coul_energy) * charmm36_constants::KJ_TO_KCAL + eef1_sb_energy;
      }
 
-
-
+      
+     //! Code that needs to be setup explicitly in the constructor, and also
+     //! explicitly copy-constructor. Sets up the cache and initial energies.
      void setup_caches() {
 
 
@@ -239,10 +270,7 @@ public:
                     RandomNumberEngine *random_number_engine = &random_global)
           : EnergyTermCommon(chain, "charmm36-non-bonded-cached", settings, random_number_engine) {
 
-
-          std::cout << "Setup master thread" << std::endl;
           setup_caches();
-          std::cout << "Done!" << std::endl;
      }
 
 
@@ -282,13 +310,11 @@ public:
                  int thread_index, ChainFB *chain)
           : EnergyTermCommon(other, random_number_engine, thread_index, chain) {
 
-          std::cout << "Setup thread # " << thread_index << std::endl;
           setup_caches();
-          std::cout << "Done!" << std::endl;
      }
 
 
-     // Big long initialize code from Sandro
+     // Big long initialize code from Wouter/Sandro
      void initialize(std::vector<double> &dGref,
                      std::vector< std::vector<double> > &factors,
                      std::vector<double> &vdw_radii,
@@ -389,22 +415,6 @@ public:
 
      }
 
-     //! Newton's method to determine inverse square roots.
-     // inline double fast_inv_sqrt(double number) {
-
-     //      long long i;
-     //      double x2, y;
-     //      const double threehalfs = 1.5;
-     //      x2 = number * 0.5;
-     //      y  = number;
-     //      i  = * ( long long * ) &y;
-     //      // i  = 0x5fe6ec85e7de30da - ( i >> 1 );
-     //      i  = 0x5fe6eb50c7b537a9 - ( i >> 1 );
-     //      y  = * ( double * ) &i;
-     //      y  = y * ( threehalfs - ( x2 * y * y ) );
-     //      y  = y * ( threehalfs - ( x2 * y * y ) );
-     //      return y;
-     // }
 
      //! Evaluate chain energy
      //! \param move_info object containing information about last move
@@ -429,7 +439,7 @@ public:
         double delta_energy_local = 0.0;
 
         // Loop over all pairs which must be recomputed
-        #pragma omp parallel for reduction(+:delta_energy_local) schedule(static)
+        // #pragma omp parallel for reduction(+:delta_energy_local) schedule(static)
         for (unsigned int k = 0; k < this->cache_indexes.size(); k++) {
 
             // Local index variables for residues i and j.
@@ -445,10 +455,41 @@ public:
                 // Make local copy of atom pair k.
                 topology::NonBondedInteraction interaction = this->cached_residue_interactions[i][j].interactions[k];
 
-                double interaction_energy = calculate_interaction_energy(interaction);
+                const double r_sq = ((interaction.atom1)->position - (interaction.atom2)->position).norm_squared();
+                
+                const double inv_r_sq = 1.0 / r_sq;
+                const double inv_r_sq6 = inv_r_sq * inv_r_sq * inv_r_sq * charmm36_constants::NM6_TO_ANGS6; //shift to nanometers^6
+                const double inv_r_sq12 = inv_r_sq6 * inv_r_sq6;
+                
+                const double vdw_energy = (interaction.c12 * inv_r_sq12 - interaction.c6 * inv_r_sq6);
+                const double coul_energy = interaction.qq * inv_r_sq * charmm36_constants::TEN_OVER_ONE_POINT_FIVE;
 
-                // Add diatomic contribution to interaction energy of the residue pair ij.
-                this->cached_residue_interactions[i][j].energy_new += interaction_energy;
+                // Add vdw and coulomb energy (and convert from kJ to kcal).                
+                this->cached_residue_interactions[i][j].energy_new += (vdw_energy + coul_energy) * charmm36_constants::KJ_TO_KCAL;
+                
+                // If the pair has a contribution to EEF1-SB solvation term
+                if ((interaction.do_eef1) && (r_sq < 81.0)) {
+                
+                    // From Sandro's code
+                    const double r_ij = std::sqrt(r_sq);
+                
+                    const double arg_ij = std::fabs((r_ij - interaction.R_vdw_1)/interaction.lambda1);
+                    const double arg_ji = std::fabs((r_ij - interaction.R_vdw_2)/interaction.lambda2);
+                
+                    const int bin_ij = int(arg_ij*100);
+                    const int bin_ji = int(arg_ji*100);
+                
+                    double exp_ij = 0.0;
+                    double exp_ji = 0.0;
+                
+                    if (bin_ij < 350) exp_ij = charmm36_constants::EXP_EEF1[bin_ij];
+                    if (bin_ji < 350) exp_ji = charmm36_constants::EXP_EEF1[bin_ji];
+               
+                    // Add solvation energy (already in kcal) 
+                    this->cached_residue_interactions[i][j].energy_new -= (interaction.fac_12*exp_ij + interaction.fac_21*exp_ji) * inv_r_sq;
+                
+                }
+
             }
 
             // Compute delta energy for the residue pair ij (I.e. subtract old, add new)
@@ -466,7 +507,7 @@ public:
      }
 
 
-
+    //! Accept move and backup energies
     void accept() {
 
         // If move is accepted, backup energies in all pairs that were recomputed
@@ -481,7 +522,7 @@ public:
     }
 
 
-
+    //! Reject move and roll-back energies
     void reject() {
 
         // If move is accepted, restore energies in all pairs that were recomputed
@@ -493,10 +534,12 @@ public:
 
         // Restore total energy
         this->total_energy = this->total_energy_old;
+
     }
+
 
 };
 
-}
+} // End namespace phaistos
 
 #endif

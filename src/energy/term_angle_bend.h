@@ -41,6 +41,7 @@ public:
      //! Use same settings as base class
      typedef EnergyTerm<ChainFB>::SettingsClassicEnergy Settings;
 
+     //! List of all angle energy terms that need to be computed
      std::vector<topology::AngleBendInteraction> angle_bend_interactions;
 
      //! Constructor.
@@ -91,7 +92,7 @@ public:
                                                (interaction.atom3)->position);
 
                // Angle bend part
-               const double dtheta = theta - interaction.theta0 * M_PI / 180.0;
+               const double dtheta = theta - interaction.theta0 * charmm36_constants::DEG_TO_RAD;
                const double energy_angle_bend_temp = 0.5 * interaction.k0 * dtheta * dtheta; 
 
                energy_angle += energy_angle_bend_temp;
@@ -106,7 +107,7 @@ public:
 
           }
 
-          if (settings.debug >= 0) {
+          if (settings.debug > 0) {
 
                printf("       angle-bend E = %15.6f kJ/mol\n", energy_angle);
                printf("       angle-bend E = %15.6f kcal/mol\n", 

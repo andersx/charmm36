@@ -38,6 +38,7 @@ public:
      //! Use same settings as base class
      typedef EnergyTerm<ChainFB>::SettingsClassicEnergy Settings;
 
+     //! List of interactions that need to be computed
      std::vector<topology::ImptorInteraction> imptor_interactions;
 
      //! Constructor.

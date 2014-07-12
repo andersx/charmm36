@@ -42,11 +42,14 @@ protected:
 
      //! Lookup tables containing parameters
      std::vector<double> dGref;
+     //! Lookup tables containing parameters
      std::vector< std::vector<double> > factors;
+     //! Lookup tables containing parameters
      std::vector<double> vdw_radii;
+     //! Lookup tables containing parameters
      std::vector<double> lambda;
-
-    std::map<std::string, unsigned int> eef1_atom_type_index_map;
+     //! Lookup tables containing parameters
+     std::map<std::string, unsigned int> eef1_atom_type_index_map;
 
 public:
 
@@ -99,10 +102,11 @@ public:
                      int thread_index, ChainFB *chain)
           : EnergyTermCommon(other, random_number_engine, thread_index, chain),
             counter(other.counter){
+
           initialize();
      }
 
-
+     //! Initialize code from Wouter/Sandro I think.
      void initialize() {
 
           // Read parameter file
@@ -110,7 +114,7 @@ public:
           std::vector< std::vector<double> > params;
           std::string elem_str;
 
-          //! Useful constant
+          // Useful constant
           const double two_pi_3_2 = 2.0*M_PI*sqrt(M_PI);
           const double phys_t = 298.15;
 

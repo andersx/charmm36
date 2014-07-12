@@ -40,6 +40,7 @@ public:
      //! Use same settings as base class
      typedef EnergyTerm<ChainFB>::SettingsClassicEnergy Settings;
 
+     //! List that holds all the interactions and parameters that need to be computed:w
      std::vector<topology::NonBondedInteraction> non_bonded_interactions;
 
      //! Constructor.
@@ -120,7 +121,8 @@ public:
 
                // Here a distance dependent dieelectric constant of eps_r = 1.5 * r is used.
                // The factor of 10.0 here is because the pair.qq assumes distances in nanometers,
-               // while the factor of 1.5 in eps_r assumes that r is in angstrom.
+               // while the factor of 1.5 in eps_r assumes that r is in angstrom, so only one r in r^2 
+               // must be converted.
                const double coul_energy_temp = pair.qq / (r_sq * 1.5) * charmm36_constants::NM_TO_ANGS;
 
                if (pair.is_14_interaction) {
@@ -132,13 +134,14 @@ public:
 
           const double total_energy = (coul14_energy + coul_energy) * charmm36_constants::KJ_TO_KCAL;
 
-          printf("          Coul-14 E = %15.6f kJ/mol\n", coul14_energy);
-          printf("          Coul-14 E = %15.6f kcal/mol\n", coul14_energy * charmm36_constants::KJ_TO_KCAL);
-          printf("          Coul-SR E = %15.6f kJ/mol\n", coul_energy);
-          printf("          Coul-SR E = %15.6f kcal/mol\n", coul_energy * charmm36_constants::KJ_TO_KCAL);
-          printf("       Coul-total E = %15.6f kJ/mol\n", total_energy * charmm36_constants::KCAL_TO_KJ);
-          printf("       Coul-total E = %15.6f kcal/mol\n", total_energy);
-
+          if (settings.debug > 0) {
+               printf("          Coul-14 E = %15.6f kJ/mol\n", coul14_energy);
+               printf("          Coul-14 E = %15.6f kcal/mol\n", coul14_energy * charmm36_constants::KJ_TO_KCAL);
+               printf("          Coul-SR E = %15.6f kJ/mol\n", coul_energy);
+               printf("          Coul-SR E = %15.6f kcal/mol\n", coul_energy * charmm36_constants::KJ_TO_KCAL);
+               printf("       Coul-total E = %15.6f kJ/mol\n", total_energy * charmm36_constants::KCAL_TO_KJ);
+               printf("       Coul-total E = %15.6f kcal/mol\n", total_energy);
+          }
           return total_energy;
 
      }

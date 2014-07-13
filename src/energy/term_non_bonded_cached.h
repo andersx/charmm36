@@ -70,6 +70,8 @@ protected:
      //! List of indexes in the cache that need to be recomputed after last move
      std::vector<std::vector<unsigned int> > cache_indexes;
 
+     bool none_move;
+
 public:
 
      //! Use same settings as base class
@@ -261,19 +263,6 @@ public:
      }
 
 
-     //! Constructor.
-     //! \param chain Molecule chain
-     //! \param settings Local Settings object
-     //! \param random_number_engine Object from which random number generators can be created.
-     TermCharmm36NonBondedCached(ChainFB *chain,
-                    const Settings &settings = Settings(),
-                    RandomNumberEngine *random_number_engine = &random_global)
-          : EnergyTermCommon(chain, "charmm36-non-bonded-cached", settings, random_number_engine) {
-
-          setup_caches();
-     }
-
-
      // Returns the pairs indexes for the residues which need recomputation after
      // an MC move has been carried out.
      std::vector<std::vector<unsigned int> > get_cache_indexes(const unsigned int start,
@@ -297,7 +286,21 @@ public:
         }
 
         return indexes;
-    }
+     }
+
+
+     //! Constructor.
+     //! \param chain Molecule chain
+     //! \param settings Local Settings object
+     //! \param random_number_engine Object from which random number generators can be created.
+     TermCharmm36NonBondedCached(ChainFB *chain,
+                    const Settings &settings = Settings(),
+                    RandomNumberEngine *random_number_engine = &random_global)
+          : EnergyTermCommon(chain, "charmm36-non-bonded-cached", settings, random_number_engine) {
+        
+          this->none_move = false;
+          setup_caches();
+     }
 
 
      //! Copy constructor.
@@ -310,6 +313,7 @@ public:
                  int thread_index, ChainFB *chain)
           : EnergyTermCommon(other, random_number_engine, thread_index, chain) {
 
+          this->none_move = false;
           setup_caches();
      }
 
@@ -426,11 +430,28 @@ public:
          unsigned int start_index = 0;
          unsigned int end_index = this->chain->size() - 1;
 
-         // If these are set explicitly by the move, read these here.
+         this->none_move = false;
+
          if (move_info) {
-             start_index = move_info->modified_positions_start;
-             end_index = move_info->modified_positions_end - 1;
-         }
+
+            // This is a none move 
+            if (move_info->modified_angles.empty() == true) {
+
+                  // Notify accept/reject functions that this was a none_move
+                  this->none_move = true;
+
+                  // Return energy.
+                  return this->total_energy;
+
+             // Not a none move
+             } else {
+
+                // If these are set explicitly by the move, read these here.
+                start_index = move_info->modified_positions_start;
+                end_index = move_info->modified_positions_end - 1;
+
+            }
+        }
 
         // Get the indexes of all pairs of residues which must be recomputed
         this->cache_indexes = get_cache_indexes(start_index, end_index);
@@ -452,6 +473,8 @@ public:
             // Loop over all pairs of atoms, k, in the residue pair ij.
             for (unsigned int k = 0; k < this->cached_residue_interactions[i][j].interactions.size(); k++) {
 
+                // This is the loop where the majority of the time is spent. Feel free to optimize!
+
                 // Make local copy of atom pair k.
                 topology::NonBondedInteraction interaction = this->cached_residue_interactions[i][j].interactions[k];
 
@@ -461,11 +484,16 @@ public:
                 const double inv_r_sq6 = inv_r_sq * inv_r_sq * inv_r_sq * charmm36_constants::NM6_TO_ANGS6; //shift to nanometers^6
                 const double inv_r_sq12 = inv_r_sq6 * inv_r_sq6;
                 
-                const double vdw_energy = (interaction.c12 * inv_r_sq12 - interaction.c6 * inv_r_sq6);
-                const double coul_energy = interaction.qq * inv_r_sq * charmm36_constants::TEN_OVER_ONE_POINT_FIVE;
+                // const double vdw_energy = (interaction.c12 * inv_r_sq12 - interaction.c6 * inv_r_sq6);
+                // const double coul_energy = interaction.qq * inv_r_sq * charmm36_constants::TEN_OVER_ONE_POINT_FIVE;
+
+                // // Add vdw and coulomb energy (and convert from kJ to kcal).                
+                // this->cached_residue_interactions[i][j].energy_new += (vdw_energy + coul_energy) * charmm36_constants::KJ_TO_KCAL;
 
                 // Add vdw and coulomb energy (and convert from kJ to kcal).                
-                this->cached_residue_interactions[i][j].energy_new += (vdw_energy + coul_energy) * charmm36_constants::KJ_TO_KCAL;
+                this->cached_residue_interactions[i][j].energy_new += (interaction.c12 * inv_r_sq12 - interaction.c6 * inv_r_sq6                    // VDW energy
+                                                                       + interaction.qq * inv_r_sq * charmm36_constants::TEN_OVER_ONE_POINT_FIVE)   // Coulomb energy 
+                                                                       * charmm36_constants::KJ_TO_KCAL;
                 
                 // If the pair has a contribution to EEF1-SB solvation term
                 if ((interaction.do_eef1) && (r_sq < 81.0)) {
@@ -510,31 +538,36 @@ public:
     //! Accept move and backup energies
     void accept() {
 
-        // If move is accepted, backup energies in all pairs that were recomputed
-        for (unsigned int k = 0; k < this->cache_indexes.size(); k++) {
-            unsigned int i = this->cache_indexes[k][0];
-            unsigned int j = this->cache_indexes[k][1];
-            this->cached_residue_interactions[i][j].energy_old = this->cached_residue_interactions[i][j].energy_new;
-        }
+        if (this->none_move == false) {
 
-        //Backup total energy
-        this->total_energy_old = this->total_energy;
+            // If move is accepted, backup energies in all pairs that were recomputed
+            for (unsigned int k = 0; k < this->cache_indexes.size(); k++) {
+                unsigned int i = this->cache_indexes[k][0];
+                unsigned int j = this->cache_indexes[k][1];
+                this->cached_residue_interactions[i][j].energy_old = this->cached_residue_interactions[i][j].energy_new;
+            }
+
+            //Backup total energy
+            this->total_energy_old = this->total_energy;
+        }
     }
 
 
     //! Reject move and roll-back energies
     void reject() {
 
-        // If move is accepted, restore energies in all pairs that were recomputed
-        for (unsigned int k = 0; k < this->cache_indexes.size(); k++) {
-            unsigned int i = this->cache_indexes[k][0];
-            unsigned int j = this->cache_indexes[k][1];
-            this->cached_residue_interactions[i][j].energy_new = this->cached_residue_interactions[i][j].energy_old;
+        if (this->none_move == false) {
+
+            // If move is accepted, restore energies in all pairs that were recomputed
+            for (unsigned int k = 0; k < this->cache_indexes.size(); k++) {
+                unsigned int i = this->cache_indexes[k][0];
+                unsigned int j = this->cache_indexes[k][1];
+                this->cached_residue_interactions[i][j].energy_new = this->cached_residue_interactions[i][j].energy_old;
+            }
+
+            // Restore total energy
+            this->total_energy = this->total_energy_old;
         }
-
-        // Restore total energy
-        this->total_energy = this->total_energy_old;
-
     }
 
 

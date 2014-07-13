@@ -77,6 +77,7 @@ public:
      int start_index;
      int end_index;
 
+     bool none_move;
 
      //! Setup 
      void setup_caches() {
@@ -218,18 +219,6 @@ public:
 
 
 
-     //! Constructor.
-     //! \param chain Molecule chain
-     //! \param settings Local Settings object
-     //! \param random_number_engine Object from which random number generators can be created.
-     TermCharmm36BondedCached(ChainFB *chain,
-                    const Settings &settings = Settings(),
-                    RandomNumberEngine *random_number_engine = &random_global)
-          : EnergyTermCommon(chain, "charmm36-bonded-cached", settings, random_number_engine) {
-
-
-         setup_caches();
-     }
 
      double calculate_cached_residue_energy(BondedCachedResidue &cached_residue) {
 
@@ -321,6 +310,18 @@ public:
 
      }
 
+     //! Constructor.
+     //! \param chain Molecule chain
+     //! \param settings Local Settings object
+     //! \param random_number_engine Object from which random number generators can be created.
+     TermCharmm36BondedCached(ChainFB *chain,
+                    const Settings &settings = Settings(),
+                    RandomNumberEngine *random_number_engine = &random_global)
+          : EnergyTermCommon(chain, "charmm36-bonded-cached", settings, random_number_engine) {
+
+         this->none_move = false;
+         setup_caches();
+     }
 
      //! Copy constructor.
      //! \param other Source object from which copy is made
@@ -332,6 +333,7 @@ public:
                  int thread_index, ChainFB *chain)
           : EnergyTermCommon(other, random_number_engine, thread_index, chain) {
 
+          this->none_move = false;
           setup_caches();
      }
 
@@ -346,11 +348,29 @@ public:
           this->start_index = 0;
           this->end_index = this->chain->size() - 1;
 
-          // If these are set explicitly by the move, read these here.
+
+          this->none_move = false;
+
           if (move_info) {
-              this->start_index = std::max(0, move_info->modified_positions_start - 1);
-              this->end_index = std::min(move_info->modified_positions_end + 1, this->chain->size() - 1);
-          }
+ 
+               // This is a none move 
+               if (move_info->modified_angles.empty() == true) {
+ 
+                   // Notify accept/reject functions that this was a none_move
+                   this->none_move = true;
+ 
+                   // Return energy.
+                   return this->energy_new * charmm36_constants::KJ_TO_KCAL;
+ 
+              // Not a none move
+              } else {
+ 
+                   // If these are set explicitly by the move, read these here.
+                   this->start_index = std::max(0, move_info->modified_positions_start - 1);
+                   this->end_index = std::min(move_info->modified_positions_end + 1, this->chain->size() - 1);
+ 
+             }
+         }
 
           // Local delta energy required for OpenMP -- can't just write to this->energy_new.
           double delta_energy_local = 0.0;
@@ -375,26 +395,30 @@ public:
 
      void accept() {
 
-          // If move is accepted, backup energies in all pairs that were recomputed
-          for (int i = this->start_index; i < this->end_index+1; i ++) {
+        if (this->none_move == false) {
+            // If move is accepted, backup energies in all pairs that were recomputed
+            for (int i = this->start_index; i < this->end_index+1; i ++) {
 
-               this->bonded_cached_residues[i].energy_old
-                   = this->bonded_cached_residues[i].energy_new;
-          }
-
-          this->energy_old = this->energy_new;
+                this->bonded_cached_residues[i].energy_old
+                    = this->bonded_cached_residues[i].energy_new;
+            }
+            this->energy_old = this->energy_new;
+        }
     }
 
 
     void reject() {
 
-        // If move is accepted, restore energies in all pairs that were recomputed
-          for (int i = this->start_index; i < this->end_index+1; i ++) {
+        if (this->none_move == false) {
 
-               this->bonded_cached_residues[i].energy_new
-                   = this->bonded_cached_residues[i].energy_old;
-          }
-          this->energy_new = this->energy_old;
+            // If move is accepted, restore energies in all pairs that were recomputed
+            for (int i = this->start_index; i < this->end_index+1; i ++) {
+
+                this->bonded_cached_residues[i].energy_new
+                    = this->bonded_cached_residues[i].energy_old;
+            }
+            this->energy_new = this->energy_old;
+        }
     }
 
 

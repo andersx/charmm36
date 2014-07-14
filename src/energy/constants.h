@@ -12,10 +12,10 @@ const double KJ_TO_KCAL = 1.0 / KCAL_TO_KJ;
 const double NM_TO_ANGS = 10.0;
 const double ANGS_TO_NM = 1.0 / NM_TO_ANGS;
 
-const double NM2_TO_ANGS2 = 100.0;
-const double ANGS2_TO_NM2 = 1.0 / ANGS2_TO_NM2;
+const double NM2_TO_ANGS2 = std::pow(NM_TO_ANGS, 2.0);
+const double ANGS2_TO_NM2 = 1.0 / NM2_TO_ANGS2;
 
-const double NM6_TO_ANGS6 = 1000000.0;
+const double NM6_TO_ANGS6 = std::pow(NM_TO_ANGS, 6.0);
 const double ANGS6_TO_NM6 = 1.0 / NM6_TO_ANGS6;
 
 // facel = 1 / (4 * pi * epsilon_0)

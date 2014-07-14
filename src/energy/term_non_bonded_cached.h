@@ -464,17 +464,17 @@ public:
 
                 const double r_sq = ((interaction.atom1)->position - (interaction.atom2)->position).norm_squared();
 
-                const double inv_r_sq = charmm36_constants::NM2_TO_ANGS2 / r_sq; // convert to nanometers
-                const double inv_r_sq6 = inv_r_sq * inv_r_sq * inv_r_sq;
+                const double inv_r_sq = 1.0 / r_sq; // convert to nanometers
+                const double inv_r_sq6 = inv_r_sq * inv_r_sq * inv_r_sq * charmm36_constants::NM6_TO_ANGS6;
 
-                // Add vdw and coulomb energy (in kJ).
+                // Add vdw and coulomb energy (using nm and kJ).
                 this->cached_residue_interactions[i][j].energy_new += (interaction.c12 * inv_r_sq6 - interaction.c6) * inv_r_sq6                    // VDW energy
                                                                        + interaction.qq * inv_r_sq * charmm36_constants::TEN_OVER_ONE_POINT_FIVE;   // Coulomb energy
 
                 // If the pair has a contribution to EEF1-SB solvation term
                 if ((interaction.do_eef1) && (r_sq < 81.0)) {
 
-                    // From Sandro's code
+                    // From Sandro's code -- this bit is in angstrom and kcal.
                     const double r_ij = std::sqrt(r_sq);
 
                     const double arg_ij = std::fabs((r_ij - interaction.R_vdw_1)/interaction.lambda1);

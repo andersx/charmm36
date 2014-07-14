@@ -77,22 +77,6 @@ public:
      //! Use same settings as base class
      typedef EnergyTerm<ChainFB>::SettingsClassicEnergy Settings;
 
-     // //! Newton's method to determine inverse square roots.
-     // inline double fast_inv_sqrt(double number) {
-
-     //      long long i;
-     //      double x2, y;
-     //      const double threehalfs = 1.5;
-     //      x2 = number * 0.5;
-     //      y  = number;
-     //      i  = * ( long long * ) &y;
-     //      // i  = 0x5fe6ec85e7de30da - ( i >> 1 );
-     //      i  = 0x5fe6eb50c7b537a9 - ( i >> 1 );
-     //      y  = * ( double * ) &i;
-     //      y  = y * ( threehalfs - ( x2 * y * y ) );
-     //      y  = y * ( threehalfs - ( x2 * y * y ) );
-     //      return y;
-     // }
 
      //! Calculate the energy of a diatomic interaction
      double calculate_interaction_energy(topology::NonBondedInteraction &interaction) {
@@ -143,7 +127,7 @@ public:
           return (vdw_energy + coul_energy) * charmm36_constants::KJ_TO_KCAL + eef1_sb_energy;
      }
 
-      
+
      //! Code that needs to be setup explicitly in the constructor, and also
      //! explicitly copy-constructor. Sets up the cache and initial energies.
      void setup_caches() {
@@ -297,7 +281,7 @@ public:
                     const Settings &settings = Settings(),
                     RandomNumberEngine *random_number_engine = &random_global)
           : EnergyTermCommon(chain, "charmm36-non-bonded-cached", settings, random_number_engine) {
-        
+
           this->none_move = false;
           setup_caches();
      }
@@ -434,7 +418,7 @@ public:
 
          if (move_info) {
 
-            // This is a none move 
+            // This is a none move
             if (move_info->modified_angles.empty() == true) {
 
                   // Notify accept/reject functions that this was a none_move
@@ -479,46 +463,41 @@ public:
                 topology::NonBondedInteraction interaction = this->cached_residue_interactions[i][j].interactions[k];
 
                 const double r_sq = ((interaction.atom1)->position - (interaction.atom2)->position).norm_squared();
-                
-                const double inv_r_sq = 1.0 / r_sq;
-                const double inv_r_sq6 = inv_r_sq * inv_r_sq * inv_r_sq * charmm36_constants::NM6_TO_ANGS6; //shift to nanometers^6
-                const double inv_r_sq12 = inv_r_sq6 * inv_r_sq6;
-                
-                // const double vdw_energy = (interaction.c12 * inv_r_sq12 - interaction.c6 * inv_r_sq6);
-                // const double coul_energy = interaction.qq * inv_r_sq * charmm36_constants::TEN_OVER_ONE_POINT_FIVE;
 
-                // // Add vdw and coulomb energy (and convert from kJ to kcal).                
-                // this->cached_residue_interactions[i][j].energy_new += (vdw_energy + coul_energy) * charmm36_constants::KJ_TO_KCAL;
+                const double inv_r_sq = charmm36_constants::NM2_TO_ANGS2 / r_sq; // convert to nanometers
+                const double inv_r_sq6 = inv_r_sq * inv_r_sq * inv_r_sq;
 
-                // Add vdw and coulomb energy (and convert from kJ to kcal).                
-                this->cached_residue_interactions[i][j].energy_new += (interaction.c12 * inv_r_sq12 - interaction.c6 * inv_r_sq6                    // VDW energy
-                                                                       + interaction.qq * inv_r_sq * charmm36_constants::TEN_OVER_ONE_POINT_FIVE)   // Coulomb energy 
-                                                                       * charmm36_constants::KJ_TO_KCAL;
-                
+                // Add vdw and coulomb energy (in kJ).
+                this->cached_residue_interactions[i][j].energy_new += (interaction.c12 * inv_r_sq6 - interaction.c6) * inv_r_sq6                    // VDW energy
+                                                                       + interaction.qq * inv_r_sq * charmm36_constants::TEN_OVER_ONE_POINT_FIVE;   // Coulomb energy
+
                 // If the pair has a contribution to EEF1-SB solvation term
                 if ((interaction.do_eef1) && (r_sq < 81.0)) {
-                
+
                     // From Sandro's code
                     const double r_ij = std::sqrt(r_sq);
-                
+
                     const double arg_ij = std::fabs((r_ij - interaction.R_vdw_1)/interaction.lambda1);
                     const double arg_ji = std::fabs((r_ij - interaction.R_vdw_2)/interaction.lambda2);
-                
+
                     const int bin_ij = int(arg_ij*100);
                     const int bin_ji = int(arg_ji*100);
-                
+
                     double exp_ij = 0.0;
                     double exp_ji = 0.0;
-                
+
                     if (bin_ij < 350) exp_ij = charmm36_constants::EXP_EEF1[bin_ij];
                     if (bin_ji < 350) exp_ji = charmm36_constants::EXP_EEF1[bin_ji];
-               
-                    // Add solvation energy (already in kcal) 
-                    this->cached_residue_interactions[i][j].energy_new -= (interaction.fac_12*exp_ij + interaction.fac_21*exp_ji) * inv_r_sq;
-                
+
+                    // Add solvation energy (in kcal, so convert to kJ)
+                    this->cached_residue_interactions[i][j].energy_new -= (interaction.fac_12*exp_ij + interaction.fac_21*exp_ji) * inv_r_sq * charmm36_constants::KCAL_TO_KJ;
+
                 }
 
             }
+
+            // Energies are summed in kJ, so convert to kcal now.
+            this->cached_residue_interactions[i][j].energy_new *= charmm36_constants::KJ_TO_KCAL;
 
             // Compute delta energy for the residue pair ij (I.e. subtract old, add new)
             delta_energy_local += this->cached_residue_interactions[i][j].energy_new

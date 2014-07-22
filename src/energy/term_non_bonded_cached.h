@@ -1,4 +1,4 @@
-// term_vdw.h --- Van der Waals interaction energy term
+// non_bonded_cached.h --- Coulomb, vdw and excl vol solvent collective term
 // Copyright (C) 2014 Anders S. Christensen
 //
 // This file is part of PHAISTOS
@@ -30,6 +30,9 @@
 #include "parsers/topology_parser.h"
 #include "parsers/eef1_sb_parser.h"
 #include "constants.h"
+#include "parameters/vdw14_itp.h"
+#include "parameters/vdw_itp.h"
+#include "parameters/solvpar_17_inp.h"
 
 namespace phaistos {
 
@@ -141,17 +144,12 @@ public:
 
           initialize(dGref, factors, vdw_radii, lambda, eef1_atom_type_index_map);
 
-          std::string non_bonded_filename
-              = "/home/andersx/phaistos_dev/modules/charmm36/src/energy/parameters/vdw.itp";
 
           std::vector<topology::NonBondedParameter> non_bonded_parameters
-              = topology::read_nonbonded_parameters(non_bonded_filename);
-
-          std::string non_bonded_14_filename
-              = "/home/andersx/phaistos_dev/modules/charmm36/src/energy/parameters/vdw14.itp";
+              = topology::read_nonbonded_parameters(charmm36_constants::vdw_itp);
 
           std::vector<topology::NonBonded14Parameter> non_bonded_14_parameters
-              = topology::read_nonbonded_14_parameters(non_bonded_14_filename);
+              = topology::read_nonbonded_14_parameters(charmm36_constants::vdw14_itp);
 
           std::vector<topology::NonBondedInteraction> non_bonded_interactions
               = topology::generate_non_bonded_interactions_cached(this->chain,
@@ -318,12 +316,7 @@ public:
           const double two_pi_3_2 = 2.0*M_PI*sqrt(M_PI);
           const double phys_t = 298.15;
 
-          std::string settings_solvation_filename = "/home/andersx/phaistos_dev/modules/charmm36/src/energy/parameters/solvpar_17.inp";
-          std::ifstream f_h((settings_solvation_filename).c_str());
-          if (!f_h) {
-               printf("# ERROR: EEF1 input: unable to open file '%s'\n", (settings_solvation_filename).c_str() );
-               exit(1); // terminate with error
-          }
+          std::istringstream f_h(charmm36_constants::solvpar_inp);
 
           std::string line;
           std::vector<double> pp;
@@ -357,7 +350,6 @@ public:
                params.push_back(pp);
                pp.clear();
           }
-          f_h.close();
 
           //Create pairwise paramters in a atomtype*atomtype lookup table
           //double t = settings.temp;

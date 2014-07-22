@@ -88,8 +88,9 @@ void test_terms(ChainFB *chain, int n=1) {
 
 
      std::cout << "Init ok! " << std::endl;
+
      // Evaluate energy
-     // for (unsigned int i = 0; i < 100; i++)
+
      energy.evaluate();
      // Output
      cout << energy << endl;;

@@ -24,6 +24,7 @@
 #include <boost/tokenizer.hpp>
 #include "energy/energy_term.h"
 #include "parsers/eef1_sb_parser.h"
+#include "parameters/solvpar_17_inp.h"
 
 namespace phaistos {
 
@@ -53,30 +54,8 @@ protected:
 
 public:
 
-
-     //! Local settings class
-     const class Settings: public EnergyTerm<ChainFB>::SettingsClassicEnergy {
-     public:
-
-          //! Path to file containing solvation parameters
-          std::string solvation_filename;
-
-          //! Temperature
-          double temp;
-
-          //! Constructor
-          Settings(std::string solvation_filename 
-                  = "/home/andersx/phaistos_dev/modules/charmm36/src/energy/parameters/solvpar_17.inp",double temp=298.15)
-               : solvation_filename(solvation_filename),temp(temp) {}
-
-          //! Output operator
-          friend std::ostream &operator<<(std::ostream &o, const Settings &settings) {
-               o << "solvation-filename:" << settings.solvation_filename << "\n";
-               o << "temperature:" << settings.temp << "\n";
-               o << static_cast<const EnergyTerm<ChainFB>::Settings>(settings);
-               return o;
-          }
-     } settings;    //!< Local settings object
+     //! Use same settings as base class
+     typedef EnergyTerm<ChainFB>::SettingsClassicEnergy Settings;
 
      //! Constructor
      //! \param chain Molecule chain
@@ -118,11 +97,7 @@ public:
           const double two_pi_3_2 = 2.0*M_PI*sqrt(M_PI);
           const double phys_t = 298.15;
 
-          std::ifstream f_h((settings.solvation_filename).c_str());
-          if (!f_h) {
-               printf("# ERROR: EEF1 input: unable to open file '%s'\n", (settings.solvation_filename).c_str() );
-               exit(1); // terminate with error
-          }
+          std::istringstream f_h(charmm36_constants::solvpar_inp);
 
           std::string line;
           std::vector<double> pp;
@@ -156,10 +131,9 @@ public:
                params.push_back(pp);
                pp.clear();
           }
-          f_h.close();
 
           //Create pairwise paramters in a atomtype*atomtype lookup table
-          double t = settings.temp;
+          double t = 298.15;
           double dt = t-phys_t;
           for (unsigned int i=0; i< atoms.size(); i++){
                //dGref(t) = dGref_t0 - (dH_t0-dGref_t0)*(dt/t_0) - dCp(t*log(t/t_0) -dt)

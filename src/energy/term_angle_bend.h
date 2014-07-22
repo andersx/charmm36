@@ -24,6 +24,7 @@
 
 #include "energy/energy_term.h"
 #include "parsers/topology_parser.h"
+#include "parameters/angle_bend_itp.h"
 
 namespace phaistos {
 
@@ -53,9 +54,11 @@ public:
                     RandomNumberEngine *random_number_engine = &random_global)
           : EnergyTermCommon(chain, "charmm36-angle-bend", settings, random_number_engine) {
 
-          std::string filename = "/home/andersx/phaistos_dev/modules/charmm36/src/energy/parameters/angle_bend.itp";
-          std::vector<topology::AngleBendParameter> angle_bend_parameters = topology::read_angle_bend_parameters(filename);
-          this->angle_bend_interactions = topology::generate_angle_bend_interactions(this->chain, angle_bend_parameters);
+          std::vector<topology::AngleBendParameter> angle_bend_parameters = 
+                    topology::read_angle_bend_parameters(charmm36_constants::angle_bend_itp);
+
+          this->angle_bend_interactions =
+                    topology::generate_angle_bend_interactions(this->chain, angle_bend_parameters);
      }
 
      //! Copy constructor.
@@ -68,9 +71,11 @@ public:
                  int thread_index, ChainFB *chain)
           : EnergyTermCommon(other, random_number_engine, thread_index, chain) {
 
-          std::string filename = "/home/andersx/phaistos_dev/modules/charmm36/src/energy/parameters/angle_bend.itp";
-          std::vector<topology::AngleBendParameter> angle_bend_parameters = topology::read_angle_bend_parameters(filename);
-          this->angle_bend_interactions = topology::generate_angle_bend_interactions(this->chain, angle_bend_parameters);
+          std::vector<topology::AngleBendParameter> angle_bend_parameters = 
+                    topology::read_angle_bend_parameters(charmm36_constants::angle_bend_itp);
+
+          this->angle_bend_interactions =
+                    topology::generate_angle_bend_interactions(this->chain, angle_bend_parameters);
 
      }
 

@@ -20,10 +20,12 @@
 #ifndef TERM_CHARMM36_TORSION_H
 #define TERM_CHARMM36_TORSION_H
 
+#include "math.h"
+
 #include <boost/type_traits/is_base_of.hpp>
 #include "energy/energy_term.h"
 #include "parsers/topology_parser.h"
-#include "math.h"
+#include "parameters/torsion_itp.h"
 
 namespace phaistos {
 
@@ -51,11 +53,14 @@ public:
                         RandomNumberEngine *random_number_engine = &random_global)
           : EnergyTermCommon(chain, "charmm36-torsion", settings, random_number_engine) {
 
-          std::string filename = "/home/andersx/phaistos_dev/modules/charmm36/src/energy/parameters/torsion.itp";
-          std::vector<topology::TorsionParameter> torsion_parameters = topology::read_torsion_parameters(filename);
-          this->torsion_interactions= topology::generate_torsion_interactions(this->chain, torsion_parameters);
+          std::vector<topology::TorsionParameter> torsion_parameters 
+                    = topology::read_torsion_parameters(charmm36_constants::torsion_itp);
+
+          this->torsion_interactions
+                    = topology::generate_torsion_interactions(this->chain, torsion_parameters);
 
      }
+
 
      //! Copy constructor.
      //! \param other Source object from which copy is made
@@ -67,11 +72,15 @@ public:
                         int thread_index, ChainFB *chain)
           : EnergyTermCommon(other, random_number_engine, thread_index, chain) {
 
-          std::string filename = "/home/andersx/phaistos_dev/modules/charmm36/src/energy/parameters/torsion.itp";
-          std::vector<topology::TorsionParameter> torsion_parameters = topology::read_torsion_parameters(filename);
-          this->torsion_interactions= topology::generate_torsion_interactions(this->chain, torsion_parameters);
+          std::vector<topology::TorsionParameter> torsion_parameters 
+                    = topology::read_torsion_parameters(charmm36_constants::torsion_itp);
+
+          this->torsion_interactions
+                    = topology::generate_torsion_interactions(this->chain, torsion_parameters);
 
      }
+
+
      //! Evaluate chain energy
      //! \param move_info object containing information about last move
      //! \return torsional potential energy of the chain in the object

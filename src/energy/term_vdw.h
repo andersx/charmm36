@@ -29,6 +29,9 @@
 
 #include "parsers/topology_parser.h"
 
+#include "parameters/vdw14_itp.h"
+#include "parameters/vdw_itp.h"
+
 namespace phaistos {
 
 
@@ -56,17 +59,11 @@ public:
                     RandomNumberEngine *random_number_engine = &random_global)
           : EnergyTermCommon(chain, "charmm36-vdw", settings, random_number_engine) {
 
-              std::string non_bonded_filename
-                  = "/home/andersx/phaistos_dev/modules/charmm36/src/energy/parameters/vdw.itp";
-
               std::vector<topology::NonBondedParameter> non_bonded_parameters
-                  = topology::read_nonbonded_parameters(non_bonded_filename);
-
-              std::string non_bonded_14_filename
-                  = "/home/andersx/phaistos_dev/modules/charmm36/src/energy/parameters/vdw14.itp";
+                  = topology::read_nonbonded_parameters(charmm36_constants::vdw_itp);
 
               std::vector<topology::NonBonded14Parameter> non_bonded_14_parameters =
-                  topology::read_nonbonded_14_parameters(non_bonded_14_filename);
+                  topology::read_nonbonded_14_parameters(charmm36_constants::vdw14_itp);
 
               this->non_bonded_interactions = 
                   topology::generate_non_bonded_interactions(this->chain,
@@ -85,17 +82,11 @@ public:
           : EnergyTermCommon(other, random_number_engine, thread_index, chain) {
 
 
-              std::string non_bonded_filename
-                  = "/home/andersx/phaistos_dev/modules/charmm36/src/energy/parameters/vdw.itp";
-
               std::vector<topology::NonBondedParameter> non_bonded_parameters
-                  = topology::read_nonbonded_parameters(non_bonded_filename);
-
-              std::string non_bonded_14_filename
-                  = "/home/andersx/phaistos_dev/modules/charmm36/src/energy/parameters/vdw14.itp";
+                  = topology::read_nonbonded_parameters(charmm36_constants::vdw_itp);
 
               std::vector<topology::NonBonded14Parameter> non_bonded_14_parameters =
-                  topology::read_nonbonded_14_parameters(non_bonded_14_filename);
+                  topology::read_nonbonded_14_parameters(charmm36_constants::vdw14_itp);
 
               this->non_bonded_interactions = 
                   topology::generate_non_bonded_interactions(this->chain,

@@ -116,14 +116,9 @@ std::vector<CmapInteraction> generate_cmap_interactions(phaistos::ChainFB *chain
 
 
 
-std::vector<NonBondedParameter> read_nonbonded_parameters(const std::string filename) {
+std::vector<NonBondedParameter> read_nonbonded_parameters(const std::string &itp) {
 
-    std::ifstream input_stream(filename.c_str());
-
-    if (!input_stream.is_open()) {
-        std::cerr << "# Error: Cannot open UPL file " << " .\n";
-        exit(EXIT_FAILURE);
-    }
+    std::istringstream input_stream(itp);
 
     std::vector<NonBondedParameter> parameters;
 
@@ -159,14 +154,9 @@ std::vector<NonBondedParameter> read_nonbonded_parameters(const std::string file
 }
 
 
-std::vector<NonBonded14Parameter> read_nonbonded_14_parameters(const std::string &filename) {
+std::vector<NonBonded14Parameter> read_nonbonded_14_parameters(const std::string &itp) {
 
-    std::ifstream input_stream(filename.c_str());
-
-    if (!input_stream.is_open()) {
-        std::cerr << "# Error: Cannot open UPL file " << " .\n";
-        exit(EXIT_FAILURE);
-    }
+    std::istringstream input_stream(itp);
 
     std::vector<NonBonded14Parameter> parameters;
 
@@ -535,14 +525,9 @@ std::vector<NonBondedInteraction> generate_non_bonded_interactions_cached(phaist
 }
 
 
-std::vector<TorsionParameter> read_torsion_parameters(const std::string &filename) {
+std::vector<TorsionParameter> read_torsion_parameters(const std::string &itp) {
 
-    std::ifstream input_stream(filename.c_str());
-
-    if (!input_stream.is_open()) {
-        std::cerr << "# Error: Cannot open itp file " << " .\n";
-        exit(EXIT_FAILURE);
-    }
+    std::istringstream input_stream(itp);
 
     std::vector<TorsionParameter> parameters;
 
@@ -691,14 +676,9 @@ std::vector<TorsionInteraction> generate_torsion_interactions(phaistos::ChainFB 
 }
 
 
-std::vector<BondedPairParameter> read_bonded_pair_parameters(const std::string &filename) {
+std::vector<BondedPairParameter> read_bonded_pair_parameters(const std::string &itp) {
 
-    std::ifstream input_stream(filename.c_str());
-
-    if (!input_stream.is_open()) {
-        std::cerr << "# Error: Cannot open itp file " << " .\n";
-        exit(EXIT_FAILURE);
-    }
+    std::istringstream input_stream(itp);
 
     std::vector<BondedPairParameter> parameters;
 
@@ -778,15 +758,9 @@ std::vector<BondedPairInteraction> generate_bonded_pair_interactions(phaistos::C
 
 }
 
+std::vector<AngleBendParameter> read_angle_bend_parameters(const std::string &itp) {
 
-std::vector<AngleBendParameter> read_angle_bend_parameters(const std::string &filename) {
-
-    std::ifstream input_stream(filename.c_str());
-
-    if (!input_stream.is_open()) {
-        std::cerr << "# Error: Cannot open itp file " << " .\n";
-        exit(EXIT_FAILURE);
-    }
+    std::istringstream input_stream(itp);
 
     std::vector<AngleBendParameter> parameters;
 
@@ -885,14 +859,9 @@ std::vector<AngleBendInteraction> generate_angle_bend_interactions(phaistos::Cha
 }
 
 
-std::vector<ImptorParameter> read_imptor_parameters(const std::string &filename) {
+std::vector<ImptorParameter> read_imptor_parameters(const std::string &itp) {
 
-    std::ifstream input_stream(filename.c_str());
-
-    if (!input_stream.is_open()) {
-        std::cerr << "# Error: Cannot open itp file " << " .\n";
-        exit(EXIT_FAILURE);
-    }
+    std::istringstream input_stream(itp);
 
     std::vector<ImptorParameter> parameters;
 

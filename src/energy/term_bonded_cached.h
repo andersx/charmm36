@@ -25,6 +25,11 @@
 #include "energy/energy_term.h"
 #include "parsers/topology_parser.h"
 #include "term_cmap_tables.h"
+#include "parameters/angle_bend_itp.h"
+#include "parameters/bond_stretch_itp.h"
+#include "parameters/imptor_itp.h"
+#include "parameters/torsion_itp.h"
+
 
 namespace phaistos {
 
@@ -127,32 +132,29 @@ public:
           std::string filename;
 
           // Read angle-bend parameters.
-          filename = "/home/andersx/phaistos_dev/modules/charmm36/src/energy/parameters/angle_bend.itp";
-          std::vector<topology::AngleBendParameter> angle_bend_parameters 
-              = topology::read_angle_bend_parameters(filename);
+          std::vector<topology::AngleBendParameter> angle_bend_parameters = 
+                    topology::read_angle_bend_parameters(charmm36_constants::angle_bend_itp);
 
           std::vector<topology::AngleBendInteraction> angle_bend_interactions 
               = topology::generate_angle_bend_interactions(this->chain, angle_bend_parameters);
 
           // Read bond-stretch parameters.
-          filename = "/home/andersx/phaistos_dev/modules/charmm36/src/energy/parameters/bond_stretch.itp";
-          std::vector<topology::BondedPairParameter> bonded_pair_parameters
-              = topology::read_bonded_pair_parameters(filename);
+          std::vector<topology::BondedPairParameter> bonded_pair_parameters 
+              = topology::read_bonded_pair_parameters(charmm36_constants::bond_stretch_itp);
 
           std::vector<topology::BondedPairInteraction> bonded_pair_interactions
               = topology::generate_bonded_pair_interactions(this->chain, bonded_pair_parameters);
 
           // Read improper torsion parameters.
-          filename = "/home/andersx/phaistos_dev/modules/charmm36/src/energy/parameters/imptor.itp";
           std::vector<topology::ImptorParameter> imptor_parameters 
-              = topology::read_imptor_parameters(filename);
+                    = topology::read_imptor_parameters(charmm36_constants::imptor_itp);
+
           std::vector<topology::ImptorInteraction> imptor_interactions
               = topology::generate_imptor_interactions(this->chain, imptor_parameters);
 
           // Get proper torsion parameters.
-          filename = "/home/andersx/phaistos_dev/modules/charmm36/src/energy/parameters/torsion.itp";
-          std::vector<topology::TorsionParameter> torsion_parameters
-              = topology::read_torsion_parameters(filename);
+          std::vector<topology::TorsionParameter> torsion_parameters 
+                    = topology::read_torsion_parameters(charmm36_constants::torsion_itp);
 
           std::vector<topology::TorsionInteraction> torsion_interactions
               = topology::generate_torsion_interactions(this->chain, torsion_parameters);

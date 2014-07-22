@@ -22,6 +22,7 @@
 
 #include "energy/energy_term.h"
 #include "parsers/topology_parser.h"
+#include "parameters/imptor_itp.h"
 
 namespace phaistos {
 
@@ -50,9 +51,11 @@ public:
                     RandomNumberEngine *random_number_engine = &random_global)
           : EnergyTermCommon(chain, "charmm36-imptor", settings, random_number_engine) {
 
-          std::string filename = "/home/andersx/phaistos_dev/modules/charmm36/src/energy/parameters/imptor.itp";
-          std::vector<topology::ImptorParameter> imptor_parameters = topology::read_imptor_parameters(filename);
-          this->imptor_interactions = topology::generate_imptor_interactions(this->chain, imptor_parameters);
+          std::vector<topology::ImptorParameter> imptor_parameters 
+                    = topology::read_imptor_parameters(charmm36_constants::imptor_itp);
+
+          this->imptor_interactions 
+                    = topology::generate_imptor_interactions(this->chain, imptor_parameters);
 
      }
 
@@ -66,9 +69,12 @@ public:
                  int thread_index, ChainFB *chain)
           : EnergyTermCommon(other, random_number_engine, thread_index, chain) {
 
-          std::string filename = "/home/andersx/phaistos_dev/modules/charmm36/src/energy/parameters/imptor.itp";
-          std::vector<topology::ImptorParameter> imptor_parameters = topology::read_imptor_parameters(filename);
-          this->imptor_interactions = topology::generate_imptor_interactions(this->chain, imptor_parameters);
+          std::vector<topology::ImptorParameter> imptor_parameters 
+                    = topology::read_imptor_parameters(charmm36_constants::imptor_itp);
+
+          this->imptor_interactions 
+                    = topology::generate_imptor_interactions(this->chain, imptor_parameters);
+
      }
 
      //! Evaluate

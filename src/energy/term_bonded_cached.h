@@ -39,8 +39,45 @@ protected:
 public:
 
 
-     //! Use same settings as base class
-     typedef EnergyTerm<ChainFB>::SettingsClassicEnergy Settings;
+     // //! Use same settings as base class
+     // // typedef EnergyTerm<ChainFB>::SettingsClassicEnergy Settings;
+
+
+     //! Local settings class
+     const class Settings: public EnergyTerm<ChainFB>::SettingsClassicEnergy {
+     public:
+
+          bool ignore_bond_angles;
+          bool ignore_bond_stretch;
+          bool ignore_torsion_angles;
+          bool ignore_improper_torsion_angles;
+          bool ignore_cmap_correction;
+
+          
+
+          //! Constructor
+          Settings(bool ignore_bond_angles=false,
+                   bool ignore_bond_stretch=true,
+                   bool ignore_torsion_angles=false,
+                   bool ignore_improper_torsion_angles=false,
+                   bool ignore_cmap_correction=false)
+               : ignore_bond_angles(ignore_bond_angles),
+                 ignore_bond_stretch(ignore_bond_stretch),
+                 ignore_torsion_angles(ignore_torsion_angles),
+                 ignore_improper_torsion_angles(ignore_improper_torsion_angles),
+                 ignore_cmap_correction(ignore_cmap_correction) {}
+
+          //! Output operator
+          friend std::ostream &operator<<(std::ostream &o, const Settings &settings) {
+               o << "ignore-bond-angles:" << settings.ignore_bond_angles << "\n";
+               o << "ignore-bond-stretch:" << settings.ignore_bond_stretch << "\n";
+               o << "ignore-torsion-angles:" << settings.ignore_torsion_angles << "\n";
+               o << "ignore-improper-torsion-angles:" << settings.ignore_improper_torsion_angles << "\n";
+               o << "ignore-cmap-correction:" << settings.ignore_cmap_correction << "\n";
+               o << static_cast<const EnergyTerm<ChainFB>::Settings>(settings);
+               return o;
+          }
+     } settings;    //!< Local settings object
 
      //! Struct that holds lists of all interaction the needs 
      //! to be computed if a residue is changed.
@@ -225,84 +262,98 @@ public:
 
           double energy_sum = 0.0;
 
-          // Sort angle_bend_pairs
-          for (unsigned int i = 0; i < cached_residue.angle_bend_interactions.size(); i++){
+          if (!(settings.ignore_bond_angles)) {
 
-               topology::AngleBendInteraction interaction = cached_residue.angle_bend_interactions[i];
+              for (unsigned int i = 0; i < cached_residue.angle_bend_interactions.size(); i++){
 
-               const double theta = calc_angle((interaction.atom1)->position,
-                                               (interaction.atom2)->position,
-                                               (interaction.atom3)->position);
+                   topology::AngleBendInteraction interaction = cached_residue.angle_bend_interactions[i];
 
-               // Angle bend part
-               const double dtheta = theta - interaction.theta0 * charmm36_constants::DEG_TO_RAD;
-               const double energy_angle_bend_temp = 0.5 * interaction.k0 * dtheta * dtheta;
+                   const double theta = calc_angle((interaction.atom1)->position,
+                                                   (interaction.atom2)->position,
+                                                   (interaction.atom3)->position);
 
-               // Urey-Bradley part
-               const double r13 = ((interaction.atom1)->position - (interaction.atom3)->position).norm() * charmm36_constants::ANGS_TO_NM;
-               const double dr = r13 - interaction.r13;
-               const double energy_urey_bradley_temp = 0.5 * interaction.kub * dr * dr;
+                   // Angle bend part
+                   const double dtheta = theta - interaction.theta0 * charmm36_constants::DEG_TO_RAD;
+                   const double energy_angle_bend_temp = 0.5 * interaction.k0 * dtheta * dtheta;
 
-               energy_sum += energy_angle_bend_temp + energy_urey_bradley_temp;
+                   // Urey-Bradley part
+                   const double r13 = ((interaction.atom1)->position - (interaction.atom3)->position).norm() * charmm36_constants::ANGS_TO_NM;
+                   const double dr = r13 - interaction.r13;
+                   const double energy_urey_bradley_temp = 0.5 * interaction.kub * dr * dr;
+
+                   energy_sum += energy_angle_bend_temp + energy_urey_bradley_temp;
+               }
+          }
+
+
+          if (!(settings.ignore_bond_stretch)) {
+
+               for (unsigned int i = 0; i < cached_residue.bonded_pair_interactions.size(); i++){
+
+                    topology::BondedPairInteraction interaction = cached_residue.bonded_pair_interactions[i];
+
+                    const double r = ((interaction.atom1)->position - (interaction.atom2)->position).norm() * charmm36_constants::ANGS_TO_NM;
+                    const double kb = interaction.kb;
+                    const double r0 = interaction.r0;
+
+                    const double dr = r - r0;
+                    const double e_bond_temp = 0.5 * kb * dr * dr;
+
+                    energy_sum += e_bond_temp;
+
+               }
+          }
+
+
+          if (!(settings.ignore_improper_torsion_angles)) {
+
+               for (unsigned int i = 0; i < cached_residue.imptor_interactions.size(); i++){
+
+                    topology::ImptorInteraction interaction = cached_residue.imptor_interactions[i];
+
+                    const double phi = calc_dihedral((interaction.atom1)->position,
+                                                     (interaction.atom2)->position,
+                                                     (interaction.atom3)->position,
+                                                     (interaction.atom4)->position);
+
+                    const double dphi = phi - interaction.phi0 * charmm36_constants::DEG_TO_RAD;
+                    const double energy_imptor_temp = 0.5 * interaction.cp * dphi * dphi;
+
+                    energy_sum += energy_imptor_temp;
+
+               }
+          }
+
+
+          if (!(settings.ignore_torsion_angles)) {
+
+               for (unsigned int i = 0; i < cached_residue.torsion_interactions.size(); i++){
+
+                    topology::TorsionInteraction interaction = cached_residue.torsion_interactions[i];
+
+                    double angle = calc_dihedral((interaction.atom1)->position,
+                                                 (interaction.atom2)->position,
+                                                 (interaction.atom3)->position,
+                                                 (interaction.atom4)->position);
+
+                    const double e_torsion_temp = interaction.cp * std::cos(interaction.mult * angle - interaction.phi0 * charmm36_constants::DEG_TO_RAD) + interaction.cp;
+
+                    energy_sum += e_torsion_temp;
+              }
 
           }
 
-          for (unsigned int i = 0; i < cached_residue.bonded_pair_interactions.size(); i++){
 
-               topology::BondedPairInteraction interaction = cached_residue.bonded_pair_interactions[i];
+          if (!(settings.ignore_cmap_correction)) {
+               if (cached_residue.has_cmap) {
+                     const int residue_index = cached_residue.cmap_interaction.residue_index;
+                     const unsigned int cmap_type_index = cached_residue.cmap_interaction.cmap_type_index;
 
-               const double r = ((interaction.atom1)->position - (interaction.atom2)->position).norm() * charmm36_constants::ANGS_TO_NM;
-               const double kb = interaction.kb;
-               const double r0 = interaction.r0;
+                     const double phi = (*(this->chain))[residue_index].get_phi();
+                     const double psi = (*(this->chain))[residue_index].get_psi();
 
-               const double dr = r - r0;
-               const double e_bond_temp = 0.5 * kb * dr * dr;
-
-               energy_sum += e_bond_temp;
-
-
-          }
-
-          for (unsigned int i = 0; i < cached_residue.imptor_interactions.size(); i++){
-
-               topology::ImptorInteraction interaction = cached_residue.imptor_interactions[i];
-
-               const double phi = calc_dihedral((interaction.atom1)->position,
-                                                (interaction.atom2)->position,
-                                                (interaction.atom3)->position,
-                                                (interaction.atom4)->position);
-
-               const double dphi = phi - interaction.phi0 * charmm36_constants::DEG_TO_RAD;
-               const double energy_imptor_temp = 0.5 * interaction.cp * dphi * dphi;
-
-               energy_sum += energy_imptor_temp;
-
-
-          }
-
-          for (unsigned int i = 0; i < cached_residue.torsion_interactions.size(); i++){
-
-               topology::TorsionInteraction interaction = cached_residue.torsion_interactions[i];
-
-               double angle = calc_dihedral((interaction.atom1)->position,
-                                            (interaction.atom2)->position,
-                                            (interaction.atom3)->position,
-                                            (interaction.atom4)->position);
-
-               const double e_torsion_temp = interaction.cp * std::cos(interaction.mult * angle - interaction.phi0 * charmm36_constants::DEG_TO_RAD) + interaction.cp;
-
-               energy_sum += e_torsion_temp;
-
-          }
-
-          if (cached_residue.has_cmap) {
-                const int residue_index = cached_residue.cmap_interaction.residue_index;
-                const unsigned int cmap_type_index = cached_residue.cmap_interaction.cmap_type_index;
-
-                const double phi = (*(this->chain))[residue_index].get_phi();
-                const double psi = (*(this->chain))[residue_index].get_psi();
-
-                energy_sum += charmm36_cmap::cmap_energy(phi, psi, cmap_type_index, this->cmap_data);
+                     energy_sum += charmm36_cmap::cmap_energy(phi, psi, cmap_type_index, this->cmap_data);
+               }
           }
 
           return energy_sum;

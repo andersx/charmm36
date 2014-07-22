@@ -95,8 +95,10 @@ public:
 
         }
 
-        printf("          torsion E = %15.6f kJ/mol\n", e_torsion);
-        printf("          torsion E = %15.6f kcal/mol\n", e_torsion * charmm36_constants::KJ_TO_KCAL);
+        if (settings.debug > 0) {
+            printf("          torsion E = %15.6f kJ/mol\n", e_torsion);
+            printf("          torsion E = %15.6f kcal/mol\n", e_torsion * charmm36_constants::KJ_TO_KCAL);
+        }
 
         return e_torsion * charmm36_constants::KJ_TO_KCAL;
 

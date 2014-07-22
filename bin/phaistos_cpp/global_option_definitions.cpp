@@ -296,7 +296,23 @@ struct EnergyOptions {
                          DefineEnergyCommonOptions(),
                          "CHARMM36 bonded terms (cached) (" + prefix + ")",
                          prefix+"-charmm36-bonded-cached", settings,
-                         make_vector()),
+                         make_vector(
+                             make_vector(std::string("ignore-bond-angles"),
+                                         std::string("Ignore bond angle terms."),
+                                          &settings->ignore_bond_angles),
+                             make_vector(std::string("ignore-bond-stretch"),
+                                         std::string("Ignore bond stretch terms (Note: Ignored by default)."),
+                                          &settings->ignore_bond_stretch),
+                             make_vector(std::string("ignore-torsion-angles"),
+                                         std::string("Ignore torsion angle terms."),
+                                          &settings->ignore_torsion_angles),
+                             make_vector(std::string("ignore-improper-torsion-angles"),
+                                         std::string("Ignore improper torsion angle terms."),
+                                          &settings->ignore_improper_torsion_angles),
+                             make_vector(std::string("ignore-cmap-correction"),
+                                         std::string("Ignore CMAP correction terms."),
+                                          &settings->ignore_cmap_correction)
+                        )),
                     super_group, counter==1);
           }
 

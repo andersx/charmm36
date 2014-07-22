@@ -132,12 +132,14 @@ public:
 
           const double total_energy = (vdw14_energy + vdw_energy) * charmm36_constants::KJ_TO_KCAL;
 
-          printf("           vdW-14 E = %15.6f kJ/mol\n", vdw14_energy);
-          printf("           vdW-14 E = %15.6f kcal/mol\n", vdw14_energy * charmm36_constants::KJ_TO_KCAL);
-          printf("           vdW-SR E = %15.6f kJ/mol\n", vdw_energy);
-          printf("           vdW-SR E = %15.6f kcal/mol\n", vdw_energy * charmm36_constants::KJ_TO_KCAL);
-          printf("        vdW-total E = %15.6f kJ/mol\n", total_energy * charmm36_constants::KCAL_TO_KJ);
-          printf("        vdW-total E = %15.6f kcal/mol\n", total_energy);
+          if (settings.debug > 0) {
+              printf("           vdW-14 E = %15.6f kJ/mol\n", vdw14_energy);
+              printf("           vdW-14 E = %15.6f kcal/mol\n", vdw14_energy * charmm36_constants::KJ_TO_KCAL);
+              printf("           vdW-SR E = %15.6f kJ/mol\n", vdw_energy);
+              printf("           vdW-SR E = %15.6f kcal/mol\n", vdw_energy * charmm36_constants::KJ_TO_KCAL);
+              printf("        vdW-total E = %15.6f kJ/mol\n", total_energy * charmm36_constants::KCAL_TO_KJ);
+              printf("        vdW-total E = %15.6f kcal/mol\n", total_energy);
+          }
 
           return total_energy;
 

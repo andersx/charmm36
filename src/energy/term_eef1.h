@@ -308,8 +308,11 @@ public:
 
           }
 
-          printf("          EEF1-SB E = %15.6f kJ/mol\n", energy_sum * charmm36_constants::KCAL_TO_KJ);
-          printf("          EEF1-SB E = %15.6f kcal/mol\n", energy_sum);
+          if (settings.debug > 0) {
+               printf("          EEF1-SB E = %15.6f kJ/mol\n", energy_sum * charmm36_constants::KCAL_TO_KJ);
+               printf("          EEF1-SB E = %15.6f kcal/mol\n", energy_sum);
+          }
+
           return energy_sum;
      }
 

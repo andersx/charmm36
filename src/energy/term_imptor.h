@@ -93,8 +93,11 @@ public:
                energy_imptor += energy_imptor_temp;
           }
 
-          printf("           imptor E = %15.6f kJ/mol\n", energy_imptor);
-          printf("           imptor E = %15.6f kcal/mol\n", energy_imptor * charmm36_constants::KJ_TO_KCAL);
+          if (settings.debug > 0) {
+
+               printf("           imptor E = %15.6f kJ/mol\n", energy_imptor);
+               printf("           imptor E = %15.6f kcal/mol\n", energy_imptor * charmm36_constants::KJ_TO_KCAL);
+          }
 
           return energy_imptor * charmm36_constants::KJ_TO_KCAL;
      }

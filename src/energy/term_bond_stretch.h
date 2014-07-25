@@ -53,9 +53,11 @@ public:
                             RandomNumberEngine *random_number_engine = &random_global)
           : EnergyTermCommon(chain, "charmm36-bond-stretch", settings, random_number_engine) {
 
+          // Read parameters from parameter file
           std::vector<topology::BondedPairParameter> bonded_pair_parameters 
               = topology::read_bonded_pair_parameters(charmm36_constants::bond_stretch_itp);
 
+          // Generate bond stretch terms
           this->bonded_pair_interactions = topology::generate_bonded_pair_interactions(this->chain, bonded_pair_parameters);
 
      }
@@ -70,9 +72,11 @@ public:
                             int thread_index, ChainFB *chain)
           : EnergyTermCommon(other, random_number_engine, thread_index, chain) {
 
+          // Read parameters from parameter file
           std::vector<topology::BondedPairParameter> bonded_pair_parameters 
               = topology::read_bonded_pair_parameters(charmm36_constants::bond_stretch_itp);
 
+          // Generate bond stretch terms
           this->bonded_pair_interactions = topology::generate_bonded_pair_interactions(this->chain, bonded_pair_parameters);
 
      }
@@ -109,6 +113,6 @@ public:
 
 };
 
-}
+} // End namespace phaistos
 
 #endif

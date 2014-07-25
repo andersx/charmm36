@@ -1,5 +1,5 @@
 // solvpar_inp.h --- std::string'ed version of solv_par.inp
-// Copyright (C) 2014 Anders S. Christensen
+// Copyright (C) 2014 Sandro Bottaro, Anders S. Christensen
 //
 // This file is part of Phaistos
 //

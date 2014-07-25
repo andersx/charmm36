@@ -32,6 +32,10 @@
 
 namespace topology {
 
+
+//! Generates an vector, over which all CMAP interactions in the chain can be iterated.
+//! \param chain The protein chain object.
+//! \returns A vector of CMAP interaction term objects
 std::vector<CmapInteraction> generate_cmap_interactions(phaistos::ChainFB *chain) {
 
     using namespace phaistos;
@@ -54,13 +58,6 @@ std::vector<CmapInteraction> generate_cmap_interactions(phaistos::ChainFB *chain
           std::string type3 = eef1_sb_parser::get_atom_type((*res)[CA]);
           std::string type4 = eef1_sb_parser::get_atom_type((*res)[C]);
           std::string type5 = eef1_sb_parser::get_atom_type((*(res->get_neighbour(+1)))[N]);
-
-          // std::cout << type1<< std::endl;
-          // std::cout << type2<< std::endl;
-          // std::cout << type3<< std::endl;
-          // std::cout << type4<< std::endl;
-          // std::cout << type5<< std::endl;
-          // std::cout << std::endl;
 
           CmapInteraction cmap_interaction;
 
@@ -115,7 +112,9 @@ std::vector<CmapInteraction> generate_cmap_interactions(phaistos::ChainFB *chain
 }
 
 
-
+//! Reads a GROMACS van der Waal parameter .itp file (converted to one long string) and returns a vector of parameter objects 
+//! \param itp A parameter file in converted to string
+//! \returns A vector of non-bonded parameters
 std::vector<NonBondedParameter> read_nonbonded_parameters(const std::string &itp) {
 
     std::istringstream input_stream(itp);
@@ -154,6 +153,9 @@ std::vector<NonBondedParameter> read_nonbonded_parameters(const std::string &itp
 }
 
 
+//! Reads a GROMACS van der Waal "1-4" parameter .itp file (converted to one long string) and returns a vector of parameter objects 
+//! \param itp A parameter file in converted to string
+//! \returns A vector of non-bonded parameters
 std::vector<NonBonded14Parameter> read_nonbonded_14_parameters(const std::string &itp) {
 
     std::istringstream input_stream(itp);

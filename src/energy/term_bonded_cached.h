@@ -43,22 +43,16 @@ protected:
 
 public:
 
-
-     // //! Use same settings as base class
-     // // typedef EnergyTerm<ChainFB>::SettingsClassicEnergy Settings;
-
-
      //! Local settings class
      const class Settings: public EnergyTerm<ChainFB>::SettingsClassicEnergy {
      public:
 
+          // Flags to ignore individual terms
           bool ignore_bond_angles;
           bool ignore_bond_stretch;
           bool ignore_torsion_angles;
           bool ignore_improper_torsion_angles;
           bool ignore_cmap_correction;
-
-          
 
           //! Constructor
           Settings(bool ignore_bond_angles=false,
@@ -113,12 +107,19 @@ public:
      //! Vector containing a list of all interaction 
      std::vector<BondedCachedResidue> bonded_cached_residues;
 
+     //! Energy after the current move
      double energy_new;
+
+     //! Backup of energy before current move
      double energy_old;
 
+     //! Index of first residue that was moved in current move
      int start_index;
+
+     //! Index of last residue that was moved in current move
      int end_index;
 
+     //! Flag to keep track of none-moves
      bool none_move;
 
      //! Setup 
@@ -128,8 +129,6 @@ public:
           this->cmap_data = charmm36_cmap::setup_cmap();
           std::vector<topology::CmapInteraction> cmap_interactions 
               = topology::generate_cmap_interactions(this->chain);
-
-          std::string filename;
 
           // Read angle-bend parameters.
           std::vector<topology::AngleBendParameter> angle_bend_parameters = 
@@ -225,6 +224,7 @@ public:
 
           }
 
+          // Initialize CMAP flags to false
           for (unsigned int i = 0; i < this->bonded_cached_residues.size(); i ++) {
                this->bonded_cached_residues[i].has_cmap = false;
           }
@@ -240,9 +240,11 @@ public:
 
          }
 
+         // Initialize energies
          this->energy_new  = 0.0;
          this->energy_old  = 0.0;
 
+         // Initialize each cache
          for (unsigned int i = 0; i < this->bonded_cached_residues.size(); i ++) {
 
              double residue_energy = calculate_cached_residue_energy(bonded_cached_residues[i]);
@@ -256,14 +258,15 @@ public:
 
      }
 
-
-
-
+     //! Calculate energy of a cached residue object
+     //! \param cached_residue A residue object for which the energy is calculated
+     //! \returns The energy of the residue
      double calculate_cached_residue_energy(BondedCachedResidue &cached_residue) {
 
-
+          // Initialize residue energy
           double energy_sum = 0.0;
 
+          // Calculate bond angle terms
           if (!(settings.ignore_bond_angles)) {
 
               for (unsigned int i = 0; i < cached_residue.angle_bend_interactions.size(); i++){
@@ -287,7 +290,7 @@ public:
                }
           }
 
-
+          // Calculate bond stretch terms
           if (!(settings.ignore_bond_stretch)) {
 
                for (unsigned int i = 0; i < cached_residue.bonded_pair_interactions.size(); i++){
@@ -306,7 +309,7 @@ public:
                }
           }
 
-
+          // Calculate improper torsion terms
           if (!(settings.ignore_improper_torsion_angles)) {
 
                for (unsigned int i = 0; i < cached_residue.imptor_interactions.size(); i++){
@@ -326,7 +329,7 @@ public:
                }
           }
 
-
+          // Calculate torsion terms
           if (!(settings.ignore_torsion_angles)) {
 
                for (unsigned int i = 0; i < cached_residue.torsion_interactions.size(); i++){
@@ -338,14 +341,15 @@ public:
                                                  (interaction.atom3)->position,
                                                  (interaction.atom4)->position);
 
-                    const double e_torsion_temp = interaction.cp * std::cos(interaction.mult * angle - interaction.phi0 * charmm36_constants::DEG_TO_RAD) + interaction.cp;
+                    const double e_torsion_temp = interaction.cp * std::cos(interaction.mult * angle - interaction.phi0 * charmm36_constants::DEG_TO_RAD) 
+                                                    + interaction.cp;
 
                     energy_sum += e_torsion_temp;
               }
 
           }
 
-
+          // Calculate CMAP correction terms
           if (!(settings.ignore_cmap_correction)) {
                if (cached_residue.has_cmap) {
                      const int residue_index = cached_residue.cmap_interaction.residue_index;
@@ -359,7 +363,6 @@ public:
           }
 
           return energy_sum;
-
 
      }
 
@@ -401,7 +404,7 @@ public:
           this->start_index = 0;
           this->end_index = this->chain->size() - 1;
 
-
+          // By default don't treat energy evaluation as a none move
           this->none_move = false;
 
           if (move_info) {
@@ -415,15 +418,15 @@ public:
                    // Return energy.
                    return this->energy_new * charmm36_constants::KJ_TO_KCAL;
  
-              // Not a none move
-              } else {
+               // Not a none move
+               } else {
  
                    // If these are set explicitly by the move, read these here.
                    this->start_index = std::max(0, move_info->modified_positions_start - 1);
                    this->end_index = std::min(move_info->modified_positions_end + 1, this->chain->size() - 1);
  
-             }
-         }
+               }
+          }
 
           // Local delta energy required for OpenMP -- can't just write to this->energy_new.
           double delta_energy_local = 0.0;
@@ -440,12 +443,15 @@ public:
                                    - this->bonded_cached_residues[i].energy_old;
           }
 
+          // Add energy delta
           this->energy_new  += delta_energy_local;
 
+          // Return energy (and convert from kJ to kcal)
           return this->energy_new * charmm36_constants::KJ_TO_KCAL;
      }
 
 
+    //! Accept move and backup energies
      void accept() {
 
         if (this->none_move == false) {
@@ -460,6 +466,7 @@ public:
     }
 
 
+    //! Reject move and roll-back energies
     void reject() {
 
         if (this->none_move == false) {

@@ -24,7 +24,7 @@
 
 namespace topology {
 
-
+//! Class to hold all information for a CMAP correction evaluation
 struct CmapInteraction {
     phaistos::Residue *residue;
     unsigned int cmap_type_index;
@@ -32,7 +32,7 @@ struct CmapInteraction {
 };
 
 
-
+//! Class to hold all parameters to evaluate the non-bonded interaction between two atoms
 struct NonBondedParameter {
 
     std::string atom_type;
@@ -46,6 +46,7 @@ struct NonBondedParameter {
 };
 
 
+//! Class to hold all parameters to evaluate the non-bonded "1-4" interaction between two atoms
 struct NonBonded14Parameter {
 
     std::string atom_type1;
@@ -57,24 +58,15 @@ struct NonBonded14Parameter {
 };
 
 
+//! Class to hold all parameters (and pointer to relevant atoms) necessary to evaluate a non-bonded interaction between two atoms
 struct NonBondedInteraction {
+
     phaistos::Atom *atom1;
     phaistos::Atom *atom2;
-//    double q1;
-//    double q2;
     double qq;
-//    double sigma1;
-//    double sigma2;
-//    double epsilon1;
-//    double epsilon2;
-//    double sigma_effective;
-//    double epsilon_effective;
     double c6;
     double c12;
     bool is_14_interaction;
-//    int i1;
-//    int i2;
-
     bool do_eef1;
     double fac_12;
     double fac_21;
@@ -86,6 +78,7 @@ struct NonBondedInteraction {
 };
 
 
+//! Class to hold all parameters for a torsion energy term
 struct TorsionParameter {
 
     std::string type1;
@@ -99,6 +92,7 @@ struct TorsionParameter {
 };
 
 
+//! Class to hold all parameters for a torsion energy term and the four atoms involved in the interaction
 struct TorsionInteraction {
 
     phaistos::Atom *atom1;
@@ -112,6 +106,7 @@ struct TorsionInteraction {
 };
 
 
+//! Class to hold parameters for a bond-stretch interaction
 struct BondedPairParameter {
     std::string type1;
     std::string type2;
@@ -120,6 +115,7 @@ struct BondedPairParameter {
 };
 
 
+//! Class to hold parameters and pointers to two atoms in a  bond-stretch interaction
 struct BondedPairInteraction {
     phaistos::Atom *atom1;
     phaistos::Atom *atom2;
@@ -128,6 +124,7 @@ struct BondedPairInteraction {
 };
 
 
+//! Class to hold parameters for an angle-bend (and Urey-Bradley) energy term.
 struct AngleBendParameter {
     std::string type1;
     std::string type2;
@@ -139,6 +136,7 @@ struct AngleBendParameter {
 };
 
 
+//! Class to hold parameters for an angle-bend (and Urey-Bradley) energy term and pointers to relevant atoms
 struct AngleBendInteraction {
     phaistos::Atom *atom1;
     phaistos::Atom *atom2;
@@ -150,6 +148,7 @@ struct AngleBendInteraction {
 };
 
 
+//! Class to hold parameters for an improper torsion energy term
 struct ImptorParameter {
 
     std::string type1;
@@ -162,6 +161,7 @@ struct ImptorParameter {
 };
 
 
+//! Class to hold parameters for an improper torsion energy term and pointers to relevant atoms
 struct ImptorInteraction {
 
     phaistos::Atom *atom1;

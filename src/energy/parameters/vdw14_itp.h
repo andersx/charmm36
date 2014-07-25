@@ -1,5 +1,7 @@
 // vdw14_itp.h --- std::string'ed version of vdw14.itp
 // Copyright (C) 2014 Anders S. Christensen
+// Copyright (c) 1991-2000, University of Groningen, The Netherlands.
+// Copyright (c) 2001-2004, The GROMACS development team,
 //
 // This file is part of Phaistos
 //

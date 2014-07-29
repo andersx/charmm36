@@ -29,7 +29,7 @@
 namespace phaistos {
 
 
-//! OPLS anglebend energy term - base class containing all functionality
+//! Charmm36 anglebend energy term - base class containing all functionality
 class TermCharmm36AngleBend: public EnergyTermCommon<TermCharmm36AngleBend, ChainFB> {
 
 protected:
@@ -110,9 +110,29 @@ public:
                energy_urey += energy_urey_bradley_temp;
                energy_sum += energy_angle_bend_temp + energy_urey_bradley_temp;
 
+
+               if (this->settings.debug > 1) {
+
+                   std::cout << "# CHARMM36 angle-bend-term:" 
+
+                             << " a1: " << interaction.atom1
+                             << " a2: " << interaction.atom2
+                             << " a3: " << interaction.atom3
+
+                             << " angle: " << theta * charmm36_constants::RAD_TO_DEG
+                             << " e_bend: " << energy_angle_bend_temp
+
+                             << " r: : " << r13 * charmm36_constants::NM_TO_ANGS
+                             << " e_ub : " << energy_urey_bradley_temp
+
+                             << std::endl;
+                             
+              
+                }
+
           }
 
-          if (settings.debug > 0) {
+          if (this->settings.debug > 0) {
 
                printf("       angle-bend E = %15.6f kJ/mol\n", energy_angle);
                printf("       angle-bend E = %15.6f kcal/mol\n", 

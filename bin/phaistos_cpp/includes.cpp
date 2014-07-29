@@ -6,6 +6,6 @@
 #include "energy/term_vdw.h"
 #include "energy/term_improper_torsion.h"
 #include "energy/term_cmap.h"
-// #include "energy/term_non_bonded.h"
+#include "energy/term_non_bonded.h"
 #include "energy/term_non_bonded_cached.h"
 #include "energy/term_bonded_cached.h"

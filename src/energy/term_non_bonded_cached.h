@@ -36,7 +36,6 @@
 
 namespace phaistos {
 
-//! Gromacs van der Waals interaction term
 class TermCharmm36NonBondedCached: public EnergyTermCommon<TermCharmm36NonBondedCached, ChainFB> {
 
 protected:
@@ -163,6 +162,7 @@ public:
                                                                   lambda,
                                                                   eef1_atom_type_index_map);
 
+            std::cout << non_bonded_interactions.size() << std::endl;
             this->dGref_total = 0.0;
 
             for (AtomIterator<ChainFB, definitions::ALL> it(*this->chain); !it.end(); ++it) {

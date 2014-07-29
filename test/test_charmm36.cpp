@@ -38,80 +38,88 @@
 #include "energy/term_non_bonded_cached.h"
 #include "energy/term_angle_bend.h"
 #include "energy/term_torsion.h"
-#include "energy/term_imptor.h"
+#include "energy/term_improper_torsion.h"
 #include "energy/term_vdw.h"
 #include "energy/term_coulomb.h"
-#include "energy/term_eef1.h"
+#include "energy/term_implicit_solvent.h"
 #include "energy/term_cmap.h"
-using namespace std;
-using namespace phaistos;
-using namespace phaistos::definitions;
 
 //! Method to evaluate a PDB file using energy terms
-void test_terms(ChainFB *chain, int n=1) {
+void test_terms(phaistos::ChainFB *chain, int debug_level) {
 
+     using namespace phaistos;
+     using namespace definitions;
 
      std::cout << "Setting up force field ... " << std::endl;
+
      // Create Energy class 
      Energy<ChainFB> energy(chain);
 
-     // Add terms
+     // Create settings object
      TermCharmm36BondStretch::Settings settings_bond_stretch;
      TermCharmm36AngleBend::Settings settings_angle_bend;
      TermCharmm36Torsion::Settings settings_torsion;
      TermCharmm36Vdw::Settings settings_vdw;
-     TermCharmm36Imptor::Settings settings_imptor;
+     TermCharmm36ImproperTorsion::Settings settings_improper_torsion;
      TermCharmm36Coulomb::Settings settings_coulomb;
-     TermCharmm36Eef1::Settings settings_eef1;
+     TermCharmm36ImplicitSolvent::Settings settings_implicit_solvent;
      TermCharmm36Cmap::Settings settings_cmap;
 
-     settings_bond_stretch.debug = 1;
-     settings_angle_bend.debug = 1;
-     settings_torsion.debug = 1;
-     settings_vdw.debug = 1;
-     settings_imptor.debug = 1;
-     settings_coulomb.debug = 1;
-     settings_eef1.debug = 1;
-     settings_cmap.debug = 1;
+     // Set debug-level (which controls output)
+     settings_bond_stretch.debug = debug_level;
+     settings_angle_bend.debug = debug_level;
+     settings_torsion.debug = debug_level;
+     settings_vdw.debug = debug_level;
+     settings_improper_torsion.debug = debug_level;
+     settings_coulomb.debug = debug_level;
+     settings_implicit_solvent.debug = debug_level;
+     settings_cmap.debug = debug_level;
 
-     energy.add_term( new TermCharmm36BondStretch(chain, settings_bond_stretch) );
-     energy.add_term( new TermCharmm36AngleBend(chain, settings_angle_bend) );
-     energy.add_term( new TermCharmm36Torsion(chain, settings_torsion) );
-     energy.add_term( new TermCharmm36Vdw(chain, settings_vdw) );
-     energy.add_term( new TermCharmm36Imptor(chain, settings_imptor) );
-     energy.add_term( new TermCharmm36Coulomb(chain, settings_coulomb) );
-     energy.add_term( new TermCharmm36Eef1(chain, settings_eef1) );
-     energy.add_term( new TermCharmm36Cmap(chain, settings_cmap) );
-     energy.add_term( new TermCharmm36BondedCached(chain) );
-     energy.add_term( new TermCharmm36NonBondedCached(chain) );
-
-
-
-     std::cout << "Init ok! " << std::endl;
+     // Add terms to energy object
+     energy.add_term(new TermCharmm36BondStretch(chain, settings_bond_stretch));
+     energy.add_term(new TermCharmm36AngleBend(chain, settings_angle_bend));
+     energy.add_term(new TermCharmm36Torsion(chain, settings_torsion));
+     energy.add_term(new TermCharmm36Vdw(chain, settings_vdw));
+     energy.add_term(new TermCharmm36ImproperTorsion(chain, settings_improper_torsion));
+     energy.add_term(new TermCharmm36Coulomb(chain, settings_coulomb));
+     energy.add_term(new TermCharmm36ImplicitSolvent(chain, settings_implicit_solvent));
+     energy.add_term(new TermCharmm36Cmap(chain, settings_cmap));
+     energy.add_term(new TermCharmm36BondedCached(chain));
+     energy.add_term(new TermCharmm36NonBondedCached(chain));
 
      // Evaluate energy
-
      energy.evaluate();
+
      // Output
-     cout << energy << endl;;
+     std::cout << energy << std::endl;;
 
-     
 }
-
 
 
 int main(int argc, char *argv[]) {
 
+     using namespace phaistos;
+     using namespace definitions;
+
+     int debug_level = 1;
+
+     if (argc == 3) {
+
+         debug_level = atoi(argv[2]);
+     }
+
      if (argc < 2) {
-          cout << "USAGE: ./test_ff <pdb-file>" <<endl;;
+         std::cout << "USAGE: ./test_charmm <pdb-file> [debug-level (=1 by default)]" << std::endl;;
           exit(1);
      }
 
-     // Create chain from PDB filename
-     string pdb_filename = argv[1];
-     ChainFB chain(pdb_filename, ALL_ATOMS);
-     // Add atoms missing in the pdb structure
-     //chain.add_atoms(ALL_PHYSICAL_ATOMS);
 
-     test_terms(&chain, 1);
+
+     // Create chain from PDB filename
+     std::string pdb_filename = argv[1];
+     ChainFB chain(pdb_filename, ALL_ATOMS);
+
+     test_terms(&chain, debug_level);
 }
+
+

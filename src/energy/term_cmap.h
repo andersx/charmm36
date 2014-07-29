@@ -104,9 +104,24 @@ public:
 
                cmap_energy += charmm36_cmap::cmap_energy(phi, psi, cmap_type_index, this->cmap_data);
 
+               if (this->settings.debug > 1) {
+
+                   std::cout << "# CHARMM36 cmap:" 
+
+                             << " i: " << residue_index + 1
+                             << " cmap-type: " << cmap_type_index
+
+                             << " phi: " << phi * charmm36_constants::RAD_TO_DEG
+                             << " psi: " << psi * charmm36_constants::RAD_TO_DEG
+
+                             << " e_cmap : " << charmm36_cmap::cmap_energy(phi, psi, cmap_type_index, this->cmap_data)
+
+                             << std::endl;
+                }
+
           }
           
-          if (settings.debug > 0) {
+          if (this->settings.debug > 0) {
                printf("             CMAP E = %15.6f kJ/mol\n", cmap_energy);
                printf("             CMAP E = %15.6f kcal/mol\n", cmap_energy * charmm36_constants::KJ_TO_KCAL);
           }
@@ -116,6 +131,5 @@ public:
 
 };
 
-}
-
+} // End namespace phaistos
 #endif

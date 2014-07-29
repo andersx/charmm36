@@ -145,11 +145,12 @@ struct AngleBendInteraction {
     double k0;
     double r13;
     double kub;
+
 };
 
 
 //! Class to hold parameters for an improper torsion energy term
-struct ImptorParameter {
+struct ImproperTorsionParameter {
 
     std::string type1;
     std::string type2;
@@ -162,7 +163,7 @@ struct ImptorParameter {
 
 
 //! Class to hold parameters for an improper torsion energy term and pointers to relevant atoms
-struct ImptorInteraction {
+struct ImproperTorsionInteraction {
 
     phaistos::Atom *atom1;
     phaistos::Atom *atom2;

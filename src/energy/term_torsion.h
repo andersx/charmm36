@@ -87,29 +87,44 @@ public:
      double evaluate(MoveInfo *move_info=NULL) {
 
 
-        double e_torsion = 0.0;
+        double energy_torsion = 0.0;
 
         for (unsigned int i = 0; i < this->torsion_interactions.size(); i++) {
 
-            topology::TorsionInteraction torsion = this->torsion_interactions[i];
+            topology::TorsionInteraction interaction = this->torsion_interactions[i];
 
-            double angle = calc_dihedral((torsion.atom1)->position,
-                                         (torsion.atom2)->position,
-                                         (torsion.atom3)->position,
-                                         (torsion.atom4)->position);
+            double phi = calc_dihedral((interaction.atom1)->position,
+                                         (interaction.atom2)->position,
+                                         (interaction.atom3)->position,
+                                         (interaction.atom4)->position);
 
-            const double e_torsion_temp = torsion.cp * std::cos(torsion.mult * angle - torsion.phi0 * charmm36_constants::DEG_TO_RAD) + torsion.cp;
+            const double energy_torsion_temp =  interaction.cp + 
+                    interaction.cp * std::cos(interaction.mult * phi - interaction.phi0 * charmm36_constants::DEG_TO_RAD);
 
-            e_torsion += e_torsion_temp;
+            energy_torsion += energy_torsion_temp;
+             if (this->settings.debug > 1) {
+
+                std::cout << "# CHARMM36 torsion:" 
+
+                          << " a1: " << interaction.atom1
+                          << " a2: " << interaction.atom2
+                          << " a3: " << interaction.atom3
+                          << " a4: " << interaction.atom4
+
+                          << " angle: " << phi * charmm36_constants::RAD_TO_DEG
+                          << " e_torsion: " <<  energy_torsion_temp
+
+                          << std::endl;
+             }
 
         }
 
-        if (settings.debug > 0) {
-            printf("          torsion E = %15.6f kJ/mol\n", e_torsion);
-            printf("          torsion E = %15.6f kcal/mol\n", e_torsion * charmm36_constants::KJ_TO_KCAL);
+        if (this->settings.debug > 0) {
+            printf("          torsion E = %15.6f kJ/mol\n", energy_torsion);
+            printf("          torsion E = %15.6f kcal/mol\n", energy_torsion * charmm36_constants::KJ_TO_KCAL);
         }
 
-        return e_torsion * charmm36_constants::KJ_TO_KCAL;
+        return energy_torsion * charmm36_constants::KJ_TO_KCAL;
 
      }
 

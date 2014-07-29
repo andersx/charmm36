@@ -23,6 +23,8 @@
 #include <boost/type_traits/is_base_of.hpp>
 #include "energy/energy_term.h"
 
+#include "parameters/vdw14_itp.h"
+#include "parameters/vdw_itp.h"
 
 namespace phaistos {
 
@@ -99,9 +101,9 @@ public:
 
           for (unsigned int i = 0; i < this->non_bonded_interactions.size(); i++) {
 
-              topology::NonBondedInteraction pair = this->non_bonded_interactions[i];
+              topology::NonBondedInteraction interaction = this->non_bonded_interactions[i];
 
-               const double r_sq = ((pair.atom1)->position - (pair.atom2)->position).norm_squared();
+               const double r_sq = ((interaction.atom1)->position - (interaction.atom2)->position).norm_squared();
 
                // This is the energy if no distance dependent di-electric constant is used.
                // const double inv_r_sq = 100.0 / (r_sq); // 100.0 due to shift to nanometers
@@ -111,18 +113,46 @@ public:
                // The factor of 10.0 here is because the pair.qq assumes distances in nanometers,
                // while the factor of 1.5 in eps_r assumes that r is in angstrom, so only one r in r^2 
                // must be converted.
-               const double coul_energy_temp = pair.qq / (r_sq * 1.5) * charmm36_constants::NM_TO_ANGS;
+               const double coul_energy_temp = interaction.qq / (r_sq * 1.5) * charmm36_constants::NM_TO_ANGS;
 
-               if (pair.is_14_interaction) {
-                    coul14_energy += coul_energy_temp;
+               if (interaction.is_14_interaction) {
+
+                   coul14_energy += coul_energy_temp;
+
+                   if (this->settings.debug > 1) {
+
+                       std::cout << "# CHARMM36 coulomb-14:";
+                  
+                    }
                } else {
-                    coul_energy += coul_energy_temp;
+ 
+                   coul_energy += coul_energy_temp;
+
+                    if (this->settings.debug > 1) {
+
+                       std::cout << "# CHARMM36 coulomb:";
+                  
+                    }
                }
+
+               if (this->settings.debug > 1) {
+
+                       std::cout << " a1: " << interaction.atom1
+                                 << " a2: " << interaction.atom2
+
+                                 << " q1*q2: " <<  interaction.qq
+
+                                 << " r: " << std::sqrt(r_sq)
+
+                                 << " e_coul: " << coul_energy_temp
+
+                                 << std::endl;
+                }
           }
 
           const double total_energy = (coul14_energy + coul_energy) * charmm36_constants::KJ_TO_KCAL;
 
-          if (settings.debug > 0) {
+          if (this->settings.debug > 0) {
                printf("          Coul-14 E = %15.6f kJ/mol\n", coul14_energy);
                printf("          Coul-14 E = %15.6f kcal/mol\n", coul14_energy * charmm36_constants::KJ_TO_KCAL);
                printf("          Coul-SR E = %15.6f kJ/mol\n", coul_energy);

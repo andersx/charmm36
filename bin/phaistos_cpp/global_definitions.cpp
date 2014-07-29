@@ -55,15 +55,15 @@ struct EnergyInitialization {
                                                    options.get_settings<Settings>(option,i)));
           }
 
-          // EEF1
-          option = options[prefix+"-charmm36-eef1"];
+          // Implicit solvent
+          option = options[prefix+"-charmm36-implicit-solvent"];
           for (int i=0; i<option.occurrences(); ++i) {
 
                // Settings typedef
-               typedef TermCharmm36Eef1::Settings Settings;
+               typedef TermCharmm36ImplicitSolvent::Settings Settings;
 
                // Add energy term
-               energy->add_term(new TermCharmm36Eef1(chain,
+               energy->add_term(new TermCharmm36ImplicitSolvent(chain,
                                                    options.get_settings<Settings>(option,i)));
           }
           // Torsion
@@ -78,14 +78,14 @@ struct EnergyInitialization {
                                                    options.get_settings<Settings>(option,i)));
           }
           // Improper torsion
-          option = options[prefix+"-charmm36-imptor"];
+          option = options[prefix+"-charmm36-ImproperTorsion"];
           for (int i=0; i<option.occurrences(); ++i) {
 
                // Settings typedef
-               typedef TermCharmm36Imptor::Settings Settings;
+               typedef TermCharmm36ImproperTorsion::Settings Settings;
 
                // Add energy term
-               energy->add_term(new TermCharmm36Imptor(chain,
+               energy->add_term(new TermCharmm36ImproperTorsion(chain,
                                                    options.get_settings<Settings>(option,i)));
           }
           // Lennard Jones
@@ -132,7 +132,7 @@ struct EnergyInitialization {
                energy->add_term(new TermCharmm36Cmap(chain,
                                                 options.get_settings<Settings>(option,i)));
           }
-          // CMAP term
+          // bonded-cached term
           option = options[prefix+"-charmm36-bonded-cached"];
           for (int i=0; i<option.occurrences(); ++i) {
 

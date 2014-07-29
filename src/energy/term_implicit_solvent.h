@@ -1,4 +1,4 @@
-// term_eef1.h -- EEF1-SB solvation term.
+// term_implicit_solvent.h -- CHARMM36/EEF1-SB excluded volume solvation term.
 // Copyright (C) 2009-2014 Sandro Bottaro, Anders S. Christensen
 //
 // This file is part of Phaistos
@@ -17,8 +17,8 @@
 // along with Phaistos.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-#ifndef TERM_CHARMM36_EEF1_H
-#define TERM_CHARMM36_EEF1_H
+#ifndef TERM_CHARMM36_IMPLICIT_SOLVENT_H
+#define TERM_CHARMM36_IMPLICIT_SOLVENT_H
 
 #include <boost/type_traits/is_base_of.hpp>
 #include <boost/tokenizer.hpp>
@@ -28,13 +28,13 @@
 
 namespace phaistos {
 
-//! partial eef1 interaction term
-class TermCharmm36Eef1: public EnergyTermCommon<TermCharmm36Eef1, ChainFB> {
+//! Implicit solvent energy term
+class TermCharmm36ImplicitSolvent: public EnergyTermCommon<TermCharmm36ImplicitSolvent, ChainFB> {
 
 private:
 
      //! For convenience, define local EnergyTermCommon
-     typedef phaistos::EnergyTermCommon<TermCharmm36Eef1, ChainFB> EnergyTermCommon;
+     typedef phaistos::EnergyTermCommon<TermCharmm36ImplicitSolvent, ChainFB> EnergyTermCommon;
 
      //! Number of interactions in the last evaluation
      int counter;
@@ -61,10 +61,10 @@ public:
      //! \param chain Molecule chain
      //! \param settings Local Settings object
      //! \param random_number_engine Object from which random number generators can be created.
-     TermCharmm36Eef1(ChainFB *chain,
+     TermCharmm36ImplicitSolvent(ChainFB *chain,
               const Settings &settings=Settings(),
               RandomNumberEngine *random_number_engine = &random_global)
-          : EnergyTermCommon(chain, "charmm36-eef1", settings, random_number_engine) {
+          : EnergyTermCommon(chain, "charmm36-implicit-solvent", settings, random_number_engine) {
 
           initialize();
 
@@ -76,7 +76,7 @@ public:
      //! \param random_number_engine Object from which random number generators can be created.
      //! \param thread_index Index indicating in which thread|rank the copy exists
      //! \param chain Molecule chain
-     TermCharmm36Eef1(const TermCharmm36Eef1 &other,
+     TermCharmm36ImplicitSolvent(const TermCharmm36ImplicitSolvent &other,
                      RandomNumberEngine *random_number_engine,
                      int thread_index, ChainFB *chain)
           : EnergyTermCommon(other, random_number_engine, thread_index, chain),
@@ -180,10 +180,10 @@ public:
      //! \param atom2 Second atom
      //! \param chg1 Eef1 of atom1
      //! \param chg2 Eef1 of atom2
-     //! \return Eef1 energy for atom pair
+     //! \return Implicit solvent energy for atom pair
      double calculate_contribution(Atom *atom1, Atom *atom2, int index1, int index2) {
 
-             return calc_eef1_energy(atom1,atom2,index1,index2);
+             return calc_implicit_solvent_energy(atom1,atom2,index1,index2);
      }
 
      //! Evaluate a eef1 interaction between two atoms
@@ -192,7 +192,7 @@ public:
      //! \param chg1 Eef1 of atom1
      //! \param chg2 Eef1 of atom2
      //! \return Eef1 energy for atom pair
-     double calc_eef1_energy(Atom *atom1, Atom *atom2, int index1, int index2) {
+     double calc_implicit_solvent_energy(Atom *atom1, Atom *atom2, int index1, int index2) {
 
           counter++;
 
@@ -268,23 +268,33 @@ public:
                     Atom *atom2 = &*it2;
                     int index2 = get_index(atom2);
 
-               if (j_atom <= i_atom) continue;
-               if (chain_distance<ChainFB>(atom1,atom2) < 3) continue;
-               if (atom2->mass == definitions::atom_h_weight) continue;
+                    if (j_atom <= i_atom) continue;
+                    if (chain_distance<ChainFB>(atom1,atom2) < 3) continue;
+                    if (atom2->mass == definitions::atom_h_weight) continue;
+                    if ((atom1->position - atom2->position).norm() > 9) continue;
 
-               if ((atom1->position - atom2->position).norm() > 9) continue;
                     const double energy_sum_temp = calculate_contribution(atom1, atom2,index1,index2);
                     energy_sum += energy_sum_temp;
 
-                     //printf("ASC: EEF1-SB %4d %4d  Etot = %15.10f  Etemp = %15.10f  r_ij = %14.10f\n",
-                     //        i_atom, j_atom, energy_sum, energy_sum_temp, (atom1->position - atom2->position).norm());
+                    if (this->settings.debug > 1) {
+
+                        std::cout << "# CHARMM36 implicit-solvent:" 
+
+                                  << " a1: " << atom1
+                                  << " a2: " << atom2
+
+                                  << " e_solv : " << energy_sum_temp
+
+                                  << std::endl;
+              
+                    }
                }
 
           }
 
-          if (settings.debug > 0) {
-               printf("          EEF1-SB E = %15.6f kJ/mol\n", energy_sum * charmm36_constants::KCAL_TO_KJ);
-               printf("          EEF1-SB E = %15.6f kcal/mol\n", energy_sum);
+          if (this->settings.debug > 0) {
+               printf(" implicit-solvent E = %15.6f kJ/mol\n", energy_sum * charmm36_constants::KCAL_TO_KJ);
+               printf(" implicit-solvent E = %15.6f kcal/mol\n", energy_sum);
           }
 
           return energy_sum;

@@ -25,7 +25,6 @@
 #include <boost/tokenizer.hpp>
 #include <boost/type_traits/is_base_of.hpp>
 #include "energy/energy_term.h"
-#include "protein/iterators/pair_iterator_chaintree.h"
 
 #include "parsers/topology_parser.h"
 
@@ -106,24 +105,57 @@ public:
 
           for (unsigned int i = 0; i < this->non_bonded_interactions.size(); i++) {
 
-              topology::NonBondedInteraction pair = this->non_bonded_interactions[i];
+              topology::NonBondedInteraction interaction = this->non_bonded_interactions[i];
 
-               const double r_sq = ((pair.atom1)->position - (pair.atom2)->position).norm_squared();
-               const double inv_r_sq = charmm36_constants::NM2_TO_ANGS2 / (r_sq);
-               const double inv_r_sq6 = inv_r_sq * inv_r_sq * inv_r_sq;
-               const double inv_r_sq12 = inv_r_sq6 * inv_r_sq6;
-               const double vdw_energy_temp = pair.c12 * inv_r_sq12 - pair.c6 * inv_r_sq6;
+               const double r2 = ((interaction.atom1)->position - (interaction.atom2)->position).norm_squared();
+               const double inv_r2 = charmm36_constants::NM2_TO_ANGS2 / r2;
+               const double inv_r6 = inv_r2 * inv_r2 * inv_r2;
+               const double inv_r12 = inv_r6 * inv_r6;
+               const double vdw_energy_temp = interaction.c12 * inv_r12 - interaction.c6 * inv_r6;
 
-               if (pair.is_14_interaction) {
+               if (interaction.is_14_interaction) {
+
                     vdw14_energy += vdw_energy_temp;
+
+                    if (this->settings.debug > 1) {
+
+                       std::cout << "# CHARMM36 vdw-14:";
+                  
+                    }
+ 
                } else {
-                    vdw_energy += vdw_energy_temp;
+ 
+                   vdw_energy += vdw_energy_temp;
+
+                    if (this->settings.debug > 1) {
+
+                       std::cout << "# CHARMM36 vdw:";
+                  
+                    }
                }
+
+               if (this->settings.debug > 1) {
+
+                       std::cout << " a1: " << interaction.atom1
+                                 << " a2: " << interaction.atom2
+
+                                 << " c6: " <<  interaction.c6
+                                 << " c12: " <<  interaction.c12
+
+                                 << " r: " << std::sqrt(r2)
+
+                                 << " e_vdw: " << vdw_energy_temp
+
+                                 << std::endl;
+                }
+
+
+
           }
 
           const double total_energy = (vdw14_energy + vdw_energy) * charmm36_constants::KJ_TO_KCAL;
 
-          if (settings.debug > 0) {
+          if (this->settings.debug > 0) {
               printf("           vdW-14 E = %15.6f kJ/mol\n", vdw14_energy);
               printf("           vdW-14 E = %15.6f kcal/mol\n", vdw14_energy * charmm36_constants::KJ_TO_KCAL);
               printf("           vdW-SR E = %15.6f kJ/mol\n", vdw_energy);

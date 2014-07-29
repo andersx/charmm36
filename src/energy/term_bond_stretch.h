@@ -101,9 +101,23 @@ public:
 
                e_bond += e_bond_temp;
 
-          }
 
-          if (settings.debug > 0) {
+               if (this->settings.debug > 1) {
+
+                   std::cout << "# CHARMM36 bond-stretch-term:" 
+
+                             << " a1: " << pair.atom1
+                             << " a2: " << pair.atom2
+
+                             << " r: : " << r * charmm36_constants::NM_TO_ANGS
+                             << " e_stretch : " << e_bond_temp
+
+                             << std::endl;
+                             
+               }
+          
+          }
+          if (this->settings.debug > 0) {
                printf("     bond-stretch E = %15.6f kJ/mol\n", e_bond);
                printf("     bond-stretch E = %15.6f kcal/mol\n", e_bond * charmm36_constants::KJ_TO_KCAL);
           }

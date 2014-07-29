@@ -861,11 +861,11 @@ std::vector<AngleBendInteraction> generate_angle_bend_interactions(phaistos::Cha
 }
 
 
-std::vector<ImptorParameter> read_imptor_parameters(const std::string &itp) {
+std::vector<ImproperTorsionParameter> read_improper_torsion_parameters(const std::string &itp) {
 
     std::istringstream input_stream(itp);
 
-    std::vector<ImptorParameter> parameters;
+    std::vector<ImproperTorsionParameter> parameters;
 
     while (input_stream.good()) {
 
@@ -882,7 +882,7 @@ std::vector<ImptorParameter> read_imptor_parameters(const std::string &itp) {
         std::vector<std::string> split_line;
         boost::split(split_line, line, boost::is_any_of(" \t"), boost::token_compress_on);
 
-        ImptorParameter parameter;
+        ImproperTorsionParameter parameter;
 
         parameter.type1 = boost::lexical_cast<std::string >(split_line[0]);
         parameter.type2 = boost::lexical_cast<std::string >(split_line[1]);
@@ -899,15 +899,15 @@ std::vector<ImptorParameter> read_imptor_parameters(const std::string &itp) {
 }
 
 
-ImptorInteraction atoms_to_imptor(const std::vector<phaistos::Atom*> &atoms,
-    const std::vector<ImptorParameter> &imptor_parameters) {
+ImproperTorsionInteraction atoms_to_improper_torsion(const std::vector<phaistos::Atom*> &atoms,
+    const std::vector<ImproperTorsionParameter> &improper_torsion_parameters) {
 
-    ImptorInteraction imptor;
+    ImproperTorsionInteraction improper_torsion;
 
-    imptor.atom1 = atoms[0];
-    imptor.atom2 = atoms[1];
-    imptor.atom3 = atoms[2];
-    imptor.atom4 = atoms[3];
+    improper_torsion.atom1 = atoms[0];
+    improper_torsion.atom2 = atoms[1];
+    improper_torsion.atom3 = atoms[2];
+    improper_torsion.atom4 = atoms[3];
 
     std::string type1 = eef1_sb_parser::get_atom_type(atoms[0]);
     std::string type2 = eef1_sb_parser::get_atom_type(atoms[1]);
@@ -916,9 +916,9 @@ ImptorInteraction atoms_to_imptor(const std::vector<phaistos::Atom*> &atoms,
 
     bool found_parameter = false;
 
-    for (unsigned int i = 0; i < imptor_parameters.size(); i++) {
+    for (unsigned int i = 0; i < improper_torsion_parameters.size(); i++) {
 
-        ImptorParameter p = imptor_parameters[i];
+        ImproperTorsionParameter p = improper_torsion_parameters[i];
 
         if (((p.type1 == type1) && (p.type2 == type2) && (p.type3 == type3) && (p.type4 == type4)) ||
             ((p.type1 == type4) && (p.type2 == type3) && (p.type3 == type2) && (p.type4 == type1)) ||
@@ -927,26 +927,26 @@ ImptorInteraction atoms_to_imptor(const std::vector<phaistos::Atom*> &atoms,
 
             found_parameter = true;
 
-            imptor.phi0 = p.phi0;
-            imptor.cp = p.cp;
+            improper_torsion.phi0 = p.phi0;
+            improper_torsion.cp = p.cp;
         }
     }
 
     if (!found_parameter)
         std::cout << "ERROR: DIDN'T FIND PARAMETER" << std::endl;
 
-    return imptor;
+    return improper_torsion;
 }
 
 
-std::vector<ImptorInteraction> generate_imptor_interactions(phaistos::ChainFB *chain,
-    const std::vector<ImptorParameter> &imptor_parameters) {
+std::vector<ImproperTorsionInteraction> generate_improper_torsion_interactions(phaistos::ChainFB *chain,
+    const std::vector<ImproperTorsionParameter> &improper_torsion_parameters) {
 
     using namespace phaistos;
     using namespace definitions;
     using namespace vector_utils;
 
-    std::vector<ImptorInteraction> imptors;
+    std::vector<ImproperTorsionInteraction> improper_torsions;
 
     for (ResidueIterator<ChainFB> res(*(chain)); !(res).end(); ++res) {
 
@@ -1056,13 +1056,14 @@ std::vector<ImptorInteraction> generate_imptor_interactions(phaistos::ChainFB *c
 
         for (unsigned int i = 0; i < enum_pairs.size(); i++) {
 
-            ImptorInteraction sc_imptor = atoms_to_imptor(make_vector((*res)[enum_pairs[i][0]],
-                                                                      (*res)[enum_pairs[i][1]],
-                                                                      (*res)[enum_pairs[i][2]],
-                                                                      (*res)[enum_pairs[i][3]]),
-                                                          imptor_parameters);
+            ImproperTorsionInteraction sc_improper_torsion 
+                = atoms_to_improper_torsion(make_vector((*res)[enum_pairs[i][0]],
+                                                        (*res)[enum_pairs[i][1]],
+                                                        (*res)[enum_pairs[i][2]],
+                                                        (*res)[enum_pairs[i][3]]),
+                                            improper_torsion_parameters);
 
-            imptors.push_back(sc_imptor);
+            improper_torsions.push_back(sc_improper_torsion);
 
 
         }
@@ -1078,39 +1079,42 @@ std::vector<ImptorInteraction> generate_imptor_interactions(phaistos::ChainFB *c
              if (res->residue_type == PRO)
                 amide_atom = CD;
 
-             ImptorInteraction bb_imptor = atoms_to_imptor(make_vector((*res)[N],
-                                                            (*previous_residue)[C],
-                                                            (*res)[CA],
-                                                            (*res)[amide_atom]),
-                                                imptor_parameters);
+             ImproperTorsionInteraction bb_improper_torsion 
+                 = atoms_to_improper_torsion(make_vector((*res)[N],
+                                                         (*previous_residue)[C],
+                                                         (*res)[CA],
+                                                         (*res)[amide_atom]),
+                                                improper_torsion_parameters);
 
-             imptors.push_back(bb_imptor);
+             improper_torsions.push_back(bb_improper_torsion);
          }
 
           //C   CA  +N  O
          if (!(res->terminal_status == CTERM)) {
 
-             ImptorInteraction bb_imptor = atoms_to_imptor(make_vector((*res)[C],
-                                                            (*res)[CA],
-                                                            (*next_residue)[N],
-                                                            (*res)[O]),
-                                                imptor_parameters);
+             ImproperTorsionInteraction bb_improper_torsion 
+                 = atoms_to_improper_torsion(make_vector((*res)[C],
+                                                         (*res)[CA],
+                                                         (*next_residue)[N],
+                                                         (*res)[O]),
+                                                improper_torsion_parameters);
 
-             imptors.push_back(bb_imptor);
+             improper_torsions.push_back(bb_improper_torsion);
          } else if (res->terminal_status == CTERM) {
 
-             ImptorInteraction bb_imptor = atoms_to_imptor(make_vector((*res)[C],
-                                                            (*res)[CA],
-                                                            (*res)[OXT],
-                                                            (*res)[O]),
-                                                imptor_parameters);
+             ImproperTorsionInteraction bb_improper_torsion 
+                 = atoms_to_improper_torsion(make_vector((*res)[C],
+                                                         (*res)[CA],
+                                                         (*res)[OXT],
+                                                         (*res)[O]),
+                                                improper_torsion_parameters);
 
-             imptors.push_back(bb_imptor);
+             improper_torsions.push_back(bb_improper_torsion);
          }
 
     }
 
-    return imptors;
+    return improper_torsions;
 
 }
 

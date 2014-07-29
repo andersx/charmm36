@@ -47,7 +47,7 @@ struct EnergyOptions {
                target.add(
                     target.create_options(
                          DefineEnergyCommonOptions(),
-                         "Charmm36 angle bend term (" + prefix + ")",
+                         "CHARMM36/EEF1-SB angle bend term (" + prefix + ")",
                          prefix+"-charmm36-angle-bend", settings,
                          make_vector()),
                     super_group, counter==1);
@@ -71,8 +71,32 @@ struct EnergyOptions {
                target.add(
                     target.create_options(
                          DefineEnergyCommonOptions(),
-                         "Charmm36 bond stretch term (" + prefix + ")",
+                         "CHARMM36/EEF1-SB bond stretch term (" + prefix + ")",
                          prefix+"-charmm36-bond-stretch", settings,
+                         make_vector()),
+                    super_group, counter==1);
+          }
+
+          // CMAP term
+          for (int counter = occurrences[prefix+"-charmm36-cmap"]; counter > 0; counter--) {
+
+               // Create settings object
+               typedef TermCharmm36Cmap EnergyTerm;
+               typedef EnergyTerm::Settings Settings;
+               boost::shared_ptr<Settings> settings(
+                    SETTINGS_MODIFIER().template modify<EnergyTerm>(new Settings(), prefix));
+
+               // If temperature has been specified, set weight based on that value
+               if(target.has_key("temperature")) {
+                    settings->weight = temperature_to_one_over_k(target["temperature"].as<double>());
+               }
+
+               // Add options
+               target.add(
+                    target.create_options(
+                         DefineEnergyCommonOptions(),
+                         "CHARMM36/EEF1-SB CMAP correction term (" + prefix + ")",
+                         prefix+"-charmm36-cmap", settings,
                          make_vector()),
                     super_group, counter==1);
           }
@@ -95,17 +119,17 @@ struct EnergyOptions {
                target.add(
                     target.create_options(
                          DefineEnergyCommonOptions(),
-                         "Charmm36 Coulomb term (" + prefix + ")",
+                         "CHARMM36/EEF1-SB Coulomb term (" + prefix + ")",
                          prefix+"-charmm36-coulomb", settings,
                          make_vector()),
                     super_group, counter==1);
           }
 
-          // Coulomb
-          for (int counter = occurrences[prefix+"-charmm36-eef1"]; counter > 0; counter--) {
+          // Implicit solvent
+          for (int counter = occurrences[prefix+"-charmm36-implicit-solvent"]; counter > 0; counter--) {
 
                // Create settings object
-               typedef TermCharmm36Eef1 EnergyTerm;
+               typedef TermCharmm36ImplicitSolvent EnergyTerm;
                typedef EnergyTerm::Settings Settings;
                boost::shared_ptr<Settings> settings(
                     SETTINGS_MODIFIER().template modify<EnergyTerm>(new Settings(), prefix));
@@ -119,16 +143,9 @@ struct EnergyOptions {
                target.add(
                     target.create_options(
                          DefineEnergyCommonOptions(),
-                         "Charmm36 EEF1 solvation term (" + prefix + ")",
-                         prefix+"-charmm36-eef1", settings,
-                         make_vector(
-                             make_vector(std::string("solvation-filename"),
-                                         std::string("solvation-filename"),
-                                          &settings->solvation_filename),
-                             make_vector(std::string("temperature"),
-                                         std::string("Simulation Temperature."),
-                                         &settings->temp)
-                        )),
+                         "CHARMM36/EEF1-SB implicit solvation term (" + prefix + ")",
+                         prefix+"-charmm36-implicit-solvent", settings,
+                         make_vector()),
                     super_group, counter==1);
           }
 
@@ -150,17 +167,17 @@ struct EnergyOptions {
                target.add(
                     target.create_options(
                          DefineEnergyCommonOptions(),
-                         "Charmm36 torsion term (" + prefix + ")",
+                         "CHARMM36/EEF1-SB torsion angle term (" + prefix + ")",
                          prefix+"-charmm36-torsion", settings,
                          make_vector()),
                          super_group, counter==1);
           }
 
           // Improper torsion
-          for (int counter = occurrences[prefix+"-charmm36-imptor"]; counter > 0; counter--) {
+          for (int counter = occurrences[prefix+"-charmm36-improper-torsion"]; counter > 0; counter--) {
 
                // Create settings object
-               typedef TermCharmm36Imptor EnergyTerm;
+               typedef TermCharmm36ImproperTorsion EnergyTerm;
                typedef EnergyTerm::Settings Settings;
                boost::shared_ptr<Settings> settings(
                     SETTINGS_MODIFIER().template modify<EnergyTerm>(new Settings(), prefix));
@@ -174,8 +191,8 @@ struct EnergyOptions {
                target.add(
                     target.create_options(
                          DefineEnergyCommonOptions(),
-                         "Charmm36 improper torsion term (" + prefix + ")",
-                         prefix+"-charmm36-imptor", settings,
+                         "CHARMM36/EEF1-SB improper torsion angle term (" + prefix + ")",
+                         prefix+"-charmm36-imptroper", settings,
                          make_vector()),
                          super_group, counter==1);
           }
@@ -198,7 +215,7 @@ struct EnergyOptions {
                target.add(
                     target.create_options(
                          DefineEnergyCommonOptions(),
-                         "Charmm36 van der Waals term (" + prefix + ")",
+                         "CHARMM36/EEF1-SB van der Waals term (" + prefix + ")",
                          prefix+"-charmm36-vdw", settings,
                          make_vector()),
                     super_group, counter==1);
@@ -228,54 +245,6 @@ struct EnergyOptions {
           //           super_group, counter==1);
           // }
 
-          // Non-Bonded chaced
-          for (int counter = occurrences[prefix+"-charmm36-non-bonded-cached"]; counter > 0; counter--) {
-
-               // Create settings object
-               typedef TermCharmm36NonBondedCached EnergyTerm;
-               typedef EnergyTerm::Settings Settings;
-               boost::shared_ptr<Settings> settings(
-                    SETTINGS_MODIFIER().template modify<EnergyTerm>(new Settings(), prefix));
-
-               // If temperature has been specified, set weight based on that value
-               if(target.has_key("temperature")) {
-                    settings->weight = temperature_to_one_over_k(target["temperature"].as<double>());
-               }
-
-               // Add options
-               target.add(
-                    target.create_options(
-                         DefineEnergyCommonOptions(),
-                         "Cached CHARMM36 van der Waal + Coulomb terms and  EEF1-SB solvent model (" + prefix + ")",
-                         prefix+"-charmm36-non-bonded-cached", settings,
-                         make_vector()),
-                    super_group, counter==1);
-          }
-
-          // CMAP term
-          for (int counter = occurrences[prefix+"-charmm36-cmap"]; counter > 0; counter--) {
-
-               // Create settings object
-               typedef TermCharmm36Cmap EnergyTerm;
-               typedef EnergyTerm::Settings Settings;
-               boost::shared_ptr<Settings> settings(
-                    SETTINGS_MODIFIER().template modify<EnergyTerm>(new Settings(), prefix));
-
-               // If temperature has been specified, set weight based on that value
-               if(target.has_key("temperature")) {
-                    settings->weight = temperature_to_one_over_k(target["temperature"].as<double>());
-               }
-
-               // Add options
-               target.add(
-                    target.create_options(
-                         DefineEnergyCommonOptions(),
-                         "CHARMM36 CMAP correction map (" + prefix + ")",
-                         prefix+"-charmm36-cmap", settings,
-                         make_vector()),
-                    super_group, counter==1);
-          }
-
           // Bonded cached terms
           for (int counter = occurrences[prefix+"-charmm36-bonded-cached"]; counter > 0; counter--) {
 
@@ -294,7 +263,7 @@ struct EnergyOptions {
                target.add(
                     target.create_options(
                          DefineEnergyCommonOptions(),
-                         "CHARMM36 bonded terms (cached) (" + prefix + ")",
+                         "Cached CHARMM36/EEF1-SB angle bend, bond stretch, torsion angle, improper torsion angles and CMAP correction terms (" + prefix + ")",
                          prefix+"-charmm36-bonded-cached", settings,
                          make_vector(
                              make_vector(std::string("ignore-bond-angles"),
@@ -313,6 +282,30 @@ struct EnergyOptions {
                                          std::string("Ignore CMAP correction terms."),
                                           &settings->ignore_cmap_correction)
                         )),
+                    super_group, counter==1);
+          }
+
+          // Non-Bonded chaced
+          for (int counter = occurrences[prefix+"-charmm36-non-bonded-cached"]; counter > 0; counter--) {
+
+               // Create settings object
+               typedef TermCharmm36NonBondedCached EnergyTerm;
+               typedef EnergyTerm::Settings Settings;
+               boost::shared_ptr<Settings> settings(
+                    SETTINGS_MODIFIER().template modify<EnergyTerm>(new Settings(), prefix));
+
+               // If temperature has been specified, set weight based on that value
+               if(target.has_key("temperature")) {
+                    settings->weight = temperature_to_one_over_k(target["temperature"].as<double>());
+               }
+
+               // Add options
+               target.add(
+                    target.create_options(
+                         DefineEnergyCommonOptions(),
+                         "Cached CHARMM36/EEF1-SB van der Waals, Coulomb and implicit solvent terms (" + prefix + ")",
+                         prefix+"-charmm36-non-bonded-cached", settings,
+                         make_vector()),
                     super_group, counter==1);
           }
 

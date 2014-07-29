@@ -84,7 +84,7 @@ public:
 
           std::vector<topology::AngleBendInteraction> angle_bend_interactions;
           std::vector<topology::BondedPairInteraction> bonded_pair_interactions;
-          std::vector<topology::ImptorInteraction> imptor_interactions;
+          std::vector<topology::ImproperTorsionInteraction> improper_torsion_interactions;
           std::vector<topology::TorsionInteraction> torsion_interactions;
           topology::CmapInteraction cmap_interaction;
 
@@ -145,11 +145,11 @@ public:
               = topology::generate_bonded_pair_interactions(this->chain, bonded_pair_parameters);
 
           // Read improper torsion parameters.
-          std::vector<topology::ImptorParameter> imptor_parameters 
-                    = topology::read_imptor_parameters(charmm36_constants::imptor_itp);
+          std::vector<topology::ImproperTorsionParameter> improper_torsion_parameters 
+                    = topology::read_improper_torsion_parameters(charmm36_constants::imptor_itp);
 
-          std::vector<topology::ImptorInteraction> imptor_interactions
-              = topology::generate_imptor_interactions(this->chain, imptor_parameters);
+          std::vector<topology::ImproperTorsionInteraction> improper_torsion_interactions
+              = topology::generate_improper_torsion_interactions(this->chain, improper_torsion_parameters);
 
           // Get proper torsion parameters.
           std::vector<topology::TorsionParameter> torsion_parameters 
@@ -189,9 +189,9 @@ public:
           }
 
           // Sort improper torsions
-          for (unsigned int i = 0; i < imptor_interactions.size(); i++){
+          for (unsigned int i = 0; i < improper_torsion_interactions.size(); i++){
 
-               topology::ImptorInteraction interaction = imptor_interactions[i];
+               topology::ImproperTorsionInteraction interaction = improper_torsion_interactions[i];
 
                int index = std::min((interaction.atom1)->residue->index,
                                     (interaction.atom2)->residue->index);
@@ -202,7 +202,7 @@ public:
                index = std::min((interaction.atom4)->residue->index,
                                 index);
 
-               this->bonded_cached_residues[index].imptor_interactions.push_back(interaction);
+               this->bonded_cached_residues[index].improper_torsion_interactions.push_back(interaction);
 
           }
 
@@ -312,9 +312,9 @@ public:
           // Calculate improper torsion terms
           if (!(this->settings.ignore_improper_torsion_angles)) {
 
-               for (unsigned int i = 0; i < cached_residue.imptor_interactions.size(); i++){
+               for (unsigned int i = 0; i < cached_residue.improper_torsion_interactions.size(); i++){
 
-                    topology::ImptorInteraction interaction = cached_residue.imptor_interactions[i];
+                    topology::ImproperTorsionInteraction interaction = cached_residue.improper_torsion_interactions[i];
 
                     const double phi = calc_dihedral((interaction.atom1)->position,
                                                      (interaction.atom2)->position,
@@ -322,9 +322,9 @@ public:
                                                      (interaction.atom4)->position);
 
                     const double dphi = phi - interaction.phi0 * charmm36_constants::DEG_TO_RAD;
-                    const double energy_imptor_temp = 0.5 * interaction.cp * dphi * dphi;
+                    const double energy_improper_torsion_temp = 0.5 * interaction.cp * dphi * dphi;
 
-                    energy_sum += energy_imptor_temp;
+                    energy_sum += energy_improper_torsion_temp;
 
                }
           }

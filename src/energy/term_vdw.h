@@ -1,4 +1,4 @@
-// term_vdw.h --- Van der Waals interaction energy term
+// term_vdw.h --- CHARMM36/EEF1-SB van der Waals interaction energy term
 // Copyright (C) 2014 Anders S. Christensen
 //
 // This file is part of PHAISTOS
@@ -17,8 +17,8 @@
 // along with Phaistos.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-#ifndef TERM_CHARMM36_VDW_H
-#define TERM_CHARMM36_VDW_H
+#ifndef TERM_CHARMM_VDW_H
+#define TERM_CHARMM_VDW_H
 
 #include <string>
 
@@ -35,12 +35,12 @@ namespace phaistos {
 
 
 //! Gromacs van der Waals interaction term
-class TermCharmm36Vdw: public EnergyTermCommon<TermCharmm36Vdw, ChainFB> {
+class TermCharmmVdw: public EnergyTermCommon<TermCharmmVdw, ChainFB> {
 
 protected:
 
      //! For convenience, define local EnergyTermCommon
-     typedef phaistos::EnergyTermCommon<TermCharmm36Vdw, ChainFB> EnergyTermCommon;
+     typedef phaistos::EnergyTermCommon<TermCharmmVdw, ChainFB> EnergyTermCommon;
 
 public:
 
@@ -53,16 +53,16 @@ public:
      //! \param chain Molecule chain
      //! \param settings Local Settings object
      //! \param random_number_engine Object from which random number generators can be created.
-     TermCharmm36Vdw(ChainFB *chain,
+     TermCharmmVdw(ChainFB *chain,
                     const Settings &settings = Settings(),
                     RandomNumberEngine *random_number_engine = &random_global)
-          : EnergyTermCommon(chain, "charmm36-vdw", settings, random_number_engine) {
+          : EnergyTermCommon(chain, "charmm-vdw", settings, random_number_engine) {
 
               std::vector<topology::NonBondedParameter> non_bonded_parameters
-                  = topology::read_nonbonded_parameters(charmm36_constants::vdw_itp);
+                  = topology::read_nonbonded_parameters(charmm_constants::vdw_itp);
 
               std::vector<topology::NonBonded14Parameter> non_bonded_14_parameters =
-                  topology::read_nonbonded_14_parameters(charmm36_constants::vdw14_itp);
+                  topology::read_nonbonded_14_parameters(charmm_constants::vdw14_itp);
 
               this->non_bonded_interactions = 
                   topology::generate_non_bonded_interactions(this->chain,
@@ -75,17 +75,17 @@ public:
      //! \param random_number_engine Object from which random number generators can be created.
      //! \param thread_index Index indicating in which thread|rank the copy exists
      //! \param chain Molecule chain
-     TermCharmm36Vdw(const TermCharmm36Vdw &other,
+     TermCharmmVdw(const TermCharmmVdw &other,
                  RandomNumberEngine *random_number_engine,
                  int thread_index, ChainFB *chain)
           : EnergyTermCommon(other, random_number_engine, thread_index, chain) {
 
 
               std::vector<topology::NonBondedParameter> non_bonded_parameters
-                  = topology::read_nonbonded_parameters(charmm36_constants::vdw_itp);
+                  = topology::read_nonbonded_parameters(charmm_constants::vdw_itp);
 
               std::vector<topology::NonBonded14Parameter> non_bonded_14_parameters =
-                  topology::read_nonbonded_14_parameters(charmm36_constants::vdw14_itp);
+                  topology::read_nonbonded_14_parameters(charmm_constants::vdw14_itp);
 
               this->non_bonded_interactions = 
                   topology::generate_non_bonded_interactions(this->chain,
@@ -108,7 +108,7 @@ public:
               topology::NonBondedInteraction interaction = this->non_bonded_interactions[i];
 
                const double r2 = ((interaction.atom1)->position - (interaction.atom2)->position).norm_squared();
-               const double inv_r2 = charmm36_constants::NM2_TO_ANGS2 / r2;
+               const double inv_r2 = charmm_constants::NM2_TO_ANGS2 / r2;
                const double inv_r6 = inv_r2 * inv_r2 * inv_r2;
                const double inv_r12 = inv_r6 * inv_r6;
                const double vdw_energy_temp = interaction.c12 * inv_r12 - interaction.c6 * inv_r6;
@@ -119,7 +119,7 @@ public:
 
                     if (this->settings.debug > 1) {
 
-                       std::cout << "# CHARMM36 vdw-14:";
+                       std::cout << "# CHARMM vdw-14:";
                   
                     }
  
@@ -129,7 +129,7 @@ public:
 
                     if (this->settings.debug > 1) {
 
-                       std::cout << "# CHARMM36 vdw:";
+                       std::cout << "# CHARMM vdw:";
                   
                     }
                }
@@ -153,14 +153,14 @@ public:
 
           }
 
-          const double total_energy = (vdw14_energy + vdw_energy) * charmm36_constants::KJ_TO_KCAL;
+          const double total_energy = (vdw14_energy + vdw_energy) * charmm_constants::KJ_TO_KCAL;
 
           if (this->settings.debug > 0) {
               printf("           vdW-14 E = %15.6f kJ/mol\n", vdw14_energy);
-              printf("           vdW-14 E = %15.6f kcal/mol\n", vdw14_energy * charmm36_constants::KJ_TO_KCAL);
+              printf("           vdW-14 E = %15.6f kcal/mol\n", vdw14_energy * charmm_constants::KJ_TO_KCAL);
               printf("           vdW-SR E = %15.6f kJ/mol\n", vdw_energy);
-              printf("           vdW-SR E = %15.6f kcal/mol\n", vdw_energy * charmm36_constants::KJ_TO_KCAL);
-              printf("        vdW-total E = %15.6f kJ/mol\n", total_energy * charmm36_constants::KCAL_TO_KJ);
+              printf("           vdW-SR E = %15.6f kcal/mol\n", vdw_energy * charmm_constants::KJ_TO_KCAL);
+              printf("        vdW-total E = %15.6f kJ/mol\n", total_energy * charmm_constants::KCAL_TO_KJ);
               printf("        vdW-total E = %15.6f kcal/mol\n", total_energy);
           }
 

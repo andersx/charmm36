@@ -1,4 +1,4 @@
-// CHARMM22/CMAP parameter parser for PHAISTOS
+// topology_parser.h -- Topology parser for the CHARMM36/EEF1-SB module
 // Copyright (C) 2014 Anders S. Christensen
 //
 // This file is part of PHAISTOS
@@ -318,8 +318,8 @@ std::vector<NonBondedInteraction> generate_non_bonded_interactions(phaistos::Cha
                //non_bonded_interaction.epsilon2 = parameter2.epsilon;
                //non_bonded_interaction.sigma_effective = sigma_effective;
                //non_bonded_interaction.epsilon_effective = epsilon_effective;
-               // non_bonded_interaction.qq  = non_bonded_interaction.q1 * non_bonded_interaction.q2 * charmm36_constants::FELEC;
-               non_bonded_interaction.qq  = atom_charge1 * atom_charge2 * charmm36_constants::FELEC;
+               // non_bonded_interaction.qq  = non_bonded_interaction.q1 * non_bonded_interaction.q2 * charmm_constants::FELEC;
+               non_bonded_interaction.qq  = atom_charge1 * atom_charge2 * charmm_constants::FELEC;
                non_bonded_interaction.c6  = 4 * epsilon_effective * std::pow(sigma_effective, 6.0);
                non_bonded_interaction.c12 = 4 * epsilon_effective * std::pow(sigma_effective, 12.0);
 
@@ -351,8 +351,8 @@ std::vector<NonBondedInteraction> generate_non_bonded_interactions(phaistos::Cha
                 // non_bonded_interaction.epsilon2 = parameter2.epsilon;
                 // non_bonded_interaction.sigma_effective = parameter14.sigma;
                 // non_bonded_interaction.epsilon_effective = parameter14.epsilon;
-                // non_bonded_interaction.qq  = non_bonded_interaction.q1 * non_bonded_interaction.q2 * charmm36_constants::FELEC;
-                non_bonded_interaction.qq  = atom_charge1 * atom_charge2 * charmm36_constants::FELEC;
+                // non_bonded_interaction.qq  = non_bonded_interaction.q1 * non_bonded_interaction.q2 * charmm_constants::FELEC;
+                non_bonded_interaction.qq  = atom_charge1 * atom_charge2 * charmm_constants::FELEC;
                 non_bonded_interaction.c6  = 4 * parameter14.epsilon * std::pow(parameter14.sigma, 6.0);
                 non_bonded_interaction.c12 = 4 * parameter14.epsilon * std::pow(parameter14.sigma, 12.0);
 
@@ -435,8 +435,8 @@ std::vector<NonBondedInteraction> generate_non_bonded_interactions_cached(phaist
                // non_bonded_interaction.epsilon2 = parameter2.epsilon;
                // non_bonded_interaction.sigma_effective = sigma_effective;
                // non_bonded_interaction.epsilon_effective = epsilon_effective;
-               // non_bonded_interaction.qq  = non_bonded_interaction.q1 * non_bonded_interaction.q2 * charmm36_constants::FELEC;
-               non_bonded_interaction.qq  = atom_charge1 * atom_charge2 * charmm36_constants::FELEC;
+               // non_bonded_interaction.qq  = non_bonded_interaction.q1 * non_bonded_interaction.q2 * charmm_constants::FELEC;
+               non_bonded_interaction.qq  = atom_charge1 * atom_charge2 * charmm_constants::FELEC;
                non_bonded_interaction.c6  = 4 * epsilon_effective * std::pow(sigma_effective, 6.0);
                non_bonded_interaction.c12 = 4 * epsilon_effective * std::pow(sigma_effective, 12.0);
 
@@ -489,7 +489,7 @@ std::vector<NonBondedInteraction> generate_non_bonded_interactions_cached(phaist
                 // non_bonded_interaction.epsilon2 = parameter2.epsilon;
                 // non_bonded_interaction.sigma_effective = parameter14.sigma;
                 // non_bonded_interaction.epsilon_effective = parameter14.epsilon;
-                non_bonded_interaction.qq  = atom_charge1 * atom_charge2 * charmm36_constants::FELEC;
+                non_bonded_interaction.qq  = atom_charge1 * atom_charge2 * charmm_constants::FELEC;
                 non_bonded_interaction.c6  = 4 * parameter14.epsilon * std::pow(parameter14.sigma, 6.0);
                 non_bonded_interaction.c12 = 4 * parameter14.epsilon * std::pow(parameter14.sigma, 12.0);
 

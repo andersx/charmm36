@@ -17,8 +17,8 @@
 // along with Phaistos.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-#ifndef TERM_CHARMM36_IMPLICIT_SOLVENT_H
-#define TERM_CHARMM36_IMPLICIT_SOLVENT_H
+#ifndef TERM_CHARMM_IMPLICIT_SOLVENT_H
+#define TERM_CHARMM_IMPLICIT_SOLVENT_H
 
 #include <boost/type_traits/is_base_of.hpp>
 #include <boost/tokenizer.hpp>
@@ -29,12 +29,12 @@
 namespace phaistos {
 
 //! Implicit solvent energy term
-class TermCharmm36ImplicitSolvent: public EnergyTermCommon<TermCharmm36ImplicitSolvent, ChainFB> {
+class TermCharmmImplicitSolvent: public EnergyTermCommon<TermCharmmImplicitSolvent, ChainFB> {
 
 private:
 
      //! For convenience, define local EnergyTermCommon
-     typedef phaistos::EnergyTermCommon<TermCharmm36ImplicitSolvent, ChainFB> EnergyTermCommon;
+     typedef phaistos::EnergyTermCommon<TermCharmmImplicitSolvent, ChainFB> EnergyTermCommon;
 
      //! Number of interactions in the last evaluation
      int counter;
@@ -61,10 +61,10 @@ public:
      //! \param chain Molecule chain
      //! \param settings Local Settings object
      //! \param random_number_engine Object from which random number generators can be created.
-     TermCharmm36ImplicitSolvent(ChainFB *chain,
+     TermCharmmImplicitSolvent(ChainFB *chain,
               const Settings &settings=Settings(),
               RandomNumberEngine *random_number_engine = &random_global)
-          : EnergyTermCommon(chain, "charmm36-implicit-solvent", settings, random_number_engine) {
+          : EnergyTermCommon(chain, "charmm-implicit-solvent", settings, random_number_engine) {
 
           initialize();
 
@@ -76,7 +76,7 @@ public:
      //! \param random_number_engine Object from which random number generators can be created.
      //! \param thread_index Index indicating in which thread|rank the copy exists
      //! \param chain Molecule chain
-     TermCharmm36ImplicitSolvent(const TermCharmm36ImplicitSolvent &other,
+     TermCharmmImplicitSolvent(const TermCharmmImplicitSolvent &other,
                      RandomNumberEngine *random_number_engine,
                      int thread_index, ChainFB *chain)
           : EnergyTermCommon(other, random_number_engine, thread_index, chain),
@@ -97,7 +97,7 @@ public:
           const double two_pi_3_2 = 2.0*M_PI*sqrt(M_PI);
           const double phys_t = 298.15;
 
-          std::istringstream f_h(charmm36_constants::solvpar_inp);
+          std::istringstream f_h(charmm_constants::solvpar_inp);
 
           std::string line;
           std::vector<double> pp;
@@ -215,8 +215,8 @@ public:
           double exp_ij = 0.0;
           double exp_ji = 0.0;
 
-          if (bin_ij < 350) exp_ij = charmm36_constants::EXP_EEF1[bin_ij];
-          if (bin_ji < 350) exp_ji = charmm36_constants::EXP_EEF1[bin_ji];
+          if (bin_ij < 350) exp_ij = charmm_constants::EXP_EEF1[bin_ij];
+          if (bin_ji < 350) exp_ji = charmm_constants::EXP_EEF1[bin_ji];
 
           double cont_ij = -factors[index1][index2]*exp_ij/r_ij_sq;
           double cont_ji = -factors[index2][index1]*exp_ji/r_ij_sq;
@@ -278,7 +278,7 @@ public:
 
                     if (this->settings.debug > 1) {
 
-                        std::cout << "# CHARMM36 implicit-solvent:" 
+                        std::cout << "# CHARMM implicit-solvent:" 
 
                                   << " a1: " << atom1
                                   << " a2: " << atom2
@@ -293,7 +293,7 @@ public:
           }
 
           if (this->settings.debug > 0) {
-               printf(" implicit-solvent E = %15.6f kJ/mol\n", energy_sum * charmm36_constants::KCAL_TO_KJ);
+               printf(" implicit-solvent E = %15.6f kJ/mol\n", energy_sum * charmm_constants::KCAL_TO_KJ);
                printf(" implicit-solvent E = %15.6f kcal/mol\n", energy_sum);
           }
 

@@ -1,4 +1,4 @@
-// term_coulomb.h ---  coulomb-coulomb interaction energy term
+// term_coulomb.h ---  CHARMM36/EEF1-SB Coulomb interaction energy term
 // Copyright (C) 2014 Anders S. Christensen
 //
 // This file is part of Phaistos
@@ -17,8 +17,8 @@
 // along with Phaistos.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-#ifndef TERM_CHARMM36_COULOMB_H
-#define TERM_CHARMM36_COULOMB_H
+#ifndef TERM_CHARMM_COULOMB_H
+#define TERM_CHARMM_COULOMB_H
 
 #include <boost/type_traits/is_base_of.hpp>
 #include "energy/energy_term.h"
@@ -30,12 +30,12 @@ namespace phaistos {
 
 
 //! partial coulomb interaction term
-class TermCharmm36Coulomb: public EnergyTermCommon<TermCharmm36Coulomb, ChainFB> {
+class TermCharmmCoulomb: public EnergyTermCommon<TermCharmmCoulomb, ChainFB> {
 
 protected:
 
      //! For convenience, define local EnergyTermCommon
-     typedef phaistos::EnergyTermCommon<TermCharmm36Coulomb, ChainFB> EnergyTermCommon;
+     typedef phaistos::EnergyTermCommon<TermCharmmCoulomb, ChainFB> EnergyTermCommon;
 
 public:
 
@@ -49,16 +49,16 @@ public:
      //! \param chain Molecule chain
      //! \param settings Local Settings object
      //! \param random_number_engine Object from which random number generators can be created.
-     TermCharmm36Coulomb(ChainFB *chain,
+     TermCharmmCoulomb(ChainFB *chain,
                     const Settings &settings = Settings(),
                     RandomNumberEngine *random_number_engine = &random_global)
-          : EnergyTermCommon(chain, "charmm36-coulomb", settings, random_number_engine) {
+          : EnergyTermCommon(chain, "charmm-coulomb", settings, random_number_engine) {
 
               std::vector<topology::NonBondedParameter> non_bonded_parameters
-                  = topology::read_nonbonded_parameters(charmm36_constants::vdw_itp);
+                  = topology::read_nonbonded_parameters(charmm_constants::vdw_itp);
 
               std::vector<topology::NonBonded14Parameter> non_bonded_14_parameters =
-                  topology::read_nonbonded_14_parameters(charmm36_constants::vdw14_itp);
+                  topology::read_nonbonded_14_parameters(charmm_constants::vdw14_itp);
 
               this->non_bonded_interactions = 
                   topology::generate_non_bonded_interactions(this->chain,
@@ -71,17 +71,17 @@ public:
      //! \param random_number_engine Object from which random number generators can be created.
      //! \param thread_index Index indicating in which thread|rank the copy exists
      //! \param chain Molecule chain
-     TermCharmm36Coulomb(const TermCharmm36Coulomb &other,
+     TermCharmmCoulomb(const TermCharmmCoulomb &other,
                  RandomNumberEngine *random_number_engine,
                  int thread_index, ChainFB *chain)
           : EnergyTermCommon(other, random_number_engine, thread_index, chain) {
 
 
               std::vector<topology::NonBondedParameter> non_bonded_parameters
-                  = topology::read_nonbonded_parameters(charmm36_constants::vdw_itp);
+                  = topology::read_nonbonded_parameters(charmm_constants::vdw_itp);
 
               std::vector<topology::NonBonded14Parameter> non_bonded_14_parameters =
-                  topology::read_nonbonded_14_parameters(charmm36_constants::vdw14_itp);
+                  topology::read_nonbonded_14_parameters(charmm_constants::vdw14_itp);
 
               this->non_bonded_interactions = 
                   topology::generate_non_bonded_interactions(this->chain,
@@ -113,7 +113,7 @@ public:
                // The factor of 10.0 here is because the pair.qq assumes distances in nanometers,
                // while the factor of 1.5 in eps_r assumes that r is in angstrom, so only one r in r^2 
                // must be converted.
-               const double coul_energy_temp = interaction.qq / (r_sq * 1.5) * charmm36_constants::NM_TO_ANGS;
+               const double coul_energy_temp = interaction.qq / (r_sq * 1.5) * charmm_constants::NM_TO_ANGS;
 
                if (interaction.is_14_interaction) {
 
@@ -121,7 +121,7 @@ public:
 
                    if (this->settings.debug > 1) {
 
-                       std::cout << "# CHARMM36 coulomb-14:";
+                       std::cout << "# CHARMM coulomb-14:";
                   
                     }
                } else {
@@ -130,7 +130,7 @@ public:
 
                     if (this->settings.debug > 1) {
 
-                       std::cout << "# CHARMM36 coulomb:";
+                       std::cout << "# CHARMM coulomb:";
                   
                     }
                }
@@ -150,14 +150,14 @@ public:
                 }
           }
 
-          const double total_energy = (coul14_energy + coul_energy) * charmm36_constants::KJ_TO_KCAL;
+          const double total_energy = (coul14_energy + coul_energy) * charmm_constants::KJ_TO_KCAL;
 
           if (this->settings.debug > 0) {
                printf("          Coul-14 E = %15.6f kJ/mol\n", coul14_energy);
-               printf("          Coul-14 E = %15.6f kcal/mol\n", coul14_energy * charmm36_constants::KJ_TO_KCAL);
+               printf("          Coul-14 E = %15.6f kcal/mol\n", coul14_energy * charmm_constants::KJ_TO_KCAL);
                printf("          Coul-SR E = %15.6f kJ/mol\n", coul_energy);
-               printf("          Coul-SR E = %15.6f kcal/mol\n", coul_energy * charmm36_constants::KJ_TO_KCAL);
-               printf("       Coul-total E = %15.6f kJ/mol\n", total_energy * charmm36_constants::KCAL_TO_KJ);
+               printf("          Coul-SR E = %15.6f kcal/mol\n", coul_energy * charmm_constants::KJ_TO_KCAL);
+               printf("       Coul-total E = %15.6f kJ/mol\n", total_energy * charmm_constants::KCAL_TO_KJ);
                printf("       Coul-total E = %15.6f kcal/mol\n", total_energy);
           }
           return total_energy;

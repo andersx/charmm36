@@ -19,10 +19,10 @@
 // along with Phaistos.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-#ifndef TERM_CHARMM36_VDW14_ITP_H
-#define TERM_CHARMM36_VDW14_ITP_H
+#ifndef TERM_CHARMM_VDW14_ITP_H
+#define TERM_CHARMM_VDW14_ITP_H
 
-namespace charmm36_constants {
+namespace charmm_constants {
 
 const static std::string vdw14_itp = "CP1	CP1	1	0.338541512893	0.04184\n\
 CP1	CP2	1	0.338541512893	0.04184\n\

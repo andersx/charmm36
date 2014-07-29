@@ -1,4 +1,4 @@
-// term_bond_stretch.h --- bond-stretch energy term
+// term_bond_stretch.h --- CHARMM36/EEF1-SB bond stretch energy term
 // Copyright (C) 2014 Anders S. Christensen
 //
 // This file is part of Phaistos
@@ -17,8 +17,8 @@
 // along with Phaistos.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-#ifndef TERM_CHARMM36_BONDSTRETCH_H
-#define TERM_CHARMM36_BONDSTRETCH_H
+#ifndef TERM_CHARMM_BONDSTRETCH_H
+#define TERM_CHARMM_BONDSTRETCH_H
 
 #include <string>
 #include "energy/energy_term.h"
@@ -29,12 +29,12 @@ namespace phaistos {
 
 
 //! bondstretch energy term
-class TermCharmm36BondStretch: public EnergyTermCommon<TermCharmm36BondStretch, ChainFB> {
+class TermCharmmBondStretch: public EnergyTermCommon<TermCharmmBondStretch, ChainFB> {
 
 private:
 
      //! For convenience, define local EnergyTermCommon
-     typedef phaistos::EnergyTermCommon<TermCharmm36BondStretch, ChainFB> EnergyTermCommon;
+     typedef phaistos::EnergyTermCommon<TermCharmmBondStretch, ChainFB> EnergyTermCommon;
 
 public:
 
@@ -48,14 +48,14 @@ public:
      //! \param chain Molecule chain
      //! \param settings Local Settings object
      //! \param random_number_engine Object from which random number generators can be created.
-     TermCharmm36BondStretch(ChainFB *chain,
+     TermCharmmBondStretch(ChainFB *chain,
                             const Settings &settings=Settings(),
                             RandomNumberEngine *random_number_engine = &random_global)
-          : EnergyTermCommon(chain, "charmm36-bond-stretch", settings, random_number_engine) {
+          : EnergyTermCommon(chain, "charmm-bond-stretch", settings, random_number_engine) {
 
           // Read parameters from parameter file
           std::vector<topology::BondedPairParameter> bonded_pair_parameters 
-              = topology::read_bonded_pair_parameters(charmm36_constants::bond_stretch_itp);
+              = topology::read_bonded_pair_parameters(charmm_constants::bond_stretch_itp);
 
           // Generate bond stretch terms
           this->bonded_pair_interactions = topology::generate_bonded_pair_interactions(this->chain, bonded_pair_parameters);
@@ -67,14 +67,14 @@ public:
      //! \param random_number_engine Object from which random number generators can be created.
      //! \param thread_index Index indicating in which thread|rank the copy exists
      //! \param chain Molecule chain
-     TermCharmm36BondStretch(const TermCharmm36BondStretch &other,
+     TermCharmmBondStretch(const TermCharmmBondStretch &other,
                             RandomNumberEngine *random_number_engine,
                             int thread_index, ChainFB *chain)
           : EnergyTermCommon(other, random_number_engine, thread_index, chain) {
 
           // Read parameters from parameter file
           std::vector<topology::BondedPairParameter> bonded_pair_parameters 
-              = topology::read_bonded_pair_parameters(charmm36_constants::bond_stretch_itp);
+              = topology::read_bonded_pair_parameters(charmm_constants::bond_stretch_itp);
 
           // Generate bond stretch terms
           this->bonded_pair_interactions = topology::generate_bonded_pair_interactions(this->chain, bonded_pair_parameters);
@@ -92,7 +92,7 @@ public:
 
                topology::BondedPairInteraction pair = this->bonded_pair_interactions[i];
 
-               const double r = ((pair.atom1)->position - (pair.atom2)->position).norm() * charmm36_constants::ANGS_TO_NM;
+               const double r = ((pair.atom1)->position - (pair.atom2)->position).norm() * charmm_constants::ANGS_TO_NM;
                const double kb = pair.kb;
                const double r0 = pair.r0;
 
@@ -104,12 +104,12 @@ public:
 
                if (this->settings.debug > 1) {
 
-                   std::cout << "# CHARMM36 bond-stretch-term:" 
+                   std::cout << "# CHARMM bond-stretch-term:" 
 
                              << " a1: " << pair.atom1
                              << " a2: " << pair.atom2
 
-                             << " r: : " << r * charmm36_constants::NM_TO_ANGS
+                             << " r: : " << r * charmm_constants::NM_TO_ANGS
                              << " e_stretch : " << e_bond_temp
 
                              << std::endl;
@@ -119,10 +119,10 @@ public:
           }
           if (this->settings.debug > 0) {
                printf("     bond-stretch E = %15.6f kJ/mol\n", e_bond);
-               printf("     bond-stretch E = %15.6f kcal/mol\n", e_bond * charmm36_constants::KJ_TO_KCAL);
+               printf("     bond-stretch E = %15.6f kcal/mol\n", e_bond * charmm_constants::KJ_TO_KCAL);
           }
 
-          return e_bond * charmm36_constants::KJ_TO_KCAL;
+          return e_bond * charmm_constants::KJ_TO_KCAL;
      }
 
 };

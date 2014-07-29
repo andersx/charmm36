@@ -19,10 +19,10 @@
 // along with Phaistos.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-#ifndef TERM_CHARMM36_TORSION_ITP_H
-#define TERM_CHARMM36_TORSION_ITP_H
+#ifndef TERM_CHARMM_TORSION_ITP_H
+#define TERM_CHARMM_TORSION_ITP_H
 
-namespace charmm36_constants {
+namespace charmm_constants {
 
 const static std::string torsion_itp ="CT1	CT2	CC	OC	9	0.00	3.51456	1 ; FIX FOR ASP IN EEF1SB\n\
 CT1	CT2	CC	OC	9	180.00	4.10032	2 ; FIX FOR ASP IN EEF1SB\n\

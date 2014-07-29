@@ -1,7 +1,26 @@
-#ifndef CHARMM36_CONSTANTS
-#define CHARMM36_CONSTANTS
+// constants.h -- CHARMM36/EEF1-SB energy term constants
+// Copyright (C) 2014 Anders S. Christensen
+//
+// This file is part of Phaistos
+//
+// Phaistos is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+//
+// Phaistos is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with Phaistos.  If not, see <http://www.gnu.org/licenses/>.
+//
 
-namespace charmm36_constants {
+#ifndef CHARMM_CONSTANTS
+#define CHARMM_CONSTANTS
+
+namespace charmm_constants {
 
 const double DEG_TO_RAD = M_PI / 180.0;
 const double RAD_TO_DEG = 1.0 / DEG_TO_RAD;

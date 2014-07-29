@@ -17,10 +17,10 @@
 // along with Phaistos.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-#ifndef TERM_CHARMM36_SOLVPAR_INP_H
-#define TERM_CHARMM36_SOLVPAR_INP_H
+#ifndef TERM_CHARMM_SOLVPAR_INP_H
+#define TERM_CHARMM_SOLVPAR_INP_H
 
-namespace charmm36_constants {
+namespace charmm_constants {
 
 const static std::string solvpar_inp = "! Parameters for solvation free energy calculation in EEF1\n\
 ! Volume in A^3, energies in Kcal/mol, cp in cal/molK\n\
@@ -31,7 +31,7 @@ const static std::string solvpar_inp = "! Parameters for solvation free energy c
 ! explicit solvent experimental data\". J. Chem. Theor. Comput.\n\
 ! dx.doi.org/10.1021/ct400730n\n\
 !\n\
-! The van der Waal radii are taken from CHARMM36 force field for this implementation.\n\
+! The van der Waal radii are taken from CHARMM force field for this implementation.\n\
 !\n\
 !\n\
 !       Volume       Gref        Gfree       Href        CPref      Sigw        vdw Radius\n\

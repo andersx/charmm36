@@ -20,127 +20,127 @@ struct EnergyInitialization {
           Options::OptionValue option;
 
           // Angle Bend
-          option = options[prefix+"-charmm36-angle-bend"];
+          option = options[prefix+"-charmm-angle-bend"];
           for (int i=0; i<option.occurrences(); ++i) {
 
                // Settings typedef
-               typedef TermCharmm36AngleBend::Settings Settings;
+               typedef TermCharmmAngleBend::Settings Settings;
 
                // Add energy term
-               energy->add_term(new TermCharmm36AngleBend(chain,
+               energy->add_term(new TermCharmmAngleBend(chain,
                                                    options.get_settings<Settings>(option,i)));
           }
 
           // Bond Stretch
-          option = options[prefix+"-charmm36-bond-stretch"];
+          option = options[prefix+"-charmm-bond-stretch"];
           for (int i=0; i<option.occurrences(); ++i) {
 
                // Settings typedef
-               typedef TermCharmm36BondStretch::Settings Settings;
+               typedef TermCharmmBondStretch::Settings Settings;
 
                // Add energy term
-               energy->add_term(new TermCharmm36BondStretch(chain,
+               energy->add_term(new TermCharmmBondStretch(chain,
                                                    options.get_settings<Settings>(option,i)));
           }
 
           // Coulomb
-          option = options[prefix+"-charmm36-coulomb"];
+          option = options[prefix+"-charmm-coulomb"];
           for (int i=0; i<option.occurrences(); ++i) {
 
                // Settings typedef
-               typedef TermCharmm36Coulomb::Settings Settings;
+               typedef TermCharmmCoulomb::Settings Settings;
 
                // Add energy term
-               energy->add_term(new TermCharmm36Coulomb(chain,
+               energy->add_term(new TermCharmmCoulomb(chain,
                                                    options.get_settings<Settings>(option,i)));
           }
 
           // Implicit solvent
-          option = options[prefix+"-charmm36-implicit-solvent"];
+          option = options[prefix+"-charmm-implicit-solvent"];
           for (int i=0; i<option.occurrences(); ++i) {
 
                // Settings typedef
-               typedef TermCharmm36ImplicitSolvent::Settings Settings;
+               typedef TermCharmmImplicitSolvent::Settings Settings;
 
                // Add energy term
-               energy->add_term(new TermCharmm36ImplicitSolvent(chain,
+               energy->add_term(new TermCharmmImplicitSolvent(chain,
                                                    options.get_settings<Settings>(option,i)));
           }
           // Torsion
-          option = options[prefix+"-charmm36-torsion"];
+          option = options[prefix+"-charmm-torsion"];
           for (int i=0; i<option.occurrences(); ++i) {
 
                // Settings typedef
-               typedef TermCharmm36Torsion::Settings Settings;
+               typedef TermCharmmTorsion::Settings Settings;
 
                // Add energy term
-               energy->add_term(new TermCharmm36Torsion(chain,
+               energy->add_term(new TermCharmmTorsion(chain,
                                                    options.get_settings<Settings>(option,i)));
           }
           // Improper torsion
-          option = options[prefix+"-charmm36-ImproperTorsion"];
+          option = options[prefix+"-charmm-ImproperTorsion"];
           for (int i=0; i<option.occurrences(); ++i) {
 
                // Settings typedef
-               typedef TermCharmm36ImproperTorsion::Settings Settings;
+               typedef TermCharmmImproperTorsion::Settings Settings;
 
                // Add energy term
-               energy->add_term(new TermCharmm36ImproperTorsion(chain,
+               energy->add_term(new TermCharmmImproperTorsion(chain,
                                                    options.get_settings<Settings>(option,i)));
           }
           // Lennard Jones
-          option = options[prefix+"-charmm36-vdw"];
+          option = options[prefix+"-charmm-vdw"];
           for (int i=0; i<option.occurrences(); ++i) {
 
                // Settings typedef
-               typedef TermCharmm36Vdw::Settings Settings;
+               typedef TermCharmmVdw::Settings Settings;
 
                // Add energy term
-               energy->add_term(new TermCharmm36Vdw(chain,
+               energy->add_term(new TermCharmmVdw(chain,
                                                    options.get_settings<Settings>(option,i)));
           }
           // // Non-bonded terms
-          option = options[prefix+"-charmm36-non-bonded"];
+          option = options[prefix+"-charmm-non-bonded"];
           for (int i=0; i<option.occurrences(); ++i) {
 
                // Settings typedef
-               typedef TermCharmm36NonBonded::Settings Settings;
+               typedef TermCharmmNonBonded::Settings Settings;
 
                // Add energy term
-               energy->add_term(new TermCharmm36NonBonded(chain,
+               energy->add_term(new TermCharmmNonBonded(chain,
                                                    options.get_settings<Settings>(option,i)));
           }
           // Non-bonded cached terms
-          option = options[prefix+"-charmm36-non-bonded-cached"];
+          option = options[prefix+"-charmm-non-bonded-cached"];
           for (int i=0; i<option.occurrences(); ++i) {
 
                // Settings typedef
-               typedef TermCharmm36NonBondedCached::Settings Settings;
+               typedef TermCharmmNonBondedCached::Settings Settings;
 
                // Add energy term
-               energy->add_term(new TermCharmm36NonBondedCached(chain,
+               energy->add_term(new TermCharmmNonBondedCached(chain,
                                                    options.get_settings<Settings>(option,i)));
           }
           // CMAP term
-          option = options[prefix+"-charmm36-cmap"];
+          option = options[prefix+"-charmm-cmap"];
           for (int i=0; i<option.occurrences(); ++i) {
 
                // Settings typedef
-               typedef TermCharmm36Cmap::Settings Settings;
+               typedef TermCharmmCmap::Settings Settings;
 
                // Add energy term
-               energy->add_term(new TermCharmm36Cmap(chain,
+               energy->add_term(new TermCharmmCmap(chain,
                                                 options.get_settings<Settings>(option,i)));
           }
           // bonded-cached term
-          option = options[prefix+"-charmm36-bonded-cached"];
+          option = options[prefix+"-charmm-bonded-cached"];
           for (int i=0; i<option.occurrences(); ++i) {
 
                // Settings typedef
-               typedef TermCharmm36BondedCached::Settings Settings;
+               typedef TermCharmmBondedCached::Settings Settings;
 
                // Add energy term
-               energy->add_term(new TermCharmm36BondedCached(chain,
+               energy->add_term(new TermCharmmBondedCached(chain,
                                                 options.get_settings<Settings>(option,i)));
           }
      }

@@ -1,4 +1,4 @@
-// CHARMM36 parameter parser for PHAISTOS
+// eef1_sb_parser.h -- CHARMM36/EEF1-SB atom type parameter parser for PHAISTOS
 // Copyright (C) 2014 Anders S. Christensen
 //
 // This file is part of PHAISTOS
@@ -17,8 +17,8 @@
 // along with Phaistos.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-#ifndef TERM_CHARMM36_CHARMM_PARSER_H
-#define TERM_CHARMM36_CHARMM_PARSER_H
+#ifndef EEF1_SB_PARSER_H
+#define EEF1_SB_PARSER_H
 
 #include <string>
 #include <math.h>

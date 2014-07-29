@@ -1,4 +1,4 @@
-// test_charmm36.cpp --- Test of CHARMM36/EEF1-SB energy class
+// test_charmm.cpp --- Test of CHARMM36/EEF1-SB energy class
 // Copyright (C) 2014 Anders Steen Christensen
 //
 // This file is part of PHAISTOS 
@@ -57,14 +57,14 @@ void test_terms(phaistos::ChainFB *chain, int debug_level) {
      Energy<ChainFB> energy(chain);
 
      // Create settings object
-     TermCharmm36BondStretch::Settings settings_bond_stretch;
-     TermCharmm36AngleBend::Settings settings_angle_bend;
-     TermCharmm36Torsion::Settings settings_torsion;
-     TermCharmm36Vdw::Settings settings_vdw;
-     TermCharmm36ImproperTorsion::Settings settings_improper_torsion;
-     TermCharmm36Coulomb::Settings settings_coulomb;
-     TermCharmm36ImplicitSolvent::Settings settings_implicit_solvent;
-     TermCharmm36Cmap::Settings settings_cmap;
+     TermCharmmBondStretch::Settings settings_bond_stretch;
+     TermCharmmAngleBend::Settings settings_angle_bend;
+     TermCharmmTorsion::Settings settings_torsion;
+     TermCharmmVdw::Settings settings_vdw;
+     TermCharmmImproperTorsion::Settings settings_improper_torsion;
+     TermCharmmCoulomb::Settings settings_coulomb;
+     TermCharmmImplicitSolvent::Settings settings_implicit_solvent;
+     TermCharmmCmap::Settings settings_cmap;
 
      // Set debug-level (which controls output)
      settings_bond_stretch.debug = debug_level;
@@ -77,17 +77,17 @@ void test_terms(phaistos::ChainFB *chain, int debug_level) {
      settings_cmap.debug = debug_level;
 
      // Add terms to energy object
-     energy.add_term(new TermCharmm36BondStretch(chain, settings_bond_stretch));
-     energy.add_term(new TermCharmm36AngleBend(chain, settings_angle_bend));
-     energy.add_term(new TermCharmm36Torsion(chain, settings_torsion));
-     energy.add_term(new TermCharmm36Vdw(chain, settings_vdw));
-     energy.add_term(new TermCharmm36ImproperTorsion(chain, settings_improper_torsion));
-     energy.add_term(new TermCharmm36Coulomb(chain, settings_coulomb));
-     energy.add_term(new TermCharmm36ImplicitSolvent(chain, settings_implicit_solvent));
-     energy.add_term(new TermCharmm36Cmap(chain, settings_cmap));
-     energy.add_term(new TermCharmm36NonBonded(chain));
-     energy.add_term(new TermCharmm36BondedCached(chain));
-     energy.add_term(new TermCharmm36NonBondedCached(chain));
+     energy.add_term(new TermCharmmBondStretch(chain, settings_bond_stretch));
+     energy.add_term(new TermCharmmAngleBend(chain, settings_angle_bend));
+     energy.add_term(new TermCharmmTorsion(chain, settings_torsion));
+     energy.add_term(new TermCharmmVdw(chain, settings_vdw));
+     energy.add_term(new TermCharmmImproperTorsion(chain, settings_improper_torsion));
+     energy.add_term(new TermCharmmCoulomb(chain, settings_coulomb));
+     energy.add_term(new TermCharmmImplicitSolvent(chain, settings_implicit_solvent));
+     energy.add_term(new TermCharmmCmap(chain, settings_cmap));
+     energy.add_term(new TermCharmmNonBonded(chain));
+     energy.add_term(new TermCharmmBondedCached(chain));
+     energy.add_term(new TermCharmmNonBondedCached(chain));
 
      // Evaluate energy
      energy.evaluate();

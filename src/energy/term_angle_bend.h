@@ -1,4 +1,4 @@
-// term_angle_bend.h --- angle-bend energy term
+// term_angle_bend.h -- CHARMM36/EEF1-SB angle-bend energy term
 // Copyright (C) 2014 Anders S. Christensn
 //
 // This file is part of Phaistos
@@ -17,8 +17,8 @@
 // along with Phaistos.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-#ifndef TERM_CHARMM36_ANGLEBEND_H
-#define TERM_CHARMM36_ANGLEBEND_H
+#ifndef TERM_CHARMM_ANGLEBEND_H
+#define TERM_CHARMM_ANGLEBEND_H
 
 #include <string>
 
@@ -29,13 +29,13 @@
 namespace phaistos {
 
 
-//! Charmm36 anglebend energy term - base class containing all functionality
-class TermCharmm36AngleBend: public EnergyTermCommon<TermCharmm36AngleBend, ChainFB> {
+//! Charmm anglebend energy term - base class containing all functionality
+class TermCharmmAngleBend: public EnergyTermCommon<TermCharmmAngleBend, ChainFB> {
 
 protected:
 
     //! For convenience, define local EnergyTermCommon
-    typedef phaistos::EnergyTermCommon<TermCharmm36AngleBend, ChainFB> EnergyTermCommon;
+    typedef phaistos::EnergyTermCommon<TermCharmmAngleBend, ChainFB> EnergyTermCommon;
 
 public:
 
@@ -49,13 +49,13 @@ public:
      //! \param chain Molecule chain
      //! \param settings Local Settings object
      //! \param random_number_engine Object from which random number generators can be created.
-     TermCharmm36AngleBend(ChainFB *chain,
+     TermCharmmAngleBend(ChainFB *chain,
                     const Settings &settings = Settings(),
                     RandomNumberEngine *random_number_engine = &random_global)
-          : EnergyTermCommon(chain, "charmm36-angle-bend", settings, random_number_engine) {
+          : EnergyTermCommon(chain, "charmm-angle-bend", settings, random_number_engine) {
 
           std::vector<topology::AngleBendParameter> angle_bend_parameters = 
-                    topology::read_angle_bend_parameters(charmm36_constants::angle_bend_itp);
+                    topology::read_angle_bend_parameters(charmm_constants::angle_bend_itp);
 
           this->angle_bend_interactions =
                     topology::generate_angle_bend_interactions(this->chain, angle_bend_parameters);
@@ -66,13 +66,13 @@ public:
      //! \param random_number_engine Object from which random number generators can be created.
      //! \param thread_index Index indicating in which thread|rank the copy exists
      //! \param chain Molecule chain
-     TermCharmm36AngleBend(const TermCharmm36AngleBend &other,
+     TermCharmmAngleBend(const TermCharmmAngleBend &other,
                  RandomNumberEngine *random_number_engine,
                  int thread_index, ChainFB *chain)
           : EnergyTermCommon(other, random_number_engine, thread_index, chain) {
 
           std::vector<topology::AngleBendParameter> angle_bend_parameters = 
-                    topology::read_angle_bend_parameters(charmm36_constants::angle_bend_itp);
+                    topology::read_angle_bend_parameters(charmm_constants::angle_bend_itp);
 
           this->angle_bend_interactions =
                     topology::generate_angle_bend_interactions(this->chain, angle_bend_parameters);
@@ -97,13 +97,13 @@ public:
                                                (interaction.atom3)->position);
 
                // Angle bend part
-               const double dtheta = theta - interaction.theta0 * charmm36_constants::DEG_TO_RAD;
+               const double dtheta = theta - interaction.theta0 * charmm_constants::DEG_TO_RAD;
                const double energy_angle_bend_temp = 0.5 * interaction.k0 * dtheta * dtheta; 
 
                energy_angle += energy_angle_bend_temp;
 
                // Urey-Bradley part
-               const double r13 = ((interaction.atom1)->position - (interaction.atom3)->position).norm() * charmm36_constants::ANGS_TO_NM;
+               const double r13 = ((interaction.atom1)->position - (interaction.atom3)->position).norm() * charmm_constants::ANGS_TO_NM;
                const double dr = r13 - interaction.r13;
                const double energy_urey_bradley_temp = 0.5 * interaction.kub * dr * dr;
 
@@ -113,16 +113,16 @@ public:
 
                if (this->settings.debug > 1) {
 
-                   std::cout << "# CHARMM36 angle-bend-term:" 
+                   std::cout << "# CHARMM angle-bend-term:" 
 
                              << " a1: " << interaction.atom1
                              << " a2: " << interaction.atom2
                              << " a3: " << interaction.atom3
 
-                             << " angle: " << theta * charmm36_constants::RAD_TO_DEG
+                             << " angle: " << theta * charmm_constants::RAD_TO_DEG
                              << " e_bend: " << energy_angle_bend_temp
 
-                             << " r: : " << r13 * charmm36_constants::NM_TO_ANGS
+                             << " r: : " << r13 * charmm_constants::NM_TO_ANGS
                              << " e_ub : " << energy_urey_bradley_temp
 
                              << std::endl;
@@ -136,17 +136,17 @@ public:
 
                printf("       angle-bend E = %15.6f kJ/mol\n", energy_angle);
                printf("       angle-bend E = %15.6f kcal/mol\n", 
-                       energy_angle * charmm36_constants::KJ_TO_KCAL);
+                       energy_angle * charmm_constants::KJ_TO_KCAL);
                printf("     urey-bradley E = %15.6f kJ/mol\n", energy_urey);
                printf("     urey-bradley E = %15.6f kcal/mol\n",
-                       energy_urey * charmm36_constants::KJ_TO_KCAL);
+                       energy_urey * charmm_constants::KJ_TO_KCAL);
                printf(" angle-bend-total E = %15.6f kJ/mol\n", energy_sum);
                printf(" angle-bend-total E = %15.6f kcal/mol\n",
-                       energy_sum * charmm36_constants::KJ_TO_KCAL);
+                       energy_sum * charmm_constants::KJ_TO_KCAL);
 
           }
 
-          return energy_sum * charmm36_constants::KJ_TO_KCAL;
+          return energy_sum * charmm_constants::KJ_TO_KCAL;
 
      }
 

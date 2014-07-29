@@ -1,4 +1,4 @@
-// term_improper_torsion.h --- Improper torsion or out-of-plane bending energy term
+// term_improper_torsion.h --- CHARMM36/EEF1-SB improper torsion (out-of-plane bending) energy term
 // Copyright (C) 2014 Anders S. Christensen
 //
 // This file is part of PHAISTOS
@@ -17,8 +17,8 @@
 // along with Phaistos.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-#ifndef TERM_CHARMM36_IMPROPER_TORSION_H
-#define TERM_CHARMM36_IMPROPER_TORSION_H
+#ifndef TERM_CHARMM_IMPROPER_TORSION_H
+#define TERM_CHARMM_IMPROPER_TORSION_H
 
 #include "energy/energy_term.h"
 #include "parsers/topology_parser.h"
@@ -27,12 +27,12 @@
 namespace phaistos {
 
 //! Gromacs improper torsion Waals interaction term
-class TermCharmm36ImproperTorsion: public EnergyTermCommon<TermCharmm36ImproperTorsion, ChainFB> {
+class TermCharmmImproperTorsion: public EnergyTermCommon<TermCharmmImproperTorsion, ChainFB> {
 
 protected:
 
      //! For convenience, define local EnergyTermCommon
-     typedef phaistos::EnergyTermCommon<TermCharmm36ImproperTorsion, ChainFB> EnergyTermCommon;
+     typedef phaistos::EnergyTermCommon<TermCharmmImproperTorsion, ChainFB> EnergyTermCommon;
 
 public:
 
@@ -46,13 +46,13 @@ public:
      //! \param chain Molecule chain
      //! \param settings Local Settings object
      //! \param random_number_engine Object from which random number generators can be created.
-     TermCharmm36ImproperTorsion(ChainFB *chain,
+     TermCharmmImproperTorsion(ChainFB *chain,
                     const Settings &settings = Settings(),
                     RandomNumberEngine *random_number_engine = &random_global)
-          : EnergyTermCommon(chain, "charmm36-improper-torsion", settings, random_number_engine) {
+          : EnergyTermCommon(chain, "charmm-improper-torsion", settings, random_number_engine) {
 
           std::vector<topology::ImproperTorsionParameter> improper_torsion_parameters 
-                    = topology::read_improper_torsion_parameters(charmm36_constants::imptor_itp);
+                    = topology::read_improper_torsion_parameters(charmm_constants::imptor_itp);
 
           this->improper_torsion_interactions 
                     = topology::generate_improper_torsion_interactions(this->chain, improper_torsion_parameters);
@@ -64,13 +64,13 @@ public:
      //! \param random_number_engine Object from which random number generators can be created.
      //! \param thread_index Index indicating in which thread|rank the copy exists
      //! \param chain Molecule chain
-     TermCharmm36ImproperTorsion(const TermCharmm36ImproperTorsion &other,
+     TermCharmmImproperTorsion(const TermCharmmImproperTorsion &other,
                  RandomNumberEngine *random_number_engine,
                  int thread_index, ChainFB *chain)
           : EnergyTermCommon(other, random_number_engine, thread_index, chain) {
 
           std::vector<topology::ImproperTorsionParameter> improper_torsion_parameters 
-                    = topology::read_improper_torsion_parameters(charmm36_constants::imptor_itp);
+                    = topology::read_improper_torsion_parameters(charmm_constants::imptor_itp);
 
           this->improper_torsion_interactions 
                     = topology::generate_improper_torsion_interactions(this->chain, improper_torsion_parameters);
@@ -93,21 +93,21 @@ public:
                                                 (interaction.atom3)->position,
                                                 (interaction.atom4)->position);
 
-               const double dphi = phi - interaction.phi0 * charmm36_constants::DEG_TO_RAD;
+               const double dphi = phi - interaction.phi0 * charmm_constants::DEG_TO_RAD;
                const double energy_improper_torsion_temp = 0.5 * interaction.cp * dphi * dphi;
 
                energy_improper_torsion += energy_improper_torsion_temp;
 
                if (this->settings.debug > 1) {
 
-                   std::cout << "# CHARMM36 improper-torsion:" 
+                   std::cout << "# CHARMM improper-torsion:" 
 
                              << " a1: " << interaction.atom1
                              << " a2: " << interaction.atom2
                              << " a3: " << interaction.atom3
                              << " a4: " << interaction.atom4
 
-                             << " angle: " << phi * charmm36_constants::RAD_TO_DEG
+                             << " angle: " << phi * charmm_constants::RAD_TO_DEG
                              << " e_improper_torsion: " <<  energy_improper_torsion_temp
 
                              << std::endl;
@@ -117,10 +117,10 @@ public:
           if (this->settings.debug > 0) {
 
                printf(" improper-torsion E = %15.6f kJ/mol\n", energy_improper_torsion);
-               printf(" improper-torsion E = %15.6f kcal/mol\n", energy_improper_torsion * charmm36_constants::KJ_TO_KCAL);
+               printf(" improper-torsion E = %15.6f kcal/mol\n", energy_improper_torsion * charmm_constants::KJ_TO_KCAL);
           }
 
-          return energy_improper_torsion * charmm36_constants::KJ_TO_KCAL;
+          return energy_improper_torsion * charmm_constants::KJ_TO_KCAL;
      }
 
 };

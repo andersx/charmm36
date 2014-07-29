@@ -1,4 +1,4 @@
-// term_cmap_tables.h --- CMAP torsion angle energy term
+// term_cmap_tables.h --- Auxiliary tables and functions CMAP correction term
 // Copyright (C) 2014 Anders S. Christensen
 // Copyright (c) 1991-2000, University of Groningen, The Netherlands.
 // Copyright (c) 2001-2004, The GROMACS development team,
@@ -19,10 +19,10 @@
 // along with Phaistos.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-#ifndef TERM_CHARMM36_CMAP_TABLES_H
-#define TERM_CHARMM36_CMAP_TABLES_H
+#ifndef TERM_CHARMM_CMAP_TABLES_H
+#define TERM_CHARMM_CMAP_TABLES_H
 
-namespace charmm36_cmap {
+namespace charmm_cmap {
 
 //! Matrix used in the CMAP interpolation
 const int cmap_coeff_matrix[] = {
@@ -736,6 +736,6 @@ double cmap_energy(const double phi,
 }
 
 
-} // End namespace charmm36_cmap
+} // End namespace charmm_cmap
 
 #endif

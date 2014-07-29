@@ -19,10 +19,10 @@
 // along with Phaistos.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-#ifndef TERM_CHARMM36_ANGLE_BEND_ITP_H
-#define TERM_CHARMM36_ANGLE_BEND_ITP_H
+#ifndef TERM_CHARMM_ANGLE_BEND_ITP_H
+#define TERM_CHARMM_ANGLE_BEND_ITP_H
 
-namespace charmm36_constants {
+namespace charmm_constants {
 
 const static std::string angle_bend_itp = ";       i        j        k  func       theta0       ktheta          ub0          kub\n\
        H      NH2      CT1     5   111.000000   418.400000   0.00000000         0.00\n\
@@ -2723,6 +2723,6 @@ const static std::string angle_bend_itp = ";       i        j        k  func    
     HGA1     CRL1     CTL3     5   110.100000   288.696000   0.21790000     18853.10\n\
     CRL2     CRL2     CRL2     5   113.600000   488.272800   0.25610000      9338.69\n" ;
 
-} // End namespace charmm36_constants
+} // End namespace charmm_constants
 
 #endif

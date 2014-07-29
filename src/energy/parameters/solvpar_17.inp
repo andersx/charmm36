@@ -7,7 +7,7 @@
 ! explicit solvent experimental data". J. Chem. Theor. Comput.
 ! dx.doi.org/10.1021/ct400730n
 !
-! The van der Waal radii are taken from CHARMM36 force field for this implementation.
+! The van der Waal radii are taken from CHARMM force field for this implementation.
 ! 
 !
 !       Volume       Gref        Gfree       Href        CPref      Sigw        vdw Radius

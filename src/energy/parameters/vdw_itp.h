@@ -19,10 +19,10 @@
 // along with Phaistos.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-#ifndef TERM_CHARMM36_VDW_ITP_H
-#define TERM_CHARMM36_VDW_ITP_H
+#ifndef TERM_CHARMM_VDW_ITP_H
+#define TERM_CHARMM_VDW_ITP_H
 
-namespace charmm36_constants {
+namespace charmm_constants {
 
 const static std::string vdw_itp = "C	17	12.01100	0.51	A	0.356359487256	0.46024 \n\
 CA	17	12.01100	-0.115	A	0.355005321205	0.29288 \n\

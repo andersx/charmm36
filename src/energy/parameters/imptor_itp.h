@@ -19,10 +19,10 @@
 // along with Phaistos.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-#ifndef TERM_CHARMM36_IMPTOR_ITP_H
-#define TERM_CHARMM36_IMPTOR_ITP_H
+#ifndef TERM_CHARMM_IMPTOR_ITP_H
+#define TERM_CHARMM_IMPTOR_ITP_H
 
-namespace charmm36_constants {
+namespace charmm_constants {
 
 const static std::string imptor_itp = ";      i        j        k        l  func         phi0         kphi\n\
      HE2      HE2      CE2      CE2     2     0.000000    25.104000\n\

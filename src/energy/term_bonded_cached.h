@@ -1,4 +1,4 @@
-// term_bonded_cached.h -- All bonded terms -- cached version.
+// term_bonded_cached.h -- CHARMM36/EEF1-SB cached version of all bonded terms.
 // Copyright (C) 2014 Anders S. Christensen
 //
 // This file is part of Phaistos
@@ -17,8 +17,8 @@
 // along with Phaistos.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-#ifndef TERM_CHARMM36_BONDED_CACHED_H
-#define TERM_CHARMM36_BONDED_CACHED_H
+#ifndef TERM_CHARMM_BONDED_CACHED_H
+#define TERM_CHARMM_BONDED_CACHED_H
 
 #include <string>
 
@@ -33,13 +33,13 @@
 
 namespace phaistos {
 
-//! CHARMM36 bonded terms -- cached.
-class TermCharmm36BondedCached: public EnergyTermCommon<TermCharmm36BondedCached, ChainFB> {
+//! CHARMM bonded terms -- cached.
+class TermCharmmBondedCached: public EnergyTermCommon<TermCharmmBondedCached, ChainFB> {
 
 protected:
 
     //! For convenience, define local EnergyTermCommon
-    typedef phaistos::EnergyTermCommon<TermCharmm36BondedCached, ChainFB> EnergyTermCommon;
+    typedef phaistos::EnergyTermCommon<TermCharmmBondedCached, ChainFB> EnergyTermCommon;
 
 public:
 
@@ -56,7 +56,7 @@ public:
 
           //! Constructor
           Settings(bool ignore_bond_angles=false,
-                   bool ignore_bond_stretch=true,
+                   bool ignore_bond_stretch=false,
                    bool ignore_torsion_angles=false,
                    bool ignore_improper_torsion_angles=false,
                    bool ignore_cmap_correction=false)
@@ -126,34 +126,34 @@ public:
      void setup_caches() {
 
           // Get CMAP data from the Gromacs code.
-          this->cmap_data = charmm36_cmap::setup_cmap();
+          this->cmap_data = charmm_cmap::setup_cmap();
           std::vector<topology::CmapInteraction> cmap_interactions 
               = topology::generate_cmap_interactions(this->chain);
 
           // Read angle-bend parameters.
           std::vector<topology::AngleBendParameter> angle_bend_parameters = 
-                    topology::read_angle_bend_parameters(charmm36_constants::angle_bend_itp);
+                    topology::read_angle_bend_parameters(charmm_constants::angle_bend_itp);
 
           std::vector<topology::AngleBendInteraction> angle_bend_interactions 
               = topology::generate_angle_bend_interactions(this->chain, angle_bend_parameters);
 
           // Read bond-stretch parameters.
           std::vector<topology::BondedPairParameter> bonded_pair_parameters 
-              = topology::read_bonded_pair_parameters(charmm36_constants::bond_stretch_itp);
+              = topology::read_bonded_pair_parameters(charmm_constants::bond_stretch_itp);
 
           std::vector<topology::BondedPairInteraction> bonded_pair_interactions
               = topology::generate_bonded_pair_interactions(this->chain, bonded_pair_parameters);
 
           // Read improper torsion parameters.
           std::vector<topology::ImproperTorsionParameter> improper_torsion_parameters 
-                    = topology::read_improper_torsion_parameters(charmm36_constants::imptor_itp);
+                    = topology::read_improper_torsion_parameters(charmm_constants::imptor_itp);
 
           std::vector<topology::ImproperTorsionInteraction> improper_torsion_interactions
               = topology::generate_improper_torsion_interactions(this->chain, improper_torsion_parameters);
 
           // Get proper torsion parameters.
           std::vector<topology::TorsionParameter> torsion_parameters 
-                    = topology::read_torsion_parameters(charmm36_constants::torsion_itp);
+                    = topology::read_torsion_parameters(charmm_constants::torsion_itp);
 
           std::vector<topology::TorsionInteraction> torsion_interactions
               = topology::generate_torsion_interactions(this->chain, torsion_parameters);
@@ -278,11 +278,11 @@ public:
                                                    (interaction.atom3)->position);
 
                    // Angle bend part
-                   const double dtheta = theta - interaction.theta0 * charmm36_constants::DEG_TO_RAD;
+                   const double dtheta = theta - interaction.theta0 * charmm_constants::DEG_TO_RAD;
                    const double energy_angle_bend_temp = 0.5 * interaction.k0 * dtheta * dtheta;
 
                    // Urey-Bradley part
-                   const double r13 = ((interaction.atom1)->position - (interaction.atom3)->position).norm() * charmm36_constants::ANGS_TO_NM;
+                   const double r13 = ((interaction.atom1)->position - (interaction.atom3)->position).norm() * charmm_constants::ANGS_TO_NM;
                    const double dr = r13 - interaction.r13;
                    const double energy_urey_bradley_temp = 0.5 * interaction.kub * dr * dr;
 
@@ -297,7 +297,7 @@ public:
 
                     topology::BondedPairInteraction interaction = cached_residue.bonded_pair_interactions[i];
 
-                    const double r = ((interaction.atom1)->position - (interaction.atom2)->position).norm() * charmm36_constants::ANGS_TO_NM;
+                    const double r = ((interaction.atom1)->position - (interaction.atom2)->position).norm() * charmm_constants::ANGS_TO_NM;
                     const double kb = interaction.kb;
                     const double r0 = interaction.r0;
 
@@ -321,7 +321,7 @@ public:
                                                      (interaction.atom3)->position,
                                                      (interaction.atom4)->position);
 
-                    const double dphi = phi - interaction.phi0 * charmm36_constants::DEG_TO_RAD;
+                    const double dphi = phi - interaction.phi0 * charmm_constants::DEG_TO_RAD;
                     const double energy_improper_torsion_temp = 0.5 * interaction.cp * dphi * dphi;
 
                     energy_sum += energy_improper_torsion_temp;
@@ -341,7 +341,7 @@ public:
                                                  (interaction.atom3)->position,
                                                  (interaction.atom4)->position);
 
-                    const double e_torsion_temp = interaction.cp * std::cos(interaction.mult * angle - interaction.phi0 * charmm36_constants::DEG_TO_RAD) 
+                    const double e_torsion_temp = interaction.cp * std::cos(interaction.mult * angle - interaction.phi0 * charmm_constants::DEG_TO_RAD) 
                                                     + interaction.cp;
 
                     energy_sum += e_torsion_temp;
@@ -358,7 +358,7 @@ public:
                      const double phi = (*(this->chain))[residue_index].get_phi();
                      const double psi = (*(this->chain))[residue_index].get_psi();
 
-                     energy_sum += charmm36_cmap::cmap_energy(phi, psi, cmap_type_index, this->cmap_data);
+                     energy_sum += charmm_cmap::cmap_energy(phi, psi, cmap_type_index, this->cmap_data);
                }
           }
 
@@ -370,10 +370,10 @@ public:
      //! \param chain Molecule chain
      //! \param settings Local Settings object
      //! \param random_number_engine Object from which random number generators can be created.
-     TermCharmm36BondedCached(ChainFB *chain,
+     TermCharmmBondedCached(ChainFB *chain,
                     const Settings &settings = Settings(),
                     RandomNumberEngine *random_number_engine = &random_global)
-          : EnergyTermCommon(chain, "charmm36-bonded-cached", settings, random_number_engine) {
+          : EnergyTermCommon(chain, "charmm-bonded-cached", settings, random_number_engine) {
 
          this->none_move = false;
          setup_caches();
@@ -384,7 +384,7 @@ public:
      //! \param random_number_engine Object from which random number generators can be created.
      //! \param thread_index Index indicating in which thread|rank the copy exists
      //! \param chain Molecule chain
-     TermCharmm36BondedCached(const TermCharmm36BondedCached &other,
+     TermCharmmBondedCached(const TermCharmmBondedCached &other,
                  RandomNumberEngine *random_number_engine,
                  int thread_index, ChainFB *chain)
           : EnergyTermCommon(other, random_number_engine, thread_index, chain) {
@@ -416,7 +416,7 @@ public:
                    this->none_move = true;
  
                    // Return energy.
-                   return this->energy_new * charmm36_constants::KJ_TO_KCAL;
+                   return this->energy_new * charmm_constants::KJ_TO_KCAL;
  
                // Not a none move
                } else {
@@ -447,7 +447,7 @@ public:
           this->energy_new  += delta_energy_local;
 
           // Return energy (and convert from kJ to kcal)
-          return this->energy_new * charmm36_constants::KJ_TO_KCAL;
+          return this->energy_new * charmm_constants::KJ_TO_KCAL;
      }
 
 

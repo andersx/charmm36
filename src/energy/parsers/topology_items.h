@@ -1,4 +1,4 @@
-// CHARMM22/CMAP parameter parser for PHAISTOS
+// topology_items.h -- Classes for energy interactions in the CHARMM36/EEF1-SB module
 // Copyright (C) 2014 Anders S. Christensen
 //
 // This file is part of PHAISTOS

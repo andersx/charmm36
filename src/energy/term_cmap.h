@@ -1,4 +1,4 @@
-// term_cmap.h --- CMAP torsion angle energy term
+// term_cmap.h --- CHARMM36/EEF1-SB CMAP correction energy term
 // Copyright (C) 2014 Anders S. Christensen
 //
 // This file is part of Phaistos
@@ -17,8 +17,8 @@
 // along with Phaistos.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-#ifndef TERM_CHARMM36_CMAP_H
-#define TERM_CHARMM36_CMAP_H
+#ifndef TERM_CHARMM_CMAP_H
+#define TERM_CHARMM_CMAP_H
 
 #include <boost/type_traits/is_base_of.hpp>
 #include "energy/energy_term.h"
@@ -34,12 +34,12 @@
 namespace phaistos {
 
 //! CMAP energy term
-class TermCharmm36Cmap: public EnergyTermCommon<TermCharmm36Cmap, ChainFB> {
+class TermCharmmCmap: public EnergyTermCommon<TermCharmmCmap, ChainFB> {
 
 protected:
 
      //! For convenience, define local EnergyTermCommon
-     typedef phaistos::EnergyTermCommon<TermCharmm36Cmap, ChainFB> EnergyTermCommon;
+     typedef phaistos::EnergyTermCommon<TermCharmmCmap, ChainFB> EnergyTermCommon;
 
 public:
 
@@ -58,13 +58,13 @@ public:
      //! \param chain Molecule chain
      //! \param settings Local Settings object
      //! \param random_number_engine Object from which random number generators can be created.
-     TermCharmm36Cmap(ChainFB *chain,
+     TermCharmmCmap(ChainFB *chain,
                         const Settings &settings=Settings(),
                         RandomNumberEngine *random_number_engine = &random_global)
-          : EnergyTermCommon(chain, "charmm36-cmap", settings, random_number_engine) {
+          : EnergyTermCommon(chain, "charmm-cmap", settings, random_number_engine) {
 
           // Get CMAP data from the Gromacs code.
-          this->cmap_data = charmm36_cmap::setup_cmap();
+          this->cmap_data = charmm_cmap::setup_cmap();
 
           // Make a list of all CMAP interactions
           this->cmap_interactions = topology::generate_cmap_interactions(this->chain);
@@ -75,13 +75,13 @@ public:
      //! \param random_number_engine Object from which random number generators can be created.
      //! \param thread_index Index indicating in which thread|rank the copy exists
      //! \param chain Molecule chain
-     TermCharmm36Cmap(const TermCharmm36Cmap &other,
+     TermCharmmCmap(const TermCharmmCmap &other,
                         RandomNumberEngine *random_number_engine,
                         int thread_index, ChainFB *chain)
           : EnergyTermCommon(other, random_number_engine, thread_index, chain) {
 
           // Get CMAP data from the Gromacs code.
-          this->cmap_data = charmm36_cmap::setup_cmap();
+          this->cmap_data = charmm_cmap::setup_cmap();
 
           // Make a list of all CMAP interactions
           this->cmap_interactions = topology::generate_cmap_interactions(this->chain);
@@ -102,19 +102,19 @@ public:
                const double phi = (*(this->chain))[residue_index].get_phi();
                const double psi = (*(this->chain))[residue_index].get_psi();
 
-               cmap_energy += charmm36_cmap::cmap_energy(phi, psi, cmap_type_index, this->cmap_data);
+               cmap_energy += charmm_cmap::cmap_energy(phi, psi, cmap_type_index, this->cmap_data);
 
                if (this->settings.debug > 1) {
 
-                   std::cout << "# CHARMM36 cmap:" 
+                   std::cout << "# CHARMM cmap:" 
 
                              << " i: " << residue_index + 1
                              << " cmap-type: " << cmap_type_index
 
-                             << " phi: " << phi * charmm36_constants::RAD_TO_DEG
-                             << " psi: " << psi * charmm36_constants::RAD_TO_DEG
+                             << " phi: " << phi * charmm_constants::RAD_TO_DEG
+                             << " psi: " << psi * charmm_constants::RAD_TO_DEG
 
-                             << " e_cmap : " << charmm36_cmap::cmap_energy(phi, psi, cmap_type_index, this->cmap_data)
+                             << " e_cmap : " << charmm_cmap::cmap_energy(phi, psi, cmap_type_index, this->cmap_data)
 
                              << std::endl;
                 }
@@ -123,10 +123,10 @@ public:
           
           if (this->settings.debug > 0) {
                printf("             CMAP E = %15.6f kJ/mol\n", cmap_energy);
-               printf("             CMAP E = %15.6f kcal/mol\n", cmap_energy * charmm36_constants::KJ_TO_KCAL);
+               printf("             CMAP E = %15.6f kcal/mol\n", cmap_energy * charmm_constants::KJ_TO_KCAL);
           }
 
-          return cmap_energy  * charmm36_constants::KJ_TO_KCAL;
+          return cmap_energy  * charmm_constants::KJ_TO_KCAL;
      }
 
 };

@@ -19,10 +19,10 @@
 // along with Phaistos.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-#ifndef TERM_CHARMM36_BOND_STRETCH_ITP_H
-#define TERM_CHARMM36_BOND_STRETCH_ITP_H
+#ifndef TERM_CHARMM_BOND_STRETCH_ITP_H
+#define TERM_CHARMM_BOND_STRETCH_ITP_H
 
-namespace charmm36_constants {
+namespace charmm_constants {
 
 const static std::string bond_stretch_itp = "     NH2      CT1     1   0.14550000    200832.00\n\
       CA      CAI     1   0.13750000    255224.00\n\
@@ -961,6 +961,6 @@ const static std::string bond_stretch_itp = "     NH2      CT1     1   0.1455000
     CEL1     CRL2     1   0.15020000    305432.00\n\
     CEL1     CRL1     1   0.15020000    200832.00\n";
 
-} // End namespace charmm36_constants
+} // End namespace charmm_constants
 
 #endif

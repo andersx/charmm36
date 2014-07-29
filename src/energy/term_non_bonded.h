@@ -1,5 +1,5 @@
-// non_bonded.h --- Coulomb, vdw and excl vol solvent collective term
-// Copyright (C) 2014 Anders S. Christensen
+// non_bonded.h --- CHARMM36/EEF1-SB Coulomb, van der Waals and implicit solvent collective term
+// Copyright (C) 2014 Sandro Bottaro, Anders S. Christensen
 //
 // This file is part of PHAISTOS
 //
@@ -17,8 +17,8 @@
 // along with Phaistos. If not, see <http://www.gnu.org/licenses/>.
 //
 
-#ifndef TERM_CHARMM36_NON_BONDED_H
-#define TERM_CHARMM36_NON_BONDED_H
+#ifndef TERM_CHARMM_NON_BONDED_H
+#define TERM_CHARMM_NON_BONDED_H
 
 #include <string>
 
@@ -36,12 +36,12 @@
 
 namespace phaistos {
 
-class TermCharmm36NonBonded: public EnergyTermCommon<TermCharmm36NonBonded, ChainFB> {
+class TermCharmmNonBonded: public EnergyTermCommon<TermCharmmNonBonded, ChainFB> {
 
 protected:
 
      //! For convenience, define local EnergyTermCommon
-     typedef phaistos::EnergyTermCommon<TermCharmm36NonBonded, ChainFB> EnergyTermCommon;
+     typedef phaistos::EnergyTermCommon<TermCharmmNonBonded, ChainFB> EnergyTermCommon;
 
      std::vector<topology::NonBondedInteraction> non_bonded_interactions;
      double dGref_total;
@@ -65,10 +65,10 @@ public:
 
 
           std::vector<topology::NonBondedParameter> non_bonded_parameters
-              = topology::read_nonbonded_parameters(charmm36_constants::vdw_itp);
+              = topology::read_nonbonded_parameters(charmm_constants::vdw_itp);
 
           std::vector<topology::NonBonded14Parameter> non_bonded_14_parameters
-              = topology::read_nonbonded_14_parameters(charmm36_constants::vdw14_itp);
+              = topology::read_nonbonded_14_parameters(charmm_constants::vdw14_itp);
 
           this->non_bonded_interactions = topology::generate_non_bonded_interactions_cached(this->chain,
                                                                   non_bonded_parameters,
@@ -109,7 +109,7 @@ public:
           const double two_pi_3_2 = 2.0*M_PI*sqrt(M_PI);
           const double phys_t = 298.15;
 
-          std::istringstream f_h(charmm36_constants::solvpar_inp);
+          std::istringstream f_h(charmm_constants::solvpar_inp);
 
           std::string line;
           std::vector<double> pp;
@@ -192,10 +192,10 @@ public:
      //! \param chain Molecule chain
      //! \param settings Local Settings object
      //! \param random_number_engine Object from which random number generators can be created.
-     TermCharmm36NonBonded(ChainFB *chain,
+     TermCharmmNonBonded(ChainFB *chain,
                     const Settings &settings = Settings(),
                     RandomNumberEngine *random_number_engine = &random_global)
-          : EnergyTermCommon(chain, "charmm36-non-bonded", settings, random_number_engine) {
+          : EnergyTermCommon(chain, "charmm-non-bonded", settings, random_number_engine) {
 
         setup_interactions();
      }
@@ -205,7 +205,7 @@ public:
      //! \param random_number_engine Object from which random number generators can be created.
      //! \param thread_index Index indicating in which thread|rank the copy exists
      //! \param chain Molecule chain
-     TermCharmm36NonBonded(const TermCharmm36NonBonded &other,
+     TermCharmmNonBonded(const TermCharmmNonBonded &other,
                  RandomNumberEngine *random_number_engine,
                  int thread_index, ChainFB *chain)
           : EnergyTermCommon(other, random_number_engine, thread_index, chain) {
@@ -221,7 +221,7 @@ public:
      double evaluate(MoveInfo *move_info=NULL) {
 
 
-          double energy_sum = this->dGref_total * charmm36_constants::KCAL_TO_KJ;
+          double energy_sum = this->dGref_total * charmm_constants::KCAL_TO_KJ;
 
           for (unsigned int i = 0; i < this->non_bonded_interactions.size(); i++) {
 
@@ -233,11 +233,11 @@ public:
                 const double r2 = ((interaction.atom1)->position - (interaction.atom2)->position).norm_squared();
 
                 const double inv_r2 = 1.0 / r2; // convert to nanometers
-                const double inv_r6 = inv_r2 * inv_r2 * inv_r2 * charmm36_constants::NM6_TO_ANGS6;
+                const double inv_r6 = inv_r2 * inv_r2 * inv_r2 * charmm_constants::NM6_TO_ANGS6;
 
                 // Add vdw and coulomb energy (using nm and kJ).
                 energy_sum += (interaction.c12 * inv_r6 - interaction.c6) * inv_r6     // VDW energy
-                    + interaction.qq * inv_r2 * charmm36_constants::TEN_OVER_ONE_POINT_FIVE;   // Coulomb energy
+                    + interaction.qq * inv_r2 * charmm_constants::TEN_OVER_ONE_POINT_FIVE;   // Coulomb energy
 
                 // If the pair has a contribution to EEF1-SB solvation term
                 if ((interaction.do_eef1) && (r2 < 81.0)) {
@@ -254,18 +254,18 @@ public:
                     double exp_ij = 0.0;
                     double exp_ji = 0.0;
 
-                    if (bin_ij < 350) exp_ij = charmm36_constants::EXP_EEF1[bin_ij];
-                    if (bin_ji < 350) exp_ji = charmm36_constants::EXP_EEF1[bin_ji];
+                    if (bin_ij < 350) exp_ij = charmm_constants::EXP_EEF1[bin_ij];
+                    if (bin_ji < 350) exp_ji = charmm_constants::EXP_EEF1[bin_ji];
 
                     // Add solvation energy (in kcal, so convert to kJ)
-                    energy_sum -= (interaction.fac_12*exp_ij + interaction.fac_21*exp_ji) * inv_r2 * charmm36_constants::KCAL_TO_KJ;
+                    energy_sum -= (interaction.fac_12*exp_ij + interaction.fac_21*exp_ji) * inv_r2 * charmm_constants::KCAL_TO_KJ;
 
                 }
 
 
           }
 
-          return energy_sum * charmm36_constants::KJ_TO_KCAL;
+          return energy_sum * charmm_constants::KJ_TO_KCAL;
      }
 };
 

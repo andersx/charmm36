@@ -75,6 +75,8 @@ protected:
 
      bool none_move;
 
+     double dGref_total;
+
 public:
 
      //! Use same settings as base class
@@ -161,7 +163,7 @@ public:
                                                                   lambda,
                                                                   eef1_atom_type_index_map);
 
-            double dGref_total = 0.0;
+            this->dGref_total = 0.0;
 
             for (AtomIterator<ChainFB, definitions::ALL> it(*this->chain); !it.end(); ++it) {
 
@@ -170,7 +172,7 @@ public:
 
                 unsigned int index = eef1_atom_type_index_map[atom_type];
 
-                dGref_total += dGref[index];
+                this->dGref_total += dGref[index];
             }
 
             // Fill up cached matrix and set energy to zero
@@ -208,8 +210,8 @@ public:
             }
 
             // Initialize total energies
-            this->total_energy = dGref_total;
-            this->total_energy_old = dGref_total;
+            this->total_energy = this->dGref_total;
+            this->total_energy_old = this->dGref_total;
 
             // Calculate energy for each cache matrix element
             for (int i = 0; i < this->chain->size(); i++) {
@@ -454,20 +456,20 @@ public:
                 // Make local copy of atom pair k.
                 topology::NonBondedInteraction interaction = this->cached_residue_interactions[i][j].interactions[k];
 
-                const double r_sq = ((interaction.atom1)->position - (interaction.atom2)->position).norm_squared();
+                const double r2 = ((interaction.atom1)->position - (interaction.atom2)->position).norm_squared();
 
-                const double inv_r_sq = 1.0 / r_sq; // convert to nanometers
-                const double inv_r_sq6 = inv_r_sq * inv_r_sq * inv_r_sq * charmm36_constants::NM6_TO_ANGS6;
+                const double inv_r2 = 1.0 / r2; // convert to nanometers
+                const double inv_r6 = inv_r2 * inv_r2 * inv_r2 * charmm36_constants::NM6_TO_ANGS6;
 
                 // Add vdw and coulomb energy (using nm and kJ).
-                this->cached_residue_interactions[i][j].energy_new += (interaction.c12 * inv_r_sq6 - interaction.c6) * inv_r_sq6                    // VDW energy
-                                                                       + interaction.qq * inv_r_sq * charmm36_constants::TEN_OVER_ONE_POINT_FIVE;   // Coulomb energy
+                this->cached_residue_interactions[i][j].energy_new += (interaction.c12 * inv_r6 - interaction.c6) * inv_r6                    // VDW energy
+                                                                       + interaction.qq * inv_r2 * charmm36_constants::TEN_OVER_ONE_POINT_FIVE;   // Coulomb energy
 
                 // If the pair has a contribution to EEF1-SB solvation term
-                if ((interaction.do_eef1) && (r_sq < 81.0)) {
+                if ((interaction.do_eef1) && (r2 < 81.0)) {
 
                     // From Sandro's code -- this bit is in angstrom and kcal.
-                    const double r_ij = std::sqrt(r_sq);
+                    const double r_ij = std::sqrt(r2);
 
                     const double arg_ij = std::fabs((r_ij - interaction.R_vdw_1)/interaction.lambda1);
                     const double arg_ji = std::fabs((r_ij - interaction.R_vdw_2)/interaction.lambda2);
@@ -482,7 +484,7 @@ public:
                     if (bin_ji < 350) exp_ji = charmm36_constants::EXP_EEF1[bin_ji];
 
                     // Add solvation energy (in kcal, so convert to kJ)
-                    this->cached_residue_interactions[i][j].energy_new -= (interaction.fac_12*exp_ij + interaction.fac_21*exp_ji) * inv_r_sq * charmm36_constants::KCAL_TO_KJ;
+                    this->cached_residue_interactions[i][j].energy_new -= (interaction.fac_12*exp_ij + interaction.fac_21*exp_ji) * inv_r2 * charmm36_constants::KCAL_TO_KJ;
 
                 }
 
@@ -497,13 +499,36 @@ public:
 
         }
 
-        // Add delta energy for the move to total energy.
-        this->total_energy += delta_energy_local;
+        // Select update scheme for total energy (necessary for precision when the change in energy is large)
+        // If the energy-difference for the move is very large, the energy update might break double precision.
+        // Required accuracy is around 1e-7, so if dE is > 1e6, then do a full summation to be safe.
+        if (std::fabs(delta_energy_local) > 1e6) {
+
+            // Get reference solvation energy of system
+            this->total_energy = this->dGref_total;
+
+            // Get the indexes of all pairs of residues which must be recomputed
+            std::vector<std::vector<unsigned int> > all_indexes = get_cache_indexes(0, this->chain->size() - 1);
+
+            for (unsigned int k = 0; k < all_indexes.size(); k++) {
+
+                // Local index variables for residues i and j.
+                unsigned int i = all_indexes[k][0];
+                unsigned int j = all_indexes[k][1];
+                this->total_energy += this->cached_residue_interactions[i][j].energy_new;
+            }
+
+        // If the energy difference is small, then just add the delta energy.
+        } else {
+
+            // Add delta energy for the move to total energy.
+            this->total_energy += delta_energy_local;
+        }
 
         // Return energy.
         return this->total_energy;
 
-     }
+    }
 
 
     //! Accept move and backup energies

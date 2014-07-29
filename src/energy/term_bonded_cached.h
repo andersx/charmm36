@@ -267,7 +267,7 @@ public:
           double energy_sum = 0.0;
 
           // Calculate bond angle terms
-          if (!(settings.ignore_bond_angles)) {
+          if (!(this->settings.ignore_bond_angles)) {
 
               for (unsigned int i = 0; i < cached_residue.angle_bend_interactions.size(); i++){
 
@@ -291,7 +291,7 @@ public:
           }
 
           // Calculate bond stretch terms
-          if (!(settings.ignore_bond_stretch)) {
+          if (!(this->settings.ignore_bond_stretch)) {
 
                for (unsigned int i = 0; i < cached_residue.bonded_pair_interactions.size(); i++){
 
@@ -310,7 +310,7 @@ public:
           }
 
           // Calculate improper torsion terms
-          if (!(settings.ignore_improper_torsion_angles)) {
+          if (!(this->settings.ignore_improper_torsion_angles)) {
 
                for (unsigned int i = 0; i < cached_residue.imptor_interactions.size(); i++){
 
@@ -330,7 +330,7 @@ public:
           }
 
           // Calculate torsion terms
-          if (!(settings.ignore_torsion_angles)) {
+          if (!(this->settings.ignore_torsion_angles)) {
 
                for (unsigned int i = 0; i < cached_residue.torsion_interactions.size(); i++){
 
@@ -350,7 +350,7 @@ public:
           }
 
           // Calculate CMAP correction terms
-          if (!(settings.ignore_cmap_correction)) {
+          if (!(this->settings.ignore_cmap_correction)) {
                if (cached_residue.has_cmap) {
                      const int residue_index = cached_residue.cmap_interaction.residue_index;
                      const unsigned int cmap_type_index = cached_residue.cmap_interaction.cmap_type_index;

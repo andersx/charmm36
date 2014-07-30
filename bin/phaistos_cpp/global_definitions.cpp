@@ -78,7 +78,7 @@ struct EnergyInitialization {
                                                    options.get_settings<Settings>(option,i)));
           }
           // Improper torsion
-          option = options[prefix+"-charmm-ImproperTorsion"];
+          option = options[prefix+"-charmm-improper-torsion"];
           for (int i=0; i<option.occurrences(); ++i) {
 
                // Settings typedef

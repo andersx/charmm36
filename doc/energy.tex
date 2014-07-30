@@ -7,6 +7,8 @@ Compared to the standard CHARMM36 force field, the backbone torsion angle term i
 Furthermore, charges on ionic side chains and termini are scaled so these appear neutral, and the Coulomb interaction term uses a distance dependent dielectric constant.
 The solvent model is a Gaussian-solvent exclusion model.
 
+The recommended ways of using the module are the \texttt{--energy-charmm-cached} or \texttt{--observable-charmm} command line options.
+
 \subsection{Parameters}
 Parameters are stored in the \texttt{\$PHAISTOS\_ROOT/modules/charmm/src/energy/parameters} folder in GROMACS's .itp format.
 Nuclear charges and atom-types, however, are hard coded in the topology parser at this point.

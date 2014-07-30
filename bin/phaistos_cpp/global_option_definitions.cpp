@@ -309,6 +309,33 @@ struct EnergyOptions {
                     super_group, counter==1);
           }
 
+          // Automatically expands to all terms
+          for (int counter = occurrences[prefix+"-charmm"]; counter > 0; counter--) {
+
+               // Add options
+               target.add(
+                    target.create_option_expansion(
+                         "CHARMM36/EEF1-SB all terms (" + prefix + ")",
+                         prefix+"-charmm",
+                         //prefix+"-charmm-non-bonded "+prefix+"-charmm-angle-bend "+prefix+"-charmm-torsion "+prefix+"-charmm-improper-torsion "+prefix+"-charmm-bond-stretch"+prefix+"-charmm-cmap"),
+                         prefix+"-charmm-non-bonded "+prefix+"-charmm-angle-bend "+prefix+"-charmm-torsion "+prefix+"-charmm-bond-stretch "+prefix+"-charmm-cmap"),
+                    "shorthands", counter==1);
+          }
+
+          // Automatically expands to all cached terms
+          for (int counter = occurrences[prefix+"-charmm-cached"]; counter > 0; counter--) {
+
+               // Add options
+               target.add(
+                    target.create_option_expansion(
+                         "Cached CHARMM36/EEF1-SB all terms (" + prefix + ")",
+                         prefix+"-charmm-cached",
+                         prefix+"-charmm-non-bonded-cached "+prefix+"-charmm-bonded-cached"),
+                    "shorthands", counter==1);
+          }
+
+
+
      }
 
 

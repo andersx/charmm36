@@ -1,0 +1,88 @@
+\section{CHARMM36/EEF1-SB force field energy}
+
+This module is an implementation of the CHARMM36/EEF1-SB force field\cite{doi:10.1021/ct400730n}.
+Briefly described, the method is based on the CHARMM36 force field (with CMAP correction), with an implicit solvent model.
+
+Compared to the standard CHARMM36 force field, the backbone torsion angle term is slightly adjusted to give a better balance between alpha-helix and beta-sheets.
+Furthermore, charges on ionic side chains and termini are scaled so these appear neutral, and the Coulomb interaction term uses a distance dependent dielectric constant.
+The solvent model is a Gaussian-solvent exclusion model.
+
+\subsection{Parameters}
+Parameters are stored in the \texttt{\$PHAISTOS\_ROOT/modules/charmm/src/energy/parameters} folder in GROMACS's .itp format.
+Nuclear charges and atom-types, however, are hard coded in the topology parser at this point.
+Physical constants have been set to the values found in the CHARMM program, and all terms are verified to match the CHARMM program to single precision accuracy.
+There is an extensive collection of test-cases in the \texttt{\$PHAISTOS\_ROOT/modules/charmm/test} directory which can be used to verify parameters and energies against the CHARMM program.
+
+
+\subsection{Debug levels}
+There are three debug-levels in non-cached terms.
+Level 0 gives no debug output. 
+Level 1 and higher will display the internal molecular energy for that energy term in kcal and kJ each iteration.
+Level 2 and higher will additionally display information about each individual interaction that contributes to the energy of that term.
+This can be useful for situations like changing parameters or analyzing interactions in a structure.
+The dedicated \texttt{test\_charmm} program can be used to set a debug-level and run single-point energy evaluations.
+
+
+\subsection{CHARMM36/EEF1-SB angle bend term\\(\texttt{charmm-bond-stretch})}
+This term calculates the energy contributions from angle-bend and Urey-Bradley interactions.
+
+
+\subsection{CHARMM36/EEF1-SB bond stretch term\\(\texttt{charmm-bond-stretch})}
+This term calculates the energy contributions from bond stretch interactions between bonded neighbor atoms.
+
+\subsection{CHARMM36/EEF1-SB CMAP correction term\\(\texttt{charmm-cmap})}
+This term calculates the CHARMM36/CMAP backbone phi/psi-torsion correction.
+
+
+\subsection{CHARMM36/EEF1-SB Coulomb term\\(\texttt{charmm-coulomb})}
+This term calculates the electrostatic interaction between non-neighboring atoms and "1-4" neighboring atoms. 
+This version uses a distance dependent dielectric constant, $\varepsilon = 1.5 \cdot r_{ij}$.
+Furthermore, charges on ionic side chains and termini are scaled so these appear neutral, and the Coulomb interaction term uses a distance dependent dielectric constant.
+
+
+\subsection{CHARMM36/EEF1-SB implicit solvation term\\(\texttt{charmm-implicit-solvent})}
+This term calculates the EEF1-SB Gaussian-excluded solvent energy term.
+This standard implementation is extremely computationally intensive,
+and is primarily intended for debugging purposes.
+
+
+\subsection{CHARMM36/EEF1-SB torsion angle term\\(\texttt{charmm-torsion})}
+This term calculates the energy contribution from torsion angles.
+
+
+\subsection{CHARMM36/EEF1-SB improper torsion angle term\\(\texttt{charmm-improper-torsion})}
+This term calculates the energy contribution from improper torsion angles (out-of-plane bending).
+
+
+\subsection{CHARMM36/EEF1-SB van der Waals term\\(\texttt{charmm-vdw})}
+This term calculates the Lennard-Jones/van der Waals interaction between non-neighboring atoms and "1-4" neighboring atoms. 
+
+
+\subsection{CHARMM36/EEF1-SB non-bonded\\(\texttt{charmm-non-bonded})}
+This term collects the Coulomb, van der Waals, and EEF1-SB implicit solvent energy terms in one term.
+
+\subsection{Cached CHARMM36/EEF1-SB non-bonded\\(\texttt{charmm-non-bonded-cached})}
+This term collects the Coulomb, van der Waals, and EEF1-SB implicit solvent energy terms in one more efficient term.
+This version is cached, so only interactions that change after a MC move are recalculated.
+This is the preferred way of using the CHARMM36/EEF1-SB non-bonded energy during a simulation.
+
+\subsection{Cached CHARMM36/EEF1-SB bonded-term\\(\texttt{charmm-bonded-cached})}
+
+This energy term collects the angle bend, bond stretch, CMAP correction, torsion angle and improper torsion angle terms into one cached term.
+This version is cached, so only interactions that change after a MC move are recalculated.
+This is the preferred way of using the CHARMM36/EEF1-SB bonded energy during a simulation.
+\\\\Since not all bonded terms are degrees of freedom in the move, there are options to ignore evaluation of these terms.
+In most MC moves currently available in PHAISTOS (and especially side chain moves), the improper torsion, bond-stretch and bond-angle terms are not sampled, and these can safely be ignored for most purposes.
+If these are ignored it is advised to sample backbone angles from the Engh-Huber prior (e.g.~\texttt{--move-crisp-eh}).
+Enabling these can sometimes cause large constant energy offsets during the simulation.
+This is especially pronounced for the \texttt{--energy-charmm-bond-stretch} term.
+
+\optiontitle{Settings}
+\begin{optiontable}
+     \option{ignore-bond-angles}{bool}{false}{Ignore bond angle terms.}
+     \option{ignore-bond-stretch}{bool}{false}{Ignore bond stretch terms}
+     \option{ignore-torsion-angles}{bool}{false}{Ignore torsion angle terms.}
+     \option{ignore-improper-torsion-angles}{bool}{false}{Ignore improper torsion angle terms.}
+     \option{ignore-cmap-correction}{bool}{false}{Ignore CMAP correction terms.}
+\end{optiontable}
+
